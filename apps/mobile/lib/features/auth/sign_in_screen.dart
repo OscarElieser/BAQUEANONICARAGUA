@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Acceso a los proveedores de Riverpod
 
+import '../../core/data/fotos.dart'; // Foto real de la cabecera
 import '../../core/i18n/t.dart'; // Textos traducidos
 import '../../core/theme.dart'; // Colores y espaciados del sistema de diseño
 import 'auth_repository.dart'; // Lógica de autenticación
@@ -108,6 +109,8 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           ListView(
             padding: const EdgeInsets.fromLTRB(TvSpace.s4, TvSpace.s8, TvSpace.s4, TvSpace.s8), // Márgenes
             children: [
+              const _CabeceraFoto(), // Foto real con la frase de bienvenida
+              const SizedBox(height: TvSpace.s6), // Espacio antes del orbe
               ExcludeSemantics(
                 child: TweenAnimationBuilder<double>(
                   tween: Tween(begin: MediaQuery.of(context).disableAnimations ? 1 : 0, end: 1), // Sin animación si así se pidió
@@ -266,6 +269,46 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 }
 
 /// Arco de luz al pie de la pantalla, como el borde iluminado de un planeta, con los colores de la marca.
+/// Cabecera con una foto real (playa de Corn Island), la frase grande y el crédito de la foto.
+class _CabeceraFoto extends StatelessWidget {
+  const _CabeceraFoto(); // Constructor constante
+
+  @override
+  Widget build(BuildContext context) {
+    final f = FotosReales.de('portada-caribe'); // Foto real (o null en pruebas)
+    final marca = Theme.of(context).extension<LetrasMundo>()?.marca ?? const TextStyle(); // Letra de la marca
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(26), // Esquinas suaves
+      child: SizedBox(
+        height: 230, // Alto de la cabecera
+        child: Stack(
+          fit: StackFit.expand, // Llena la cabecera
+          children: [
+            if (f != null) Image.asset(f.asset, fit: BoxFit.cover, semanticLabel: f.lugar) else const ColoredBox(color: TvColors.marcaProfundo), // Foto real o fondo liso
+            const DecoratedBox(decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.bottomCenter, end: Alignment.topCenter, colors: [Color(0xEB0D1B2A), Color(0x330D1B2A)]))), // Sombra para el texto
+            Padding(
+              padding: const EdgeInsets.all(TvSpace.s4 + 4), // Márgenes
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
+                mainAxisAlignment: MainAxisAlignment.end, // Abajo
+                children: [
+                  Text('${context.t('auth.art_line1')}\n${context.t('auth.art_line2')}', style: marca.copyWith(color: TvColors.bandMarfil, fontSize: 28, fontWeight: FontWeight.w800, height: 1.05)), // Frase grande
+                  const SizedBox(height: TvSpace.s2), // Espacio
+                  Text(context.t('auth.art_text'), style: const TextStyle(color: Color(0xFFE6EEE9), fontSize: 13.5)), // Para qué sirve BAQUEANO
+                  if (f != null) ...[
+                    const SizedBox(height: TvSpace.s1), // Espacio
+                    Text(context.t('photo.credit', {'author': f.autor, 'license': f.licencia}), style: const TextStyle(color: Color(0xFFC9D8D0), fontSize: 11)), // Crédito de la foto
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _ArcoDeLuz extends CustomPainter {
   const _ArcoDeLuz(); // Constructor constante
 

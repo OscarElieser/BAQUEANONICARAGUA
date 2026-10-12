@@ -405,5 +405,22 @@
   "credits.author": "Author",
   "credits.license": "License",
   "credits.source": "Source",
-  "credits.see_original": "See the original"
+  "credits.see_original": "See the original",
+  "home.ways_title": "Explore your way",
+  "home.ways_intro": "Six ways to begin. Every photo is real and credits the person who took it.",
+  "ways.map": "Living map",
+  "ways.map_desc": "All 17 territories and the real status of each page.",
+  "ways.territories": "Territory by territory",
+  "ways.territories_desc": "Go through all 17, from Nueva Segovia to Río San Juan.",
+  "ways.culture": "Culture",
+  "ways.culture_desc": "History, art and heritage of Nicaragua.",
+  "ways.community": "Community",
+  "ways.community_desc": "Stories and notices from people who travel and live here.",
+  "ways.adventure": "My adventure",
+  "ways.adventure_desc": "Plan your trip and save your places.",
+  "ways.business": "For businesses",
+  "ways.business_desc": "Plans to get your business listed on BAQUEANO.",
+  "auth.art_line1": "The world is big.",
+  "auth.art_line2": "Nicaragua is unforgettable.",
+  "auth.art_text": "Discover, save and share places in Nicaragua with its people."
 }

@@ -486,3 +486,36 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
 .exp-foto { width: 100%; height: 100%; object-fit: cover; } /* Foto real que llena el fondo del explorador */
 .tarjeta-silueta { position: absolute; left: 10px; bottom: 10px; width: 46px; height: 46px; padding: 6px; border-radius: 12px; background: color-mix(in oklab, var(--marca-nocturno) 55%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); fill: var(--oro); stroke: var(--band-marfil); stroke-width: 1; vector-effect: non-scaling-stroke; } /* Silueta del territorio sobre la foto */
 .foto-pie { color: var(--band-marfil); background: linear-gradient(0deg, color-mix(in oklab, var(--marca-nocturno) 82%, transparent), transparent); } .foto-pie a { color: var(--band-marfil); } /* Pie de foto legible sobre la imagen */
+
+/* ===== Explora a tu manera (mosaico de fotos reales) ===== */
+.modos-titulo { font-family: var(--font-archivo), var(--font-display); font-size: clamp(30px, 4vw, 44px); font-weight: 800; font-stretch: 112%; line-height: 1.02; letter-spacing: -0.01em; } /* Título ancho y firme, con la letra de la marca */
+.modos-rejilla { display: grid; gap: 20px 16px; grid-template-columns: 1fr; } /* Una columna en el teléfono */
+@media (min-width: 700px) { .modos-rejilla { grid-template-columns: repeat(2, minmax(0, 1fr)); } } /* Dos columnas en tableta */
+@media (min-width: 1000px) { .modos-rejilla { grid-template-columns: 1.25fr 1fr 1fr; grid-auto-rows: 230px; } .modos-celda[data-grande] { grid-row: span 2; } .modos-celda[data-ancho] .modos-mosaico { min-height: 0; } } /* Tres columnas; el primero ocupa dos filas */
+.modos-celda { position: relative; display: flex; flex-direction: column; min-width: 0; } /* Mosaico con su crédito encima */
+@media (min-width: 700px) { .modos-celda[data-ancho] { grid-column: 1 / -1; } } /* El último ocupa toda la fila */
+.modos-credito { position: absolute; top: 10px; right: 10px; max-width: calc(100% - 20px); padding: 3px 9px; border-radius: var(--radius-pill); background: color-mix(in oklab, var(--marca-nocturno) 72%, transparent); color: var(--band-marfil); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } /* Crédito en una etiqueta sobre la foto */
+.modos-credito:hover, .modos-credito:focus-visible { white-space: normal; } /* Al apuntarlo se lee completo */
+.modos-mosaico { position: relative; display: flex; align-items: flex-end; flex: 1; min-height: 220px; overflow: hidden; border-radius: 22px; background: var(--marca-profundo); color: var(--band-marfil); text-decoration: none; isolation: isolate; } /* Tarjeta con la foto de fondo */
+.modos-foto { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; transition: transform 600ms cubic-bezier(.2,.7,.2,1); } /* La foto llena el mosaico */
+.modos-mosaico::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, color-mix(in oklab, var(--marca-nocturno) 88%, transparent) 0%, color-mix(in oklab, var(--marca-nocturno) 35%, transparent) 55%, transparent 80%); } /* Sombra de abajo para que el texto se lea */
+.modos-mosaico:hover .modos-foto, .modos-mosaico:focus-visible .modos-foto { transform: scale(1.05); } /* La foto se acerca al apuntarla */
+.modos-mosaico:focus-visible { outline: 3px solid var(--marca-naranja); outline-offset: 3px; } /* Foco visible con el teclado */
+.modos-texto { display: flex; flex-direction: column; gap: 4px; padding: 20px 22px; } /* Nombre y descripción */
+.modos-nombre { font-family: var(--font-archivo), var(--font-display); font-size: 24px; font-weight: 800; font-stretch: 108%; line-height: 1.05; } /* Nombre del camino */
+.modos-celda[data-grande] .modos-nombre { font-size: clamp(28px, 3vw, 38px); } /* Más grande en el mosaico principal */
+.modos-desc { max-width: 34ch; font-size: 14px; line-height: 20px; color: color-mix(in oklab, var(--band-marfil) 88%, transparent); } /* Descripción breve */
+@media (prefers-reduced-motion: reduce) { .modos-foto { transition: none; } } /* Sin acercamiento si así se pidió */
+
+/* ===== Acceso en dos mitades: foto real a la izquierda, formulario a la derecha ===== */
+.login-partido { position: relative; display: grid; width: 100%; max-width: 1040px; overflow: hidden; border-radius: 30px; box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--band-marfil) 12%, transparent); } /* Contenedor de las dos mitades */
+@media (min-width: 900px) { .login-partido { grid-template-columns: 1.05fr 1fr; } } /* Lado a lado en pantallas grandes */
+.login-arte { position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; min-height: 260px; padding: 28px; color: var(--band-marfil); isolation: isolate; } /* Mitad con la foto */
+.login-arte img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; } /* Foto real de fondo */
+.login-arte::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(10deg, color-mix(in oklab, var(--marca-nocturno) 92%, transparent) 10%, color-mix(in oklab, var(--marca-nocturno) 30%, transparent) 70%); } /* Sombra para el texto */
+.login-arte-titulo { margin: 0; font-family: var(--font-archivo), var(--font-display); font-size: clamp(30px, 4vw, 46px); font-weight: 800; font-stretch: 110%; line-height: 1.02; } /* Frase grande */
+.login-arte-titulo span { display: block; } /* Cada frase en su línea */
+.login-arte .credito-foto { color: color-mix(in oklab, var(--band-marfil) 85%, transparent); } /* Crédito legible sobre la foto */
+.login-partido .login-lado { display: grid; place-items: center; padding: 28px 16px; } /* Mitad del formulario */
+.login-partido .login-vidrio { max-width: 440px; } /* La tarjeta conserva su ancho */
+@media (min-width: 900px) { .login-arte { min-height: 600px; padding: 40px; } } /* Más alto lado a lado */

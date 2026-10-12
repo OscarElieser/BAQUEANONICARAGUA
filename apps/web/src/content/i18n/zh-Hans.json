@@ -405,5 +405,22 @@
   "credits.author": "作者",
   "credits.license": "许可",
   "credits.source": "来源",
-  "credits.see_original": "查看原图"
+  "credits.see_original": "查看原图",
+  "home.ways_title": "按你的方式探索",
+  "home.ways_intro": "六种开始方式。每张照片都是真实的，并注明拍摄者。",
+  "ways.map": "动态地图",
+  "ways.map_desc": "17 个地区及每个页面的真实状态。",
+  "ways.territories": "逐个地区",
+  "ways.territories_desc": "从新塞哥维亚到圣胡安河，走遍 17 个地区。",
+  "ways.culture": "文化",
+  "ways.culture_desc": "尼加拉瓜的历史、艺术与遗产。",
+  "ways.community": "社区",
+  "ways.community_desc": "旅行者和当地人的故事与通知。",
+  "ways.adventure": "我的旅程",
+  "ways.adventure_desc": "规划行程，保存你的地点。",
+  "ways.business": "面向商家",
+  "ways.business_desc": "让你的商家出现在 BAQUEANO 上的方案。",
+  "auth.art_line1": "世界很大。",
+  "auth.art_line2": "尼加拉瓜令人难忘。",
+  "auth.art_text": "与当地人一起发现、保存并分享尼加拉瓜的地点。"
 }

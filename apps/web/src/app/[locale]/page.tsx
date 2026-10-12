@@ -4,6 +4,7 @@ import { listTerritories } from '@/lib/territories'; // Territorios publicados d
 import { MapaTerritorios } from '@/components/MapaTerritorios'; // Mapa ilustrado de los 17 territorios
 import { GaleriaTerritorios } from '@/components/GaleriaTerritorios'; // Galería en arco de las 17 portadas
 import { ExploradorTerritorios } from '@/components/ExploradorTerritorios'; // Explorador a pantalla completa
+import { ModosExplorar } from '@/components/ModosExplorar'; // Seis caminos con fotos reales
 import { PuertaCultura } from '@/components/PuertaCultura'; // Puerta al mundo de Cultura
 import { SpriteMapa } from '@/components/SpriteMapa'; // Formas del mapa, una sola vez por página
 import { InclinacionTarjetas } from '@/components/InclinacionTarjetas'; // Inclinación 3D de las tarjetas
@@ -38,6 +39,8 @@ export default async function Descubrir({ params }: { params: Promise<{ locale: 
     <main className={`${letraMarca.variable} ${letraFirma.variable} mx-auto max-w-[1280px] px-4 sm:px-12`}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(site) }} /> {/* Datos para buscadores */}
       <PortadaBaqueano locale={locale} /> {/* Ventana pintada, eslogan, botones y buscador */}
+
+      <ModosExplorar locale={locale} /> {/* Explora a tu manera: mapa, territorios, cultura, comunidad, viaje y negocios */}
 
       <SpriteMapa /> {/* Biblioteca de formas para portadas y mapa */}
       <ExploradorTerritorios locale={locale} published={(territories ?? []).map((ter) => ter.slug)} /> {/* Un territorio a pantalla completa, con los siguientes asomando */}

@@ -8,6 +8,7 @@ import '../../../core/theme.dart'; // Colores y espaciados
 import '../../../core/widgets/estados.dart'; // Cargando, error y vacío
 import '../../../core/widgets/explorador_territorios.dart'; // Explorador a pantalla completa
 import '../../../core/widgets/galeria_arco.dart'; // Galería en arco 3D
+import '../../../core/widgets/modos_explorar.dart'; // Explora a tu manera
 import '../../../core/widgets/mapa_territorios.dart'; // Mapa ilustrado de los 17 territorios
 import '../../../core/widgets/portada_territorio.dart'; // Portadas y tarjetas de cada territorio
 import '../../../core/widgets/portada_baqueano.dart'; // Portada con ventana pintada
@@ -16,6 +17,7 @@ import '../../home/home_shell.dart'; // Para pasar a la pestaña Mi aventura
 import '../../planner/planner_screen.dart'; // Mi aventura (si se abre fuera del menú principal)
 import '../../catalog/search_screen.dart'; // Resultados de búsqueda
 import '../../creditos/creditos_screen.dart'; // Créditos de las fotos
+import '../../community/community_screen.dart'; // Comunidad (si se abre fuera del menú principal)
 import '../../culture/culture_screen.dart'; // Mundo de Cultura
 import 'territory_screen.dart'; // Ficha de territorio
 
@@ -33,13 +35,21 @@ class TerritoriesScreen extends ConsumerStatefulWidget {
 class _TerritoriesScreenState extends ConsumerState<TerritoriesScreen> {
   final _mapa = GlobalKey(); // Para bajar hasta el mapa con "Explorar Nicaragua"
 
-  void _viaje() {
+  void _viaje() => _pestana(1, const PlannerScreen()); // Mi aventura
+
+  /// Pasa a otra pestaña del menú principal; fuera del menú abre la pantalla encima (si se dio una).
+  void _pestana(int i, Widget fuera) {
     final shell = PestanaShell.of(context); // Menú principal, si existe
     if (shell != null) {
-      shell.ir(1); // Pasa a la pestaña Mi aventura
+      shell.ir(i); // Pasa a la pestaña pedida
     } else {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const PlannerScreen())); // Fuera del menú: la abre encima
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => fuera)); // Fuera del menú: la abre encima
     }
+  }
+
+  void _alMapa() {
+    final ctx = _mapa.currentContext; // Mapa en pantalla
+    if (ctx != null) Scrollable.ensureVisible(ctx, duration: const Duration(milliseconds: 500), curve: Curves.easeOutCubic); // Baja hasta el mapa
   }
 
   @override
@@ -52,10 +62,7 @@ class _TerritoriesScreenState extends ConsumerState<TerritoriesScreen> {
       slivers: [
         SliverToBoxAdapter(
           child: PortadaBaqueano(
-            onExplorar: () {
-              final ctx = _mapa.currentContext; // Mapa en pantalla
-              if (ctx != null) Scrollable.ensureVisible(ctx, duration: const Duration(milliseconds: 500), curve: Curves.easeOutCubic); // Baja hasta el mapa
-            },
+            onExplorar: _alMapa, // Baja hasta el mapa
             onViaje: _viaje, // Abre Mi aventura
           ),
         ),
@@ -69,16 +76,13 @@ class _TerritoriesScreenState extends ConsumerState<TerritoriesScreen> {
                 const SizedBox(height: TvSpace.s4), // Espacio
                 _Buscador(onSearch: (q) => Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchScreen(query: q)))), // Busca y abre resultados
                 const SizedBox(height: TvSpace.s4), // Espacio
-                Material(
-                  color: TvColors.barro, // Barro de San Juan de Oriente: puerta al mundo de Cultura
-                  borderRadius: BorderRadius.circular(TvSpace.radiusM), // Esquinas redondeadas
-                  child: ListTile(
-                    minTileHeight: TvSpace.touchMin + 12, // Área táctil cómoda
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(TvSpace.radiusM)), // Onda del toque redondeada
-                    title: Text(context.t('culture.title'), style: (Theme.of(context).extension<LetrasMundo>()?.cultura ?? const TextStyle()).copyWith(color: TvColors.bandMarfil, fontSize: 20)), // Nombre del mundo
-                    trailing: const Icon(Icons.chevron_right, color: TvColors.bandMarfil), // Indica que se abre
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CultureScreen())), // Abre Cultura
-                  ),
+                ModosExplorar(
+                  caminos: [
+                    Camino(clave: 'map', foto: 'masaya', onTap: _alMapa), // Baja al mapa vivo
+                    Camino(clave: 'culture', foto: 'granada', onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CultureScreen()))), // Abre Cultura
+                    Camino(clave: 'community', foto: 'rio-san-juan', onTap: () => _pestana(2, const CommunityScreen())), // Pestaña Comunidad
+                    Camino(clave: 'adventure', foto: 'madriz', onTap: _viaje), // Mi aventura
+                  ],
                 ),
               ],
             ),

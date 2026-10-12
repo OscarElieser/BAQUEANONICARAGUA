@@ -405,5 +405,22 @@
   "credits.author": "撮影者",
   "credits.license": "ライセンス",
   "credits.source": "出典",
-  "credits.see_original": "元の写真を見る"
+  "credits.see_original": "元の写真を見る",
+  "home.ways_title": "自分らしく探す",
+  "home.ways_intro": "はじめ方は6つ。写真はすべて本物で、撮影者の名前を記しています。",
+  "ways.map": "生きている地図",
+  "ways.map_desc": "17の地域と、各ページの実際の状況。",
+  "ways.territories": "地域ごとに",
+  "ways.territories_desc": "ヌエバ・セゴビアからリオ・サン・フアンまで、17地域をめぐる。",
+  "ways.culture": "文化",
+  "ways.culture_desc": "ニカラグアの歴史、芸術、遺産。",
+  "ways.community": "コミュニティ",
+  "ways.community_desc": "旅する人と暮らす人の話とお知らせ。",
+  "ways.adventure": "わたしの冒険",
+  "ways.adventure_desc": "旅を組み立て、場所を保存する。",
+  "ways.business": "事業者の方へ",
+  "ways.business_desc": "BAQUEANOに掲載するためのプラン。",
+  "auth.art_line1": "世界は広い。",
+  "auth.art_line2": "ニカラグアは忘れられない。",
+  "auth.art_text": "ニカラグアの場所を、そこに暮らす人とともに見つけ、保存し、共有しよう。"
 }

@@ -405,5 +405,22 @@
   "credits.author": "Autor",
   "credits.license": "Licença",
   "credits.source": "Origem",
-  "credits.see_original": "Ver a original"
+  "credits.see_original": "Ver a original",
+  "home.ways_title": "Explore do seu jeito",
+  "home.ways_intro": "Seis caminhos para começar. Cada foto é real e traz o nome de quem a tirou.",
+  "ways.map": "Mapa vivo",
+  "ways.map_desc": "Os 17 territórios e o estado real de cada ficha.",
+  "ways.territories": "Território por território",
+  "ways.territories_desc": "Percorra os 17, de Nueva Segovia a Río San Juan.",
+  "ways.culture": "Cultura",
+  "ways.culture_desc": "História, arte e patrimônio da Nicarágua.",
+  "ways.community": "Comunidade",
+  "ways.community_desc": "Relatos e avisos de quem viaja e vive aqui.",
+  "ways.adventure": "Minha aventura",
+  "ways.adventure_desc": "Monte sua viagem e guarde seus lugares.",
+  "ways.business": "Para negócios",
+  "ways.business_desc": "Planos para que seu negócio apareça no BAQUEANO.",
+  "auth.art_line1": "O mundo é grande.",
+  "auth.art_line2": "A Nicarágua é inesquecível.",
+  "auth.art_text": "Descubra, guarde e compartilhe lugares da Nicarágua com sua gente."
 }

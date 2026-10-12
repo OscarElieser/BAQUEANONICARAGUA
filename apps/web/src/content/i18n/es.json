@@ -405,5 +405,22 @@
   "credits.author": "Autor",
   "credits.license": "Licencia",
   "credits.source": "Origen",
-  "credits.see_original": "Ver la original"
+  "credits.see_original": "Ver la original",
+  "home.ways_title": "Explora a tu manera",
+  "home.ways_intro": "Seis caminos para empezar. Cada foto es real y lleva el nombre de quien la tomó.",
+  "ways.map": "Mapa vivo",
+  "ways.map_desc": "Los 17 territorios y el estado real de cada ficha.",
+  "ways.territories": "Territorio por territorio",
+  "ways.territories_desc": "Recorre los 17, de Nueva Segovia a Río San Juan.",
+  "ways.culture": "Cultura",
+  "ways.culture_desc": "Historia, arte y patrimonio de Nicaragua.",
+  "ways.community": "Comunidad",
+  "ways.community_desc": "Relatos y avisos de quienes viajan y viven aquí.",
+  "ways.adventure": "Mi aventura",
+  "ways.adventure_desc": "Arma tu viaje y guarda tus lugares.",
+  "ways.business": "Para negocios",
+  "ways.business_desc": "Planes para que tu negocio aparezca en BAQUEANO.",
+  "auth.art_line1": "El mundo es grande.",
+  "auth.art_line2": "Nicaragua es inolvidable.",
+  "auth.art_text": "Descubre, guarda y comparte lugares de Nicaragua con su gente."
 }

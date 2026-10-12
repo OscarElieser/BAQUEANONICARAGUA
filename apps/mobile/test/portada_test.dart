@@ -8,6 +8,7 @@ import 'package:nica_app/core/theme.dart'; // Tema del sistema de diseño
 import 'package:nica_app/core/widgets/explorador_territorios.dart'; // Explorador a pantalla completa
 import 'package:nica_app/core/widgets/galeria_arco.dart'; // Galería en arco 3D
 import 'package:nica_app/core/widgets/mapa_territorios.dart'; // Datos del mapa
+import 'package:nica_app/core/widgets/modos_explorar.dart'; // Explora a tu manera
 import 'package:nica_app/core/widgets/portada_baqueano.dart'; // Portada con ventana pintada
 
 void main() {
@@ -108,5 +109,28 @@ void main() {
     expect(find.byType(Image), findsWidgets); // Hay una foto
     expect(find.textContaining('Wikimedia Commons'), findsOneWidget); // Con su crédito visible
     expect(tester.takeException(), isNull); // Sin errores
+  });
+
+  testWidgets('los caminos de "Explora a tu manera" responden al tocarlos', (tester) async {
+    final tocados = <String>[]; // Caminos tocados
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildTheme(Brightness.light, webFonts: false), // Tema sin descargar fuentes
+        home: Scaffold(
+          body: SingleChildScrollView(
+            child: SizedBox(
+              width: 390, // Ancho de teléfono
+              child: ModosExplorar(caminos: [
+                for (final c in ['map', 'culture', 'community', 'adventure']) Camino(clave: c, foto: 'x', onTap: () => tocados.add(c)), // Cuatro caminos sin foto
+              ]),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.byType(InkWell).at(0)); // Mapa vivo
+    await tester.tap(find.byType(InkWell).at(3)); // Mi aventura
+    expect(tocados, ['map', 'adventure']); // Cada uno abre lo suyo
+    expect(tester.takeException(), isNull); // Sin errores al dibujar
   });
 }

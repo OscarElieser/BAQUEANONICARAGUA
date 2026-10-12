@@ -157,6 +157,17 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
       - Android, que además tiene su propia pantalla de créditos.
     - Las ilustraciones quedan como respaldo donde no haya foto.
     - Próximo paso propuesto: relieves con alturas reales (modelo de elevación público, generado en Actions) y un mapa con proveedor de teselas cuando el dueño lo elija.
+19. **Prototipo "BAQUEANO Design Experience" del dueño, tomado como referencia (12 de octubre de 2026):**
+    - Lectura elegida: se adoptan sus piezas que encajan sin romper el sistema actual; no se copia tal cual.
+    - Adoptado:
+      - "Explora a tu manera": mosaico de fotos reales con su crédito (web: 6 caminos a páginas que existen; Android: 4, a mapa, Cultura, Comunidad y Mi aventura);
+      - acceso en dos mitades: foto real (Corn Island) con "El mundo es grande. Nicaragua es inolvidable." y el formulario de vidrio al lado (en Android, como cabecera).
+    - No adoptado, y por qué:
+      - sus fotos de Unsplash no son de Nicaragua;
+      - su mapa y sus barras de demostración serían datos inventados;
+      - BAQÜI no existe todavía, así que no hay botón ni franja de BAQÜI;
+      - la barra lateral del prototipo encaja como estructura del Ops Center (ya la tiene), no en el sitio público;
+      - el "che" del saludo no es nicaragüense; los textos siguen el tono de la web.
 
 ## 4b. Estado del proyecto oficial (revisado el 2026-10-12)
 
