@@ -294,7 +294,7 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
 .marca-cabecera::after { content: ""; display: inline-block; width: 8px; height: 8px; margin-left: 6px; border-radius: 2px; background: var(--marca-naranja); vertical-align: 0.15em; } /* Punto naranja de marca */
 
 /* ===== Ops Center: tema nocturno propio (herramienta interna, siempre oscura) ===== */
-.ops-noche {
+.ops-noche, .tema-noche {
   --ground: var(--marca-nocturno); /* Fondo general: azul nocturno */
   --ground-raised: var(--marca-profundo); /* Paneles: azul profundo */
   --ink: var(--band-marfil); /* Texto principal: marfil (15:1) */
@@ -345,3 +345,30 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
   .ops-lateral .ops-grupo, .ops-lateral .ops-item-futuro { display: none; } /* Sin títulos ni secciones futuras: más espacio */
   .ops-lateral .ops-item { white-space: nowrap; } /* Nombres en una línea */
 }
+
+/* ===== Inicio de sesión: tarjeta de vidrio sobre un arco de luz ===== */
+.login-escena { position: relative; overflow: hidden; display: grid; place-items: center; min-height: calc(100vh - 96px); padding: 48px 16px; margin-top: 16px; } /* Escena nocturna que ocupa la pantalla */
+.login-aurora { position: absolute; left: 50%; top: 58%; width: 170vmax; height: 120vmax; transform: translateX(-50%); border-radius: 50%; pointer-events: none;
+  background: conic-gradient(from 285deg, transparent 0deg, color-mix(in oklab, var(--marca-turquesa) 80%, transparent) 30deg, color-mix(in oklab, var(--marca-verde) 75%, transparent) 62deg, color-mix(in oklab, var(--marca-naranja) 85%, transparent) 98deg, color-mix(in oklab, var(--band-achiote) 65%, transparent) 124deg, transparent 152deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 86%, black 95%, transparent 100%); mask: radial-gradient(closest-side, transparent 86%, black 95%, transparent 100%); filter: blur(24px); opacity: 0.9; } /* Borde de un planeta iluminado, con los colores de la marca */
+@keyframes amanecer { from { opacity: 0; transform: translateX(-50%) translateY(6%); } } /* El arco sube al llegar */
+.login-aurora { animation: amanecer 1.6s cubic-bezier(.2,.7,.2,1) both; } /* Una sola vez */
+@media (prefers-reduced-motion: reduce) { .login-aurora { animation: none; } } /* Sin movimiento si así se pidió */
+.login-vidrio { position: relative; width: 100%; max-width: 440px; padding: 28px; border-radius: 28px;
+  background: linear-gradient(170deg, color-mix(in oklab, var(--band-marfil) 10%, transparent), color-mix(in oklab, var(--marca-nocturno) 70%, transparent));
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--band-marfil) 16%, transparent), 0 30px 60px -30px var(--marca-nocturno);
+  -webkit-backdrop-filter: blur(22px) saturate(1.2); backdrop-filter: blur(22px) saturate(1.2); } /* Tarjeta de vidrio esmerilado */
+.login-pestanas { display: inline-flex; align-self: flex-start; gap: 4px; padding: 4px; border-radius: var(--radius-pill); background: color-mix(in oklab, var(--marca-nocturno) 60%, transparent); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--band-marfil) 12%, transparent); } /* Pestañas segmentadas */
+.login-pestana { min-height: 40px; padding: 0 18px; border: 0; border-radius: var(--radius-pill); background: none; color: var(--ink-muted); font-weight: 700; cursor: pointer; transition: background-color 180ms ease-out, color 180ms ease-out; } /* Cada pestaña */
+.login-pestana[aria-current="page"] { background: color-mix(in oklab, var(--band-marfil) 14%, transparent); color: var(--ink); } /* Pestaña elegida */
+.login-etiqueta { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700; color: var(--ink-muted); } /* Etiqueta siempre visible */
+.login-campo { width: 100%; height: 50px; padding: 0 16px 0 44px; border-radius: 12px; border: 1px solid color-mix(in oklab, var(--band-marfil) 18%, transparent); background: color-mix(in oklab, var(--band-marfil) 6%, transparent); color: var(--ink); font: inherit; font-weight: 400; transition: border-color 160ms ease-out, background-color 160ms ease-out; } /* Campo de vidrio */
+.login-campo:focus { border-color: var(--marca-turquesa); background: color-mix(in oklab, var(--band-marfil) 10%, transparent); } /* Campo activo */
+.login-icono { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--ink-muted); pointer-events: none; } /* Icono dentro del campo */
+.login-principal { width: 100%; min-height: 50px; border: 0; border-radius: 12px; background: var(--band-marfil); color: var(--marca-nocturno); font-weight: 700; cursor: pointer; box-shadow: 0 10px 24px -14px var(--band-marfil); transition: transform 140ms ease-out; } /* Botón principal claro */
+.login-principal:active, .login-social:active { transform: scale(0.98); } /* Se hunde al tocarlo */
+.login-principal:disabled, .login-social:disabled { opacity: 0.45; cursor: progress; } /* Mientras trabaja */
+.login-separador { display: flex; align-items: center; gap: 12px; margin: 4px 0 0; font-size: 13px; color: var(--ink-muted); } /* "o continúa con" */
+.login-separador::before, .login-separador::after { content: ""; flex: 1; height: 1px; background: var(--line); } /* Líneas a los lados */
+.login-social { display: flex; width: 100%; min-height: 50px; align-items: center; justify-content: center; gap: 10px; border-radius: 12px; border: 1px solid color-mix(in oklab, var(--band-marfil) 18%, transparent); background: color-mix(in oklab, var(--band-marfil) 7%, transparent); color: var(--ink); font-weight: 700; cursor: pointer; } /* Botón de Google */
+.login-aviso { margin: 0; padding: 16px; border-radius: 14px; background: color-mix(in oklab, var(--band-marfil) 8%, transparent); font-weight: 700; } /* Avisos dentro de la tarjeta */

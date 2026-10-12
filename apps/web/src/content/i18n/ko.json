@@ -370,5 +370,6 @@
   "hero.scene_caption": "일러스트: {zone}",
   "hero.scenes_aria": "표지 장면 선택",
   "hero.cta_explore": "니카라과 탐험하기",
-  "hero.cta_trip": "내 여행 만들기"
+  "hero.cta_trip": "내 여행 만들기",
+  "auth.or_continue": "또는 다음으로 계속"
 }

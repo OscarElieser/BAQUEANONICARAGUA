@@ -6,12 +6,15 @@ export const metadata = { robots: { index: false, follow: false } }; // Los busc
 export default async function Cuenta({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params; // Idioma de la página
   return (
-    <main className="mx-auto max-w-[560px] px-4 py-12">
-      <h1 className="m-0 font-display text-[40px] font-normal leading-[1.02]">{t(locale, 'auth.title')}</h1> {/* Título de la página */}
-      <p className="mb-8 mt-3 text-[19px] leading-[30px] text-ink-muted">
-        {t(locale, 'auth.intro')} {/* Para qué sirve la cuenta */}
-      </p>
-      <CuentaForm locale={locale} /> {/* Entrar, crear cuenta, recuperar o cerrar sesión */}
+    <main className="tema-noche login-escena">
+      <div aria-hidden="true" className="login-aurora" /> {/* Arco de luz con los colores de la marca (decoración) */}
+      <div className="login-vidrio">
+        <h1 className="m-0 text-sm font-bold text-ink-muted">{t(locale, 'auth.title')}</h1> {/* Título de la página */}
+        <p className="mb-6 mt-1 text-[15px] leading-[23px] text-ink-muted">
+          {t(locale, 'auth.intro')} {/* Para qué sirve la cuenta */}
+        </p>
+        <CuentaForm locale={locale} /> {/* Entrar, crear cuenta, recuperar o cerrar sesión */}
+      </div>
     </main>
   );
 }

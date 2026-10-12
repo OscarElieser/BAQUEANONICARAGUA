@@ -1,6 +1,6 @@
 'use client'; // Formulario interactivo del navegador
 
-import { useState, type FormEvent } from 'react'; // Estado local y tipo del evento de envío
+import { useState, type FormEvent, type ReactNode } from 'react'; // Estado local, tipo del evento de envío y del contenido
 import {
   authErrorMessage, // Traduce los errores al idioma de la página
   cerrarSesion, // Cierra la sesión
@@ -15,7 +15,26 @@ import { t } from '@/i18n/t'; // Textos traducidos
 
 type Mode = 'entrar' | 'crear' | 'recuperar'; // Las tres vistas del formulario
 
-const field = 'h-[52px] rounded-pill border border-control-border bg-ground-raised px-5 text-base text-ink'; // Estilo común de los campos
+const field = 'login-campo'; // Estilo común de los campos (vidrio con icono)
+
+/** Iconos de línea para los campos: ayudan a reconocerlos de un vistazo (la etiqueta sigue visible). */
+const ICONOS = {
+  nombre: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8a7 7 0 0 1 14 0', // Persona
+  correo: 'M3 6h18v12H3zM3 7l9 6 9-6', // Sobre
+  clave: 'M6 11h12v9H6zM9 11V8a3 3 0 0 1 6 0v3', // Candado
+} as const;
+
+/** Campo con su icono a la izquierda. */
+function ConIcono({ icono, children }: { icono: keyof typeof ICONOS; children: ReactNode }) {
+  return (
+    <span className="relative block">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="login-icono">
+        <path d={ICONOS[icono]} /> {/* Dibujo del icono */}
+      </svg>
+      {children} {/* El campo */}
+    </span>
+  );
+}
 
 export function CuentaForm({ locale }: { locale: string }) {
   const session = useSession(); // Sesión actual
@@ -51,7 +70,7 @@ export function CuentaForm({ locale }: { locale: string }) {
 
   if (session.status === 'not_configured') {
     // Firebase aún no está conectado en este entorno
-    return <p className="rounded-m bg-ground-raised p-5 font-bold">{t(locale, 'auth.not_configured')}</p>; // Aviso honesto
+    return <p className="login-aviso">{t(locale, 'auth.not_configured')}</p>; // Aviso honesto
   }
   if (session.status === 'loading') {
     // Todavía comprobamos si hay sesión
@@ -62,7 +81,7 @@ export function CuentaForm({ locale }: { locale: string }) {
     // Vista de la cuenta cuando ya hay sesión
     const u = session.user; // Usuario con sesión
     return (
-      <section aria-labelledby="mi-cuenta" className="flex flex-col gap-4 rounded-m bg-ground-raised p-6">
+      <section aria-labelledby="mi-cuenta" className="flex flex-col gap-4">
         <h2 id="mi-cuenta" className="m-0 text-[20px] font-bold">{t(locale, 'profile.hello', { name: u.displayName || u.email || '' })}</h2> {/* Saludo con el nombre */}
         <p className="m-0 text-ink-muted">{u.email}</p> {/* Correo de la cuenta */}
         {!u.emailVerified && (
@@ -87,37 +106,40 @@ export function CuentaForm({ locale }: { locale: string }) {
 
   return (
     <div className="flex flex-col gap-6">
-      <nav aria-label={t(locale, 'auth.tabs_aria')} className="flex flex-wrap gap-1 self-start rounded-pill bg-ground-raised p-1">
+      <nav aria-label={t(locale, 'auth.tabs_aria')} className="login-pestanas">
         {(['entrar', 'crear'] as const).map((m) => (
           // Pestañas para elegir entre entrar y crear cuenta
           <button key={m} type="button" onClick={() => { setMode(m); setError(null); setInfo(null); }} aria-current={mode === m ? 'page' : undefined}
-            className={`rounded-pill px-5 py-2.5 font-bold ${mode === m ? 'bg-ink text-ground' : 'text-ink'}`}>
+            className="login-pestana">
             {m === 'entrar' ? t(locale, 'session.sign_in') : t(locale, 'auth.create')} {/* Texto de cada pestaña */}
           </button>
         ))}
       </nav>
 
+      <h2 className="m-0 text-[26px] font-bold leading-tight">
+        {t(locale, mode === 'entrar' ? 'auth.sign_in_title' : mode === 'crear' ? 'auth.sign_up_title' : 'auth.reset_title')} {/* Título según la vista */}
+      </h2>
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
         {mode === 'crear' && (
           // El nombre solo se pide al crear la cuenta
-          <label className="flex flex-col gap-2 font-bold">{t(locale, 'auth.name')}
-            <input name="name" required maxLength={80} autoComplete="name" className={field} /> {/* Campo del nombre */}
+          <label className="login-etiqueta">{t(locale, 'auth.name')}
+            <ConIcono icono="nombre"><input name="name" required maxLength={80} autoComplete="name" className={field} /></ConIcono> {/* Campo del nombre */}
           </label>
         )}
-        <label className="flex flex-col gap-2 font-bold">{t(locale, 'auth.email')}
-          <input name="email" type="email" required autoComplete="email" className={field} /> {/* Campo del correo */}
+        <label className="login-etiqueta">{t(locale, 'auth.email')}
+          <ConIcono icono="correo"><input name="email" type="email" required autoComplete="email" spellCheck={false} className={field} /></ConIcono> {/* Campo del correo */}
         </label>
         {mode !== 'recuperar' && (
           // La contraseña no se pide para recuperar
-          <label className="flex flex-col gap-2 font-bold">{t(locale, 'auth.password')}
-            <input name="password" type="password" required minLength={mode === 'crear' ? 8 : 1}
-              autoComplete={mode === 'crear' ? 'new-password' : 'current-password'} className={field} /> {/* Campo de la contraseña */}
+          <label className="login-etiqueta">{t(locale, 'auth.password')}
+            <ConIcono icono="clave"><input name="password" type="password" required minLength={mode === 'crear' ? 8 : 1}
+              autoComplete={mode === 'crear' ? 'new-password' : 'current-password'} className={field} /></ConIcono> {/* Campo de la contraseña */}
             {mode === 'crear' && <span className="text-sm font-normal text-ink-muted">{t(locale, 'auth.password_hint')}</span>} {/* Ayuda */}
           </label>
         )}
         {error && <p role="alert" className="m-0 text-status-alert">{error}</p>} {/* Error visible */}
         {info && <p role="status" className="m-0 text-status-verified">{info}</p>} {/* Confirmación visible */}
-        <button type="submit" disabled={busy} className="h-[52px] self-start rounded-pill bg-oro px-7 font-bold text-on-oro disabled:opacity-45">
+        <button type="submit" disabled={busy} className="login-principal">
           {busy ? t(locale, 'auth.processing') : mode === 'entrar' ? t(locale, 'session.sign_in') : mode === 'crear' ? t(locale, 'auth.create') : t(locale, 'auth.send_link')} {/* Acción según la vista */}
         </button>
       </form>
@@ -137,15 +159,15 @@ export function CuentaForm({ locale }: { locale: string }) {
 
       {mode !== 'recuperar' && (
         // Alternativa: entrar con Google
-        <div className="flex flex-col gap-2 border-t border-line pt-6">
-          <button type="button" disabled={busy} onClick={() => run(iniciarConGoogle)}
-            className="flex h-[52px] items-center gap-3 self-start rounded-pill border-[1.5px] border-control-border px-6 font-bold disabled:opacity-45">
+        <div className="flex flex-col gap-4">
+          <p className="login-separador"><span>{t(locale, 'auth.or_continue')}</span></p> {/* Separador "o continúa con" */}
+          <button type="button" disabled={busy} onClick={() => run(iniciarConGoogle)} className="login-social">
             <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
               <path fill="currentColor" d="M21.35 11.1H12v2.9h5.35c-.25 1.5-1.7 4.4-5.35 4.4a6.4 6.4 0 0 1 0-12.8c2 0 3.35.85 4.1 1.6l2.8-2.7C17.1 2.85 14.8 2 12 2a10 10 0 1 0 0 20c5.75 0 9.6-4.05 9.6-9.75 0-.65-.1-1.15-.25-1.15z" /> {/* Ícono de Google */}
             </svg>
             {t(locale, 'auth.google')} {/* Texto del botón */}
           </button>
-          <p className="m-0 text-sm text-ink-muted">{t(locale, 'auth.terms_note')}</p> {/* Aviso legal honesto */}
+          <p className="m-0 text-center text-sm text-ink-muted">{t(locale, 'auth.terms_note')}</p> {/* Aviso legal honesto */}
         </div>
       )}
     </div>

@@ -370,5 +370,6 @@
   "hero.scene_caption": "イラスト：{zone}",
   "hero.scenes_aria": "表紙の風景を選ぶ",
   "hero.cta_explore": "ニカラグアを探検",
-  "hero.cta_trip": "旅を計画する"
+  "hero.cta_trip": "旅を計画する",
+  "auth.or_continue": "または次で続行"
 }

@@ -370,5 +370,6 @@
   "hero.scene_caption": "插画：{zone}",
   "hero.scenes_aria": "选择封面场景",
   "hero.cta_explore": "探索尼加拉瓜",
-  "hero.cta_trip": "规划我的旅行"
+  "hero.cta_trip": "规划我的旅行",
+  "auth.or_continue": "或使用以下方式继续"
 }

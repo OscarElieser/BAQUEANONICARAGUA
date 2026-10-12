@@ -370,5 +370,6 @@
   "hero.scene_caption": "Ilustração: {zone}",
   "hero.scenes_aria": "Escolher a cena da capa",
   "hero.cta_explore": "Explorar a Nicarágua",
-  "hero.cta_trip": "Criar minha viagem"
+  "hero.cta_trip": "Criar minha viagem",
+  "auth.or_continue": "ou continue com"
 }

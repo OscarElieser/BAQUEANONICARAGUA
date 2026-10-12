@@ -370,5 +370,6 @@
   "hero.scene_caption": "Illustrazione: {zone}",
   "hero.scenes_aria": "Scegli la scena di copertina",
   "hero.cta_explore": "Esplora il Nicaragua",
-  "hero.cta_trip": "Crea il mio viaggio"
+  "hero.cta_trip": "Crea il mio viaggio",
+  "auth.or_continue": "o continua con"
 }
