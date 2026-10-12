@@ -36,14 +36,14 @@ Regla: un módulo solo pasa a `probado` cuando cumple los criterios de la secci�
 | Accesibilidad automatizada | en desarrollo | axe (WCAG 2.2 AA) en 13 páginas y dos temas en CI; enlace de salto; pruebas de widgets en Android. |
 | API NestJS (auth, /me, /health) | en desarrollo | Código escrito, **aún no compilado** (el entorno donde se generó no tenía acceso al registro npm). Primer paso al clonar: `pnpm install && pnpm typecheck`. **Bloqueado**: proyecto Firebase. |
 | Web Next.js | en desarrollo | Esqueleto i18n (10 idiomas) + lectura pública de territorios. Sin diseño. **Aún no compilado** (mismo motivo). |
-| Android Flutter | en desarrollo | Esqueleto Riverpod + lectura de territorios. No compilado (sin SDK en este entorno). |
+| Android Flutter (Fase 7) | en desarrollo | Paridad con la web: Descubrir con búsqueda, ficha de territorio, destino y negocio (verificación, horarios ISO, tarifas con fecha y fuente, contactos seguros); Mi aventura con el mismo intérprete que la web (22 casos de `intent_golden.json` iguales en TypeScript y Dart); Comunidad con relatos cronológicos; Mis mensajes con bandeja y conversación. Datos directo a Supabase con RLS. Analizado y probado en CI (`dart analyze` + `flutter test`). Bloqueado para probar en un teléfono: proyecto Supabase y Firebase. |
 | CI GitHub Actions | en desarrollo | `ci.yml` escrito, no ejecutado. **Bloqueado**: repositorio. |
 | Despliegue (Hostinger/Cloudflare) | bloqueado | Falta plan Hostinger y dominio. |
 | Relieve vivo 3D | en desarrollo | Web: Three.js con capas de curvas de nivel, giro por arrastre, cimas tocables, pausa fuera de pantalla; versión SVG automática con movimiento reducido, ahorro de datos o sin WebGL. Android: proyección en perspectiva con giro por gesto y prueba de widget; se detiene con "quitar animaciones". |
 | Diseño: tres direcciones | probado | `design/fase1-direcciones/`: A Curvas de nivel, B Hamaca y añil, C Cocibolca (web + Android). |
 | Sistema de diseño "Territorios vivos" | en desarrollo | Síntesis elegida: base A + franja tejida de B + Atkinson Hyperlegible de C. `design/sistema/`, `docs/DESIGN_SYSTEM.md`. Contraste AA calculado en ambos temas; `scripts/check_tokens.py` verifica que web y Android usan los mismos colores (en CI). |
 | Web con el sistema aplicado | en desarrollo | Portada Descubrir, página de territorio, selector de experiencia, tema claro/oscuro/automático, páginas honestas "No disponible todavía" para Mi aventura, Comunidad, Mapa y Cuenta. Sin compilar aún. |
-| Android con el sistema aplicado | en desarrollo | Tema Flutter con los mismos tokens, CurvasDeNivel, FranjaTejida, EstadoVerificacion, navegación de 4 secciones. Sin compilar aún. |
+| Android con el sistema aplicado | en desarrollo | Tema Flutter con los mismos tokens, CurvasDeNivel, FranjaTejida, EstadoVerificacion, navegación de 4 secciones con contenido real. Analizado y probado en CI. |
 | Mapa, IA, itinerarios, comunidad, mensajería, cultura, música, denuncias, clima, notificaciones, Ops Center | no iniciado | Fases 3–8 |
 
 ## Fases y criterios de salida
