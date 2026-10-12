@@ -26,7 +26,8 @@ if (!user) return null; // Sin sesión no hay nada que mostrar
 
 ## 3. Cómo se trabaja en el repositorio
 
-- Cambios en una rama; se unen a `main` solo con CI en verde (los 6 trabajos de CI y CodeQL).
+- Todo cambio va primero a la rama única `desarrollo`; cuando CI (6 trabajos) y CodeQL están en verde, `main` avanza a ese mismo commit (avance rápido, sin fusiones ni ramas nuevas).
+- No se crean más ramas. Las únicas ramas permanentes son `main` y `desarrollo` (más la propuesta agrupada de Dependabot, si la hay).
 - Toda tabla nueva lleva RLS y pruebas en `supabase/tests/rls_smoke.sql`.
 - Los colores salen del sistema de diseño (`design/sistema/tokens.json`); `scripts/check_tokens.py` lo verifica.
 - Los recursos del Ops Center se declaran en `apps/web/src/ops/resources.ts` y en `app.admin_resources`; `scripts/ops-resources.test.ts` verifica que coincidan.

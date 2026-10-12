@@ -1,17 +1,46 @@
-# Dependabot propone actualizaciones de seguridad y versiones cada semana (abre ramas con CI; nada se une solo).
+# Dependabot propone actualizaciones una vez por semana.
+# Para no llenar el repositorio de ramas:
+#   - agrupa todo en UNA propuesta por ecosistema (una rama cada uno);
+#   - no propone saltos de versión mayor (suelen romper; se hacen a mano con pruebas);
+#   - las alertas de seguridad siguen llegando aparte, aunque sean de versión mayor.
 version: 2
 updates:
   - package-ecosystem: npm # Web, API y paquetes de Node
     directory: "/"
     schedule: { interval: weekly, day: monday } # Los lunes
-    open-pull-requests-limit: 5 # Máximo 5 propuestas abiertas
+    open-pull-requests-limit: 1 # Una sola propuesta abierta
+    groups:
+      node:
+        patterns: ["*"] # Todas las dependencias juntas
+        update-types: ["minor", "patch"] # Solo cambios menores y parches
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"] # Sin saltos de versión mayor
   - package-ecosystem: pub # App Android (Flutter)
     directory: "/apps/mobile"
     schedule: { interval: weekly, day: monday }
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 1
+    groups:
+      flutter:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions # Acciones de CI
     directory: "/"
-    schedule: { interval: weekly, day: monday }
+    schedule: { interval: monthly } # Una vez al mes
+    open-pull-requests-limit: 1
+    groups:
+      acciones:
+        patterns: ["*"]
   - package-ecosystem: docker # Imágenes base de Docker
     directories: ["/apps/web", "/apps/api"]
-    schedule: { interval: weekly, day: monday }
+    schedule: { interval: monthly }
+    open-pull-requests-limit: 1
+    groups:
+      docker:
+        patterns: ["*"]
+    ignore:
+      - dependency-name: "node"
+        update-types: ["version-update:semver-major"] # Node 22 es la versión con soporte largo que usamos

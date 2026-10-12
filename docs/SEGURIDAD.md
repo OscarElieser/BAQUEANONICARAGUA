@@ -77,3 +77,22 @@ Resumen de lo que está hecho y lo que falta. Si algo no figura aquí, no está 
 - Regiones de alojamiento de los proveedores y tabla de retención por tipo de dato.
 - Revisión de los textos por una abogada o un abogado en Nicaragua.
 - `security.txt`, que necesita el dominio y un correo de seguridad.
+
+## Protección de `main` en GitHub (lo configura la persona administradora del repositorio)
+
+Settings → Rules → Rulesets → New branch ruleset:
+
+- Nombre: `Proteger main`. Enforcement status: Active. Target branches: Include default branch.
+- Restrict deletions (nadie puede borrar `main`).
+- Block force pushes (nadie puede reescribir el historial).
+- Require status checks to pass, con estos controles:
+  - Sistema de diseño alineado (web + Android)
+  - Lógica sin dependencias (asistente, Ops Center, funciones)
+  - Web + API (tipos, pruebas, build)
+  - Migraciones + pruebas RLS
+  - Android (análisis y pruebas)
+  - Imágenes Docker (web y API)
+  - Análisis de seguridad (CodeQL)
+- No marcar "Require a pull request before merging": el trabajo avanza `main` al mismo commit ya probado en `desarrollo`, y GitHub acepta el envío porque ese commit ya pasó los controles.
+
+Settings → General → Pull Requests: activar "Automatically delete head branches" (las ramas de Dependabot se borran solas al fusionar o cerrar su propuesta).
