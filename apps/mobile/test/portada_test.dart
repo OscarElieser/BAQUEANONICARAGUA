@@ -1,8 +1,12 @@
+import 'dart:convert'; // Para leer el JSON del mapa
+import 'dart:io'; // Lectura directa del archivo
+
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 import 'package:flutter_test/flutter_test.dart'; // Herramientas de prueba
-
 import 'package:nica_app/core/theme.dart'; // Tema del sistema de diseño
+import 'package:nica_app/core/widgets/explorador_territorios.dart'; // Explorador a pantalla completa
 import 'package:nica_app/core/widgets/galeria_arco.dart'; // Galería en arco 3D
+import 'package:nica_app/core/widgets/mapa_territorios.dart'; // Datos del mapa
 import 'package:nica_app/core/widgets/portada_baqueano.dart'; // Portada con ventana pintada
 
 void main() {
@@ -65,5 +69,27 @@ void main() {
     await tester.pumpAndSettle(); // Termina el deslizamiento
     expect(find.text('Tarjeta 2'), findsOneWidget); // Aparecen las siguientes
     expect(tester.takeException(), isNull); // Sin errores al girar las tarjetas
+  });
+
+  testWidgets('el explorador avanza y abre solo fichas publicadas', (tester) async {
+    final mapa = DatosMapa.fromJson(jsonDecode(File('assets/mapa/mapa.json').readAsStringSync()) as Map<String, dynamic>); // Mapa real de la app
+    final abiertas = <String>[]; // Fichas pedidas
+    var mapaPedido = 0; // Veces que pidió bajar al mapa
+    tester.view.physicalSize = const Size(1170, 2532); // Teléfono alto
+    tester.view.devicePixelRatio = 3; // Densidad de pantalla
+    addTearDown(tester.view.reset); // Restaura al terminar
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildTheme(Brightness.dark, webFonts: false), // Tema sin descargar fuentes
+        home: Scaffold(body: ExploradorTerritorios(mapa: mapa, published: {mapa.territories[1].id}, onAbrir: (f) => abiertas.add(f.id), onMapa: () => mapaPedido++)), // Solo el segundo tiene ficha
+      ),
+    );
+    await tester.tap(find.byType(FilledButton)); // Primero: sin ficha
+    expect(mapaPedido, 1); // Lleva al mapa
+    await tester.tap(find.byIcon(Icons.chevron_right)); // Siguiente territorio
+    await tester.pumpAndSettle(); // Termina el fundido
+    await tester.tap(find.byType(FilledButton)); // Segundo: con ficha
+    expect(abiertas, [mapa.territories[1].id]); // Abre su ficha
+    expect(tester.takeException(), isNull); // Sin errores al dibujar
   });
 }

@@ -6,6 +6,7 @@ import '../../../core/data/repositories.dart'; // Acceso al catálogo
 import '../../../core/i18n/t.dart'; // Textos traducidos
 import '../../../core/theme.dart'; // Colores y espaciados
 import '../../../core/widgets/estados.dart'; // Cargando, error y vacío
+import '../../../core/widgets/explorador_territorios.dart'; // Explorador a pantalla completa
 import '../../../core/widgets/galeria_arco.dart'; // Galería en arco 3D
 import '../../../core/widgets/mapa_territorios.dart'; // Mapa ilustrado de los 17 territorios
 import '../../../core/widgets/portada_territorio.dart'; // Portadas y tarjetas de cada territorio
@@ -115,6 +116,8 @@ class _TerritoriesScreenState extends ConsumerState<TerritoriesScreen> {
   }
 }
 
+final _claveMapaIlustrado = GlobalKey(); // Para bajar al mapa desde el explorador
+
 /// Mapa ilustrado cuando su archivo ya cargó; mientras tanto no ocupa espacio (la lista sigue disponible).
 class _MapaConDatos extends ConsumerWidget {
   const _MapaConDatos({required this.territories}); // Recibe los territorios publicados
@@ -129,7 +132,17 @@ class _MapaConDatos extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
       children: [
-        MapaTerritorios(mapa: mapa, published: bySlug.keys.toSet(), onOpen: abrir), // Mapa (los publicados se abren)
+        ExploradorTerritorios(
+          mapa: mapa, // Formas de los 17
+          published: bySlug.keys.toSet(), // Con ficha publicada
+          onAbrir: abrir, // Abre la ficha
+          onMapa: () {
+            final ctx = _claveMapaIlustrado.currentContext; // Mapa en pantalla
+            if (ctx != null) Scrollable.ensureVisible(ctx, duration: const Duration(milliseconds: 500), curve: Curves.easeOutCubic); // Baja al mapa
+          },
+        ),
+        const SizedBox(height: TvSpace.s8), // Espacio
+        KeyedSubtree(key: _claveMapaIlustrado, child: MapaTerritorios(mapa: mapa, published: bySlug.keys.toSet(), onOpen: abrir)), // Mapa (los publicados se abren)
         const SizedBox(height: TvSpace.s8), // Espacio
         GaleriaArco(
           titulo: context.t('gallery.title'), // "Los 17, uno por uno"
