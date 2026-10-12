@@ -21,7 +21,7 @@ jobs:
       - name: Flujos de GitHub Actions bien escritos (actionlint) # Detecta errores en ci.yml, codeql.yml y deploy.yml antes de usarlos
         run: |
           bash <(curl -fsSL https://raw.githubusercontent.com/rhysd/actionlint/v1.7.7/scripts/download-actionlint.bash) 1.7.7 # Descarga una versión fija
-          ./actionlint -color # Revisa todos los flujos
+          ./actionlint -format '{{range $err := .}}::error file={{$err.Filepath}},line={{$err.Line}},col={{$err.Column}}::{{$err.Message}}{{"\n"}}{{end}}' # Revisa todos los flujos y publica cada error como anotación
       - name: Script de despliegue sin errores (shellcheck) # deploy/servidor/desplegar.sh
         run: shellcheck deploy/servidor/desplegar.sh
       - name: Textos legales iguales en web y Android # Sobre nosotros, privacidad, cookies, términos…
