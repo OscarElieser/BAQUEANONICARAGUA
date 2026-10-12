@@ -343,7 +343,7 @@
   "tmap.status_published": "条目已发布",
   "tmap.status_pending": "核实中",
   "gallery.title": "17 个地区，逐一呈现",
-  "gallery.intro": "每张封面都取自该地区的真实轮廓。它们是插画，不是照片：照片核实后才会上线。",
+  "gallery.intro": "来自维基共享资源的自由许可真实照片，均注明作者。不久也会加入当地居民拍摄的照片。",
   "gallery.pause": "暂停轮播",
   "gallery.play": "继续轮播",
   "zone.pacifico": "火山太平洋",
@@ -381,7 +381,7 @@
   "explorer.map": "在地图上查看",
   "explorer.see": "查看{name}",
   "explorer.of": "/",
-  "explorer.note": "根据真实轮廓绘制的插画；照片核实后再上线。",
+  "explorer.note": "自由许可的真实照片。",
   "plans.title": "商家套餐",
   "plans.intro": "适合希望被更多旅行者发现并直接联系的住宿、餐厅、导游和小微企业。",
   "plans.pending_banner": "套餐正在准备中：名称、价格和权益尚未确定，目前不收取任何费用。",
@@ -396,5 +396,14 @@
   "plans.featured": "精选",
   "hero.word_pacifico": "太平洋",
   "hero.word_norte": "山地",
-  "hero.word_caribe": "加勒比"
+  "hero.word_caribe": "加勒比",
+  "photo.credit": "照片：{author}（{license}），维基共享资源",
+  "credits.title": "照片署名",
+  "credits.intro": "BAQUEANO 的所有照片都是真实照片，采用自由许可。感谢拍摄并分享它们的人。",
+  "credits.link": "照片署名",
+  "credits.place": "地点",
+  "credits.author": "作者",
+  "credits.license": "许可",
+  "credits.source": "来源",
+  "credits.see_original": "查看原图"
 }

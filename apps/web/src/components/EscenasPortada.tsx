@@ -7,7 +7,7 @@ const mez = (a: string, pct: number, b: string) => `color-mix(in oklab, var(--${
 const f = (fill: string, extra: CSSProperties = {}): CSSProperties => ({ fill, ...extra }); // Relleno como estilo (las variables CSS no funcionan como atributo)
 
 /** Palabra gigante entre capas del paisaje: los volcanes, cayos o cerros de adelante la tapan en parte y da profundidad. */
-function Palabra({ texto, y, color }: { texto: string; y: number; color: string }) {
+export function Palabra({ texto, y, color }: { texto: string; y: number; color: string }) {
   return (
     <g className="capa-palabra">
       <text x="600" y={y} textAnchor="middle" textLength={texto.length > 7 ? 1080 : undefined} lengthAdjust="spacingAndGlyphs" style={{ fill: color, fontFamily: 'var(--font-archivo), system-ui, sans-serif', fontWeight: 900, fontStretch: '75%', fontSize: 230, letterSpacing: '-0.01em' }}>
@@ -158,6 +158,16 @@ export function EscenaCaribe({ palabra }: { palabra: string }) {
         {palmera(1120, 462, 1.1)} {/* Segunda palmera */}
       </g>
       <Aves x={520} y={170} color="var(--marca-profundo)" /> {/* Pelícanos a lo lejos */}
+    </g>
+  );
+}
+
+/** Escena con foto real: la foto llena la ventana y la palabra de la zona se imprime sobre el cielo. */
+export function EscenaFoto({ href, diferida, palabra }: { href: string; diferida: boolean; palabra: string }) {
+  return (
+    <g>
+      <image {...(diferida ? { 'data-href': href } : { href })} x="0" y="0" width="1200" height="560" preserveAspectRatio="xMidYMid slice" className="capa-foto" /> {/* Foto real (las escenas que no se ven aún se cargan al elegirlas) */}
+      <g className="palabra-sobre-foto"><Palabra texto={palabra} y={250} color="white" /></g> {/* Palabra gigante fundida con el cielo */}
     </g>
   );
 }

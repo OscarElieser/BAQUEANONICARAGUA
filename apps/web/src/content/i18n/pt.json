@@ -343,7 +343,7 @@
   "tmap.status_published": "Ficha publicada",
   "tmap.status_pending": "Em verificação",
   "gallery.title": "Os 17, um por um",
-  "gallery.intro": "Cada capa nasce da forma real do seu território. São ilustrações, não fotos: as fotos chegarão quando forem verificadas.",
+  "gallery.intro": "Fotos reais com licença livre do Wikimedia Commons, cada uma com seu autor. Em breve, também as de quem vive aqui.",
   "gallery.pause": "Pausar o desfile",
   "gallery.play": "Retomar o desfile",
   "zone.pacifico": "Pacífico vulcânico",
@@ -381,7 +381,7 @@
   "explorer.map": "Ver no mapa",
   "explorer.see": "Ver {name}",
   "explorer.of": "de",
-  "explorer.note": "Ilustração do seu contorno real; as fotos virão quando forem verificadas.",
+  "explorer.note": "Foto real com licença livre.",
   "plans.title": "Planos para negócios",
   "plans.intro": "Para hospedagens, restaurantes, guias e empreendimentos que querem ser encontrados por mais viajantes e receber mensagens diretas.",
   "plans.pending_banner": "Os planos estão em preparação: nomes, preços e benefícios ainda serão definidos. Nada é cobrado por enquanto.",
@@ -396,5 +396,14 @@
   "plans.featured": "Destaque",
   "hero.word_pacifico": "PACÍFICO",
   "hero.word_norte": "MONTANHA",
-  "hero.word_caribe": "CARIBE"
+  "hero.word_caribe": "CARIBE",
+  "photo.credit": "Foto: {author} ({license}), Wikimedia Commons",
+  "credits.title": "Créditos das fotos",
+  "credits.intro": "Todas as fotos do BAQUEANO são reais e têm licença livre. Obrigado a quem as tirou e compartilhou.",
+  "credits.link": "Créditos das fotos",
+  "credits.place": "Lugar",
+  "credits.author": "Autor",
+  "credits.license": "Licença",
+  "credits.source": "Origem",
+  "credits.see_original": "Ver a original"
 }

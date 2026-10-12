@@ -32,6 +32,8 @@ jobs:
         run: python3 scripts/sync_i18n.py --check
       - name: Mapa de los 17 territorios igual en web y Android # content/territorios/mapa.json
         run: python3 scripts/sync_mapa.py --check
+      - name: Fotos reales con autor y licencia libre, iguales en web y Android # content/fotos/fotos.json
+        run: python3 scripts/sync_fotos.py --check
 
   ai-core:
     name: Lógica sin dependencias (asistente, Ops Center, funciones)

@@ -3,6 +3,7 @@ import { Galeria3D } from './Galeria3D'; // Galería en arco
 import { TarjetaTerritorio } from './TarjetaTerritorio'; // Tarjeta de cada territorio
 import { territorios } from '@/lib/portadas'; // Los 17 territorios
 import { t } from '@/i18n/t'; // Textos traducidos
+import Link from 'next/link'; // Enlace a los créditos
 
 export function GaleriaTerritorios({ locale, published }: { locale: string; published: string[] }) {
   return (
@@ -13,6 +14,7 @@ export function GaleriaTerritorios({ locale, published }: { locale: string; publ
       etiqueta={t(locale, 'gallery.arc_label')} // Nombre accesible e instrucciones
       anterior={t(locale, 'gallery.prev')} // Flecha izquierda
       siguiente={t(locale, 'gallery.next')} // Flecha derecha
+      pie={<Link href={`/${locale}/creditos`} className="credito-foto">{t(locale, 'credits.link')}</Link>} // Autores y licencias de las fotos
       items={territorios.map((ter) => ({
         key: ter.slug, // Territorio
         contenido: <TarjetaTerritorio locale={locale} slug={ter.slug} name={ter.name} zone={ter.zone} published={published.includes(ter.slug)} uid="g" />, // Tarjeta real (enlace si tiene ficha)

@@ -13,9 +13,10 @@ type Props = {
   anterior: string; // Texto de la flecha izquierda
   siguiente: string; // Texto de la flecha derecha
   items: Array<{ key: string; contenido: ReactNode }>; // Tarjetas
+  pie?: ReactNode; // Algo bajo las flechas (por ejemplo, el enlace a los créditos de las fotos)
 };
 
-export function Galeria3D({ id, titulo, intro, etiqueta, anterior, siguiente, items }: Props) {
+export function Galeria3D({ id, titulo, intro, etiqueta, anterior, siguiente, items, pie }: Props) {
   return (
     <section aria-labelledby={`${id}-titulo`} className="arco-escena">
       <div className="mx-auto max-w-[44ch] px-4 text-center">
@@ -34,6 +35,7 @@ export function Galeria3D({ id, titulo, intro, etiqueta, anterior, siguiente, it
       <div className="mt-2 flex justify-center">
         <ControlArco id={id} anterior={anterior} siguiente={siguiente} /> {/* Flechas */}
       </div>
+      {pie && <div className="mt-3 text-center">{pie}</div>} {/* Pie opcional */}
     </section>
   );
 }

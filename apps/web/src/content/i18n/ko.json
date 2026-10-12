@@ -343,7 +343,7 @@
   "tmap.status_published": "항목 게시됨",
   "tmap.status_pending": "확인 중",
   "gallery.title": "17곳을 하나씩",
-  "gallery.intro": "각 표지는 그 지역의 실제 모양에서 그렸습니다. 사진이 아닌 일러스트이며, 사진은 확인된 후에 올라옵니다.",
+  "gallery.intro": "위키미디어 공용의 자유 라이선스 실제 사진이며, 모두 촬영자를 표시합니다. 곧 이곳 주민들의 사진도 더해집니다.",
   "gallery.pause": "행렬 일시정지",
   "gallery.play": "행렬 다시 재생",
   "zone.pacifico": "화산 태평양",
@@ -381,7 +381,7 @@
   "explorer.map": "지도에서 보기",
   "explorer.see": "{name} 보기",
   "explorer.of": "/",
-  "explorer.note": "실제 윤곽을 그린 일러스트입니다. 사진은 확인 후 게시됩니다.",
+  "explorer.note": "자유 라이선스의 실제 사진입니다.",
   "plans.title": "사업자 요금제",
   "plans.intro": "더 많은 여행자에게 발견되고 직접 연락받고 싶은 숙소, 식당, 가이드, 소상공인을 위한 요금제입니다.",
   "plans.pending_banner": "요금제를 준비 중입니다. 이름, 가격, 혜택은 아직 정해지지 않았으며 현재 비용은 청구되지 않습니다.",
@@ -396,5 +396,14 @@
   "plans.featured": "추천",
   "hero.word_pacifico": "태평양",
   "hero.word_norte": "산지",
-  "hero.word_caribe": "카리브"
+  "hero.word_caribe": "카리브",
+  "photo.credit": "사진: {author} ({license}), 위키미디어 공용",
+  "credits.title": "사진 출처",
+  "credits.intro": "BAQUEANO의 모든 사진은 실제 사진이며 자유 라이선스입니다. 사진을 찍고 공유해 주신 분들께 감사드립니다.",
+  "credits.link": "사진 출처",
+  "credits.place": "장소",
+  "credits.author": "촬영자",
+  "credits.license": "라이선스",
+  "credits.source": "출처",
+  "credits.see_original": "원본 보기"
 }

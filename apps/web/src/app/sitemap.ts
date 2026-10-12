@@ -21,6 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/mapa', priority: 0.8, changeFrequency: 'daily' }, // Mapa y búsqueda
     { path: '/comunidad', priority: 0.8, changeFrequency: 'daily' }, // Comunidad
     { path: '/cultura', priority: 0.7, changeFrequency: 'weekly' }, // Cultura
+    { path: '/creditos', priority: 0.2, changeFrequency: 'monthly' }, // Créditos de las fotos
     { path: '/mi-aventura', priority: 0.6, changeFrequency: 'monthly' }, // Planificador
     { path: '/comunidad/registrar', priority: 0.5, changeFrequency: 'monthly' }, // Registro de negocios
     ...legalSlugs.map((s) => ({ path: `/${s}`, priority: 0.3, changeFrequency: 'monthly' as const })), // Páginas legales

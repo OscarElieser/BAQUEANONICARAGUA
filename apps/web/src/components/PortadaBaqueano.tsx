@@ -4,12 +4,18 @@
 import Link from 'next/link'; // Enlaces internos
 import { t } from '@/i18n/t'; // Textos traducidos
 import { pinceladas } from '@/lib/pincel'; // Trazos de pincel con semilla fija
-import { EscenaCaribe, EscenaNorte, EscenaPacifico } from './EscenasPortada'; // Paisajes ilustrados
+import { EscenaCaribe, EscenaFoto, EscenaNorte, EscenaPacifico } from './EscenasPortada'; // Paisajes ilustrados y con foto real
+import { fotoDe } from '@/lib/fotos'; // Fotos reales con licencia libre
+import type { Zona } from '@/lib/portadas'; // Zonas de paisaje
 import { ControlPortada } from './ControlPortada'; // Cambio de escena y paralaje
 
 const VENTANA = pinceladas(1979); // Bandas de la ventana (siempre las mismas)
 
 export function PortadaBaqueano({ locale }: { locale: string }) {
+  const zonas: Zona[] = ['pacifico', 'norte', 'caribe']; // Escenas, de oeste a este
+  const fotos = Object.fromEntries(zonas.map((z) => [z, fotoDe(`portada-${z}`)])); // Foto real de cada escena (si existe)
+  const creditos = Object.fromEntries(zonas.map((z) => [z, fotos[z] ? { lugar: fotos[z]!.lugar, texto: t(locale, 'photo.credit', { author: fotos[z]!.autor, license: fotos[z]!.licencia }), pagina: fotos[z]!.pagina } : null])) as Record<Zona, { lugar: string; texto: string; pagina: string } | null>; // Créditos para el pie
+  const ilustracion = { pacifico: EscenaPacifico, norte: EscenaNorte, caribe: EscenaCaribe }; // Ilustración de respaldo
   return (
     <section id="portada" data-escena="pacifico" aria-labelledby="eslogan" className="portada-baqueano relative">
       <span aria-hidden="true" className="portada-vertical">{t(locale, 'brand.name')}</span> {/* Marca en vertical, al borde */}
@@ -28,9 +34,15 @@ export function PortadaBaqueano({ locale }: { locale: string }) {
             </mask>
           </defs>
           <g mask="url(#pb-ventana)">
-            <g className="escena" data-id="pacifico"><EscenaPacifico palabra={t(locale, 'hero.word_pacifico')} /></g> {/* Pacífico volcánico */}
-            <g className="escena" data-id="norte"><EscenaNorte palabra={t(locale, 'hero.word_norte')} /></g> {/* Centro-norte */}
-            <g className="escena" data-id="caribe"><EscenaCaribe palabra={t(locale, 'hero.word_caribe')} /></g> {/* Caribe */}
+            {zonas.map((z, i) => {
+              const f = fotos[z]; // Foto real de la escena
+              const Ilustracion = ilustracion[z]; // Dibujo si no hay foto
+              return (
+                <g key={z} className="escena" data-id={z}>
+                  {f ? <EscenaFoto href={f.imagen} diferida={i > 0} palabra={t(locale, `hero.word_${z}` as const)} /> : <Ilustracion palabra={t(locale, `hero.word_${z}` as const)} />} {/* Foto real o ilustración */}
+                </g>
+              );
+            })}
           </g>
         </svg>
 
@@ -44,7 +56,7 @@ export function PortadaBaqueano({ locale }: { locale: string }) {
       </div>
 
       <div className="portada-pie">
-        <ControlPortada locale={locale} portada="portada" /> {/* Qué escena se ve y barras para cambiarla */}
+        <ControlPortada locale={locale} portada="portada" creditos={creditos} /> {/* Qué escena se ve y barras para cambiarla */}
         <p className="m-0 mt-5 max-w-[56ch] text-[17px] leading-[27px] text-ink-muted">{t(locale, 'home.intro')}</p> {/* Presentación breve */}
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <a href="#territorios" className="boton-marca">{t(locale, 'hero.cta_explore')}</a> {/* Baja a los 17 territorios */}

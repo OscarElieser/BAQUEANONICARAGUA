@@ -6,6 +6,8 @@ import { PortadaTerritorio } from './PortadaTerritorio'; // Portada ilustrada (n
 import { ControlExplorador } from './ControlExplorador'; // Cambio de territorio
 import { territorios, ZONA_TEXTO } from '@/lib/portadas'; // Los 17 territorios y el nombre de cada zona
 import { t } from '@/i18n/t'; // Textos traducidos
+import { fotoDe, srcsetDe } from '@/lib/fotos'; // Fotos reales con licencia libre
+import { CreditoFoto } from './CreditoFoto'; // Crédito de cada foto
 
 const dos = (n: number) => String(n).padStart(2, '0'); // 4 → "04"
 
@@ -17,7 +19,17 @@ export function ExploradorTerritorios({ locale, published }: { locale: string; p
       <div className="exp-fondos" aria-hidden="true">
         {territorios.map((ter, i) => (
           <div key={ter.slug} className={`exp-fondo${i === 0 ? ' es-activo' : ''}`} data-i={i}>
-            <PortadaTerritorio slug={ter.slug} uid={`xf${i}`} className="h-full w-full" /> {/* Portada a pantalla completa */}
+            {fotoDe(ter.slug) ? (
+              <img
+                alt="" // Decorativa: el nombre y el crédito van en texto
+                {...(i === 0 ? { src: fotoDe(ter.slug)!.imagen, srcSet: srcsetDe(fotoDe(ter.slug)!) } : { 'data-src': fotoDe(ter.slug)!.imagen, 'data-srcset': srcsetDe(fotoDe(ter.slug)!) })} // Solo la primera se carga de entrada; las demás al acercarse
+                sizes="100vw" // Ocupa todo el ancho
+                decoding="async" // Sin bloquear la página
+                className="exp-foto" // Llena el fondo
+              />
+            ) : (
+              <PortadaTerritorio slug={ter.slug} uid={`xf${i}`} className="h-full w-full" /> // Sin foto: la portada ilustrada
+            )}
           </div>
         ))}
       </div>
@@ -35,7 +47,11 @@ export function ExploradorTerritorios({ locale, published }: { locale: string; p
                 <p className="exp-zona">{t(locale, ZONA_TEXTO[ter.zone])}</p> {/* Zona de paisaje */}
                 <h3 className="exp-nombre">{ter.name}</h3> {/* Nombre en grande */}
                 <p className={`exp-estado ${pub ? 'text-status-verified' : 'text-oro-text'}`}>{t(locale, pub ? 'tmap.status_published' : 'tmap.status_pending')}</p> {/* Estado real */}
-                <p className="exp-nota">{t(locale, 'explorer.note')}</p> {/* Aviso: es ilustración */}
+                {fotoDe(ter.slug) ? (
+                  <p className="exp-nota"><span className="font-bold text-ink">{fotoDe(ter.slug)!.lugar}.</span> <CreditoFoto locale={locale} foto={fotoDe(ter.slug)!} /></p> // Lugar real y crédito de la foto
+                ) : (
+                  <p className="exp-nota">{t(locale, 'tmap.note')}</p> // Sin foto: aviso de la ilustración
+                )}
                 {pub ? (
                   <Link href={`/${locale}/territorios/${ter.slug}`} className="exp-cta">{t(locale, 'explorer.open', { name: ter.name })}</Link> // Abre la ficha publicada
                 ) : (
@@ -50,7 +66,11 @@ export function ExploradorTerritorios({ locale, published }: { locale: string; p
           {territorios.map((ter, i) => (
             <li key={ter.slug} data-i={i} data-pos={i >= 1 && i <= 3 ? String(i) : undefined}>
               <button type="button" data-ir={i} className="exp-carta" aria-label={t(locale, 'explorer.see', { name: ter.name })}>
-                <PortadaTerritorio slug={ter.slug} uid={`xc${i}`} className="exp-carta-img" /> {/* Portada pequeña */}
+                {fotoDe(ter.slug) ? (
+                  <img alt="" {...(i >= 1 && i <= 3 ? { src: fotoDe(ter.slug)!.imagen_movil } : { 'data-src': fotoDe(ter.slug)!.imagen_movil })} decoding="async" className="exp-carta-img object-cover" /> // Foto real pequeña (las ocultas se cargan al asomar)
+                ) : (
+                  <PortadaTerritorio slug={ter.slug} uid={`xc${i}`} className="exp-carta-img" /> // Sin foto: portada ilustrada
+                )}
                 <span className="exp-carta-num" aria-hidden="true">{dos(i + 1)}</span> {/* Número */}
                 <span className="exp-carta-texto" aria-hidden="true">
                   <span className="block text-[12px] opacity-80">{t(locale, ZONA_TEXTO[ter.zone])}</span> {/* Zona */}

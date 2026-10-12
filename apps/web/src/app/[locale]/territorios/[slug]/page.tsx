@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { fotoDe, srcsetDe } from '@/lib/fotos'; // Foto real del territorio, si existe
 import { SpriteMapa } from '@/components/SpriteMapa'; // Formas del mapa (las portadas las reutilizan)
 import { notFound } from 'next/navigation';
 import { CurvasDeNivel } from '@/components/CurvasDeNivel'; // Curvas genéricas (si el territorio no está en el mapa)
@@ -48,6 +49,16 @@ export default async function TerritoryPage({ params }: { params: Promise<{ loca
       <nav aria-label={t(locale, 'nav.breadcrumb')} className="pt-6 text-sm">
         <Link href={`/${locale}`}>{t(locale, 'nav.discover')}</Link>
       </nav>
+
+      {fotoDe(slug) && (
+        <figure className="relative m-0 mt-4 overflow-hidden rounded-[var(--radius-m)]">
+          <img src={fotoDe(slug)!.imagen} srcSet={srcsetDe(fotoDe(slug)!)} sizes="(min-width: 1280px) 1180px, 100vw" alt={fotoDe(slug)!.lugar} width={1600} height={fotoDe(slug)!.alto} fetchPriority="high" decoding="async" className="block aspect-[21/9] h-auto w-full object-cover" /> {/* Foto real del territorio */}
+          <figcaption className="foto-pie absolute inset-x-0 bottom-0 flex flex-wrap items-end justify-between gap-2 px-5 pb-3 pt-10">
+            <span className="text-[15px] font-bold">{fotoDe(slug)!.lugar}</span> {/* Lugar de la foto */}
+            <a href={fotoDe(slug)!.pagina} target="_blank" rel="noopener noreferrer" className="text-[12px] underline">{t(locale, 'photo.credit', { author: fotoDe(slug)!.autor, license: fotoDe(slug)!.licencia })}</a> {/* Crédito */}
+          </figcaption>
+        </figure>
+      )}
 
       {forma ? (
         <header className={`heroe-territorio zona-${forma.zone} mt-4 grid items-center gap-6 rounded-[var(--radius-m)] p-6 sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]`}>

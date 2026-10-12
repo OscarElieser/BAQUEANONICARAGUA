@@ -343,7 +343,7 @@
   "tmap.status_published": "Listing published",
   "tmap.status_pending": "Being verified",
   "gallery.title": "All 17, one by one",
-  "gallery.intro": "Each cover is drawn from the real shape of its territory. They are illustrations, not photos: photos will come once they are verified.",
+  "gallery.intro": "Real photos under free licenses from Wikimedia Commons, each with its author. Soon, also those taken by people who live here.",
   "gallery.pause": "Pause the parade",
   "gallery.play": "Resume the parade",
   "zone.pacifico": "Volcanic Pacific",
@@ -381,7 +381,7 @@
   "explorer.map": "See on the map",
   "explorer.see": "See {name}",
   "explorer.of": "of",
-  "explorer.note": "Illustration of its real outline; photos will come once they are verified.",
+  "explorer.note": "Real photo under a free license.",
   "plans.title": "Plans for businesses",
   "plans.intro": "For lodgings, restaurants, guides and small businesses that want more travelers to find them and write to them directly.",
   "plans.pending_banner": "Plans are being prepared: names, prices and benefits are still to be defined. Nothing is charged yet.",
@@ -396,5 +396,14 @@
   "plans.featured": "Featured",
   "hero.word_pacifico": "PACIFIC",
   "hero.word_norte": "HIGHLANDS",
-  "hero.word_caribe": "CARIBBEAN"
+  "hero.word_caribe": "CARIBBEAN",
+  "photo.credit": "Photo: {author} ({license}), Wikimedia Commons",
+  "credits.title": "Photo credits",
+  "credits.intro": "All BAQUEANO photos are real and freely licensed. Thanks to the people who took and shared them.",
+  "credits.link": "Photo credits",
+  "credits.place": "Place",
+  "credits.author": "Author",
+  "credits.license": "License",
+  "credits.source": "Source",
+  "credits.see_original": "See the original"
 }

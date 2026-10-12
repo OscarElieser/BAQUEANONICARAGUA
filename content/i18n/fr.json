@@ -343,7 +343,7 @@
   "tmap.status_published": "Fiche publiée",
   "tmap.status_pending": "En vérification",
   "gallery.title": "Les 17, un par un",
-  "gallery.intro": "Chaque couverture naît de la forme réelle de son territoire. Ce sont des illustrations, pas des photos : les photos arriveront une fois vérifiées.",
+  "gallery.intro": "Photos réelles sous licence libre de Wikimedia Commons, chacune avec son auteur. Bientôt, aussi celles des habitants.",
   "gallery.pause": "Mettre le défilé en pause",
   "gallery.play": "Reprendre le défilé",
   "zone.pacifico": "Pacifique volcanique",
@@ -381,7 +381,7 @@
   "explorer.map": "Voir sur la carte",
   "explorer.see": "Voir {name}",
   "explorer.of": "sur",
-  "explorer.note": "Illustration de sa silhouette réelle ; les photos arriveront une fois vérifiées.",
+  "explorer.note": "Photo réelle sous licence libre.",
   "plans.title": "Offres pour les entreprises",
   "plans.intro": "Pour les hébergements, restaurants, guides et entrepreneurs qui veulent que plus de voyageurs les trouvent et leur écrivent directement.",
   "plans.pending_banner": "Les offres sont en préparation : noms, prix et avantages restent à définir. Rien n'est facturé pour l'instant.",
@@ -396,5 +396,14 @@
   "plans.featured": "En vedette",
   "hero.word_pacifico": "PACIFIQUE",
   "hero.word_norte": "MONTAGNE",
-  "hero.word_caribe": "CARAÏBES"
+  "hero.word_caribe": "CARAÏBES",
+  "photo.credit": "Photo : {author} ({license}), Wikimedia Commons",
+  "credits.title": "Crédits photo",
+  "credits.intro": "Toutes les photos de BAQUEANO sont réelles et sous licence libre. Merci à celles et ceux qui les ont prises et partagées.",
+  "credits.link": "Crédits photo",
+  "credits.place": "Lieu",
+  "credits.author": "Auteur",
+  "credits.license": "Licence",
+  "credits.source": "Source",
+  "credits.see_original": "Voir l'original"
 }

@@ -478,3 +478,11 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
 .login-vidrio > * { animation: aparecer 500ms ease-out both; animation-delay: 750ms; } /* El contenido aparece cuando la tarjeta ya se abrió */
 .login-vidrio > *:nth-child(3) { animation-delay: 850ms; } /* El formulario, un poco después */
 @media (prefers-reduced-motion: reduce) { .login-orbe, .login-vidrio, .login-vidrio > * { animation: none; } } /* Sin movimiento si así se pidió */
+
+/* ===== Fotos reales ===== */
+.credito-foto { font-size: 12px; line-height: 16px; color: var(--ink-muted); text-decoration: underline; text-underline-offset: 2px; overflow-wrap: anywhere; } /* Crédito discreto pero legible y enlazado */
+.palabra-sobre-foto { mix-blend-mode: soft-light; opacity: 0.95; } /* La palabra se funde con el cielo de la foto */
+.portada-baqueano .capa-foto { transform: scale(1.04) translate(calc(var(--px, 0) * -10px), calc(var(--py, 0) * -6px)); transform-origin: center; transition: transform 700ms cubic-bezier(.2,.7,.2,1); } /* La foto se mueve apenas con el cursor */
+.exp-foto { width: 100%; height: 100%; object-fit: cover; } /* Foto real que llena el fondo del explorador */
+.tarjeta-silueta { position: absolute; left: 10px; bottom: 10px; width: 46px; height: 46px; padding: 6px; border-radius: 12px; background: color-mix(in oklab, var(--marca-nocturno) 55%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); fill: var(--oro); stroke: var(--band-marfil); stroke-width: 1; vector-effect: non-scaling-stroke; } /* Silueta del territorio sobre la foto */
+.foto-pie { color: var(--band-marfil); background: linear-gradient(0deg, color-mix(in oklab, var(--marca-nocturno) 82%, transparent), transparent); } .foto-pie a { color: var(--band-marfil); } /* Pie de foto legible sobre la imagen */

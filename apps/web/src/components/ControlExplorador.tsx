@@ -15,6 +15,17 @@ function aplicar(el: HTMLElement, activo: number, total: number) {
   });
   el.querySelectorAll<HTMLElement>('.exp-fondo').forEach((f) => f.classList.toggle('es-activo', Number(f.dataset.i) === activo)); // Fondo activo
   el.style.setProperty('--avance', String((activo + 1) / total)); // Riel de avance
+  const cargar = (img: HTMLImageElement | null) => {
+    if (!img?.dataset.src) return; // Ya cargada o sin foto
+    if (img.dataset.srcset) img.srcset = img.dataset.srcset; // Tamaños disponibles
+    img.src = img.dataset.src; // Empieza a descargar
+    delete img.dataset.src; delete img.dataset.srcset; // Ya no hace falta
+  }; // Carga una foto diferida
+  for (let d = 0; d <= 3; d++) {
+    const i = (activo + d) % total; // El activo y los tres siguientes
+    cargar(el.querySelector<HTMLImageElement>(`.exp-fondo[data-i="${i}"] img`)); // Su fondo
+    cargar(el.querySelector<HTMLImageElement>(`.exp-cartas li[data-i="${i}"] img`)); // Su tarjeta
+  }
 }
 
 /**

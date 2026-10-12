@@ -343,7 +343,7 @@
   "tmap.status_published": "ページ公開済み",
   "tmap.status_pending": "確認中",
   "gallery.title": "17の地域をひとつずつ",
-  "gallery.intro": "各カバーはその地域の実際の形から描いています。写真ではなくイラストです。写真は確認後に掲載します。",
+  "gallery.intro": "ウィキメディア・コモンズの自由ライセンスの実写写真で、撮影者を明記しています。今後は地元の人々の写真も加わります。",
   "gallery.pause": "パレードを一時停止",
   "gallery.play": "パレードを再開",
   "zone.pacifico": "火山の太平洋側",
@@ -381,7 +381,7 @@
   "explorer.map": "地図で見る",
   "explorer.see": "{name}を見る",
   "explorer.of": "/",
-  "explorer.note": "実際の輪郭のイラストです。写真は確認後に掲載します。",
+  "explorer.note": "自由ライセンスの実写写真です。",
   "plans.title": "事業者向けプラン",
   "plans.intro": "宿泊施設、レストラン、ガイド、小規模事業者が、より多くの旅行者に見つけてもらい、直接連絡を受けるためのプランです。",
   "plans.pending_banner": "プランは準備中です。名称・料金・特典は未定で、現在は料金は発生しません。",
@@ -396,5 +396,14 @@
   "plans.featured": "おすすめ",
   "hero.word_pacifico": "太平洋",
   "hero.word_norte": "山地",
-  "hero.word_caribe": "カリブ"
+  "hero.word_caribe": "カリブ",
+  "photo.credit": "写真：{author}（{license}）、ウィキメディア・コモンズ",
+  "credits.title": "写真クレジット",
+  "credits.intro": "BAQUEANOの写真はすべて実写で、自由ライセンスです。撮影・共有してくださった方々に感謝します。",
+  "credits.link": "写真クレジット",
+  "credits.place": "場所",
+  "credits.author": "撮影者",
+  "credits.license": "ライセンス",
+  "credits.source": "出典",
+  "credits.see_original": "元の写真を見る"
 }
