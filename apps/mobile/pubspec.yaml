@@ -1,0 +1,29 @@
+name: nica_app
+description: Ecosistema Turístico de Nicaragua — aplicación Android.
+publish_to: none
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_riverpod: ^2.5.1
+  go_router: ^14.2.0
+  firebase_core: ^3.4.0
+  firebase_auth: ^5.2.0
+  firebase_messaging: ^15.1.0
+  supabase_flutter: ^2.6.0
+  intl: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  # generate: true  → activar al añadir l10n.yaml y los ARB de los 10 idiomas (Fase 9)

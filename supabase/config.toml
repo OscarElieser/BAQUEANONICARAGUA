@@ -1,0 +1,20 @@
+project_id = "nica-ecosistema"
+
+[db]
+major_version = 15
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
+[api]
+schemas = ["public"]          # app y audit no se exponen por la Data API
+extra_search_path = ["public", "extensions"]
+
+[auth]
+enabled = true
+
+# Identidad de usuarios finales: Firebase (ADR-002).
+[auth.third_party.firebase]
+enabled = true
+project_id = "env(FIREBASE_PROJECT_ID)"

@@ -1,0 +1,16 @@
+node_modules/
+.turbo/
+.next/
+dist/
+coverage/
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+google-services.json
+GoogleService-Info.plist
+service-account*.json
+apps/mobile/build/
+apps/mobile/.dart_tool/
+supabase/.temp/

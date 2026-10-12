@@ -1,0 +1,79 @@
+openapi: 3.1.0
+info:
+  title: Ecosistema Turístico de Nicaragua — API
+  version: 0.1.0
+  description: >
+    Contrato fuente compartido por web (TS) y Android (Dart). Los clientes se generan desde
+    este archivo. Errores en formato RFC 9457.
+servers:
+  - url: https://api.staging.example.ni/v1
+    description: Staging (dominio por definir)
+security:
+  - firebase: []
+components:
+  securitySchemes:
+    firebase:
+      type: http
+      scheme: bearer
+      bearerFormat: Firebase ID token
+  schemas:
+    Problem:
+      type: object
+      required: [type, title, status]
+      properties:
+        type: { type: string }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        instance: { type: string }
+    Profile:
+      type: object
+      required: [id, preferred_locale, status]
+      properties:
+        id: { type: string, format: uuid }
+        display_name: { type: [string, 'null'] }
+        username: { type: [string, 'null'] }
+        preferred_locale:
+          type: string
+          enum: [es, en, zh-Hans, ko, it, fr, pt, de, ru, ja]
+        status: { type: string, enum: [active, suspended, deleted] }
+    Health:
+      type: object
+      properties:
+        status: { type: string, enum: [ok, degraded] }
+        database: { type: string }
+        latency_ms: { type: integer }
+        version: { type: string }
+  responses:
+    Unauthorized:
+      description: Token ausente, inválido o revocado
+      content:
+        application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } }
+paths:
+  /health:
+    get:
+      summary: Estado del servicio
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json: { schema: { $ref: '#/components/schemas/Health' } }
+  /me/bootstrap:
+    post:
+      summary: Crea el perfil del usuario autenticado si no existe (idempotente)
+      responses:
+        '201':
+          description: Perfil
+          content:
+            application/json: { schema: { $ref: '#/components/schemas/Profile' } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /me:
+    get:
+      summary: Perfil y roles del usuario autenticado
+      responses:
+        '200':
+          description: Perfil
+          content:
+            application/json: { schema: { $ref: '#/components/schemas/Profile' } }
+        '401': { $ref: '#/components/responses/Unauthorized' }

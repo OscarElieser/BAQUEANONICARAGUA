@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  node:
+    name: Web + API (lint, tipos, pruebas, build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - name: Auditoría de dependencias
+        run: pnpm audit --audit-level high
+
+  database:
+    name: Migraciones + pruebas RLS
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with: { version: latest }
+      - name: Levantar Supabase local y aplicar migraciones
+        run: supabase start -x studio,imgproxy,inbucket,edge-runtime,logflare,vector
+      - name: Pruebas de humo RLS
+        run: psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -v ON_ERROR_STOP=1 -f supabase/tests/rls_smoke.sql | tee rls.out && ! grep -q "FAIL" rls.out
+
+  mobile:
+    name: Android (análisis y pruebas)
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: apps/mobile } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable }
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+
+# Despliegue a staging y producción: workflow separado (deploy.yml) con environment
+# "production" protegido por aprobación manual. Se añade en Fase 2 cuando existan
+# el servidor de Hostinger y los secrets.

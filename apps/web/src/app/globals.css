@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+/*
+ * Tokens provisionales "Territorios vivos" (sección 3).
+ * Son el punto de partida del prompt; la identidad definitiva sale de comparar
+ * tres direcciones visuales en la Fase 1.
+ */
+:root {
+  --selva-900: #071C1B;
+  --territorio-700: #0D5448;
+  --oro-400: #E4B063;
+  --marfil-50: #F2EFE5;
+  --terracota-500: #C65F3E;
+
+  --bg: var(--marfil-50);
+  --fg: var(--selva-900);
+  --accent: var(--territorio-700);
+  --highlight: var(--oro-400);
+  --warm: var(--terracota-500);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: var(--selva-900);
+    --fg: var(--marfil-50);
+    --accent: var(--oro-400);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: var(--selva-900);
+  --fg: var(--marfil-50);
+  --accent: var(--oro-400);
+}
+
+body { background: var(--bg); color: var(--fg); }
+
+/* Alternativa ligera: sin movimiento cuando el usuario lo pide */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
