@@ -29,7 +29,7 @@ export function GaleriaTerritorios({ locale, published }: { locale: string; publ
           {t(locale, pausa ? 'gallery.play' : 'gallery.pause')} {/* Lo que hará al pulsarlo */}
         </button>
       </div>
-      <div className="desfile" data-pausa={pausa} role="region" aria-label={t(locale, 'gallery.label')}>
+      <div className="desfile" data-pausa={pausa} role="region" aria-label={t(locale, 'gallery.label')} tabIndex={0}> {/* Enfocable: con el teclado se detiene y, sin animación, se desliza con las flechas */}
         <div className="desfile-carril">
           <ul className="desfile-lista">
             {/* Las 17 tarjetas reales (enlaces si tienen ficha) */}

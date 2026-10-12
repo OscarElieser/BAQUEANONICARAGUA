@@ -2,6 +2,8 @@ import { Planificador } from '@/components/Planificador'; // Intérprete del via
 import { t } from '@/i18n/t'; // Textos traducidos
 import type { Metadata } from 'next'; // Tipo de los metadatos
 import { pageMetadata } from '@/lib/seo'; // Canónica, idiomas y vista previa
+import { letraAventura } from '@/app/fuentes'; // Letra propia de Mi aventura (Anybody, ancho variable)
+import { RutaPintada } from '@/components/RutaPintada'; // Ruta que se dibuja
 
 /** Metadatos para buscadores en el idioma de la página. */
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -12,16 +14,23 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function MiAventura({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   return (
-    <main className="mx-auto max-w-[1280px] px-4 pb-16 sm:px-12">
-      <section className="flex flex-wrap items-end gap-10 pb-10 pt-14">
-        <h1 className="m-0 flex-[1_1_460px] font-display text-[44px] font-normal leading-[0.98] sm:text-[76px]">
-          {t(locale, 'adventure.title')} {/* Título */}
-        </h1>
-        <p className="m-0 max-w-[46ch] flex-[1_1_340px] text-[19px] leading-[30px] text-ink-muted">
-          {t(locale, 'adventure.intro')} {/* Presentación */}
-        </p>
-      </section>
-      <Planificador locale={locale} />
+    <main className={`${letraAventura.variable} mundo-aventura pb-16`}>
+      {/* Mundo de Mi aventura: los buses pintados de Nicaragua */}
+      <header className="aventura-heroe">
+        <div className="mx-auto flex max-w-[1280px] flex-wrap items-end gap-10 px-4 pb-6 pt-14 sm:px-12">
+          <h1 className="rotulo m-0 flex-[1_1_460px] font-mundo text-[46px] leading-[0.95] sm:text-[84px]">
+            {t(locale, 'adventure.title')} {/* Rótulo que se estira al llegar */}
+          </h1>
+          <p className="m-0 max-w-[46ch] flex-[1_1_340px] text-[19px] leading-[30px]">
+            {t(locale, 'adventure.intro')} {/* Presentación */}
+          </p>
+        </div>
+        <RutaPintada className="block h-[90px] w-full" /> {/* Ruta con paradas */}
+        <div className="franjas-bus" aria-hidden="true" /> {/* Franjas del costado del bus */}
+      </header>
+      <div className="mx-auto max-w-[1280px] px-4 pt-10 sm:px-12">
+      <Planificador locale={locale} /> {/* Intérprete del viaje */}
+      </div>
     </main>
   );
 }

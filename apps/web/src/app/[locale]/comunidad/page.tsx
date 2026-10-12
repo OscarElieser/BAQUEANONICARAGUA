@@ -5,6 +5,7 @@ import { t } from '@/i18n/t'; // Textos traducidos
 import type { Metadata } from 'next'; // Tipo de los metadatos
 import { Paginacion } from '@/components/Paginacion'; // Anterior / siguiente
 import { pageMetadata } from '@/lib/seo'; // Canónica, idiomas y vista previa
+import { letraComunidad } from '@/app/fuentes'; // Letra propia de Comunidad (Bricolage Grotesque)
 
 const PER_PAGE = 20; // Relatos por página
 
@@ -32,10 +33,11 @@ export default async function Comunidad({ params, searchParams }: { params: Prom
   const nextHref = all.length > PER_PAGE ? `/${locale}/comunidad?antes=${encodeURIComponent(feed[feed.length - 1].created_at)}` : undefined; // Relatos anteriores
   const firstHref = before ? `/${locale}/comunidad` : undefined; // Volver a los más recientes
   return (
-    <main>
-      <FranjaTejida height={22} />
+    <main className={`${letraComunidad.variable} mundo-comunidad`}>
+      {/* Mundo de Comunidad: hamacas de Masaya y letra cálida */}
+      <FranjaTejida height={28} className="franja-tejiendo" /> {/* La franja se teje al llegar */}
       <div className="mx-auto max-w-[1280px] px-4 py-14 sm:px-12">
-        <h1 className="m-0 max-w-[14ch] font-display text-[44px] font-normal leading-[0.98] sm:text-[72px]">
+        <h1 className="m-0 max-w-[14ch] font-mundo text-[46px] font-extrabold leading-[0.95] tracking-[-0.025em] sm:text-[84px]">
           {t(locale, 'community.title')} {/* Título */}
         </h1>
         <p className="mt-6 max-w-[52ch] text-[19px] leading-[30px] text-ink-muted">
@@ -50,19 +52,19 @@ export default async function Comunidad({ params, searchParams }: { params: Prom
           </Link>
         </div>
         <section aria-labelledby="relatos" className="mt-14 max-w-[var(--measure)]">
-          <h2 id="relatos" className="font-display text-[28px] font-normal">{t(locale, 'community.stories')}</h2>
+          <h2 id="relatos" className="mb-2 mt-0 font-mundo text-[34px] font-bold tracking-[-0.01em]">{t(locale, 'community.stories')}</h2>
           <p className="text-sm text-ink-muted">{t(locale, 'community.order_note')}</p>
           {feed.length === 0 ? (
             <p className="text-ink-muted">{t(locale, 'community.empty')}</p>
           ) : (
             <ol className="m-0 list-none p-0">
-              {feed.map((p) => (
-                <li key={p.id} className="border-b border-line py-5">
+              {feed.map((p, i) => (
+                <li key={p.id} className={`relato hilo-${(i % 4) + 1} mb-4 px-5 pb-5 pt-6`}> {/* Relato colgado de un hilo de color */}
                   <p className="m-0 text-sm text-ink-muted">
                     {p.author_name ?? t(locale, 'community.traveler')} — {new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }).format(new Date(p.created_at))}
                     {p.is_promotional && <span className="ml-2 font-bold text-oro-text">{t(locale, 'community.promotional')}</span>}
                   </p>
-                  {p.title && <h3 className="mb-1 mt-2 text-[20px] font-bold">{p.title}</h3>}
+                  {p.title && <h3 className="mb-1 mt-2 font-mundo text-[22px] font-bold">{p.title}</h3>} {/* Título del relato */}
                   <p className="m-0 mt-1 line-clamp-4 whitespace-pre-line">{p.body_md}</p>
                   <p className="m-0 mt-2 text-sm text-ink-muted">{t(locale, 'community.interactions', { reactions: p.reactions, comments: p.comments })}</p>
                 </li>

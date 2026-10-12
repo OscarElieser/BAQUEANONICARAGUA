@@ -2,6 +2,8 @@ import { publicDb } from '@/lib/territories'; // Acceso público a la base de da
 import { t, type MessageKey } from '@/i18n/t'; // Textos traducidos
 import type { Metadata } from 'next'; // Tipo de los metadatos
 import { pageMetadata } from '@/lib/seo'; // Canónica, idiomas y vista previa
+import { letraCultura } from '@/app/fuentes'; // Letra propia de Cultura (Caprasimo)
+import { Greca } from '@/components/Greca'; // Friso de greca que se traza al llegar
 
 export const revalidate = 3600;
 
@@ -31,26 +33,33 @@ export default async function Cultura({ params }: { params: Promise<{ locale: st
   const items = (heritage ?? []) as Heritage[];
 
   return (
-    <main className="mx-auto max-w-[1280px] px-4 pb-16 sm:px-12">
-      <h1 className="mb-3 mt-12 font-display text-[44px] font-normal leading-[0.98] sm:text-[64px]">{t(locale, 'culture.title')}</h1>
-      <p className="max-w-[56ch] text-[19px] leading-[30px] text-ink-muted">
-        {t(locale, 'culture.intro')} {/* Cómo se trata el contenido */}
-      </p>
-
+    <main className={`${letraCultura.variable} mundo-cultura pb-16`}>
+      {/* Mundo de Cultura: barro de San Juan de Oriente, greca y letra rotunda */}
+      <header className="cultura-heroe">
+        <div className="mx-auto max-w-[1280px] px-4 pb-8 pt-14 sm:px-12">
+          <h1 className="m-0 max-w-[16ch] font-mundo text-[44px] font-normal leading-[1] sm:text-[80px]">{t(locale, 'culture.title')}</h1> {/* Titular del mundo */}
+          <p className="mb-0 mt-6 max-w-[56ch] text-[19px] leading-[30px]">
+            {t(locale, 'culture.intro')} {/* Cómo se trata el contenido */}
+          </p>
+        </div>
+        <Greca className="block h-[40px] w-full text-[var(--band-marfil)]" /> {/* Friso de greca */}
+        <div className="h-3" /> {/* Respiro bajo el friso */}
+      </header>
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-12">
       <div className="mt-10 flex flex-wrap gap-12">
         <section aria-labelledby="linea" className="min-w-0 flex-[2_1_480px]">
-          <h2 id="linea" className="font-display text-[28px] font-normal">{t(locale, 'culture.timeline')}</h2>
+          <h2 id="linea" className="mb-6 mt-0 font-mundo text-[34px] font-normal">{t(locale, 'culture.timeline')}</h2>
           {timeline.length === 0 ? (
             <p className="text-ink-muted">{t(locale, 'culture.timeline_empty')}</p>
           ) : (
             <ol className="m-0 list-none border-l-2 border-line p-0 pl-6">
               {timeline.map((e) => (
                 <li key={e.id} className="relative pb-6">
-                  <span aria-hidden="true" className="absolute -left-[31px] top-1.5 h-3 w-3 rounded-pill bg-oro" />
+                  <span aria-hidden="true" className="sello absolute -left-[33px] top-1" /> {/* Sello de barro */}
                   <p className="m-0 text-sm text-ink-muted">
                     {eraKey[e.era] ? t(locale, eraKey[e.era]) : e.era}: {e.date_precision === 'approximate' ? t(locale, 'culture.around', { year: year(locale, e.start_year) }) : year(locale, e.start_year)}{e.end_year ? `–${year(locale, e.end_year)}` : ''}
                   </p>
-                  <h3 className="mb-1 mt-1 text-[19px] font-bold">{e.title}</h3>
+                  <h3 className="mb-1 mt-1 font-mundo text-[22px] font-normal">{e.title}</h3> {/* Hecho histórico */}
                   {e.summary && <p className="m-0">{e.summary}</p>}
                   {e.contested && <p className="m-0 mt-1 text-sm text-oro-text">{t(locale, 'culture.contested')}</p>}
                 </li>
@@ -60,21 +69,25 @@ export default async function Cultura({ params }: { params: Promise<{ locale: st
         </section>
 
         <section aria-labelledby="patrimonio" className="min-w-0 flex-[1_1_300px]">
-          <h2 id="patrimonio" className="font-display text-[28px] font-normal">{t(locale, 'culture.heritage')}</h2>
+          <h2 id="patrimonio" className="mb-6 mt-0 font-mundo text-[34px] font-normal">{t(locale, 'culture.heritage')}</h2>
           {items.length === 0 ? (
             <p className="text-ink-muted">{t(locale, 'culture.heritage_empty')}</p>
           ) : (
             <ul className="m-0 list-none p-0">
               {items.map((h) => (
-                <li key={h.id} className="border-b border-line py-3">
-                  <p className="m-0 font-bold">{h.title}</p>
+                <li key={h.id} className="tarjeta-barro mb-4">
+                  <Greca unidades={8} alto={22} className="block h-[22px] w-full opacity-60" /> {/* Borde de greca */}
+                  <div className="px-5 pb-5 pt-3">
+                  <p className="m-0 font-mundo text-[22px]">{h.title}</p> {/* Nombre de la pieza */}
                   {h.unesco_recognized && <p className="m-0 text-sm text-status-verified">{t(locale, 'culture.unesco')}</p>}
-                  {h.summary && <p className="m-0 mt-1 text-ink-muted">{h.summary}</p>}
+                  {h.summary && <p className="m-0 mt-1 text-ink-muted">{h.summary}</p>} {/* Resumen */}
+                  </div>
                 </li>
               ))}
             </ul>
           )}
         </section>
+      </div>
       </div>
     </main>
   );
