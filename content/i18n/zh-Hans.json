@@ -361,5 +361,7 @@
   "notfound.map": "打开地图",
   "errorpage.title": "路上出了点问题",
   "errorpage.body": "页面出错了。你可以再试一次；如果仍然出错，请通过“联系我们”告诉我们。",
-  "errorpage.retry": "再试一次"
+  "errorpage.retry": "再试一次",
+  "tmap.legend": "景观区域（设计分组，非官方划分）",
+  "tmap.zone_all": "全部"
 }

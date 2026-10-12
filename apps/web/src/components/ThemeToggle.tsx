@@ -26,6 +26,9 @@ export function ThemeToggle({ locale }: { locale: string }) {
     const root = document.documentElement; // Elemento raíz de la página
     if (nt === 'auto') delete root.dataset.theme; // Automático: sigue al sistema
     else root.dataset.theme = nt; // Claro u oscuro forzado
+    document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]').forEach((m) => {
+      m.content = nt === 'auto' ? (m.dataset.auto ?? m.content) : nt === 'dark' ? '#0D5448' : '#E6EEE9'; // La barra del navegador sigue al tema elegido
+    });
     try {
       if (nt === 'auto') localStorage.removeItem('theme'); // Olvida la preferencia
       else localStorage.setItem('theme', nt); // Recuerda la preferencia

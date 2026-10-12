@@ -361,5 +361,7 @@
   "notfound.map": "Abrir o mapa",
   "errorpage.title": "Algo caiu pelo caminho",
   "errorpage.body": "A página teve um erro. Você pode tentar de novo; se continuar, escreva para nós em Contato.",
-  "errorpage.retry": "Tentar de novo"
+  "errorpage.retry": "Tentar de novo",
+  "tmap.legend": "Zonas de paisagem (agrupamento de design, não oficial)",
+  "tmap.zone_all": "Todas"
 }

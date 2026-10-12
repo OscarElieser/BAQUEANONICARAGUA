@@ -361,5 +361,7 @@
   "notfound.map": "地図を開く",
   "errorpage.title": "途中で問題が起きました",
   "errorpage.body": "ページでエラーが発生しました。もう一度お試しください。続く場合は「お問い合わせ」からご連絡ください。",
-  "errorpage.retry": "もう一度試す"
+  "errorpage.retry": "もう一度試す",
+  "tmap.legend": "景観ゾーン（デザイン上の区分で、公式ではありません）",
+  "tmap.zone_all": "すべて"
 }

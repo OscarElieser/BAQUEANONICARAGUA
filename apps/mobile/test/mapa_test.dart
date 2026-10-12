@@ -33,14 +33,16 @@ void main() {
       MaterialApp(
         theme: buildTheme(Brightness.dark, webFonts: false), // Tema sin descargar fuentes (las pruebas no tienen red)
         home: Scaffold(
-          body: SizedBox(
-            width: 390, // Ancho de teléfono
-            child: MapaTerritorios(mapa: mapa, published: const {'boaco'}, onOpen: (f) => opened.add(f.id)), // Solo Boaco publicado
-          ),
+          body: SingleChildScrollView(
+            child: SizedBox(
+              width: 390, // Ancho de teléfono
+              child: MapaTerritorios(mapa: mapa, published: const {'boaco'}, onOpen: (f) => opened.add(f.id)), // Solo Boaco publicado
+            ),
+          ), // Con desplazamiento, como en la pantalla real (la leyenda va debajo del mapa)
         ),
       ),
     );
-    final lienzo = find.descendant(of: find.byType(MapaTerritorios), matching: find.byType(CustomPaint)); // Dibujo del mapa
+    final lienzo = find.descendant(of: find.byType(MapaTerritorios), matching: find.byType(CustomPaint)).first; // Dibujo del mapa (el primero; los botones de la leyenda también dibujan)
     final origin = tester.getTopLeft(lienzo); // Esquina del dibujo en pantalla
     final scale = tester.getSize(lienzo).width / mapa.size.width; // Escala del mapa en pantalla
     Offset onScreen(String slug) => origin + mapa.territories.firstWhere((t) => t.id == slug).label * scale; // Punto del territorio en pantalla
@@ -54,6 +56,13 @@ void main() {
     await tester.pump(); // Redibuja
     expect(opened, ['boaco']); // Pide abrir su ficha
     expect(tester.takeException(), isNull); // Sin errores al dibujar
+
+    final caribe = find.byType(ChoiceChip).last; // Último botón de la leyenda: Caribe (el idioma de la prueba puede variar)
+    await tester.ensureVisible(caribe); // Lo trae a la vista
+    await tester.tap(caribe); // Elige esa zona
+    await tester.pump(); // Redibuja
+    expect(tester.widget<ChoiceChip>(caribe).selected, isTrue); // Queda marcada
+    expect(tester.takeException(), isNull); // Sin errores al apagar las otras zonas
   });
 
   testWidgets('las 17 portadas se dibujan sin errores y cada territorio tiene su zona', (tester) async {

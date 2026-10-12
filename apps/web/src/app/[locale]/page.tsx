@@ -97,7 +97,7 @@ export default async function Descubrir({ params }: { params: Promise<{ locale: 
           <MapaTerritorios
             locale={locale} // Idioma
             published={(territories ?? []).map((ter) => ter.slug)} // Solo los publicados son enlaces
-            territories={formas.map(({ slug, name, label }) => ({ slug, name, label }))} // Nombres y etiquetas (las formas vienen del sprite)
+            territories={formas.map(({ slug, name, label, zone }) => ({ slug, name, label, zone }))} // Nombres, etiquetas y zona (las formas vienen del sprite)
             lakes={lagos.map((l) => l.id)} // Lagos
             viewBox={VIEWBOX_MAPA} // Lienzo
           />

@@ -15,7 +15,7 @@ const youngSerif = Young_Serif({ weight: '400', subsets: ['latin'], variable: '-
 const atkinson = Atkinson_Hyperlegible({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-atkinson', display: 'swap' });
 
 // Aplica el tema guardado antes de pintar (evita parpadeo). Tolera storage bloqueado.
-const themeBoot = `try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}`;
+const themeBoot = `try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;document.querySelectorAll('meta[name=theme-color]').forEach(function(m){m.content=t==='dark'?'#0D5448':'#E6EEE9'})}}catch(e){}`; // Aplica el tema guardado (y el color de la barra del navegador) antes de pintar
 
 /** Título de la pestaña en el idioma de la página: cada página pone el suyo y se agrega el nombre del sitio. */
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -46,8 +46,9 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${youngSerif.variable} ${atkinson.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="manifest" href="/manifest.webmanifest" />
-        <meta name="theme-color" content="#0D5448" />
+        <link rel="manifest" href="/manifest.webmanifest" /> {/* Datos para instalar la web como app */}
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#E6EEE9" data-auto="#E6EEE9" /> {/* Barra del navegador en tema claro: mismo fondo que la página */}
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0D5448" data-auto="#0D5448" /> {/* Barra del navegador en tema oscuro */}
         <script dangerouslySetInnerHTML={{ __html: themeBoot }} />
       </head>
       <body>

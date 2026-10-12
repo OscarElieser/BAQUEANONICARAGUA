@@ -361,5 +361,7 @@
   "notfound.map": "Open the map",
   "errorpage.title": "Something fell along the way",
   "errorpage.body": "The page hit an error. You can try again; if it keeps happening, write to us from Contact.",
-  "errorpage.retry": "Try again"
+  "errorpage.retry": "Try again",
+  "tmap.legend": "Landscape zones (a design grouping, not official)",
+  "tmap.zone_all": "All"
 }

@@ -108,6 +108,9 @@
     font-size: 16px; /* Tamaño base */
     line-height: 25px; /* Interlineado base */
   }
+  a, button, summary, label, [role="button"] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; } /* Toques rápidos (sin espera de doble toque) y sin destello gris: el estado activo lo dibuja cada componente */
+  h1, h2, h3 { text-wrap: balance; } /* Títulos con líneas parejas, sin una palabra suelta al final */
+  p { text-wrap: pretty; } /* Párrafos sin viudas */
   a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; } /* Enlaces subrayados: se distinguen sin depender del color */
   :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; } /* Foco siempre visible con teclado */
 }
@@ -127,16 +130,26 @@
 
 /* Mapa vivo de los territorios */
 .mapa-vivo .territorio { stroke: var(--oro); stroke-width: 1.4; stroke-linejoin: round; transition: fill 160ms ease-out, stroke-width 160ms ease-out; } /* Borde dorado de cada territorio */
-.mapa-vivo .publicado { fill: var(--ground-raised); cursor: pointer; } /* Con ficha: relleno elevado */
-.mapa-vivo .pendiente { fill: var(--ground-deep); stroke-dasharray: 0.004 0.004; opacity: 0.85; } /* En verificación: borde punteado */
+.zt-pacifico { --zt: var(--terracota); } /* Pacífico volcánico: lava */
+.zt-norte { --zt: var(--musgo); } /* Centro-norte: musgo de montaña */
+.zt-caribe { --zt: var(--caribe); } /* Caribe: mar */
+.mapa-vivo { --mezcla: 42%; } /* Cuánto color de zona lleva cada territorio */
+:root[data-theme="dark"] .mapa-vivo { --mezcla: 58%; } /* En oscuro hace falta más color para separarse del fondo */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mapa-vivo { --mezcla: 58%; } } /* Igual cuando el sistema está en oscuro */
+.mapa-vivo .territorio { fill: color-mix(in oklab, var(--zt) var(--mezcla), var(--ground)); transition: fill 160ms ease-out, stroke-width 160ms ease-out, opacity 220ms ease-out; } /* Cada territorio con el color de su paisaje (el mismo de su portada) */
+.mapa-vivo .publicado { cursor: pointer; } /* Con ficha: se puede abrir */
+.mapa-vivo[data-zona] .territorio { opacity: 0.28; } /* Con una zona elegida, las demás se apagan… */
+.mapa-vivo[data-zona="pacifico"] .zt-pacifico, .mapa-vivo[data-zona="norte"] .zt-norte, .mapa-vivo[data-zona="caribe"] .zt-caribe { opacity: 1; } /* …y la elegida queda encendida */
+.mapa-vivo[data-zona] .activo { opacity: 1; } /* El territorio bajo el cursor siempre se ve entero */
+.muestra-zona { width: 14px; height: 14px; border-radius: 4px; background: var(--zt); box-shadow: inset 0 0 0 1px var(--line); } /* Cuadrito de color en la leyenda */
+.leyenda-zonas button[aria-pressed="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); } /* Zona elegida: botón invertido */
+.mapa-vivo .pendiente { stroke-dasharray: 3 4; opacity: 0.85; } /* En verificación: borde punteado (en píxeles de pantalla, por el trazo que no escala) */
 .mapa-vivo .activo.publicado { fill: var(--oro); stroke: var(--on-oro); stroke-width: 2; } /* Resaltado con ficha: oro */
-.mapa-vivo .activo.pendiente { fill: var(--line); } /* Resaltado sin ficha: tono neutro */
+.mapa-vivo .activo.pendiente { fill: color-mix(in oklab, var(--zt) 85%, var(--ground)); } /* Resaltado sin ficha: su zona, más intensa */
 .mapa-vivo a:focus-visible { outline: none; } /* El foco se ve en el propio territorio (abajo) */
 .mapa-vivo a:focus-visible .territorio { stroke: var(--focus); stroke-width: 4; } /* Foco visible con teclado */
 .mapa-vivo .lago { fill: var(--band-anil); stroke: var(--oro); stroke-width: 1; } /* Lagos en añil */
 .mapa-vivo .etiqueta-mapa { font-family: var(--font-young-serif), Georgia, serif; font-size: 22px; fill: var(--ink); paint-order: stroke; stroke: var(--ground); stroke-width: 5px; } /* Nombre legible sobre cualquier fondo */
-@keyframes trazo-aparece { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } } /* El borde se dibuja */
-.mapa-vivo .publicado.trazo { stroke-dasharray: 1; animation: trazo-aparece 1200ms ease-out both; } /* Una sola vez, al cargar */
 
 /* Un solo momento orquestado: las curvas se dibujan de la base a la cima */
 @keyframes curva-aparece { from { opacity: 0; } }
@@ -219,10 +232,10 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
 @media (max-width: 639px) { .boleto-talon { border-top: 2px dashed var(--control-border); } } /* En el teléfono el talón va abajo */
 .boleto-talon { animation: despegar .9s cubic-bezier(.2,.8,.2,1) .3s both; transform-origin: left center; } /* El talón se asoma al llegar */
 @keyframes despegar { from { opacity: 0; transform: rotate(-2.5deg) translateX(-10px); } to { opacity: 1; transform: none; } } /* Como si se despegara */
-.talon-tarifa { background: var(--ground-raised); border-radius: var(--radius-s); border-left: 6px dotted var(--oro); margin-bottom: 10px; } /* Cada tarifa, un talón con borde perforado */
+.talon-tarifa { background: var(--ground-raised); border-radius: var(--radius-s); border-left: 6px dotted var(--oro); margin-bottom: 10px; font-variant-numeric: tabular-nums; } /* Cada tarifa, un talón con borde perforado; cifras del mismo ancho para comparar */
 
 /* Negocios: pizarra de pulpería (oscura en los dos temas) */
-.pizarra { --ink: #F2EFE5; --ink-muted: #C9D8D0; background: #071C1B; color: var(--ink); box-shadow: inset 0 0 0 6px #0A4339; } /* Pizarra con marco */
+.pizarra { --ink: #F2EFE5; --ink-muted: #C9D8D0; background: #071C1B; color: var(--ink); box-shadow: inset 0 0 0 6px #0A4339; font-variant-numeric: tabular-nums; } /* Pizarra con marco; precios alineados */
 .pizarra-puntos { border-bottom: 2px dotted #7DB0A4; transform: translateY(-5px); } /* Puntos guía hasta el precio */
 .neblina-banda { animation: neblina 4.5s cubic-bezier(.3,.6,.3,1) .3s both; } /* La neblina se corre una sola vez (menos de 5 s) y deja ver el sendero */
 .neblina-banda.lenta { animation-duration: 4.9s; animation-direction: reverse; } /* La otra banda se corre hacia el otro lado */

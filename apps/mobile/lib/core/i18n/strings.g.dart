@@ -376,6 +376,8 @@ const i18nStrings = <String, Map<String, String>>{
     'errorpage.title': 'Algo se cayó en el camino',
     'errorpage.body': 'La página tuvo un error. Puedes intentarlo otra vez; si sigue pasando, escríbenos desde Contacto.',
     'errorpage.retry': 'Intentar otra vez',
+    'tmap.legend': 'Zonas de paisaje (agrupación de diseño, no oficial)',
+    'tmap.zone_all': 'Todas',
   },
   'en': {
     'meta.title_default': 'Nicaragua, contour by contour',
@@ -736,6 +738,8 @@ const i18nStrings = <String, Map<String, String>>{
     'errorpage.title': 'Something fell along the way',
     'errorpage.body': 'The page hit an error. You can try again; if it keeps happening, write to us from Contact.',
     'errorpage.retry': 'Try again',
+    'tmap.legend': 'Landscape zones (a design grouping, not official)',
+    'tmap.zone_all': 'All',
   },
   'zh-Hans': {
     'meta.title_default': '尼加拉瓜，一线一景',
@@ -1096,6 +1100,8 @@ const i18nStrings = <String, Map<String, String>>{
     'errorpage.title': '路上出了点问题',
     'errorpage.body': '页面出错了。你可以再试一次；如果仍然出错，请通过“联系我们”告诉我们。',
     'errorpage.retry': '再试一次',
+    'tmap.legend': '景观区域（设计分组，非官方划分）',
+    'tmap.zone_all': '全部',
   },
   'ko': {
     'meta.title_default': '니카라과, 등고선 따라 한 굽이씩',
@@ -1456,6 +1462,8 @@ const i18nStrings = <String, Map<String, String>>{
     'errorpage.title': '가는 길에 문제가 생겼어요',
     'errorpage.body': '페이지에 오류가 발생했습니다. 다시 시도해 보세요. 계속되면 연락처를 통해 알려 주세요.',
     'errorpage.retry': '다시 시도',
+    'tmap.legend': '경관 구역 (디자인용 구분, 공식 아님)',
+    'tmap.zone_all': '전체',
   },
   'it': {
     'meta.title_default': 'Nicaragua, curva dopo curva',
@@ -1816,6 +1824,8 @@ const i18nStrings = <String, Map<String, String>>{
     'errorpage.title': 'Qualcosa è caduto lungo la strada',
     'errorpage.body': 'La pagina ha avuto un errore. Puoi riprovare; se succede ancora, scrivici da Contatti.',
     'errorpage.retry': 'Riprova',
+    'tmap.legend': 'Zone di paesaggio (raggruppamento grafico, non ufficiale)',
+    'tmap.zone_all': 'Tutte',
   },
   'fr': {
     'meta.title_default': 'Nicaragua, courbe après courbe',
@@ -2176,6 +2186,8 @@ const i18nStrings = <String, Map<String, String>>{
     'errorpage.title': 'Quelque chose est tombé en chemin',
     'errorpage.body': 'La page a rencontré une erreur. Vous pouvez réessayer ; si cela continue, écrivez-nous depuis Contact.',
     'errorpage.retry': 'Réessayer',
+    'tmap.legend': 'Zones de paysage (regroupement graphique, non officiel)',
+    'tmap.zone_all': 'Toutes',
   },
   'pt': {
     'meta.title_default': 'Nicarágua, curva a curva',
@@ -2536,6 +2548,8 @@ const i18nStrings = <String, Map<String, String>>{
     'errorpage.title': 'Algo caiu pelo caminho',
     'errorpage.body': 'A página teve um erro. Você pode tentar de novo; se continuar, escreva para nós em Contato.',
     'errorpage.retry': 'Tentar de novo',
+    'tmap.legend': 'Zonas de paisagem (agrupamento de design, não oficial)',
+    'tmap.zone_all': 'Todas',
   },
   'de': {
     'meta.title_default': 'Nicaragua, Höhenlinie für Höhenlinie',
@@ -2896,6 +2910,8 @@ const i18nStrings = <String, Map<String, String>>{
     'errorpage.title': 'Unterwegs ist etwas schiefgegangen',
     'errorpage.body': 'Die Seite hatte einen Fehler. Du kannst es noch einmal versuchen; wenn es weiter passiert, schreib uns über Kontakt.',
     'errorpage.retry': 'Erneut versuchen',
+    'tmap.legend': 'Landschaftszonen (gestalterische Gruppierung, nicht amtlich)',
+    'tmap.zone_all': 'Alle',
   },
   'ru': {
     'meta.title_default': 'Никарагуа, изгиб за изгибом',
@@ -3256,6 +3272,8 @@ const i18nStrings = <String, Map<String, String>>{
     'errorpage.title': 'По дороге что-то сломалось',
     'errorpage.body': 'На странице произошла ошибка. Попробуйте ещё раз; если повторится, напишите нам через «Контакты».',
     'errorpage.retry': 'Попробовать снова',
+    'tmap.legend': 'Ландшафтные зоны (условная группировка, не официальная)',
+    'tmap.zone_all': 'Все',
   },
   'ja': {
     'meta.title_default': 'ニカラグア、等高線をたどって',
@@ -3616,5 +3634,7 @@ const i18nStrings = <String, Map<String, String>>{
     'errorpage.title': '途中で問題が起きました',
     'errorpage.body': 'ページでエラーが発生しました。もう一度お試しください。続く場合は「お問い合わせ」からご連絡ください。',
     'errorpage.retry': 'もう一度試す',
+    'tmap.legend': '景観ゾーン（デザイン上の区分で、公式ではありません）',
+    'tmap.zone_all': 'すべて',
   },
 };

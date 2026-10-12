@@ -361,5 +361,7 @@
   "notfound.map": "Karte öffnen",
   "errorpage.title": "Unterwegs ist etwas schiefgegangen",
   "errorpage.body": "Die Seite hatte einen Fehler. Du kannst es noch einmal versuchen; wenn es weiter passiert, schreib uns über Kontakt.",
-  "errorpage.retry": "Erneut versuchen"
+  "errorpage.retry": "Erneut versuchen",
+  "tmap.legend": "Landschaftszonen (gestalterische Gruppierung, nicht amtlich)",
+  "tmap.zone_all": "Alle"
 }

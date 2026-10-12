@@ -361,5 +361,7 @@
   "notfound.map": "Ouvrir la carte",
   "errorpage.title": "Quelque chose est tombé en chemin",
   "errorpage.body": "La page a rencontré une erreur. Vous pouvez réessayer ; si cela continue, écrivez-nous depuis Contact.",
-  "errorpage.retry": "Réessayer"
+  "errorpage.retry": "Réessayer",
+  "tmap.legend": "Zones de paysage (regroupement graphique, non officiel)",
+  "tmap.zone_all": "Toutes"
 }

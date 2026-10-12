@@ -3,8 +3,10 @@
 import Link from 'next/link'; // Enlaces internos
 import { useState } from 'react'; // Territorio activo
 import { t } from '@/i18n/t'; // Textos traducidos
+import { ZONA_TEXTO, type Zona } from '@/lib/portadas'; // Zonas de paisaje y sus nombres
 
-export type TerritorioLigero = { slug: string; name: string; label: number[] }; // Lo mínimo de cada territorio (la forma viene de <SpriteMapa />)
+export type TerritorioLigero = { slug: string; name: string; label: number[]; zone: Zona }; // Lo mínimo de cada territorio (la forma viene de <SpriteMapa />)
+const ZONAS: Zona[] = ['pacifico', 'norte', 'caribe']; // Orden de la leyenda: de oeste a este
 type Territorio = TerritorioLigero; // Alias interno
 
 /**
@@ -14,12 +16,13 @@ type Territorio = TerritorioLigero; // Alias interno
  */
 export function MapaTerritorios({ locale, published, territories, lakes, viewBox }: { locale: string; published: string[]; territories: TerritorioLigero[]; lakes: string[]; viewBox: string }) {
   const [active, setActive] = useState<Territorio | null>(null); // Territorio resaltado
+  const [zona, setZona] = useState<Zona | null>(null); // Zona elegida en la leyenda (null: todas)
   const isPublished = (slug: string) => published.includes(slug); // Si tiene ficha publicada
 
   return (
     <figure className="m-0 min-w-0">
       <div className="relative">
-        <svg viewBox={viewBox} className="mapa-vivo block h-auto w-full" role="group" aria-label={t(locale, 'tmap.aria')}>
+        <svg viewBox={viewBox} className="mapa-vivo block h-auto w-full" data-zona={zona ?? undefined} role="group" aria-label={t(locale, 'tmap.aria')}>
           <defs>
             <pattern id="curvas" width="18" height="18" patternUnits="userSpaceOnUse">
               <circle cx="9" cy="9" r="7" fill="none" stroke="var(--on-oro)" strokeOpacity="0.22" strokeWidth="1" /> {/* Curva de nivel repetida: relieve al resaltar */}
@@ -32,7 +35,7 @@ export function MapaTerritorios({ locale, published, territories, lakes, viewBox
             const on = active?.slug === ter.slug; // Si está resaltado
             const shape = (
               <>
-                <use href={`#ter-${ter.slug}`} className={`territorio ${isPublished(ter.slug) ? 'publicado' : 'pendiente'} ${on ? 'activo' : ''}`} /> {/* Forma del territorio (de SpriteMapa) */}
+                <use href={`#ter-${ter.slug}`} className={`territorio zt-${ter.zone} ${isPublished(ter.slug) ? 'publicado' : 'pendiente'} ${on ? 'activo' : ''}`} /> {/* Forma del territorio (de SpriteMapa) */}
                 {on && <use href={`#ter-${ter.slug}`} fill="url(#curvas)" pointerEvents="none" />} {/* Relieve de curvas al resaltar */}
               </>
             ); // Dibujo del territorio
@@ -77,6 +80,7 @@ export function MapaTerritorios({ locale, published, territories, lakes, viewBox
           {active ? (
             <>
               <span className="block font-display text-[24px] leading-tight">{active.name}</span> {/* Nombre */}
+              <span className="block text-ink-muted">{t(locale, ZONA_TEXTO[active.zone])}</span> {/* Zona de paisaje */}
               <span className={isPublished(active.slug) ? 'text-status-verified' : 'text-oro-text'}>
                 {isPublished(active.slug) ? t(locale, 'tmap.status_published') : t(locale, 'tmap.status_pending')} {/* Estado */}
               </span>
@@ -86,7 +90,23 @@ export function MapaTerritorios({ locale, published, territories, lakes, viewBox
           )}
         </p>
       </div>
-      <figcaption className="mt-2 text-[13px] text-ink-muted">{t(locale, 'tmap.note')}</figcaption> {/* Fuente y aviso de límites aproximados */}
+      <div role="group" aria-label={t(locale, 'tmap.legend')} className="leyenda-zonas mt-3 flex flex-wrap gap-2">
+        {/* Leyenda: cada botón resalta su zona en el mapa; el nombre va en texto, no solo en color */}
+        {[null, ...ZONAS].map((z) => (
+          <button
+            key={z ?? 'todas'} // Botón de la zona
+            type="button" // No envía formularios
+            aria-pressed={zona === z} // Dice si está elegida
+            onClick={() => setZona(z)} // Resalta esa zona (o todas)
+            className="flex min-h-11 items-center gap-2 rounded-pill border border-line px-4 text-[14px] text-ink"
+          >
+            {z && <span aria-hidden="true" className={`muestra-zona zt-${z}`} />} {/* Muestra del color */}
+            {z ? t(locale, ZONA_TEXTO[z]) : t(locale, 'tmap.zone_all')} {/* Nombre de la zona */}
+          </button>
+        ))}
+      </div>
+      <p className="mt-2 text-[13px] text-ink-muted">{t(locale, 'tmap.legend')}</p> {/* Aviso: agrupación de diseño */}
+      <figcaption className="mt-1 text-[13px] text-ink-muted">{t(locale, 'tmap.note')}</figcaption> {/* Fuente y aviso de límites aproximados */}
     </figure>
   );
 }

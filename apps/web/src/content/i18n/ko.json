@@ -361,5 +361,7 @@
   "notfound.map": "지도 열기",
   "errorpage.title": "가는 길에 문제가 생겼어요",
   "errorpage.body": "페이지에 오류가 발생했습니다. 다시 시도해 보세요. 계속되면 연락처를 통해 알려 주세요.",
-  "errorpage.retry": "다시 시도"
+  "errorpage.retry": "다시 시도",
+  "tmap.legend": "경관 구역 (디자인용 구분, 공식 아님)",
+  "tmap.zone_all": "전체"
 }

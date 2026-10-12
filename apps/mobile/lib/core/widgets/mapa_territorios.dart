@@ -110,6 +110,8 @@ class MapaTerritorios extends StatefulWidget {
 
 class _MapaTerritoriosState extends State<MapaTerritorios> {
   FormaMapa? _active; // Territorio resaltado
+  String? _zona; // Zona elegida en la leyenda (null: todas)
+  static const _zonas = ['pacifico', 'norte', 'caribe']; // Orden de la leyenda: de oeste a este
 
   /// Convierte un punto de la pantalla en coordenadas del mapa.
   Offset _toMap(Offset local, Size box) {
@@ -152,7 +154,7 @@ class _MapaTerritoriosState extends State<MapaTerritorios> {
                   onTapUp: (d) => _tap(d.localPosition, size), // Toque en el mapa
                   child: CustomPaint(
                     size: size, // Ocupa todo el espacio
-                    painter: _PintorMapa(mapa: widget.mapa, published: widget.published, active: active?.id, tv: tv, labelStyle: text.titleMedium), // Dibujo
+                    painter: _PintorMapa(mapa: widget.mapa, published: widget.published, active: active?.id, tv: tv, labelStyle: text.titleMedium, zona: _zona, oscuro: Theme.of(context).brightness == Brightness.dark), // Dibujo
                   ),
                 ),
               );
@@ -165,10 +167,29 @@ class _MapaTerritoriosState extends State<MapaTerritorios> {
           child: active == null
               ? Text(context.t('tmap.hint'), style: text.bodySmall?.copyWith(color: tv.inkMuted)) // Instrucción
               : Text(
-                  '${active.name} · ${context.t(isPub ? 'tmap.status_published' : 'tmap.status_pending')}', // Nombre y estado
+                  '${active.name} · ${active.zone.isEmpty ? '' : '${context.t('zone.${active.zone}')} · '}${context.t(isPub ? 'tmap.status_published' : 'tmap.status_pending')}', // Nombre, zona y estado
                   style: text.bodyMedium?.copyWith(color: isPub ? tv.statusVerified : tv.oroText), // Color según estado
                 ),
         ),
+        const SizedBox(height: TvSpace.s2), // Espacio
+        Semantics(
+          label: context.t('tmap.legend'), // Nombre del grupo para lectores de pantalla
+          child: Wrap(
+            spacing: TvSpace.s1, // Espacio entre botones
+            runSpacing: TvSpace.s1, // Espacio entre filas
+            children: [
+              for (final z in <String?>[null, ..._zonas])
+                ChoiceChip(
+                  avatar: z == null ? null : Container(width: 14, height: 14, decoration: BoxDecoration(color: colorZona(z), borderRadius: BorderRadius.circular(4))), // Muestra del color
+                  label: Text(z == null ? context.t('tmap.zone_all') : context.t('zone.$z')), // Nombre de la zona en texto, no solo color
+                  selected: _zona == z, // Si está elegida
+                  onSelected: (_) => setState(() => _zona = z), // Resalta esa zona (o todas)
+                ),
+            ],
+          ),
+        ),
+        const SizedBox(height: TvSpace.s1), // Espacio
+        Text(context.t('tmap.legend'), style: text.bodySmall?.copyWith(color: tv.inkMuted)), // Aviso: agrupación de diseño, no oficial
         const SizedBox(height: TvSpace.s1), // Espacio
         Text(context.t('tmap.note'), style: text.bodySmall?.copyWith(color: tv.inkMuted)), // Fuente y límites aproximados
       ],
@@ -176,9 +197,18 @@ class _MapaTerritoriosState extends State<MapaTerritorios> {
   }
 }
 
+/// Color de cada zona de paisaje (el mismo de las curvas de sus portadas).
+Color colorZona(String zona) => switch (zona) {
+      'pacifico' => TvColors.terracota, // Lava del Pacífico volcánico
+      'norte' => TvColors.musgo, // Musgo de montaña
+      _ => TvColors.caribe, // Mar del Caribe
+    };
+
 /// Dibuja territorios, lagos y el nombre del resaltado.
 class _PintorMapa extends CustomPainter {
-  _PintorMapa({required this.mapa, required this.published, required this.active, required this.tv, required this.labelStyle}); // Constructor
+  _PintorMapa({required this.mapa, required this.published, required this.active, required this.tv, required this.labelStyle, required this.zona, required this.oscuro}); // Constructor
+  final String? zona; // Zona elegida (las demás se apagan)
+  final bool oscuro; // Tema oscuro: hace falta más color para separarse del fondo
   final DatosMapa mapa; // Formas
   final Set<String> published; // Publicados
   final String? active; // Resaltado
@@ -199,7 +229,9 @@ class _PintorMapa extends CustomPainter {
     for (final t in mapa.territories) {
       final pub = published.contains(t.id); // Si tiene ficha
       final on = t.id == active; // Si está resaltado
-      final fill = Paint()..color = on && pub ? TvColors.oro : (pub ? tv.groundRaised : tv.groundDeep); // Relleno según estado
+      final tinte = Color.lerp(tv.ground, colorZona(t.zone), on ? 0.85 : (oscuro ? 0.58 : 0.42))!; // Color de su paisaje mezclado con el fondo
+      final apagado = zona != null && t.zone != zona && !on; // Si otra zona está elegida
+      final fill = Paint()..color = (on && pub ? TvColors.oro : tinte).withValues(alpha: apagado ? 0.28 : 1); // Relleno según zona y estado
       canvas.drawPath(t.path, fill); // Relleno
       if (on) _curvas(canvas, t.path, s); // Curvas de nivel al resaltar
       canvas.drawPath(t.path, pub ? stroke : (Paint()..style = PaintingStyle.stroke..color = TvColors.oro.withValues(alpha: 0.55)..strokeWidth = 1 / s)); // Borde (más tenue si está pendiente)
@@ -237,5 +269,5 @@ class _PintorMapa extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_PintorMapa old) => old.active != active || old.published != published || old.tv != tv; // Redibuja solo si cambia algo visible
+  bool shouldRepaint(_PintorMapa old) => old.active != active || old.published != published || old.tv != tv || old.zona != zona || old.oscuro != oscuro; // Redibuja solo si cambia algo visible
 }
