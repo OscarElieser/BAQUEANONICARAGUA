@@ -1,0 +1,45 @@
+# Capturas de pantalla de la web real (Chromium) en cada cambio de la rama desarrollo.
+# Se guardan en la referencia oculta refs/capturas/ultima (no es una rama: no aparece en la lista de ramas).
+name: Capturas
+
+on:
+  push:
+    branches: [desarrollo] # Solo la rama de trabajo
+  workflow_dispatch: # También a mano
+
+permissions:
+  contents: write # Para guardar las capturas en refs/capturas/ultima
+
+concurrency:
+  group: capturas # Una a la vez
+  cancel-in-progress: true # Si llega un cambio nuevo, la anterior ya no sirve
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Igual que en CI
+
+jobs:
+  capturar:
+    name: Capturas de la web (computadora y teléfono)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4 # Descarga el código
+      - name: Construir y arrancar la web # La misma imagen que se publicaría
+        run: |
+          docker build -f apps/web/Dockerfile -t nica-web:capturas . # Construye
+          docker run -d --name web -p 3000:3000 nica-web:capturas # Arranca
+          for _ in $(seq 1 30); do curl -fsS -o /dev/null http://127.0.0.1:3000/es && break; sleep 2; done # Espera hasta 60 s
+      - uses: actions/setup-node@v4 # Node para Playwright
+        with: { node-version: 22 }
+      - name: Tomar las capturas # Chromium con varios idiomas, temas y tamaños
+        run: |
+          (cd scripts/a11y && npm install --no-audit --no-fund && npx playwright install --with-deps chromium) # Playwright y Chromium
+          cp scripts/capturas/capturar.mjs scripts/a11y/capturar.mjs # Junto a sus dependencias
+          BASE_URL=http://127.0.0.1:3000 OUT="$PWD/capturas" node scripts/a11y/capturar.mjs # Captura
+      - name: Guardar en refs/capturas/ultima # Commit aparte, sin historia, que se reemplaza en cada ejecución
+        run: |
+          cd capturas # Carpeta de imágenes
+          printf 'Capturas del commit %s (%s)\n' "$GITHUB_SHA" "$(date -u +%FT%TZ)" > LEEME.txt # De qué versión son
+          git init -q && git checkout -q -b capturas # Repositorio temporal
+          git config user.name "github-actions[bot]" && git config user.email "41898282+github-actions[bot]@users.noreply.github.com" # Autor automático
+          git add . && git commit -q -m "Capturas de $GITHUB_SHA" # Guarda las imágenes
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:refs/capturas/ultima # Reemplaza las anteriores
