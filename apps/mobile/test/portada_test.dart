@@ -113,6 +113,9 @@ void main() {
 
   testWidgets('los caminos de "Explora a tu manera" responden al tocarlos', (tester) async {
     final tocados = <String>[]; // Caminos tocados
+    tester.view.physicalSize = const Size(1170, 2532); // Teléfono alto: caben todos los mosaicos
+    tester.view.devicePixelRatio = 3; // Densidad de pantalla
+    addTearDown(tester.view.reset); // Restaura al terminar
     await tester.pumpWidget(
       MaterialApp(
         theme: buildTheme(Brightness.light, webFonts: false), // Tema sin descargar fuentes
