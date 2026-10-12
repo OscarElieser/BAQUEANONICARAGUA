@@ -1,0 +1,31 @@
+# Busca fotos reales de Nicaragua con licencia libre en Wikimedia Commons (con autor y licencia).
+# El resultado se deja en la referencia oculta refs/datos/fotos (no es rama) para revisarlo antes de usarlo.
+name: Datos de fotos
+
+on:
+  workflow_dispatch: # A mano
+  push:
+    branches: [desarrollo] # Cuando cambia el buscador
+    paths: ['scripts/fotos/**', '.github/workflows/datos-fotos.yml']
+
+permissions:
+  contents: write # Para guardar el resultado en refs/datos/fotos
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Igual que en CI
+
+jobs:
+  buscar:
+    name: Buscar fotos en Wikimedia Commons
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4 # Descarga el buscador
+      - name: Buscar y descargar candidatas # Solo licencias libres; guarda autor, licencia y origen
+        run: python3 scripts/fotos/buscar_fotos.py salida
+      - name: Guardar en refs/datos/fotos # Commit aparte que se reemplaza en cada ejecución
+        run: |
+          cd salida # Resultado
+          git init -q && git checkout -q -b datos # Repositorio temporal
+          git config user.name "github-actions[bot]" && git config user.email "41898282+github-actions[bot]@users.noreply.github.com" # Autor automático
+          git add . && git commit -q -m "Candidatas de fotos de Commons en $GITHUB_SHA" # Guarda
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:refs/datos/fotos # Reemplaza el anterior
