@@ -1,0 +1,298 @@
+{
+  "version": "2026-10-12",
+  "status_note": "Borrador para revisión legal. Los datos entre corchetes se completan cuando el equipo los confirme.",
+  "pages": [
+    {
+      "slug": "sobre-nosotros",
+      "title": "Sobre nosotros",
+      "summary": "Qué es esta plataforma, quién la hace y cómo decidimos lo que se publica.",
+      "sections": [
+        {
+          "heading": "Qué hacemos",
+          "body": [
+            "Reunimos en un solo lugar los territorios, destinos, negocios, cultura y música de Nicaragua para que puedas planear un viaje con información que alguien comprobó.",
+            "La plataforma funciona en la web y en Android, en diez idiomas, y está pensada para quien visita el país y para quien recibe a los visitantes."
+          ]
+        },
+        {
+          "heading": "Quién está detrás",
+          "body": [
+            "La plataforma la opera [marcador: razón social], con domicilio en [marcador: dirección] y número RUC [marcador: RUC].",
+            "Si quieres escribirnos, en la página de contacto están los canales que respondemos."
+          ]
+        },
+        {
+          "heading": "Cómo decidimos qué se publica",
+          "body": [
+            "Cada ficha indica su fuente y la fecha en que se comprobó. Si un dato no está confirmado, lo decimos: no publicamos precios, horarios, rutas, coordenadas ni estadísticas inventadas.",
+            "Los negocios se publican después de que el equipo revisa sus documentos. Pagar por más visibilidad no cambia el orden de los resultados de búsqueda, y todo contenido patrocinado se marca como tal."
+          ]
+        },
+        {
+          "heading": "El asistente con inteligencia artificial",
+          "body": [
+            "El asistente responde con la información verificada de la plataforma y muestra de dónde sale cada dato. No reserva, no paga y no cambia nada por ti sin que lo confirmes.",
+            "Si una respuesta está mal, puedes marcarla y el equipo editorial la revisa."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "privacidad",
+      "title": "Aviso de privacidad",
+      "summary": "Qué datos tratamos, para qué, con quién se comparten y cómo ejercer tus derechos según la Ley 787 de Nicaragua.",
+      "sections": [
+        {
+          "heading": "Responsable del tratamiento",
+          "body": [
+            "[marcador: razón social], con domicilio en [marcador: dirección], es responsable de los datos personales que se tratan en esta plataforma.",
+            "Para cualquier consulta sobre privacidad escribe a [marcador: correo de privacidad]."
+          ]
+        },
+        {
+          "heading": "Marco legal",
+          "body": [
+            "Tratamos los datos conforme a la Ley No. 787, Ley de Protección de Datos Personales de Nicaragua, y su reglamento, y a la Constitución Política, que protege la vida privada."
+          ]
+        },
+        {
+          "heading": "Qué datos tratamos y para qué",
+          "items": [
+            "Cuenta: correo, nombre visible y el identificador que asigna el servicio de inicio de sesión. Sirven para abrir tu sesión y proteger tu cuenta.",
+            "Perfil: nombre de usuario, foto, biografía e idioma preferido, si decides completarlos. Se muestran en la comunidad.",
+            "Viajes: los planes que guardas en Mi aventura. Solo los ves tú, salvo que los compartas.",
+            "Mensajes: las conversaciones con negocios. Solo las ven quienes participan; los moderadores no tienen acceso al contenido.",
+            "Comunidad: publicaciones, comentarios, reacciones y reportes que haces. Son públicos o visibles según la opción que elijas al publicar.",
+            "Denuncias: la descripción, la categoría y, si decides darla, la ubicación y las pruebas. La ubicación nunca se publica. Tu identidad solo se comparte con una autoridad si lo autorizas expresamente.",
+            "Registro de negocios: los datos de la empresa y de contacto que entregas para la verificación.",
+            "Notificaciones: el identificador del teléfono o navegador, si activas los avisos.",
+            "Seguridad: un registro de las acciones sensibles (por ejemplo, cambios de permisos). Guardamos la dirección IP solo transformada en un código que no permite recuperarla.",
+            "Medición de navegación: qué páginas se visitan, sin tu nombre, correo ni IP, y solo si aceptas la medición en el aviso de cookies. Se borra a los 90 días. Si tu navegador envía la señal Global Privacy Control, no se mide."
+          ]
+        },
+        {
+          "heading": "Base para tratarlos",
+          "body": [
+            "Tratamos tus datos con tu consentimiento, que das al crear la cuenta o al usar cada función, y para cumplir lo que pides (por ejemplo, entregar un mensaje a un negocio). Puedes retirar el consentimiento en cualquier momento; eso no afecta lo que se hizo antes."
+          ]
+        },
+        {
+          "heading": "Con quién se comparten",
+          "items": [
+            "Proveedores que prestan el servicio técnico: inicio de sesión (Firebase de Google), base de datos y archivos (Supabase), alojamiento (Hostinger) y red de entrega (Cloudflare). Solo tratan los datos para darnos ese servicio.",
+            "Proveedores de mapas y clima: reciben la zona que consultas, no tu identidad.",
+            "Autoridades: solo cuando una ley o una orden judicial lo exige, o cuando autorizas que una denuncia se envíe con tu identidad.",
+            "No vendemos datos personales."
+          ]
+        },
+        {
+          "heading": "Transferencias fuera de Nicaragua",
+          "body": [
+            "Algunos proveedores guardan datos en servidores fuera del país. Elegimos proveedores que ofrecen medidas de seguridad equivalentes y lo indicamos aquí: [marcador: regiones de alojamiento confirmadas]."
+          ]
+        },
+        {
+          "heading": "Cuánto tiempo los guardamos",
+          "body": [
+            "Mientras tengas la cuenta activa. Si la eliminas, borramos o anonimizamos tus datos personales, salvo lo que una ley obligue a conservar. El registro de seguridad se conserva sin datos que te identifiquen directamente.",
+            "Plazos concretos por tipo de dato: [marcador: tabla de retención aprobada]."
+          ]
+        },
+        {
+          "heading": "Tus derechos",
+          "body": [
+            "La Ley 787 te reconoce el derecho a acceder a tus datos, rectificarlos, modificarlos, complementarlos, bloquearlos, cancelarlos o suprimirlos, oponerte a su tratamiento y pedir el olvido digital.",
+            "Para ejercerlos escribe a [marcador: correo de privacidad] indicando qué derecho quieres ejercer. Responderemos en un plazo máximo de 10 días hábiles. Si no recibes respuesta, la ley te permite ejercer la acción de protección de datos personales y acudir a la Dirección de Protección de Datos Personales.",
+            "Desde tu cuenta ya puedes ver y corregir tu perfil y eliminar la cuenta."
+          ]
+        },
+        {
+          "heading": "Seguridad",
+          "body": [
+            "Cada tabla de la base de datos tiene reglas de acceso por usuario, las acciones del equipo exigen doble verificación y quedan registradas, y ninguna clave secreta viaja en la web ni en la app."
+          ]
+        },
+        {
+          "heading": "Menores de edad",
+          "body": [
+            "La plataforma no está dirigida a menores de 16 años. Si eres madre, padre o tutor y crees que un menor nos dio datos, escríbenos y los eliminaremos."
+          ]
+        },
+        {
+          "heading": "Cambios en este aviso",
+          "body": [
+            "Si cambiamos algo importante, te avisaremos en la plataforma antes de que entre en vigor. Arriba se indica la fecha de la versión vigente."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "cookies",
+      "title": "Cookies y almacenamiento",
+      "summary": "Qué guardamos en tu navegador, para qué y cómo cambiar tu elección.",
+      "sections": [
+        {
+          "heading": "Qué son",
+          "body": [
+            "Las cookies y el almacenamiento del navegador son pequeños datos que una página guarda en tu equipo. Usamos solo los necesarios para que la plataforma funcione, y la medición de navegación únicamente si la aceptas."
+          ]
+        },
+        {
+          "heading": "Necesarios (siempre activos)",
+          "items": [
+            "nica_consentimiento (cookie, 12 meses): recuerda tu elección sobre la medición.",
+            "theme (almacenamiento local, sin vencimiento): recuerda si elegiste tema claro u oscuro.",
+            "Sesión de inicio de sesión (almacenamiento del navegador, hasta que cierres sesión): la guarda el servicio de inicio de sesión solo si entras con tu cuenta."
+          ]
+        },
+        {
+          "heading": "Medición (opcional, apagada por defecto)",
+          "items": [
+            "nica_visita (almacenamiento de la pestaña, se borra al cerrarla): un código al azar que agrupa las páginas de una misma visita. No contiene tu nombre, correo ni IP, y no te sigue a otros sitios. Las páginas registradas se borran a los 90 días y nunca se miden las zonas privadas (tu cuenta, tus mensajes, tus viajes)."
+          ]
+        },
+        {
+          "heading": "Publicidad",
+          "body": [
+            "No usamos cookies de publicidad ni de redes sociales de terceros."
+          ]
+        },
+        {
+          "heading": "Cómo cambiar tu elección",
+          "body": [
+            "Puedes cambiarla cuando quieras con el botón Preferencias de cookies al pie de cada página. También puedes borrar estos datos desde la configuración de tu navegador."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "terminos",
+      "title": "Términos de uso",
+      "summary": "Las reglas para usar la plataforma, publicar contenido y relacionarte con negocios.",
+      "sections": [
+        {
+          "heading": "Aceptación",
+          "body": [
+            "Al usar la plataforma aceptas estos términos. Si no estás de acuerdo, no la uses. La operadora es [marcador: razón social]."
+          ]
+        },
+        {
+          "heading": "Tu cuenta",
+          "body": [
+            "Eres responsable de lo que se haga con tu cuenta. Usa una contraseña propia y avísanos si crees que alguien entró sin permiso. Podemos suspender una cuenta que incumpla estos términos; siempre te diremos el motivo y cómo pedir una revisión."
+          ]
+        },
+        {
+          "heading": "Lo que publicas",
+          "body": [
+            "Lo que publicas sigue siendo tuyo. Nos das permiso para mostrarlo en la plataforma mientras no lo borres.",
+            "No está permitido publicar contenido falso, de odio, de acoso, que exponga datos de otra persona, que infrinja derechos de autor o que promueva actividades ilegales. Cualquiera puede reportarlo y el equipo de moderación lo revisa."
+          ]
+        },
+        {
+          "heading": "Información turística",
+          "body": [
+            "Hacemos lo posible por verificar cada dato e indicamos su fuente y fecha, pero las condiciones cambian. Confirma con el negocio o la autoridad antes de viajar, sobre todo precios, horarios y accesos.",
+            "La plataforma no vende servicios turísticos. Los acuerdos que hagas con un negocio son entre tú y ese negocio."
+          ]
+        },
+        {
+          "heading": "Negocios",
+          "body": [
+            "Quien registra un negocio declara que tiene derecho a representarlo y que sus datos son ciertos. La verificación del equipo no es una garantía sobre la calidad del servicio."
+          ]
+        },
+        {
+          "heading": "Denuncias",
+          "body": [
+            "El canal de denuncias no sustituye a los servicios de emergencia. Si hay peligro inmediato llama al 118 (Policía), al 115 (Bomberos) o al 128 (Cruz Roja). Una denuncia falsa hecha a sabiendas puede tener consecuencias legales."
+          ]
+        },
+        {
+          "heading": "Música, imágenes y cultura",
+          "body": [
+            "Las obras se muestran con la licencia o el permiso de sus autores, o mediante los reproductores oficiales de cada plataforma. Si eres titular de una obra y crees que se usa sin permiso, escríbenos a [marcador: correo de derechos de autor]."
+          ]
+        },
+        {
+          "heading": "Responsabilidad",
+          "body": [
+            "La plataforma se ofrece tal cual. En la medida en que la ley lo permita, no respondemos por daños derivados de información de terceros ni de interrupciones del servicio."
+          ]
+        },
+        {
+          "heading": "Ley aplicable",
+          "body": [
+            "Estos términos se rigen por las leyes de la República de Nicaragua. [marcador: jurisdicción acordada]."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "accesibilidad",
+      "title": "Accesibilidad",
+      "summary": "Nuestro compromiso para que cualquiera pueda usar la plataforma y cómo avisarnos de un problema.",
+      "sections": [
+        {
+          "heading": "Objetivo",
+          "body": [
+            "Buscamos cumplir el nivel AA de las Pautas de Accesibilidad para el Contenido Web (WCAG) 2.2 en la web y criterios equivalentes en Android."
+          ]
+        },
+        {
+          "heading": "Qué ya hacemos",
+          "items": [
+            "Tipografía Atkinson Hyperlegible, diseñada para personas con baja visión.",
+            "Colores con contraste comprobado en tema claro y oscuro.",
+            "Todo se puede usar con teclado, con el foco siempre visible, y hay un enlace para saltar al contenido.",
+            "Las animaciones y el relieve en 3D se detienen si tu sistema pide reducir el movimiento o ahorrar datos.",
+            "Las imágenes e ilustraciones tienen descripción para lectores de pantalla.",
+            "La web se revisa con pruebas automáticas de accesibilidad en cada cambio."
+          ]
+        },
+        {
+          "heading": "Limitaciones conocidas",
+          "items": [
+            "El mapa interactivo depende de un proveedor externo; para cada lugar del mapa hay también una ficha en texto.",
+            "Las traducciones a algunos idiomas están en revisión."
+          ]
+        },
+        {
+          "heading": "Avísanos",
+          "body": [
+            "Si algo no te funciona, escríbenos a [marcador: correo de accesibilidad] indicando la página y lo que pasó. Respondemos en un máximo de 10 días hábiles."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "contacto",
+      "title": "Contacto",
+      "summary": "Cómo comunicarte con el equipo según lo que necesites.",
+      "sections": [
+        {
+          "heading": "Canales",
+          "items": [
+            "Soporte general: [marcador: correo de soporte].",
+            "Privacidad y datos personales: [marcador: correo de privacidad].",
+            "Derechos de autor: [marcador: correo de derechos de autor].",
+            "Accesibilidad: [marcador: correo de accesibilidad].",
+            "Prensa y alianzas: [marcador: correo de prensa]."
+          ]
+        },
+        {
+          "heading": "Si eres un negocio",
+          "body": [
+            "Para aparecer en la plataforma usa la opción Registrar mi negocio en Comunidad. El equipo revisa cada solicitud y te responde por el mismo medio."
+          ]
+        },
+        {
+          "heading": "Emergencias",
+          "body": [
+            "Este no es un canal de emergencias. Si hay peligro inmediato llama al 118 (Policía), al 115 (Bomberos) o al 128 (Cruz Roja)."
+          ]
+        }
+      ]
+    }
+  ]
+}

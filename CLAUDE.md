@@ -26,8 +26,13 @@ if (!user) return null; // Sin sesión no hay nada que mostrar
 
 ## 3. Cómo se trabaja en el repositorio
 
-- Cambios en una rama; se unen a `main` solo con CI en verde (los 5 controles).
+- Cambios en una rama; se unen a `main` solo con CI en verde (los 6 trabajos de CI y CodeQL).
 - Toda tabla nueva lleva RLS y pruebas en `supabase/tests/rls_smoke.sql`.
 - Los colores salen del sistema de diseño (`design/sistema/tokens.json`); `scripts/check_tokens.py` lo verifica.
 - Los recursos del Ops Center se declaran en `apps/web/src/ops/resources.ts` y en `app.admin_resources`; `scripts/ops-resources.test.ts` verifica que coincidan.
+- Los textos legales se editan solo en `content/legal/`; `python3 scripts/sync_legal.py` los copia a web y Android.
+- Ningún dato legal o de contacto se inventa: lo que falta va como `[marcador: …]`.
+- La medición de navegación solo corre con consentimiento y nunca guarda datos personales ni rutas privadas.
+- Las páginas nuevas deben pasar la revisión de accesibilidad de CI (axe, WCAG 2.2 AA, tema claro y oscuro).
+- Seguridad y privacidad: `docs/SEGURIDAD.md`.
 - Estado real de cada módulo: `docs/ROADMAP.md`.

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'; // Acceso a los proveed
 import '../../core/theme.dart'; // Colores y espaciados del sistema de diseño
 import '../auth/auth_repository.dart'; // Sesión y acciones de autenticación
 import '../auth/sign_in_screen.dart'; // Pantalla de acceso
+import '../legal/legal_screen.dart'; // Información y legal
 
 /// Pestaña "Perfil": muestra el acceso si no hay sesión, o la cuenta con "Cerrar sesión".
 class ProfileScreen extends ConsumerWidget {
@@ -16,7 +17,14 @@ class ProfileScreen extends ConsumerWidget {
     return session.when(
       loading: () => const Center(child: CircularProgressIndicator()), // Mientras comprueba la sesión
       error: (_, __) => const Center(child: Text('No se pudo comprobar la sesión.')), // Error al leer la sesión
-      data: (user) => user == null ? const SignInScreen() : _Account(user: user), // Sin sesión: acceso; con sesión: cuenta
+      data: (user) => user == null
+          ? const Column(
+              children: [
+                Expanded(child: SignInScreen()), // Sin sesión: pantalla de acceso
+                LegalLink(), // Información y legal, accesible sin cuenta
+              ],
+            )
+          : _Account(user: user), // Con sesión: cuenta
     );
   }
 }
@@ -85,7 +93,26 @@ class _AccountState extends ConsumerState<_Account> {
           const SizedBox(height: TvSpace.s3), // Espacio
           Text(_message!), // Mensaje visible
         ],
+        const SizedBox(height: TvSpace.s8), // Espacio antes del enlace
+        const LegalLink(), // Información y legal
       ],
+    );
+  }
+}
+
+/// Enlace a "Información y legal" (Sobre nosotros, Privacidad, Términos…).
+class LegalLink extends StatelessWidget {
+  const LegalLink({super.key}); // Constructor constante
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      top: false, // Solo protege el borde inferior
+      child: TextButton.icon(
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const LegalIndexScreen())), // Abre la lista
+        icon: const Icon(Icons.info_outline), // Icono de información
+        label: const Text('Información y legal'), // Texto del enlace
+      ),
     );
   }
 }

@@ -29,4 +29,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/legal/ # Textos legales (copiados desde content/legal por scripts/sync_legal.py)
   # generate: true  → activar al añadir l10n.yaml y los ARB de los 10 idiomas (Fase 9)

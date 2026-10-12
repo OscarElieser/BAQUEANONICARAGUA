@@ -253,6 +253,7 @@ export const SECTIONS: OpsSection[] = [
     resources: ['heritage_items', 'historical_events', 'artists', 'music_works', 'media_licenses', 'community_stories'] },
   { key: 'fuentes', label: 'Fuentes y datos', path: '/r/data_sources', resources: ['data_sources'] },
   { key: 'auditoria', label: 'Auditoría', path: '/auditoria', permission: 'audit.read' },
+  { key: 'navegacion', label: 'Navegación', path: '/navegacion', permission: 'analytics.read' }, // Resumen anónimo de páginas vistas (con consentimiento)
   { key: 'configuracion', label: 'Configuración', path: '/configuracion', permission: 'settings.manage' },
   { key: 'notificaciones', label: 'Notificaciones', path: null },
   { key: 'traducciones', label: 'Traducciones', path: null },

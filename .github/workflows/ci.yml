@@ -18,6 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/check_tokens.py
+      - name: Textos legales iguales en web y Android # Sobre nosotros, privacidad, cookies, términos…
+        run: python3 scripts/sync_legal.py --check
 
   ai-core:
     name: Lógica sin dependencias (asistente, Ops Center, funciones)
@@ -35,6 +37,8 @@ jobs:
         with: { deno-version: v2.x } # Última versión estable de Deno 2
       - name: Tipos de las funciones de Supabase con Deno # Revisa index.ts tal como se desplegará
         run: deno check supabase/functions/*/index.ts
+      - name: Cabeceras de seguridad de la web # CSP, HSTS y demás, sin eval en producción
+        run: node --test apps/web/security-headers.test.mjs
 
   node:
     name: Web + API (tipos, pruebas, build)
@@ -52,6 +56,8 @@ jobs:
         run: pnpm -r --if-present run test
       - name: Build
         run: pnpm -r --if-present run build
+      - name: Dependencias sin vulnerabilidades críticas # Falla solo con avisos críticos en dependencias de producción
+        run: pnpm audit --prod --audit-level critical
       - name: Guardar pnpm-lock.yaml generado
         if: always()
         uses: actions/upload-artifact@v4
@@ -99,6 +105,33 @@ jobs:
           done
           exit ${status:-0}
       - run: flutter test
+
+  docker:
+    name: Imágenes Docker (web y API)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Construir imagen de la API # Comprueba que la receta funciona (no se publica)
+        run: docker build -f apps/api/Dockerfile -t nica-api:ci .
+      - name: Construir imagen de la web # Sin configuración: la web arranca con avisos de "no disponible todavía"
+        run: docker build -f apps/web/Dockerfile -t nica-web:ci .
+      - name: La web arranca sin privilegios y responde # Prueba real del contenedor
+        run: |
+          docker run -d --name web --read-only --tmpfs /tmp --tmpfs /app/apps/web/.next/cache -p 3000:3000 nica-web:ci # Arranca con disco de solo lectura
+          for i in $(seq 1 30); do curl -fsS -o /dev/null http://127.0.0.1:3000/es && break; sleep 2; done # Espera hasta 60 s
+          curl -fsS -D headers.txt -o /dev/null http://127.0.0.1:3000/es/privacidad # Pide la página de privacidad
+          grep -qi "content-security-policy" headers.txt # Debe traer la política de seguridad
+          grep -qi "strict-transport-security" headers.txt # Y HSTS
+          test "$(docker exec web id -u)" != "0" # Y no correr como administrador
+          docker logs web | tail -20 # Deja el registro visible
+      - uses: actions/setup-node@v4 # Node para la revisión de accesibilidad
+        with: { node-version: 22 }
+      - name: Accesibilidad WCAG 2.2 AA (axe, temas claro y oscuro) # Falla con problemas graves o críticos
+        working-directory: scripts/a11y
+        run: |
+          npm install --no-audit --no-fund # Instala axe y Playwright solo para esta revisión
+          npx playwright install --with-deps chromium # Navegador para la revisión
+          BASE_URL=http://127.0.0.1:3000 node check.mjs # Revisa las páginas principales
 
 # Despliegue a staging y producción: workflow separado (deploy.yml) con environment
 # "production" protegido por aprobación manual. Se añade en Fase 2 cuando existan

@@ -261,6 +261,14 @@ export class OpsController {
     return data;
   }
 
+  @Get('navigation')
+  @RequirePermissions('analytics.read') // Solo quien tenga permiso de ver el resumen
+  async navigation(@Req() req: AuthedRequest, @Query(new ZodPipe(z.object({ days: z.coerce.number().int().min(1).max(90).default(30) }))) q: { days: number }) {
+    const { data, error } = await this.db.asUser(bearer(req)).rpc('ops_navigation_summary', { p_days: q.days }); // Resumen anónimo calculado en la base de datos
+    if (error) httpFromDb(error); // Traduce errores de la base de datos a HTTP
+    return data; // Devuelve el resumen
+  }
+
   @Post('settings/:key')
   @HttpCode(204)
   @RequirePermissions('settings.manage')

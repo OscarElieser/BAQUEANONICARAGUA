@@ -109,6 +109,14 @@ a { color: var(--accent); }
   clip: rect(0 0 0 0); white-space: nowrap;
 }
 
+/* Enlace "Saltar al contenido": fuera de la vista hasta que recibe el foco con el teclado */
+.saltar {
+  position: fixed; left: 12px; top: -80px; z-index: 60; /* Escondido arriba de la pantalla */
+  padding: 12px 20px; border-radius: var(--radius-pill); /* Forma de píldora como los botones */
+  background: var(--oro); color: var(--on-oro); font-weight: 700; text-decoration: none; /* Colores del sistema */
+}
+.saltar:focus { top: 12px; } /* Aparece al recibir el foco */
+
 /* Un solo momento orquestado: las curvas se dibujan de la base a la cima */
 @keyframes curva-aparece { from { opacity: 0; } }
 .curva { animation: curva-aparece 600ms ease-out both; }

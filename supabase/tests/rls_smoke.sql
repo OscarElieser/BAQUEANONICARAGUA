@@ -821,6 +821,49 @@ begin
 end $$;
 reset role;
 
+-- 44. Medición de navegación: anónima, validada, sin lectura directa y resumen con umbral de anonimato
+set local role anon; -- Visitante sin sesión
+select public.track_navigation('00000000-0000-0000-0000-0000000a0001', '/es/territorios/granada', 'es', 'Google.com', 'web'); -- Registra una página
+do $$
+begin
+  begin
+    perform public.track_navigation('00000000-0000-0000-0000-0000000a0001', '/es/buscar?q=correo@ejemplo.ni', 'es'); -- Ruta con parámetros
+    insert into results values ('navegación rechaza rutas con parámetros', false); -- No debió aceptarla
+  exception when invalid_parameter_value then
+    insert into results values ('navegación rechaza rutas con parámetros', true); -- Rechazada como se espera
+  end;
+  begin
+    perform count(*) from analytics.navigation_events; -- Intenta leer la tabla directamente
+    insert into results values ('visitante no lee eventos de navegación', false); -- No debió poder
+  exception when insufficient_privilege then
+    insert into results values ('visitante no lee eventos de navegación', true); -- Bloqueado
+  end;
+end $$;
+reset role;
+insert into analytics.navigation_events (visit_id, path, locale, platform) -- Cuatro visitas más a la misma ruta (total 5)
+select gen_random_uuid(), '/es/territorios/granada', 'es', 'web' from generate_series(1, 4);
+insert into analytics.navigation_events (visit_id, path, locale, platform) -- Una ruta con una sola visita
+values (gen_random_uuid(), '/es/territorios/rara', 'es', 'web');
+insert into results select 'evento guarda el dominio en minúsculas y sin usuario', -- Comprueba lo guardado
+  exists (select 1 from analytics.navigation_events where referrer_host = 'google.com');
+select pg_temp.act_as('fb_auditor'); -- Auditora con permiso de lectura
+insert into results select 'resumen muestra rutas con 5 visitas o más', -- La ruta frecuente aparece
+  (public.ops_navigation_summary(30)->'top_paths') @> '[{"path":"/es/territorios/granada"}]'::jsonb;
+insert into results select 'resumen oculta rutas con menos de 5 visitas', -- La ruta rara no aparece
+  not ((public.ops_navigation_summary(30)->'top_paths') @> '[{"path":"/es/territorios/rara"}]'::jsonb);
+reset role;
+select pg_temp.act_as('fb_user_a'); -- Usuaria sin permiso
+do $$
+begin
+  begin
+    perform public.ops_navigation_summary(30); -- Intenta ver el resumen
+    insert into results values ('usuaria sin permiso no ve el resumen de navegación', false); -- No debió poder
+  exception when insufficient_privilege then
+    insert into results values ('usuaria sin permiso no ve el resumen de navegación', true); -- Bloqueada
+  end;
+end $$;
+reset role;
+
 select case when ok then 'PASS' else 'FAIL' end as status, name from results order by ok, name;
 select count(*) filter (where not ok) as failures, count(*) as total from results;
 

@@ -1,0 +1,17 @@
+# Archivos que no entran a las imágenes de Docker (más livianas y sin secretos)
+**/node_modules
+**/.next
+**/dist
+**/.turbo
+**/coverage
+.git
+.github
+apps/mobile
+design
+docs
+supabase/.temp
+**/.env
+**/.env.*
+!.env.example
+**/service-account*.json
+**/google-services.json

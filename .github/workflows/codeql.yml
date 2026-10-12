@@ -1,0 +1,25 @@
+# Análisis de seguridad del código (CodeQL de GitHub) en TypeScript y JavaScript.
+name: CodeQL
+
+on:
+  push:
+    branches: ['**'] # En cada rama
+  pull_request: # Y en propuestas de cambio
+  schedule:
+    - cron: '23 9 * * 1' # Además, cada lunes (detecta reglas nuevas aunque no cambie el código)
+
+permissions:
+  contents: read # Leer el código
+  security-events: write # Publicar hallazgos en la pestaña Security
+
+jobs:
+  analyze:
+    name: Análisis de seguridad (CodeQL)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4 # Descarga el código
+      - uses: github/codeql-action/init@v3 # Prepara el análisis
+        with:
+          languages: javascript-typescript # Web, API, funciones y paquetes
+          queries: security-extended # Reglas de seguridad ampliadas
+      - uses: github/codeql-action/analyze@v3 # Ejecuta el análisis y publica resultados

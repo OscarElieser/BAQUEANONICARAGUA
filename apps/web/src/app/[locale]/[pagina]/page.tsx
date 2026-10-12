@@ -1,0 +1,104 @@
+import type { Metadata } from 'next'; // Tipo de los metadatos de la página
+import Link from 'next/link'; // Enlaces internos
+import { notFound } from 'next/navigation'; // Respuesta 404
+import { locales } from '@/i18n/config'; // Idiomas disponibles
+import { TextoLegal } from '@/components/TextoLegal'; // Texto con marcadores resaltados
+import { legalFor, legalSlugs } from '@/lib/legal'; // Textos legales
+
+export const dynamicParams = false; // Solo existen las páginas declaradas: cualquier otra dirección da 404
+
+/** Genera una página por idioma y por texto legal (se construyen de antemano). */
+export function generateStaticParams() {
+  return locales.flatMap((locale) => legalSlugs.map((pagina) => ({ locale, pagina }))); // Todas las combinaciones
+}
+
+/** Título y descripción para buscadores y pestañas del navegador. */
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; pagina: string }> }): Promise<Metadata> {
+  const { locale, pagina } = await params; // Idioma y página pedidos
+  const page = legalFor(locale).file.pages.find((p) => p.slug === pagina); // Busca la página
+  return page ? { title: page.title, description: page.summary } : {}; // Metadatos si existe
+}
+
+/** Convierte "2026-10-12" en "12 de octubre de 2026". */
+function fechaLarga(iso: string): string {
+  return new Intl.DateTimeFormat('es-NI', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T00:00:00Z`)); // Fecha en español de Nicaragua
+}
+
+/** Página legal o institucional: Sobre nosotros, Privacidad, Cookies, Términos, Accesibilidad, Contacto. */
+export default async function PaginaLegal({ params }: { params: Promise<{ locale: string; pagina: string }> }) {
+  const { locale, pagina } = await params; // Idioma y página pedidos
+  const { file, translated } = legalFor(locale); // Textos del idioma (o español si falta la traducción)
+  const page = file.pages.find((p) => p.slug === pagina); // Página pedida
+  if (!page) notFound(); // No existe: 404
+  const anchor = (i: number) => `seccion-${i + 1}`; // Identificador de cada sección para enlazarla
+
+  return (
+    <main className="mx-auto max-w-[1280px] px-4 pb-20 pt-10 sm:px-12">
+      <header className="max-w-[64ch]">
+        <h1 className="m-0 font-display text-[40px] font-normal leading-[1.02] sm:text-[56px]">{page.title}</h1> {/* Título */}
+        <p className="mt-4 text-[19px] leading-[30px] text-ink-muted">{page.summary}</p> {/* Resumen */}
+        <div className="mt-5 flex flex-wrap gap-2 text-[15px]">
+          <span className="rounded-pill bg-ground-raised px-3 py-1">Versión del {fechaLarga(file.version)}</span> {/* Fecha de la versión vigente */}
+          <span className="rounded-pill border border-dashed border-oro-text px-3 py-1 text-oro-text">{file.status_note}</span> {/* Aviso de borrador */}
+        </div>
+        {!translated && (
+          <p lang="es" className="mt-4 text-[15px] text-ink-muted">
+            Este texto está disponible por ahora solo en español. {/* Aviso honesto cuando falta la traducción */}
+          </p>
+        )}
+      </header>
+
+      <div className="mt-10 grid gap-10 lg:grid-cols-[240px_minmax(0,64ch)]">
+        <nav aria-label="En esta página" className="lg:sticky lg:top-6 lg:self-start">
+          <details open className="group">
+            <summary className="cursor-pointer list-none font-bold">En esta página</summary> {/* Índice plegable en el teléfono */}
+            <ol className="m-0 mt-3 list-none space-y-1 p-0 text-[15px]">
+              {page.sections.map((s, i) => (
+                <li key={s.heading}>
+                  <a href={`#${anchor(i)}`} className="block py-1 text-ink-muted no-underline hover:text-accent">
+                    {s.heading} {/* Enlace a la sección */}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </details>
+        </nav>
+
+        <ol lang="es" className="m-0 list-none border-l border-line p-0">
+          {page.sections.map((s, i) => (
+            <li key={s.heading} id={anchor(i)} className="relative scroll-mt-6 pb-8 pl-7">
+              <span aria-hidden className="absolute -left-[6px] top-[10px] h-[11px] w-[11px] rounded-full border-2 border-oro bg-ground" /> {/* Punto del sendero de lectura */}
+              <h2 className="m-0 font-display text-[26px] font-normal leading-[1.2]">{s.heading}</h2> {/* Título de la sección */}
+              {s.body?.map((p) => (
+                <p key={p} className="mt-3 text-[17px] leading-[28px]">
+                  <TextoLegal text={p} /> {/* Párrafo */}
+                </p>
+              ))}
+              {s.items && (
+                <ul className="mt-3 space-y-2 pl-5 text-[17px] leading-[28px]">
+                  {s.items.map((it) => (
+                    <li key={it}>
+                      <TextoLegal text={it} /> {/* Punto de la lista */}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <nav aria-label="Otras páginas" className="mt-6 max-w-[64ch] border-t border-line pt-6">
+        <ul className="m-0 flex list-none flex-wrap gap-x-6 gap-y-2 p-0">
+          {file.pages
+            .filter((p) => p.slug !== page.slug) // Todas menos la actual
+            .map((p) => (
+              <li key={p.slug}>
+                <Link href={`/${locale}/${p.slug}`}>{p.title}</Link> {/* Enlace a otra página legal */}
+              </li>
+            ))}
+        </ul>
+      </nav>
+    </main>
+  );
+}

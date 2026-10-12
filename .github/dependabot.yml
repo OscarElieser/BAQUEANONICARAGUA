@@ -1,0 +1,17 @@
+# Dependabot propone actualizaciones de seguridad y versiones cada semana (abre ramas con CI; nada se une solo).
+version: 2
+updates:
+  - package-ecosystem: npm # Web, API y paquetes de Node
+    directory: "/"
+    schedule: { interval: weekly, day: monday } # Los lunes
+    open-pull-requests-limit: 5 # Máximo 5 propuestas abiertas
+  - package-ecosystem: pub # App Android (Flutter)
+    directory: "/apps/mobile"
+    schedule: { interval: weekly, day: monday }
+    open-pull-requests-limit: 5
+  - package-ecosystem: github-actions # Acciones de CI
+    directory: "/"
+    schedule: { interval: weekly, day: monday }
+  - package-ecosystem: docker # Imágenes base de Docker
+    directories: ["/apps/web", "/apps/api"]
+    schedule: { interval: weekly, day: monday }

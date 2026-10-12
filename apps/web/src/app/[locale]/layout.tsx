@@ -3,6 +3,9 @@ import { notFound } from 'next/navigation';
 import { Young_Serif, Atkinson_Hyperlegible } from 'next/font/google';
 import { locales, type Locale } from '@/i18n/config';
 import { SiteHeader } from '@/components/SiteHeader';
+import { SiteFooter } from '@/components/SiteFooter'; // Pie con páginas legales y preferencias de cookies
+import { AvisoCookies } from '@/components/AvisoCookies'; // Aviso de cookies con consentimiento real
+import { MedicionNavegacion } from '@/components/MedicionNavegacion'; // Medición anónima, solo con consentimiento
 import '../globals.css';
 
 const youngSerif = Young_Serif({ weight: '400', subsets: ['latin'], variable: '--font-young-serif', display: 'swap' });
@@ -32,8 +35,16 @@ export default async function LocaleLayout({
         <script dangerouslySetInnerHTML={{ __html: themeBoot }} />
       </head>
       <body>
+        <a href="#contenido" className="saltar">
+          Saltar al contenido {/* Primer elemento con teclado: evita recorrer toda la cabecera */}
+        </a>
         <SiteHeader locale={locale as Locale} />
-        {children}
+        <div id="contenido" tabIndex={-1} className="outline-none">
+          {children} {/* Contenido de cada página */}
+        </div>
+        <SiteFooter locale={locale} /> {/* Pie de página común */}
+        <AvisoCookies locale={locale} /> {/* Aviso de cookies (solo aparece si falta elegir) */}
+        <MedicionNavegacion locale={locale} /> {/* Registra páginas vistas solo con consentimiento */}
       </body>
     </html>
   );
