@@ -1,0 +1,38 @@
+# Genera el mapa ilustrado de los 17 territorios a partir de Natural Earth (dominio público).
+# El resultado se deja en la referencia oculta refs/datos/mapa (no es rama) para revisarlo antes de usarlo.
+name: Datos del mapa
+
+on:
+  workflow_dispatch: # A mano
+  push:
+    branches: [desarrollo] # Cuando cambia el generador
+    paths: ['scripts/mapa/**', '.github/workflows/datos-mapa.yml']
+
+permissions:
+  contents: write # Para guardar el resultado en refs/datos/mapa
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Igual que en CI
+
+jobs:
+  generar:
+    name: Generar mapa desde Natural Earth
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4 # Descarga el generador
+      - name: Descargar Natural Earth (versión fija) # Límites de primer nivel y lagos, escala 1:10 millones
+        run: |
+          base=https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson # Versión publicada fija
+          curl -fsSL "$base/ne_10m_admin_1_states_provinces.geojson" -o admin1.geojson # Departamentos y regiones del mundo
+          curl -fsSL "$base/ne_10m_lakes.geojson" -o lagos.geojson # Lagos del mundo
+      - name: Generar # Filtra Nicaragua, simplifica y proyecta
+        run: |
+          mkdir salida # Carpeta del resultado
+          python3 scripts/mapa/generar_mapa.py admin1.geojson lagos.geojson salida/mapa.json # Mapa
+      - name: Guardar en refs/datos/mapa # Commit aparte que se reemplaza en cada ejecución
+        run: |
+          cd salida # Resultado
+          git init -q && git checkout -q -b datos # Repositorio temporal
+          git config user.name "github-actions[bot]" && git config user.email "41898282+github-actions[bot]@users.noreply.github.com" # Autor automático
+          git add . && git commit -q -m "Mapa generado desde Natural Earth en $GITHUB_SHA" # Guarda
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:refs/datos/mapa # Reemplaza el anterior
