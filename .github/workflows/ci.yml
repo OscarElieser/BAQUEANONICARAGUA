@@ -186,6 +186,15 @@ jobs:
           grep -qi 'hreflang="x-default"' cultura.html # Declara la versión por defecto
           curl -fsS "http://127.0.0.1:3000/es/mapa?q=volcan" -o busqueda.html # Una búsqueda
           grep -q 'name="robots" content="noindex, follow"' busqueda.html # Las búsquedas no se indexan, pero sus enlaces sí se siguen
+      - name: Vista previa al compartir, icono y página 404 # Imágenes Open Graph del sitio y de un territorio, icono y "te perdiste en la neblina"
+        run: |
+          curl -fsS -o og.png -w '%{content_type}\n' http://127.0.0.1:3000/es/opengraph-image | grep -q image/png # Imagen del sitio
+          curl -fsS -o og-ter.png -w '%{content_type}\n' http://127.0.0.1:3000/es/territorios/granada/opengraph-image | grep -q image/png # Imagen de un territorio (sale del mapa, sin base de datos)
+          test "$(stat -c %s og-ter.png)" -gt 5000 # No es una imagen vacía
+          curl -fsS -o /dev/null http://127.0.0.1:3000/icono.svg # Icono del sitio
+          curl -fsS http://127.0.0.1:3000/manifest.webmanifest | grep -q icono-512.png # El manifiesto declara los iconos
+          code=$(curl -s -o 404.html -w '%{http_code}' http://127.0.0.1:3000/es/territorios/no-existe) # Una ficha que no existe
+          test "$code" = 404 # Responde 404 de verdad
       - uses: actions/setup-node@v4 # Node para la revisión de accesibilidad
         with: { node-version: 22 }
       - name: Accesibilidad WCAG 2.2 AA (axe, temas claro y oscuro) # Falla con problemas graves o críticos

@@ -354,5 +354,12 @@
   "relief.territory_static": "Portada ilustrada de {name}, hecha con su forma real",
   "relief.territory_note": "Forma real; alturas ilustrativas, no es topografía.",
   "culture.door": "Línea de tiempo y patrimonio del país, cada dato con su fuente.",
-  "ficha.territory_unknown": "Territorio sin confirmar."
+  "ficha.territory_unknown": "Territorio sin confirmar.",
+  "notfound.title": "Te perdiste en la neblina",
+  "notfound.body": "Esta dirección no lleva a ningún lugar publicado. Puede que la ficha ya no exista o que el enlace esté incompleto.",
+  "notfound.home": "Volver a Descubrir",
+  "notfound.map": "Abrir el mapa",
+  "errorpage.title": "Algo se cayó en el camino",
+  "errorpage.body": "La página tuvo un error. Puedes intentarlo otra vez; si sigue pasando, escríbenos desde Contacto.",
+  "errorpage.retry": "Intentar otra vez"
 }

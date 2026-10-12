@@ -354,5 +354,12 @@
   "relief.territory_static": "실제 모양으로 만든 {name}의 일러스트 표지",
   "relief.territory_note": "실제 모양이며, 높이는 설명용으로 지형 자료가 아닙니다.",
   "culture.door": "나라의 연표와 유산, 모든 내용에 출처를 밝힙니다.",
-  "ficha.territory_unknown": "지역 미확인."
+  "ficha.territory_unknown": "지역 미확인.",
+  "notfound.title": "안개 속에서 길을 잃었어요",
+  "notfound.body": "이 주소는 공개된 장소로 연결되지 않습니다. 페이지가 더 이상 없거나 링크가 불완전할 수 있습니다.",
+  "notfound.home": "발견으로 돌아가기",
+  "notfound.map": "지도 열기",
+  "errorpage.title": "가는 길에 문제가 생겼어요",
+  "errorpage.body": "페이지에 오류가 발생했습니다. 다시 시도해 보세요. 계속되면 연락처를 통해 알려 주세요.",
+  "errorpage.retry": "다시 시도"
 }

@@ -354,5 +354,12 @@
   "relief.territory_static": "Couverture illustrée de {name}, construite à partir de sa forme réelle",
   "relief.territory_note": "Forme réelle ; hauteurs illustratives, ce n’est pas de la topographie.",
   "culture.door": "La chronologie et le patrimoine du pays, chaque fait avec sa source.",
-  "ficha.territory_unknown": "Territoire non confirmé."
+  "ficha.territory_unknown": "Territoire non confirmé.",
+  "notfound.title": "Perdu dans la brume",
+  "notfound.body": "Cette adresse ne mène à aucun lieu publié. La fiche n’existe peut-être plus ou le lien est incomplet.",
+  "notfound.home": "Retour à Découvrir",
+  "notfound.map": "Ouvrir la carte",
+  "errorpage.title": "Quelque chose est tombé en chemin",
+  "errorpage.body": "La page a rencontré une erreur. Vous pouvez réessayer ; si cela continue, écrivez-nous depuis Contact.",
+  "errorpage.retry": "Réessayer"
 }

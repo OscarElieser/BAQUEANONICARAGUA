@@ -354,5 +354,12 @@
   "relief.territory_static": "Illustrated cover of {name}, built from its real shape",
   "relief.territory_note": "Real shape; heights are illustrative, not topography.",
   "culture.door": "The country's timeline and heritage, every fact with its source.",
-  "ficha.territory_unknown": "Territory not confirmed."
+  "ficha.territory_unknown": "Territory not confirmed.",
+  "notfound.title": "Lost in the mist",
+  "notfound.body": "This address doesn't lead to any published place. The page may no longer exist or the link may be incomplete.",
+  "notfound.home": "Back to Discover",
+  "notfound.map": "Open the map",
+  "errorpage.title": "Something fell along the way",
+  "errorpage.body": "The page hit an error. You can try again; if it keeps happening, write to us from Contact.",
+  "errorpage.retry": "Try again"
 }

@@ -354,5 +354,12 @@
   "relief.territory_static": "Illustriertes Titelbild von {name}, aus der echten Form erstellt",
   "relief.territory_note": "Echte Form; Höhen nur zur Veranschaulichung, keine Topografie.",
   "culture.door": "Zeitleiste und Kulturerbe des Landes, jede Angabe mit Quelle.",
-  "ficha.territory_unknown": "Gebiet nicht bestätigt."
+  "ficha.territory_unknown": "Gebiet nicht bestätigt.",
+  "notfound.title": "Im Nebel verirrt",
+  "notfound.body": "Diese Adresse führt zu keinem veröffentlichten Ort. Die Seite gibt es vielleicht nicht mehr oder der Link ist unvollständig.",
+  "notfound.home": "Zurück zu Entdecken",
+  "notfound.map": "Karte öffnen",
+  "errorpage.title": "Unterwegs ist etwas schiefgegangen",
+  "errorpage.body": "Die Seite hatte einen Fehler. Du kannst es noch einmal versuchen; wenn es weiter passiert, schreib uns über Kontakt.",
+  "errorpage.retry": "Erneut versuchen"
 }

@@ -224,3 +224,6 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
 /* Negocios: pizarra de pulpería (oscura en los dos temas) */
 .pizarra { --ink: #F2EFE5; --ink-muted: #C9D8D0; background: #071C1B; color: var(--ink); box-shadow: inset 0 0 0 6px #0A4339; } /* Pizarra con marco */
 .pizarra-puntos { border-bottom: 2px dotted #7DB0A4; transform: translateY(-5px); } /* Puntos guía hasta el precio */
+.neblina-banda { animation: neblina 4.5s cubic-bezier(.3,.6,.3,1) .3s both; } /* La neblina se corre una sola vez (menos de 5 s) y deja ver el sendero */
+.neblina-banda.lenta { animation-duration: 4.9s; animation-direction: reverse; } /* La otra banda se corre hacia el otro lado */
+@keyframes neblina { from { transform: translateX(120px); } to { transform: translateX(-40px); } } /* De tapar el sendero a dejarlo ver */

@@ -354,5 +354,12 @@
   "relief.territory_static": "{name} 的插画封面，依据真实轮廓制作",
   "relief.territory_note": "轮廓真实；高度仅为示意，并非地形数据。",
   "culture.door": "国家的历史年表与遗产，每条信息都注明来源。",
-  "ficha.territory_unknown": "所属地区待确认。"
+  "ficha.territory_unknown": "所属地区待确认。",
+  "notfound.title": "你在雾中迷路了",
+  "notfound.body": "这个地址没有指向任何已发布的地方。该页面可能已不存在，或链接不完整。",
+  "notfound.home": "返回发现",
+  "notfound.map": "打开地图",
+  "errorpage.title": "路上出了点问题",
+  "errorpage.body": "页面出错了。你可以再试一次；如果仍然出错，请通过“联系我们”告诉我们。",
+  "errorpage.retry": "再试一次"
 }

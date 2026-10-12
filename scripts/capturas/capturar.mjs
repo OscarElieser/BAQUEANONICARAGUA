@@ -19,6 +19,7 @@ const shots = [
   { name: '09-privacidad', path: '/es/privacidad', device: 'desktop', theme: 'light', full: true }, // Aviso de privacidad (completo)
   { name: '10-cuenta-telefono', path: '/es/cuenta', device: 'phone', theme: 'dark' }, // Inicio de sesión en el teléfono
   { name: '11-mapa-territorios', path: '/es', device: 'desktop', theme: 'dark', hover: 'Rivas' }, // Mapa ilustrado con un territorio resaltado
+  { name: '13-pagina-404', path: '/es/territorios/no-existe', device: 'desktop', theme: 'dark' }, // "Te perdiste en la neblina"
   { name: '12-mapa-territorios-claro', path: '/es', device: 'desktop', theme: 'light', hover: 'Matagalpa' }, // El mismo mapa en tema claro
 ];
 

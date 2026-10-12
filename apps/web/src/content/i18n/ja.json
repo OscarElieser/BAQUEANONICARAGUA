@@ -354,5 +354,12 @@
   "relief.territory_static": "実際の形から作った{name}のイラストカバー",
   "relief.territory_note": "形は実際のもの。高さはイメージで、地形データではありません。",
   "culture.door": "国の年表と遺産。すべての情報に出典があります。",
-  "ficha.territory_unknown": "地域は未確認です。"
+  "ficha.territory_unknown": "地域は未確認です。",
+  "notfound.title": "霧の中で迷いました",
+  "notfound.body": "このアドレスは公開中の場所につながっていません。ページがもう存在しないか、リンクが不完全な可能性があります。",
+  "notfound.home": "「見つける」に戻る",
+  "notfound.map": "地図を開く",
+  "errorpage.title": "途中で問題が起きました",
+  "errorpage.body": "ページでエラーが発生しました。もう一度お試しください。続く場合は「お問い合わせ」からご連絡ください。",
+  "errorpage.retry": "もう一度試す"
 }
