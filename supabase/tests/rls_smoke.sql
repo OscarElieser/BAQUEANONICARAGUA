@@ -36,7 +36,7 @@ values ('00000000-0000-0000-0000-0000000000b1', '00000000-0000-0000-0000-0000000
         'comedor-prueba', 'Comedor de prueba', 6, 'claimed', 'published');
 
 create temp table results (name text, ok boolean);
-grant insert on results to anon, authenticated;
+grant insert, update, select on results to anon, authenticated;
 
 -- Utilidad para actuar como un usuario Firebase
 create or replace function pg_temp.act_as(p_uid text, p_project text default 'nica-test')
@@ -362,6 +362,115 @@ insert into results select 'municipios siguen en borrador hasta confirmar con IN
   bool_and(editorial = 'draft') from public.municipalities;
 set local role anon;
 insert into results select 'anónimo no ve municipios en borrador', count(*) = 0 from public.municipalities;
+reset role;
+
+-- ===========================================================================
+-- Fase 4 · conversaciones con negocios, no leídos, notificaciones, feed, moderación
+-- ===========================================================================
+
+-- 24. B escribe al negocio; la dueña lo ve como no leído y recibe notificación
+select pg_temp.act_as('fb_user_b');
+insert into ctx values ('conv', public.start_business_conversation('00000000-0000-0000-0000-0000000000b1', 'Hola, ¿abren el domingo?'));
+reset role;
+select pg_temp.act_as('fb_owner');
+insert into results select 'dueña ve 1 mensaje sin leer',
+  (select unread = 1 from public.my_inbox() where conversation_id = (select v from ctx where k = 'conv'));
+insert into results select 'dueña recibe notificación de mensaje',
+  exists (select 1 from public.notifications where kind = 'new_message'
+          and payload->>'conversation_id' = (select v::text from ctx where k = 'conv'));
+insert into results select 'notificación nace pendiente de envío, no "enviada"',
+  (select bool_and(push_status = 'pending') from public.notifications where kind = 'new_message');
+select public.mark_conversation_read((select v from ctx where k = 'conv'));
+insert into results select 'al leer, el contador vuelve a 0',
+  (select unread = 0 from public.my_inbox() where conversation_id = (select v from ctx where k = 'conv'));
+do $$
+begin
+  begin
+    update public.notifications set push_status = 'sent';
+    insert into results values ('usuario no puede marcar push como enviado', false);
+  exception when insufficient_privilege then
+    insert into results values ('usuario no puede marcar push como enviado', true);
+  end;
+end $$;
+do $$
+begin
+  begin
+    perform public.start_business_conversation('00000000-0000-0000-0000-0000000000b1', 'Me escribo a mí');
+    insert into results values ('dueña no puede escribirse a su negocio', false);
+  exception when invalid_parameter_value then
+    insert into results values ('dueña no puede escribirse a su negocio', true);
+  end;
+end $$;
+reset role;
+
+-- 25. Segunda consulta de B reutiliza la misma conversación
+select pg_temp.act_as('fb_user_b');
+insert into results select 'B reanuda la misma conversación',
+  public.start_business_conversation('00000000-0000-0000-0000-0000000000b1', '¿Y el sábado?') = (select v from ctx where k = 'conv');
+insert into results select 'A no ve la conversación de B con el negocio',
+  true; -- verificado abajo como A
+reset role;
+select pg_temp.act_as('fb_user_a');
+update results set ok = not exists (select 1 from public.my_inbox() where conversation_id = (select v from ctx where k = 'conv'))
+ where name = 'A no ve la conversación de B con el negocio';
+reset role;
+
+-- 26. Si la dueña bloquea a B, B no puede escribir
+insert into public.user_blocks (blocker_id, blocked_id)
+values ('00000000-0000-0000-0000-0000000000e1', '00000000-0000-0000-0000-00000000000b');
+select pg_temp.act_as('fb_user_b');
+do $$
+begin
+  begin
+    perform public.start_business_conversation('00000000-0000-0000-0000-0000000000b1', 'insisto');
+    insert into results values ('bloqueado no puede consultar al negocio', false);
+  exception when insufficient_privilege then
+    insert into results values ('bloqueado no puede consultar al negocio', true);
+  end;
+end $$;
+reset role;
+delete from public.user_blocks;
+
+-- 27. Feed público y notificación de comentario
+select pg_temp.act_as('fb_user_a');
+insert into public.posts (id, author_id, body_md, visibility) values
+  ('00000000-0000-0000-0000-0000000005a1', '00000000-0000-0000-0000-00000000000a', 'Atardecer en la laguna', 'public'),
+  ('00000000-0000-0000-0000-0000000005a2', '00000000-0000-0000-0000-00000000000a', 'Nota privada', 'private');
+reset role;
+set local role anon;
+select set_config('request.jwt.claims', '{}', true);
+insert into results select 'feed público muestra la publicación pública',
+  exists (select 1 from public.public_feed() where id = '00000000-0000-0000-0000-0000000005a1');
+insert into results select 'feed público no muestra la privada',
+  not exists (select 1 from public.public_feed() where id = '00000000-0000-0000-0000-0000000005a2');
+reset role;
+select pg_temp.act_as('fb_user_b');
+insert into public.comments (post_id, author_id, body) values
+  ('00000000-0000-0000-0000-0000000005a1', '00000000-0000-0000-0000-00000000000b', '¡Qué lindo!');
+reset role;
+select pg_temp.act_as('fb_user_a');
+insert into results select 'autora recibe notificación del comentario',
+  exists (select 1 from public.notifications where kind = 'post_comment');
+reset role;
+
+-- 28. Moderación auditada
+select pg_temp.act_as('fb_moderator');
+select public.moderate_content('post', '00000000-0000-0000-0000-0000000005a1', 'hide', 'Prueba de moderación');
+reset role;
+insert into results select 'publicación oculta sale del feed',
+  not exists (select 1 from public.public_feed() where id = '00000000-0000-0000-0000-0000000005a1');
+insert into results select 'moderación queda auditada',
+  exists (select 1 from audit.logs where action = 'moderation.hide' and target_id = '00000000-0000-0000-0000-0000000005a1');
+select pg_temp.act_as('fb_user_b');
+do $$
+begin
+  begin
+    perform public.moderate_content('post', '00000000-0000-0000-0000-0000000005a1', 'restore', 'Me gusta');
+    insert into results values ('usuario común no puede moderar', false);
+  exception when insufficient_privilege then
+    insert into results values ('usuario común no puede moderar', true);
+  end;
+end $$;
 reset role;
 
 select case when ok then 'PASS' else 'FAIL' end as status, name from results order by ok, name;
