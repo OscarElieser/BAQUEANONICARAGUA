@@ -8,6 +8,9 @@ import { AssistantController } from './assistant/assistant.controller';
 import { BusinessesController } from './businesses/businesses.controller';
 import { CatalogController } from './catalog/catalog.controller';
 import { CommunityController } from './community/community.controller';
+import { CultureController } from './culture/culture.controller';
+import { IncidentsController } from './incidents/incidents.controller';
+import { WeatherController } from './weather/weather.controller';
 import { ConversationsController } from './messaging/conversations.controller';
 import { NotificationsController } from './notifications/notifications.controller';
 import { SupabaseService } from './common/supabase.service';
@@ -27,6 +30,9 @@ import { VerificationsController } from './ops/verifications.controller';
     ConversationsController,
     NotificationsController,
     AssistantController,
+    IncidentsController,
+    CultureController,
+    WeatherController,
   ],
   providers: [
     SupabaseService,

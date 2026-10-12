@@ -479,6 +479,137 @@ begin
 end $$;
 reset role;
 
+-- ===========================================================================
+-- Fase 6 · flujo de denuncias, cultura y música
+-- ===========================================================================
+
+-- 29. Denuncia urgente: recibida, con orientación a canales oficiales
+select pg_temp.act_as('fb_user_b');
+insert into ctx select 'inc', (r->>'id')::uuid
+from (select public.submit_incident('trail_risk', 'Puente colgante del sendero con tablas rotas', null, null, null, 6::smallint, true) as r) s;
+reset role;
+insert into results select 'denuncia queda recibida con evento visible',
+  exists (select 1 from public.incident_events where incident_id = (select v from ctx where k = 'inc') and to_state = 'received');
+
+select pg_temp.act_as('fb_user_b');
+insert into results select 'denuncia urgente orienta a 118/115/128',
+  (public.submit_incident('safety', 'Persona herida en el mirador, necesita ayuda', null, null, null, null, true)->>'urgent_guidance') like '%118%';
+reset role;
+
+-- 30. Transiciones: válidas e inválidas
+select pg_temp.act_as('fb_admin');
+select public.update_incident_state((select v from ctx where k = 'inc'), 'in_review', 'Caso asignado al equipo');
+do $$
+begin
+  begin
+    perform public.update_incident_state((select v from ctx where k = 'inc'), 'received', 'volver atrás');
+    insert into results values ('no se puede volver a "recibida"', false);
+  exception when object_not_in_prerequisite_state then
+    insert into results values ('no se puede volver a "recibida"', true);
+  end;
+  begin
+    perform public.update_incident_state((select v from ctx where k = 'inc'), 'referred', 'Derivada a MARENA');
+    insert into results values ('no se marca derivada sin remisión transmitida', false);
+  exception when object_not_in_prerequisite_state then
+    insert into results values ('no se marca derivada sin remisión transmitida', true);
+  end;
+end $$;
+select public.update_incident_state((select v from ctx where k = 'inc'), 'needs_info', 'Nota interna: verificar con guardaparques', false);
+reset role;
+
+-- 31. El denunciante no ve notas internas y responde cuando se le pide
+select pg_temp.act_as('fb_user_b');
+insert into results select 'denunciante no ve notas internas',
+  not exists (select 1 from public.incident_events where incident_id = (select v from ctx where k = 'inc') and note like 'Nota interna%');
+select public.reply_incident((select v from ctx where k = 'inc'), 'El puente está a 200 m de la entrada norte');
+insert into results select 'al responder vuelve a revisión',
+  (select state = 'in_review' from public.incident_reports where id = (select v from ctx where k = 'inc'));
+reset role;
+
+-- 32. Remisión real: preparar con consentimiento, transmitir con acuse, luego derivar
+select pg_temp.act_as('fb_admin');
+insert into ctx values ('ref', public.prepare_incident_referral((select v from ctx where k = 'inc'), 'MARENA', 'correo oficial', 'doc-canal-001', now()));
+select public.record_referral_transmission((select v from ctx where k = 'ref'), true, 'ACUSE-2026-0001');
+select public.update_incident_state((select v from ctx where k = 'inc'), 'referred', 'Remitida a la institución competente');
+reset role;
+insert into results select 'derivada solo tras transmisión con acuse',
+  (select state = 'referred' from public.incident_reports where id = (select v from ctx where k = 'inc'));
+insert into results select 'denunciante recibe notificación del avance',
+  exists (select 1 from public.notifications n join public.profiles p on p.id = n.profile_id
+          where p.firebase_uid = 'fb_user_b' and n.kind = 'incident_update');
+
+-- 33. El moderador comunitario no puede gestionar denuncias
+select pg_temp.act_as('fb_moderator');
+do $$
+begin
+  begin
+    perform public.update_incident_state((select v from ctx where k = 'inc'), 'resolved', 'cerrar');
+    insert into results values ('moderador no gestiona denuncias', false);
+  exception when insufficient_privilege then
+    insert into results values ('moderador no gestiona denuncias', true);
+  end;
+end $$;
+reset role;
+
+-- 34. Música: solo reproductores oficiales o audio con licencia que lo permita
+insert into public.artists (id, slug, name, kind, editorial) values
+  ('00000000-0000-0000-0000-00000000a71a', 'artista-prueba', 'Artista de prueba', 'group', 'draft');
+do $$
+begin
+  begin
+    insert into public.music_works (artist_id, title, embed_url)
+    values ('00000000-0000-0000-0000-00000000a71a', 'Tema', 'https://sitio-pirata.example/tema.mp3');
+    insert into results values ('embed solo de reproductores oficiales', false);
+  exception when check_violation then
+    insert into results values ('embed solo de reproductores oficiales', true);
+  end;
+  begin
+    insert into public.music_works (artist_id, title, hosted_path)
+    values ('00000000-0000-0000-0000-00000000a71a', 'Tema', 'audio/tema.mp3');
+    insert into results values ('audio alojado exige licencia', false);
+  exception when check_violation then
+    insert into results values ('audio alojado exige licencia', true);
+  end;
+end $$;
+insert into public.media_licenses (id, license, holder, permission_ref, allows_hosting) values
+  ('00000000-0000-0000-0000-0000000011c1', 'permiso-escrito', 'Agrupación de prueba', 'carta-2026-01', false);
+do $$
+begin
+  begin
+    insert into public.music_works (artist_id, title, hosted_path, license_id)
+    values ('00000000-0000-0000-0000-00000000a71a', 'Tema', 'audio/tema.mp3', '00000000-0000-0000-0000-0000000011c1');
+    insert into results values ('licencia sin permiso de alojar se rechaza', false);
+  exception when check_violation then
+    insert into results values ('licencia sin permiso de alojar se rechaza', true);
+  end;
+end $$;
+insert into public.music_works (artist_id, title, embed_url)
+values ('00000000-0000-0000-0000-00000000a71a', 'Tema oficial', 'https://www.youtube-nocookie.com/embed/abc123');
+insert into results values ('reproductor oficial se acepta', true);
+
+-- 35. Patrimonio comunitario y temas sensibles
+do $$
+begin
+  begin
+    insert into public.heritage_items (slug, title, kind, tangible, community_knowledge)
+    values ('saber-tradicional', 'Saber tradicional', 'oral_tradition', false, true);
+    insert into results values ('conocimiento comunitario exige consentimiento', false);
+  exception when check_violation then
+    insert into results values ('conocimiento comunitario exige consentimiento', true);
+  end;
+  begin
+    insert into public.historical_events (title, era, start_year, contested, source_ids, editorial)
+    values ('Hecho discutido', 'republican', 1900, true, array['00000000-0000-0000-0000-0000000005c0']::uuid[], 'published');
+    insert into results values ('hecho controvertido exige perspectivas y segunda revisión', false);
+  exception when check_violation then
+    insert into results values ('hecho controvertido exige perspectivas y segunda revisión', true);
+  end;
+end $$;
+set local role anon;
+select set_config('request.jwt.claims', '{}', true);
+insert into results select 'anónimo no ve artistas en borrador', count(*) = 0 from public.artists;
+reset role;
+
 select case when ok then 'PASS' else 'FAIL' end as status, name from results order by ok, name;
 select count(*) filter (where not ok) as failures, count(*) as total from results;
 
