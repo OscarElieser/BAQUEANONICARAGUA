@@ -4,7 +4,7 @@
     "status": "needs_review",
     "note": "Traducción inicial pendiente de revisión por una persona hablante nativa."
   },
-  "meta.title_default": "Nicaragua, courbe après courbe",
+  "meta.title_default": "BAQUEANO : découvre ce qui n'est pas sur la carte",
   "meta.description": "Territoires, destinations, commerces vérifiés, culture et musique du Nicaragua.",
   "nav.aria": "Expériences",
   "nav.discover": "Découvrir",
@@ -363,5 +363,12 @@
   "errorpage.body": "La page a rencontré une erreur. Vous pouvez réessayer ; si cela continue, écrivez-nous depuis Contact.",
   "errorpage.retry": "Réessayer",
   "tmap.legend": "Zones de paysage (regroupement graphique, non officiel)",
-  "tmap.zone_all": "Toutes"
+  "tmap.zone_all": "Toutes",
+  "brand.name": "BAQUEANO",
+  "brand.slogan_1": "Découvre ce qui",
+  "brand.slogan_2": "n'est pas sur la carte",
+  "hero.scene_caption": "Illustration : {zone}",
+  "hero.scenes_aria": "Choisir la scène de couverture",
+  "hero.cta_explore": "Explorer le Nicaragua",
+  "hero.cta_trip": "Créer mon voyage"
 }

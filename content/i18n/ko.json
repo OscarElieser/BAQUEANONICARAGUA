@@ -4,7 +4,7 @@
     "status": "needs_review",
     "note": "Traducción inicial pendiente de revisión por una persona hablante nativa."
   },
-  "meta.title_default": "니카라과, 등고선 따라 한 굽이씩",
+  "meta.title_default": "BAQUEANO: 지도에 없는 곳을 발견하세요",
   "meta.description": "니카라과의 지역, 여행지, 확인된 업체, 문화와 음악.",
   "nav.aria": "경험",
   "nav.discover": "둘러보기",
@@ -363,5 +363,12 @@
   "errorpage.body": "페이지에 오류가 발생했습니다. 다시 시도해 보세요. 계속되면 연락처를 통해 알려 주세요.",
   "errorpage.retry": "다시 시도",
   "tmap.legend": "경관 구역 (디자인용 구분, 공식 아님)",
-  "tmap.zone_all": "전체"
+  "tmap.zone_all": "전체",
+  "brand.name": "BAQUEANO",
+  "brand.slogan_1": "지도에 없는 곳을",
+  "brand.slogan_2": "발견하세요",
+  "hero.scene_caption": "일러스트: {zone}",
+  "hero.scenes_aria": "표지 장면 선택",
+  "hero.cta_explore": "니카라과 탐험하기",
+  "hero.cta_trip": "내 여행 만들기"
 }

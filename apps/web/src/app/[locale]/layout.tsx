@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params; // Idioma de la página
   return {
     metadataBase: new URL(SITE_URL), // Base para convertir rutas en direcciones absolutas
-    title: { default: t(locale, 'meta.title_default'), template: '%s | Nicaragua' }, // Título por defecto y plantilla
+    title: { default: t(locale, 'meta.title_default'), template: '%s | BAQUEANO' }, // Título por defecto y plantilla
     description: t(locale, 'meta.description'), // Descripción para buscadores
     openGraph: { siteName: 'Nicaragua', locale, type: 'website' }, // Datos comunes para la vista previa al compartir
     icons: { icon: [{ url: '/icono.svg', type: 'image/svg+xml' }, { url: '/icono-48.png', sizes: '48x48', type: 'image/png' }], apple: '/icono-180.png' }, // Icono: la silueta del país en curvas de nivel

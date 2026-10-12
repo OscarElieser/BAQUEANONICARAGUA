@@ -4,7 +4,7 @@
     "status": "needs_review",
     "note": "Traducción inicial pendiente de revisión por una persona hablante nativa."
   },
-  "meta.title_default": "Nicaragua, curva dopo curva",
+  "meta.title_default": "BAQUEANO: scopri ciò che non è sulla mappa",
   "meta.description": "Territori, destinazioni, attività verificate, cultura e musica del Nicaragua.",
   "nav.aria": "Esperienze",
   "nav.discover": "Scopri",
@@ -363,5 +363,12 @@
   "errorpage.body": "La pagina ha avuto un errore. Puoi riprovare; se succede ancora, scrivici da Contatti.",
   "errorpage.retry": "Riprova",
   "tmap.legend": "Zone di paesaggio (raggruppamento grafico, non ufficiale)",
-  "tmap.zone_all": "Tutte"
+  "tmap.zone_all": "Tutte",
+  "brand.name": "BAQUEANO",
+  "brand.slogan_1": "Scopri ciò che",
+  "brand.slogan_2": "non è sulla mappa",
+  "hero.scene_caption": "Illustrazione: {zone}",
+  "hero.scenes_aria": "Scegli la scena di copertina",
+  "hero.cta_explore": "Esplora il Nicaragua",
+  "hero.cta_trip": "Crea il mio viaggio"
 }

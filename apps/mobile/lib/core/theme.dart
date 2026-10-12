@@ -36,6 +36,12 @@ class TvColors extends ThemeExtension<TvColors> {
   static const musgo = Color(0xFF8DB89A); // Curvas de las portadas del Centro-norte
   static const caribe = Color(0xFF4FB8B0); // Curvas de las portadas del Caribe y Río San Juan
   static const barro = Color(0xFF9A4A2C); // Barro de San Juan de Oriente: mundo de Cultura
+  static const marcaNaranja = Color(0xFFF65E01); // Naranja explorador de BAQUEANO (gráfico o texto grande)
+  static const marcaTurquesa = Color(0xFF165D6F); // Turquesa de marca sobre fondos claros
+  static const marcaTurquesaClaro = Color(0xFF7FC4D2); // Turquesa de marca sobre fondos nocturnos
+  static const marcaVerde = Color(0xFF4A7A5A); // Verde naturaleza de las escenas
+  static const marcaNocturno = Color(0xFF0D1B2A); // Azul nocturno: portada en oscuro
+  static const marcaProfundo = Color(0xFF102A43); // Azul profundo: titular en claro
 
   static const dark = TvColors(
     ground: Color(0xFF0D5448),

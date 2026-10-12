@@ -4,7 +4,7 @@
     "status": "needs_review",
     "note": "Traducción inicial pendiente de revisión por una persona hablante nativa."
   },
-  "meta.title_default": "Nicaragua, contour by contour",
+  "meta.title_default": "BAQUEANO: discover what's not on the map",
   "meta.description": "Territories, destinations, verified businesses, culture and music from Nicaragua.",
   "nav.aria": "Experiences",
   "nav.discover": "Discover",
@@ -363,5 +363,12 @@
   "errorpage.body": "The page hit an error. You can try again; if it keeps happening, write to us from Contact.",
   "errorpage.retry": "Try again",
   "tmap.legend": "Landscape zones (a design grouping, not official)",
-  "tmap.zone_all": "All"
+  "tmap.zone_all": "All",
+  "brand.name": "BAQUEANO",
+  "brand.slogan_1": "Discover what's",
+  "brand.slogan_2": "not on the map",
+  "hero.scene_caption": "Illustration: {zone}",
+  "hero.scenes_aria": "Choose the cover scene",
+  "hero.cta_explore": "Explore Nicaragua",
+  "hero.cta_trip": "Plan my trip"
 }

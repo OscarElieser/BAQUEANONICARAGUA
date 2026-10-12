@@ -4,7 +4,7 @@
     "status": "needs_review",
     "note": "Traducción inicial pendiente de revisión por una persona hablante nativa."
   },
-  "meta.title_default": "Nicaragua, Höhenlinie für Höhenlinie",
+  "meta.title_default": "BAQUEANO: Entdecke, was auf keiner Karte steht",
   "meta.description": "Gebiete, Reiseziele, geprüfte Betriebe, Kultur und Musik aus Nicaragua.",
   "nav.aria": "Erlebnisse",
   "nav.discover": "Entdecken",
@@ -363,5 +363,12 @@
   "errorpage.body": "Die Seite hatte einen Fehler. Du kannst es noch einmal versuchen; wenn es weiter passiert, schreib uns über Kontakt.",
   "errorpage.retry": "Erneut versuchen",
   "tmap.legend": "Landschaftszonen (gestalterische Gruppierung, nicht amtlich)",
-  "tmap.zone_all": "Alle"
+  "tmap.zone_all": "Alle",
+  "brand.name": "BAQUEANO",
+  "brand.slogan_1": "Entdecke, was",
+  "brand.slogan_2": "auf keiner Karte steht",
+  "hero.scene_caption": "Illustration: {zone}",
+  "hero.scenes_aria": "Titelszene wählen",
+  "hero.cta_explore": "Nicaragua entdecken",
+  "hero.cta_trip": "Meine Reise planen"
 }

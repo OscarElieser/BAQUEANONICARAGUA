@@ -8,6 +8,8 @@ import { SpriteMapa } from '@/components/SpriteMapa'; // Formas del mapa, una so
 import { InclinacionTarjetas } from '@/components/InclinacionTarjetas'; // Inclinación 3D de las tarjetas
 import { VIEWBOX_MAPA, lagos, territorios as formas } from '@/lib/portadas'; // Datos ligeros del mapa
 import { t } from '@/i18n/t'; // Textos traducidos
+import { PortadaBaqueano } from '@/components/PortadaBaqueano'; // Portada con ventana pintada
+import { letraFirma, letraMarca } from '@/app/fuentes'; // Letras de la portada (Archivo y Kaushan Script)
 import type { Metadata } from 'next'; // Tipo de los metadatos
 import { jsonLd, pageMetadata, SITE_URL, absolute } from '@/lib/seo'; // Canónica, idiomas, vista previa y datos estructurados
 
@@ -27,52 +29,28 @@ export default async function Descubrir({ params }: { params: Promise<{ locale: 
     '@context': 'https://schema.org', // Vocabulario de datos estructurados
     '@type': 'WebSite', // Es un sitio web
     url: absolute(locale), // Dirección de la portada en este idioma
-    name: t(locale, 'meta.title_default'), // Nombre visible
+    name: t(locale, 'brand.name'), // Nombre de la marca
     inLanguage: locale, // Idioma
     potentialAction: { '@type': 'SearchAction', target: `${SITE_URL}/${locale}/mapa?q={search_term_string}`, 'query-input': 'required name=search_term_string' }, // Buscador del sitio (Google puede mostrarlo en sus resultados)
   }; // Datos estructurados del sitio
   return (
-    <main className="mx-auto max-w-[1280px] px-4 sm:px-12">
+    <main className={`${letraMarca.variable} ${letraFirma.variable} mx-auto max-w-[1280px] px-4 sm:px-12`}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(site) }} /> {/* Datos para buscadores */}
-      <section className="flex flex-wrap items-center gap-6 pb-2 pt-10">
-        <div className="min-w-0 max-w-[520px] flex-[1_1_420px]">
-          <h1 className="m-0 font-display text-[44px] font-normal leading-[0.98] tracking-[-0.01em] sm:text-[76px]">
-            {t(locale, 'home.title')} {/* Título */}
-          </h1>
-          <p className="mt-6 max-w-[34ch] text-[19px] leading-[30px] text-ink-muted">
-            {t(locale, 'home.intro')} {/* Presentación */}
-          </p>
-          <form role="search" action={`/${locale}/mapa`} className="mt-8 flex flex-wrap gap-2">
-            <label htmlFor="buscar" className="visually-hidden">
-              {t(locale, 'home.search_label')} {/* Nombre accesible del buscador */}
-            </label>
-            <input
-              id="buscar"
-              name="q"
-              type="search"
-              placeholder={t(locale, 'home.search_placeholder')} // Ejemplos de búsqueda
-              className="h-[52px] min-w-0 flex-[1_1_240px] rounded-pill border border-control-border bg-ground-raised px-[22px] text-base text-ink placeholder:text-ink-muted"
-            />
-            <button type="submit" className="h-[52px] rounded-pill bg-oro px-[26px] text-base font-bold text-on-oro">
-              {t(locale, 'home.search_button')} {/* Botón */}
-            </button>
-          </form>
-        </div>
-
-        <figure className="relative m-0 min-w-0 flex-[1_1_520px]">
-          <RelieveVivo3D className="block h-auto w-full" locale={locale} /> {/* Relieve 3D interactivo (con versión ligera automática) */}
-          <figcaption className="absolute bottom-[4%] left-[6%] flex flex-col gap-1.5">
-            <span className="font-display text-[26px]">Isla de Ometepe</span>
-            <span className="text-sm text-ink-muted">{t(locale, 'home.figure_note')}</span>
-          </figcaption>
-        </figure>
-      </section>
+      <PortadaBaqueano locale={locale} /> {/* Ventana pintada, eslogan, botones y buscador */}
 
       <SpriteMapa /> {/* Biblioteca de formas para portadas y mapa */}
       <InclinacionTarjetas /> {/* Las tarjetas se inclinan hacia el cursor */}
       <GaleriaTerritorios locale={locale} published={(territories ?? []).map((ter) => ter.slug)} /> {/* Las 17 portadas en movimiento */}
 
       <PuertaCultura locale={locale} /> {/* Historia, arte y cultura */}
+
+      <figure className="relative m-0 border-t border-line pt-7">
+        <RelieveVivo3D className="block h-auto w-full" locale={locale} /> {/* Relieve 3D interactivo (con versión ligera automática) */}
+        <figcaption className="absolute bottom-[4%] left-[6%] flex flex-col gap-1.5">
+          <span className="font-display text-[26px]">Isla de Ometepe</span> {/* Nombre del lugar del relieve */}
+          <span className="text-sm text-ink-muted">{t(locale, 'home.figure_note')}</span> {/* Estado de la ficha */}
+        </figcaption>
+      </figure>
 
       <section aria-labelledby="territorios" className="border-t border-line pb-10 pt-7">
         <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">

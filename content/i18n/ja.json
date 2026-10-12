@@ -4,7 +4,7 @@
     "status": "needs_review",
     "note": "Traducción inicial pendiente de revisión por una persona hablante nativa."
   },
-  "meta.title_default": "ニカラグア、等高線をたどって",
+  "meta.title_default": "BAQUEANO：地図に載っていないものを見つけよう",
   "meta.description": "ニカラグアの地域、目的地、確認済みの事業者、文化と音楽。",
   "nav.aria": "体験",
   "nav.discover": "見つける",
@@ -363,5 +363,12 @@
   "errorpage.body": "ページでエラーが発生しました。もう一度お試しください。続く場合は「お問い合わせ」からご連絡ください。",
   "errorpage.retry": "もう一度試す",
   "tmap.legend": "景観ゾーン（デザイン上の区分で、公式ではありません）",
-  "tmap.zone_all": "すべて"
+  "tmap.zone_all": "すべて",
+  "brand.name": "BAQUEANO",
+  "brand.slogan_1": "地図に載っていない",
+  "brand.slogan_2": "ものを見つけよう",
+  "hero.scene_caption": "イラスト：{zone}",
+  "hero.scenes_aria": "表紙の風景を選ぶ",
+  "hero.cta_explore": "ニカラグアを探検",
+  "hero.cta_trip": "旅を計画する"
 }

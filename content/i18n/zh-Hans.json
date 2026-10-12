@@ -4,7 +4,7 @@
     "status": "needs_review",
     "note": "Traducción inicial pendiente de revisión por una persona hablante nativa."
   },
-  "meta.title_default": "尼加拉瓜，一线一景",
+  "meta.title_default": "BAQUEANO：发现地图上找不到的地方",
   "meta.description": "尼加拉瓜的地区、目的地、经核实的商家、文化与音乐。",
   "nav.aria": "体验",
   "nav.discover": "探索",
@@ -363,5 +363,12 @@
   "errorpage.body": "页面出错了。你可以再试一次；如果仍然出错，请通过“联系我们”告诉我们。",
   "errorpage.retry": "再试一次",
   "tmap.legend": "景观区域（设计分组，非官方划分）",
-  "tmap.zone_all": "全部"
+  "tmap.zone_all": "全部",
+  "brand.name": "BAQUEANO",
+  "brand.slogan_1": "发现地图上",
+  "brand.slogan_2": "找不到的地方",
+  "hero.scene_caption": "插画：{zone}",
+  "hero.scenes_aria": "选择封面场景",
+  "hero.cta_explore": "探索尼加拉瓜",
+  "hero.cta_trip": "规划我的旅行"
 }

@@ -4,7 +4,7 @@
     "status": "source",
     "note": "Texto original. Los demás idiomas se traducen desde aquí."
   },
-  "meta.title_default": "Nicaragua, curva por curva",
+  "meta.title_default": "BAQUEANO: descubre lo que no sale en el mapa",
   "meta.description": "Territorios, destinos, negocios verificados, cultura y música de Nicaragua.",
   "nav.aria": "Experiencias",
   "nav.discover": "Descubrir",
@@ -363,5 +363,12 @@
   "errorpage.body": "La página tuvo un error. Puedes intentarlo otra vez; si sigue pasando, escríbenos desde Contacto.",
   "errorpage.retry": "Intentar otra vez",
   "tmap.legend": "Zonas de paisaje (agrupación de diseño, no oficial)",
-  "tmap.zone_all": "Todas"
+  "tmap.zone_all": "Todas",
+  "brand.name": "BAQUEANO",
+  "brand.slogan_1": "Descubre lo que",
+  "brand.slogan_2": "no sale en el mapa",
+  "hero.scene_caption": "Ilustración: {zone}",
+  "hero.scenes_aria": "Elegir la escena de la portada",
+  "hero.cta_explore": "Explorar Nicaragua",
+  "hero.cta_trip": "Crear mi viaje"
 }

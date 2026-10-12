@@ -4,7 +4,7 @@
     "status": "needs_review",
     "note": "Traducción inicial pendiente de revisión por una persona hablante nativa."
   },
-  "meta.title_default": "Nicarágua, curva a curva",
+  "meta.title_default": "BAQUEANO: descubra o que não aparece no mapa",
   "meta.description": "Territórios, destinos, negócios verificados, cultura e música da Nicarágua.",
   "nav.aria": "Experiências",
   "nav.discover": "Descobrir",
@@ -363,5 +363,12 @@
   "errorpage.body": "A página teve um erro. Você pode tentar de novo; se continuar, escreva para nós em Contato.",
   "errorpage.retry": "Tentar de novo",
   "tmap.legend": "Zonas de paisagem (agrupamento de design, não oficial)",
-  "tmap.zone_all": "Todas"
+  "tmap.zone_all": "Todas",
+  "brand.name": "BAQUEANO",
+  "brand.slogan_1": "Descubra o que",
+  "brand.slogan_2": "não aparece no mapa",
+  "hero.scene_caption": "Ilustração: {zone}",
+  "hero.scenes_aria": "Escolher a cena da capa",
+  "hero.cta_explore": "Explorar a Nicarágua",
+  "hero.cta_trip": "Criar minha viagem"
 }

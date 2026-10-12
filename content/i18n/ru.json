@@ -4,7 +4,7 @@
     "status": "needs_review",
     "note": "Traducción inicial pendiente de revisión por una persona hablante nativa."
   },
-  "meta.title_default": "Никарагуа, изгиб за изгибом",
+  "meta.title_default": "BAQUEANO: открой то, чего нет на карте",
   "meta.description": "Территории, направления, проверенные заведения, культура и музыка Никарагуа.",
   "nav.aria": "Разделы",
   "nav.discover": "Открыть",
@@ -363,5 +363,12 @@
   "errorpage.body": "На странице произошла ошибка. Попробуйте ещё раз; если повторится, напишите нам через «Контакты».",
   "errorpage.retry": "Попробовать снова",
   "tmap.legend": "Ландшафтные зоны (условная группировка, не официальная)",
-  "tmap.zone_all": "Все"
+  "tmap.zone_all": "Все",
+  "brand.name": "BAQUEANO",
+  "brand.slogan_1": "Открой то,",
+  "brand.slogan_2": "чего нет на карте",
+  "hero.scene_caption": "Иллюстрация: {zone}",
+  "hero.scenes_aria": "Выбрать сцену обложки",
+  "hero.cta_explore": "Исследовать Никарагуа",
+  "hero.cta_trip": "Спланировать поездку"
 }
