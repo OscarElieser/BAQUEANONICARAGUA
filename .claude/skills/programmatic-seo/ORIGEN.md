@@ -1,0 +1,9 @@
+# Origen de esta skill
+
+- Repositorio: https://github.com/coreyhaines31/marketingskills
+- Carpeta: `skills/programmatic-seo`
+- Versión (commit): `1efedbc5148b54b2f0f6c6c9fe0be62e151c7fff`
+- Licencia: MIT (copia en LICENSE-ORIGEN)
+- Revisada el 2026-10-12 antes de agregarla: sin instrucciones que envíen datos, pidan claves o descarguen y ejecuten programas.
+
+Las reglas del proyecto (`CLAUDE.md` y `docs/MEMORIA.md`) mandan sobre esta skill: no inventar datos, comentarios en español en cada línea de código, ninguna clave secreta en web ni Android y producción solo con aprobación.

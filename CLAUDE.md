@@ -9,6 +9,7 @@ Pedido del dueño del proyecto: debe poder leer cualquier archivo y saber qué h
 - Toda instrucción, declaración, condición, consulta SQL o etiqueta con lógica lleva un comentario en español que explique **qué hace y para qué**, en lenguaje sencillo.
 - El comentario va al final de la línea o justo encima si no cabe.
 - No llevan comentario: líneas vacías y cierres de bloque (`}`, `);`, `</div>`, `end;`).
+- Excepción: las skills de terceros en `.claude/skills/` (cada una con su `ORIGEN.md`) se guardan tal como las publicó su autor, por licencia y para poder actualizarlas.
 - Sintaxis según el lenguaje: `//` en TypeScript/Dart, `--` en SQL, `#` en YAML/Python, `{/* */}` dentro de JSX.
 - Los comentarios explican la intención, no repiten el código: "Si no hay sesión, mandamos al usuario a iniciar sesión" en vez de "if user is null".
 

@@ -22,4 +22,7 @@ jobs:
         with:
           languages: javascript-typescript # Web, API, funciones y paquetes
           queries: security-extended # Reglas de seguridad ampliadas
+          config: | # Qué carpetas analizar
+            paths-ignore:
+              - .claude/skills # Skills de terceros (instrucciones y ejemplos, no es código de la plataforma)
       - uses: github/codeql-action/analyze@v3 # Ejecuta el análisis y publica resultados
