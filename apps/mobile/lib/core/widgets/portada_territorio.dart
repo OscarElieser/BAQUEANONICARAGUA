@@ -2,6 +2,7 @@ import 'dart:typed_data'; // Matriz para encoger la silueta
 
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 
+import '../data/fotos.dart'; // Fotos reales con licencia libre
 import '../i18n/t.dart'; // Textos traducidos
 import '../theme.dart'; // Colores del sistema de diseño
 import 'mapa_territorios.dart'; // Formas del mapa
@@ -40,8 +41,11 @@ class PortadaTerritorio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final foto = FotosReales.de(slug); // Foto real del territorio, si existe
     return ExcludeSemantics(
-      child: CustomPaint(painter: _PintorPortada(mapa: mapa, slug: slug), size: Size.infinite), // Dibujo (sin lectura en voz alta)
+      child: foto != null
+          ? Image.asset(foto.asset, fit: BoxFit.cover, width: double.infinity, height: double.infinity, gaplessPlayback: true, errorBuilder: (_, __, ___) => CustomPaint(painter: _PintorPortada(mapa: mapa, slug: slug), size: Size.infinite)) // Foto real (si falla, la ilustración)
+          : CustomPaint(painter: _PintorPortada(mapa: mapa, slug: slug), size: Size.infinite), // Dibujo (sin lectura en voz alta)
     );
   }
 }

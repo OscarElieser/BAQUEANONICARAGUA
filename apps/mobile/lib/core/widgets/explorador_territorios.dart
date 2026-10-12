@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 
+import '../data/fotos.dart'; // Fotos reales con licencia libre
 import '../i18n/t.dart'; // Textos traducidos
 import '../theme.dart'; // Colores y espaciados
 import 'mapa_territorios.dart'; // Formas de los territorios
@@ -79,7 +80,12 @@ class _ExploradorTerritoriosState extends State<ExploradorTerritorios> {
                           const SizedBox(height: TvSpace.s3), // Espacio
                           Text(context.t(pub ? 'tmap.status_published' : 'tmap.status_pending'), style: TextStyle(color: pub ? const Color(0xFF9FD9C2) : const Color(0xFFE9BB74), fontWeight: FontWeight.w700)), // Estado real
                           const SizedBox(height: TvSpace.s1), // Espacio
-                          Text(context.t('explorer.note'), style: const TextStyle(color: tenue, fontSize: 13)), // Aviso de ilustración
+                          Text(
+                            FotosReales.de(f.id) == null
+                                ? context.t('tmap.note') // Sin foto: aviso de la ilustración
+                                : '${FotosReales.de(f.id)!.lugar}. ${context.t('photo.credit', {'author': FotosReales.de(f.id)!.autor, 'license': FotosReales.de(f.id)!.licencia})}', // Lugar real y crédito de la foto
+                            style: const TextStyle(color: tenue, fontSize: 13), // Texto pequeño
+                          ),
                         ],
                       ),
                     ),

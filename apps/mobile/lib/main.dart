@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'core/data/fotos.dart'; // Fotos reales con licencia libre
 import 'core/env.dart'; // Variables de configuración de entorno
 import 'core/firebase_options.dart'; // Opciones de configuración de Firebase
 import 'core/theme.dart'; // Estilos y tema del sistema de diseño
@@ -14,6 +15,7 @@ import 'features/home/home_shell.dart'; // Estructura visual de inicio
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Garantiza la inicialización de los enlaces del framework
   await initializeDateFormatting(); // Carga las configuraciones de fechas regionales
+  await FotosReales.cargar(); // Catálogo de fotos reales (si falta, se usan ilustraciones)
   // google-services.json se agrega localmente por entorno (no se versiona).
   try {
     await Firebase.initializeApp(

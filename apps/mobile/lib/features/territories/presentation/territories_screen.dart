@@ -15,6 +15,7 @@ import '../../../core/widgets/relieve_3d.dart'; // Relieve 3D interactivo
 import '../../home/home_shell.dart'; // Para pasar a la pestaña Mi aventura
 import '../../planner/planner_screen.dart'; // Mi aventura (si se abre fuera del menú principal)
 import '../../catalog/search_screen.dart'; // Resultados de búsqueda
+import '../../creditos/creditos_screen.dart'; // Créditos de las fotos
 import '../../culture/culture_screen.dart'; // Mundo de Cultura
 import 'territory_screen.dart'; // Ficha de territorio
 
@@ -152,6 +153,12 @@ class _MapaConDatos extends ConsumerWidget {
             final f = mapa.territories[i]; // Territorio
             return TarjetaTerritorio(mapa: mapa, forma: f, published: bySlug.containsKey(f.id), onOpen: () => abrir(f)); // Tarjeta real
           },
+        ),
+        Center(
+          child: TextButton(
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CreditosScreen())), // Abre los créditos
+            child: Text(context.t('credits.link')), // "Créditos de las fotos"
+          ),
         ),
       ],
     );

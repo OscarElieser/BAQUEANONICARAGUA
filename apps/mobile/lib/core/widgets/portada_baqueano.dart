@@ -3,6 +3,7 @@ import 'dart:typed_data'; // Matriz de transformación como lista de números
 
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 
+import '../data/fotos.dart'; // Fotos reales con licencia libre
 import '../i18n/t.dart'; // Textos traducidos
 import '../theme.dart'; // Colores y letras del sistema de diseño
 
@@ -133,12 +134,26 @@ class _PortadaBaqueanoState extends State<PortadaBaqueano> with TickerProviderSt
           ExcludeSemantics(
             child: AspectRatio(
               aspectRatio: 1200 / 560, // Misma proporción que en la web
-              child: AnimatedBuilder(
-                animation: Listenable.merge([_pintar, _fundido]), // Redibuja al pintar o al cambiar de escena
-                builder: (_, __) => CustomPaint(
-                  painter: _PintorPortada(bandas: _bandas, avance: _pintar.value, escena: _escena, anterior: _anterior, fundido: _fundido.value, fondo: fondo, palabras: {for (final e in escenasPortada) e: context.t('hero.word_$e')}, letra: marca), // Ventana, escena y palabra gigante
-                ),
-              ),
+              child: FotosReales.de('portada-$_escena') != null
+                  ? Stack(
+                      fit: StackFit.expand, // Ocupa la ventana completa
+                      children: [
+                        ClipPath(
+                          clipper: _Ventana(_bandas, _pintar), // Se recorta a los brochazos (y se pinta al llegar)
+                          child: AnimatedSwitcher(
+                            duration: MediaQuery.of(context).disableAnimations ? Duration.zero : const Duration(milliseconds: 600), // Fundido entre fotos
+                            child: Image.asset(FotosReales.de('portada-$_escena')!.asset, key: ValueKey(_escena), fit: BoxFit.cover, width: double.infinity, height: double.infinity), // Foto real de la escena
+                          ),
+                        ),
+                        CustomPaint(painter: _Desvanecido(fondo)), // Abajo a la izquierda la foto se funde con el lienzo
+                      ],
+                    )
+                  : AnimatedBuilder(
+                      animation: Listenable.merge([_pintar, _fundido]), // Redibuja al pintar o al cambiar de escena
+                      builder: (_, __) => CustomPaint(
+                        painter: _PintorPortada(bandas: _bandas, avance: _pintar.value, escena: _escena, anterior: _anterior, fundido: _fundido.value, fondo: fondo, palabras: {for (final e in escenasPortada) e: context.t('hero.word_$e')}, letra: marca), // Ilustración de respaldo con palabra gigante
+                      ),
+                    ),
             ),
           ),
           const SizedBox(height: TvSpace.s2), // Espacio
@@ -162,7 +177,12 @@ class _PortadaBaqueanoState extends State<PortadaBaqueano> with TickerProviderSt
               Expanded(
                 child: Semantics(
                   liveRegion: true, // Se anuncia al cambiar de escena
-                  child: Text(context.t('hero.scene_caption', {'zone': context.t('zone.$_escena')}), style: Theme.of(context).textTheme.bodySmall?.copyWith(color: tv.inkMuted)), // "Ilustración: …"
+                  child: Text(
+                    FotosReales.de('portada-$_escena') == null
+                        ? context.t('hero.scene_caption', {'zone': context.t('zone.$_escena')}) // "Ilustración: …"
+                        : '${FotosReales.de('portada-$_escena')!.lugar}. ${context.t('photo.credit', {'author': FotosReales.de('portada-$_escena')!.autor, 'license': FotosReales.de('portada-$_escena')!.licencia})}', // Lugar real y crédito
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: tv.inkMuted), // Texto pequeño
+                  ),
                 ),
               ),
               for (final e in escenasPortada)
@@ -354,4 +374,45 @@ class _PintorPortada extends CustomPainter {
 
   @override
   bool shouldRepaint(_PintorPortada old) => old.avance != avance || old.escena != escena || old.fundido != fundido || old.fondo != fondo || old.palabras['pacifico'] != palabras['pacifico']; // Solo si algo cambió
+}
+
+/// Recorte con forma de brochazos que se pintan de izquierda a derecha al llegar.
+class _Ventana extends CustomClipper<Path> {
+  _Ventana(this.bandas, this.avance) : super(reclip: avance); // Se recalcula mientras se pinta
+  final List<Path> bandas; // Brochazos en el lienzo de 1200 × 560
+  final Animation<double> avance; // 0 a 1
+
+  @override
+  Path getClip(Size size) {
+    final ventana = Path(); // Unión de bandas
+    final sx = size.width / 1200, sy = size.height / 560; // Escala del lienzo a la pantalla
+    for (var i = 0; i < bandas.length; i++) {
+      final t = ((avance.value * 1.6) - i * 0.08).clamp(0.0, 1.0); // Cada banda empieza un poco después
+      if (t <= 0) continue; // Aún no se pinta
+      final b = bandas[i].getBounds(); // Rectángulo de la banda
+      final e = Curves.easeOutCubic.transform(t); // Cuánto se estiró
+      final m = Float64List.fromList([sx * e, 0, 0, 0, 0, sy, 0, 0, 0, 0, 1, 0, sx * b.left * (1 - e), 0, 0, 1]); // Escala a pantalla y estira desde el borde izquierdo
+      ventana.addPath(bandas[i].transform(m), Offset.zero); // Agrega la banda
+    }
+    return ventana; // Forma final
+  }
+
+  @override
+  bool shouldReclip(_Ventana old) => old.bandas != bandas; // Cambia solo con otra forma (la animación ya avisa)
+}
+
+/// Desvanecido hacia el lienzo abajo a la izquierda: ahí se apoya el eslogan.
+class _Desvanecido extends CustomPainter {
+  _Desvanecido(this.fondo); // Constructor
+  final Color fondo; // Color del lienzo
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final centro = Offset(size.width * 0.275, size.height * 1.14); // Abajo a la izquierda, como en la web
+    final rect = Rect.fromCenter(center: centro, width: size.width * 1.17, height: size.height * 1.07); // Óvalo
+    canvas.drawRect(Offset.zero & size, Paint()..shader = RadialGradient(colors: [fondo, fondo, fondo.withValues(alpha: 0)], stops: const [0, 0.55, 1]).createShader(rect)); // Desvanecido
+  }
+
+  @override
+  bool shouldRepaint(_Desvanecido old) => old.fondo != fondo; // Solo si cambia el tema
 }

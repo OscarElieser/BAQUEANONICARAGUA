@@ -3,6 +3,7 @@ import 'dart:io'; // Lectura directa del archivo
 
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 import 'package:flutter_test/flutter_test.dart'; // Herramientas de prueba
+import 'package:nica_app/core/data/fotos.dart'; // Fotos reales con licencia libre
 import 'package:nica_app/core/theme.dart'; // Tema del sistema de diseño
 import 'package:nica_app/core/widgets/explorador_territorios.dart'; // Explorador a pantalla completa
 import 'package:nica_app/core/widgets/galeria_arco.dart'; // Galería en arco 3D
@@ -91,5 +92,21 @@ void main() {
     await tester.tap(find.byType(FilledButton)); // Segundo: con ficha
     expect(abiertas, [mapa.territories[1].id]); // Abre su ficha
     expect(tester.takeException(), isNull); // Sin errores al dibujar
+  });
+
+  testWidgets('con el catálogo cargado, la portada muestra la foto real y su crédito', (tester) async {
+    await tester.runAsync(FotosReales.cargar); // Lee assets/fotos/fotos.json
+    addTearDown(() => FotosReales.fijarParaPruebas(const {})); // Las demás pruebas siguen con ilustraciones
+    expect(FotosReales.de('portada-pacifico'), isNotNull); // La escena del Pacífico tiene foto
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildTheme(Brightness.light, webFonts: false), // Tema sin descargar fuentes
+        home: Scaffold(body: SingleChildScrollView(child: SizedBox(width: 390, child: PortadaBaqueano(onExplorar: () {}, onViaje: () {})))), // Ancho de teléfono
+      ),
+    );
+    await tester.pump(const Duration(seconds: 2)); // Termina de pintar la ventana
+    expect(find.byType(Image), findsWidgets); // Hay una foto
+    expect(find.textContaining('Wikimedia Commons'), findsOneWidget); // Con su crédito visible
+    expect(tester.takeException(), isNull); // Sin errores
   });
 }
