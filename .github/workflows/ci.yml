@@ -122,11 +122,11 @@ jobs:
         run: |
           dart analyze --format=machine > analyze.txt 2>&1 || status=$?
           # Publica cada error/aviso como anotación visible en GitHub
-          grep -E "^(ERROR|WARNING)\|" analyze.txt | head -n 40 | while IFS='|' read -r sev type code file line col len msg; do
+          grep -E "^(ERROR|WARNING)\|" analyze.txt | head -n 40 | while IFS='|' read -r _ _ code file line col _ msg; do
             rel="apps/mobile/${file#*apps/mobile/}"
             echo "::error file=${rel},line=${line},col=${col}::${code}: ${msg}"
           done
-          exit ${status:-0}
+          exit "${status:-0}"
       - name: Pruebas # Cada prueba fallida se publica como anotación con su error
         run: |
           flutter test --machine > test.jsonl || status=$? # Resultado en formato de máquina (una línea JSON por evento)
@@ -152,7 +152,7 @@ jobs:
                   text = (str(e.get('error', '')) + ' ' + logs[:1400] + ' ' + str(e.get('stackTrace', ''))[:300]).replace('\n', ' ').replace('%', '%25')
                   print(f"::error title=Prueba Android: {names.get(e.get('testID'), '?')}::{text[:3000]}")
           PY
-          exit ${status:-0}
+          exit "${status:-0}"
 
   docker:
     name: Imágenes Docker (web y API)
@@ -166,7 +166,7 @@ jobs:
       - name: La web arranca sin privilegios y responde # Prueba real del contenedor
         run: |
           docker run -d --name web --read-only --tmpfs /tmp --tmpfs /app/apps/web/.next/cache -p 3000:3000 nica-web:ci # Arranca con disco de solo lectura
-          for i in $(seq 1 30); do curl -fsS -o /dev/null http://127.0.0.1:3000/es && break; sleep 2; done # Espera hasta 60 s
+          for _ in $(seq 1 30); do curl -fsS -o /dev/null http://127.0.0.1:3000/es && break; sleep 2; done # Espera hasta 60 s
           curl -fsS -D headers.txt -o /dev/null http://127.0.0.1:3000/es/privacidad # Pide la página de privacidad
           grep -qi "content-security-policy" headers.txt # Debe traer la política de seguridad
           grep -qi "strict-transport-security" headers.txt # Y HSTS
