@@ -1,5 +1,7 @@
 # Reglas del proyecto (para cualquier persona o agente que escriba código aquí)
 
+**Antes de empezar, lee `docs/MEMORIA.md`**: es la memoria de todo lo conversado y decidido con el dueño (reglas, historia, pendientes y próximos pasos). Actualízala al terminar cada etapa.
+
 ## 1. Cada línea de código lleva un comentario en español
 
 Pedido del dueño del proyecto: debe poder leer cualquier archivo y saber qué hace cada línea.
