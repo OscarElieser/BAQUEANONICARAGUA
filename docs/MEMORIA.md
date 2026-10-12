@@ -95,7 +95,11 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
 
 - Supabase `nupjhqrvxjrngtpslfjq`: las 15 migraciones originales ya están aplicadas por el dueño. Hay 17 territorios, todos en borrador (0 publicados), y ningún destino ni negocio. `app.settings.firebase_project_id` está vacío (el seed no corrió).
 - La web y la app traen por defecto la configuración pública del proyecto oficial (`apps/web/src/config/publica.json` y `apps/mobile/lib/core/env.dart`). El entorno puede reemplazarla. Nunca se ponen claves secretas.
-- La migración 0016 (search_path fijo en 8 funciones) está en el repositorio, pero no se ha aplicado en producción: falta la aprobación del dueño.
+- Aplicado en producción con aprobación del dueño (12 de octubre de 2026):
+  - `app.settings.firebase_project_id` = `baqueanonicaragua-95755`;
+  - la migración 0016 (`search_path`), registrada en Supabase como `search_path`.
+- Integración Third-Party Auth con Firebase activa en Supabase.
+- Secretos de la función: `FIREBASE_SERVICE_ACCOUNT` y `FIREBASE_PROJECT_ID`, los cargó el dueño. `preparar-sesion` está activa (versión 2, desplegada por el dueño). Falta `ALLOWED_ORIGINS` cuando haya dominio.
 - Avisos del asesor de seguridad que quedan:
   - las vistas `public_*` con SECURITY DEFINER (es a propósito: exponen solo lo publicado; revisar si se pasan a security_invoker);
   - `public.rls_auto_enable()` se puede ejecutar sin sesión; no es de nuestras migraciones.
