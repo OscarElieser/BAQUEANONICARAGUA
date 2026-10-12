@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { CurvasDeNivel } from '@/components/CurvasDeNivel';
 import { EstadoVerificacion } from '@/components/EstadoVerificacion';
-import { getDestination, reportedByLabel } from '@/lib/catalog';
+import { getDestination, reportedByKey } from '@/lib/catalog'; // Datos de la ficha y quién informó cada tarifa
+import { t } from '@/i18n/t'; // Textos traducidos
 
 export const revalidate = 1800;
 
@@ -16,8 +17,8 @@ export default async function DestinoPage({ params }: { params: Promise<{ locale
 
   return (
     <main className="mx-auto max-w-[1280px] px-4 pb-16 sm:px-12">
-      <nav aria-label="Ruta" className="pt-6 text-sm">
-        <Link href={`/${locale}`}>Descubrir</Link>
+      <nav aria-label={t(locale, 'nav.breadcrumb')} className="pt-6 text-sm">
+        <Link href={`/${locale}`}>{t(locale, 'nav.discover')}</Link>
       </nav>
       <header className="flex flex-wrap items-end gap-6 pt-4">
         <div className="min-w-0 flex-[1_1_420px]">
@@ -33,20 +34,20 @@ export default async function DestinoPage({ params }: { params: Promise<{ locale
 
           {d.access_notes && (
             <section className="mt-8">
-              <h2 className="font-display text-[26px] font-normal">Cómo llegar</h2>
+              <h2 className="font-display text-[26px] font-normal">{t(locale, 'destination.access')}</h2>
               <p className="whitespace-pre-line">{d.access_notes}</p>
             </section>
           )}
           {d.environmental_notes && (
             <section className="mt-8">
-              <h2 className="font-display text-[26px] font-normal">Cuida este lugar</h2>
+              <h2 className="font-display text-[26px] font-normal">{t(locale, 'destination.care')}</h2>
               <p className="whitespace-pre-line">{d.environmental_notes}</p>
             </section>
           )}
           <section className="mt-8">
-            <h2 className="font-display text-[26px] font-normal">Tarifas</h2>
+            <h2 className="font-display text-[26px] font-normal">{t(locale, 'field.prices')}</h2>
             {prices.length === 0 ? (
-              <p className="text-ink-muted">No hay tarifas verificadas. Consulta directamente antes de ir.</p>
+              <p className="text-ink-muted">{t(locale, 'prices.none')}</p>
             ) : (
               <ul className="m-0 list-none p-0">
                 {prices.map((p) => (
@@ -55,7 +56,7 @@ export default async function DestinoPage({ params }: { params: Promise<{ locale
                       <span>{p.label}</span>
                       <span>{money(p.amount, p.currency)}{p.unit ? ` ${p.unit}` : ''}</span>
                     </div>
-                    <p className="m-0 text-sm text-ink-muted">Tarifa {reportedByLabel[p.reported_by]} el {date(p.observed_at)}</p>
+                    <p className="m-0 text-sm text-ink-muted">{t(locale, 'prices.observed', { date: date(p.observed_at), who: t(locale, reportedByKey[p.reported_by]) })}</p>
                   </li>
                 ))}
               </ul>

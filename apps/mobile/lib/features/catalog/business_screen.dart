@@ -34,7 +34,7 @@ class BusinessScreen extends ConsumerWidget {
         loading: () => const Cargando(), // Mientras carga
         error: (e, _) => ErrorConReintento(error: e, onRetry: () => ref.invalidate(businessProvider(slug))), // Error claro
         data: (b) => b == null
-            ? const Vacio(text: 'Este negocio no está publicado todavía.') // No existe
+            ? Vacio(text: context.t('business.not_published')) // No existe
             : ListView(
                 padding: const EdgeInsets.only(bottom: TvSpace.s12), // Espacio al final
                 children: [
@@ -46,15 +46,15 @@ class BusinessScreen extends ConsumerWidget {
                       children: [
                         Text(b.name, style: text.displayMedium), // Nombre
                         if (b.isSponsored)
-                          Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text('Patrocinado', style: TextStyle(color: tv.oroText, fontWeight: FontWeight.w700))), // Siempre se marca
+                          Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text(context.t('business.sponsored'), style: TextStyle(color: tv.oroText, fontWeight: FontWeight.w700))), // Siempre se marca
                         if (b.summary != null) Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text(b.summary!, style: text.bodyLarge?.copyWith(color: tv.inkMuted))), // Resumen
                         const SizedBox(height: TvSpace.s6), // Espacio
                         EstadoVerificacion(rows: businessRows(b)), // Identidad, ubicación, horarios y tarifas
                         const SizedBox(height: TvSpace.s6), // Espacio
-                        Semantics(header: true, child: Text('Contacto directo', style: text.titleLarge)), // Título
+                        Semantics(header: true, child: Text(context.t('business.contact_title'), style: text.titleLarge)), // Título
                         const SizedBox(height: TvSpace.s2), // Espacio
                         if (b.contacts.isEmpty)
-                          Text('Este negocio aún no publicó contactos. Puedes escribirle por la plataforma.', style: TextStyle(color: tv.inkMuted)) // Sin contactos
+                          Text(context.t('business.no_contacts'), style: TextStyle(color: tv.inkMuted)) // Sin contactos
                         else
                           Wrap(
                             spacing: TvSpace.s2, // Espacio horizontal
@@ -64,7 +64,7 @@ class BusinessScreen extends ConsumerWidget {
                                 if (contactUri(c) case final uri?)
                                   OutlinedButton(
                                     onPressed: () => launchUrl(uri, mode: LaunchMode.externalApplication), // Abre WhatsApp, llamada, correo o sitio
-                                    child: Text(contactLabel(c.kind)), // Tipo de contacto
+                                    child: Text(context.tk(contactLabel(c.kind))), // Tipo de contacto (traducido o marca)
                                   ),
                             ],
                           ),
@@ -76,7 +76,7 @@ class BusinessScreen extends ConsumerWidget {
                         Tarifas(prices: b.prices), // Tarifas
                         if (b.data['description_md'] != null) ...[
                           const SizedBox(height: TvSpace.s6), // Espacio
-                          Semantics(header: true, child: Text('Sobre el negocio', style: text.titleLarge)), // Título
+                          Semantics(header: true, child: Text(context.t('business.about'), style: text.titleLarge)), // Título
                           const SizedBox(height: TvSpace.s2), // Espacio
                           Text(b.data['description_md'] as String, style: text.bodyLarge), // Descripción
                         ],
@@ -116,7 +116,7 @@ class _EscribirNegocioState extends ConsumerState<_EscribirNegocio> {
     final body = _controller.text.trim(); // Mensaje sin espacios sobrantes
     if (body.length < 2) {
       // Mensaje vacío o demasiado corto
-      setState(() => _error = 'Escribe tu mensaje.'); // Lo explica
+      setState(() => _error = context.t('business.write_something')); // Lo explica
       return; // No envía
     }
     setState(() {
@@ -141,13 +141,13 @@ class _EscribirNegocioState extends ConsumerState<_EscribirNegocio> {
     final user = ref.watch(authStateProvider).valueOrNull; // Sesión actual
     if (user == null) {
       // Sin sesión: explica qué hacer
-      return Text('Inicia sesión en la pestaña Perfil para escribir por la plataforma.', style: TextStyle(color: context.tv.inkMuted));
+      return Text(context.t('business.sign_in_to_write'), style: TextStyle(color: context.tv.inkMuted)); // Explica que hace falta la sesión
     }
     if (!_open) {
       return OutlinedButton.icon(
         onPressed: () => setState(() => _open = true), // Abre el formulario
         icon: const Icon(Icons.chat_bubble_outline), // Icono de mensaje
-        label: const Text('Escribir por la plataforma'), // Texto
+        label: Text(context.t('business.write')), // Texto
       );
     }
     return Column(
@@ -158,11 +158,13 @@ class _EscribirNegocioState extends ConsumerState<_EscribirNegocio> {
           minLines: 3, // Al menos tres líneas
           maxLines: 6, // Hasta seis líneas visibles
           maxLength: 8000, // Límite de la base de datos
-          decoration: InputDecoration(labelText: 'Mensaje para ${widget.businessName}'), // Etiqueta accesible
+          decoration: InputDecoration(labelText: context.t('business.message_for', {'name': widget.businessName})), // Etiqueta accesible
         ),
         if (_error != null) Semantics(liveRegion: true, child: Text(_error!, style: TextStyle(color: context.tv.statusAlert))), // Error visible
         const SizedBox(height: TvSpace.s2), // Espacio
-        FilledButton(onPressed: _sending ? null : _send, child: Text(_sending ? 'Enviando…' : 'Enviar mensaje')), // Envía
+        FilledButton(onPressed: _sending ? null : _send, child: Text(_sending ? context.t('business.sending') : context.t('business.send'))), // Envía
+        const SizedBox(height: TvSpace.s2), // Espacio
+        Text(context.t('business.no_e2e'), style: TextStyle(color: context.tv.inkMuted, fontSize: 14)), // Aviso honesto: no hay cifrado de extremo a extremo
       ],
     );
   }

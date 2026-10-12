@@ -21,4 +21,7 @@ extension TrContext on BuildContext {
 
   /// Texto traducido en el idioma actual.
   String t(String key, [Map<String, Object> vars = const {}]) => tr(langCode, key, vars); // Traduce
+
+  /// Traduce si el texto es una clave conocida; si no (una marca o un texto de la base de datos), lo deja igual.
+  String tk(String s) => i18nStrings['es']!.containsKey(s) ? t(s) : s; // Clave o texto tal cual
 }

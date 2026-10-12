@@ -46,12 +46,12 @@ class CommunityScreen extends ConsumerWidget {
                   runSpacing: TvSpace.s2, // Espacio vertical
                   children: [
                     FilledButton(
-                      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SearchScreen(query: '', kind: 'business', title: 'Nuestra gente'))), // Lista de negocios publicados
+                      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchScreen(query: '', kind: 'business', title: context.t('search.our_people')))), // Lista de negocios publicados
                       child: Text(context.t('community.meet')), // Texto
                     ),
                     OutlinedButton(
                       onPressed: Env.webUrl.isEmpty
-                          ? () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('El registro de negocios aún no está disponible en Android. No disponible todavía.'))) // Honesto si no hay web configurada
+                          ? () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.t('community.publish_unavailable')))) // Honesto si no hay web configurada
                           : () => launchUrl(Uri.parse('${Env.webUrl}/es/comunidad/registrar'), mode: LaunchMode.externalApplication), // Abre el registro en la web
                       child: Text(context.t('community.publish')), // Texto
                     ),

@@ -7,7 +7,7 @@ import 'models.dart'; // Datos del catálogo
 FieldState locationState(String? precision) => switch (precision) {
       'exact' => const Pending(), // Exacta pero aún sin comprobar en terreno
       'approximate' => const Approximate(), // Aproximada
-      _ => const Restricted('Ubicación protegida'), // Protegida (por ejemplo, comunidades)
+      _ => const Restricted('ficha.location_protected'), // Protegida (por ejemplo, comunidades)
     };
 
 /// Estado de los horarios: comprobado en la fecha más reciente, o sin confirmar.
@@ -29,19 +29,19 @@ List<(String, FieldState)> businessRows(BusinessDetail b) {
   final scope = (b.data['verified_scope'] as List?)?.cast<String>() ?? const []; // Qué se verificó
   final verifiedAt = b.data['verified_at'] == null ? null : DateTime.parse(b.data['verified_at'] as String); // Cuándo
   return [
-    ('Identidad', scope.contains('identity') && verifiedAt != null ? Verified(verifiedAt) : const Pending()), // Identidad del negocio
-    ('Ubicación', scope.contains('location') && verifiedAt != null ? Verified(verifiedAt) : locationState(b.data['location_precision'] as String?)), // Ubicación
-    ('Horarios', hoursState(b.hours)), // Horarios
-    ('Tarifas', pricesState(b.prices)), // Tarifas
+    ('field.identity', scope.contains('identity') && verifiedAt != null ? Verified(verifiedAt) : const Pending()), // Identidad del negocio
+    ('field.location', scope.contains('location') && verifiedAt != null ? Verified(verifiedAt) : locationState(b.data['location_precision'] as String?)), // Ubicación
+    ('field.hours', hoursState(b.hours)), // Horarios
+    ('field.prices', pricesState(b.prices)), // Tarifas
   ];
 }
 
 /// Filas de verificación de un destino.
 List<(String, FieldState)> destinationRows(DestinationDetail d) => [
-      ('Ubicación', locationState(d.data['location_precision'] as String?)), // Ubicación
-      ('Horarios', hoursState(d.hours)), // Horarios
-      ('Tarifas', pricesState(d.prices)), // Tarifas
-      if (d.data['safety_notes'] != null) ('Seguridad', Restricted(d.data['safety_notes'] as String)), // Avisos de seguridad
+      ('field.location', locationState(d.data['location_precision'] as String?)), // Ubicación
+      ('field.hours', hoursState(d.hours)), // Horarios
+      ('field.prices', pricesState(d.prices)), // Tarifas
+      if (d.data['safety_notes'] != null) ('field.safety', Restricted(d.data['safety_notes'] as String)), // Avisos de seguridad
     ];
 
 /// Enlace directo para un contacto. WhatsApp usa wa.me con solo dígitos; las redes solo si son https.
@@ -64,12 +64,12 @@ Uri? contactUri(Contact c) {
   }
 }
 
-/// Nombre visible de cada tipo de contacto.
+/// Clave de traducción (o nombre de marca) de cada tipo de contacto.
 String contactLabel(String kind) => switch (kind) {
-      'whatsapp' => 'WhatsApp', // Mensajería
-      'phone' => 'Llamar', // Teléfono
-      'email' => 'Correo', // Correo electrónico
-      'website' => 'Sitio web', // Página propia
+      'whatsapp' => 'WhatsApp', // Mensajería (marca, no se traduce)
+      'phone' => 'contact.phone', // Teléfono
+      'email' => 'contact.email', // Correo electrónico
+      'website' => 'contact.website', // Página propia
       'facebook' => 'Facebook', // Red social
       'instagram' => 'Instagram', // Red social
       'tiktok' => 'TikTok', // Red social

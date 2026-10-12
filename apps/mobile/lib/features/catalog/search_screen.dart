@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'; // Proveedores de River
 
 import '../../core/data/models.dart'; // Datos del catálogo
 import '../../core/data/repositories.dart'; // Acceso al catálogo
+import '../../core/i18n/t.dart'; // Textos traducidos
 import '../../core/theme.dart'; // Colores y espaciados
 import '../../core/widgets/estados.dart'; // Cargando, error y vacío
 import 'business_screen.dart'; // Ficha de negocio
@@ -28,12 +29,12 @@ class SearchScreen extends ConsumerWidget {
     final tv = context.tv; // Colores
 
     return Scaffold(
-      appBar: AppBar(title: Text(title ?? 'Resultados para "$query"')), // Barra con lo buscado
+      appBar: AppBar(title: Text(title ?? context.t('search.results_for', {'q': query}))), // Barra con lo buscado
       body: results.when(
         loading: () => const Cargando(), // Mientras busca
         error: (e, _) => ErrorConReintento(error: e, onRetry: () => ref.invalidate(searchProvider(args))), // Error claro
         data: (items) => items.isEmpty
-            ? const Vacio(text: 'No encontramos fichas publicadas con eso. Prueba con otra palabra o explora un territorio.') // Sin resultados
+            ? Vacio(text: context.t('search.empty')) // Sin resultados
             : ListView.separated(
                 padding: const EdgeInsets.symmetric(vertical: TvSpace.s2), // Margen vertical
                 itemCount: items.length, // Cantidad
@@ -46,7 +47,7 @@ class SearchScreen extends ConsumerWidget {
                     leading: Icon(isBusiness ? Icons.storefront_outlined : Icons.landscape_outlined, color: tv.accent), // Tipo de ficha
                     title: Text(it.name), // Nombre
                     subtitle: Text(
-                      [isBusiness ? 'Negocio' : 'Destino', if (it.verification == 'verified') 'Verificado', if (it.summary != null) it.summary!].join('. '), // Tipo, verificación y resumen
+                      [isBusiness ? context.t('search.business') : context.t('search.destination'), if (it.verification == 'verified') context.t('search.verified'), if (it.summary != null) it.summary!].join('. '), // Tipo, verificación y resumen
                       maxLines: 2, // Máximo dos líneas
                       overflow: TextOverflow.ellipsis, // Puntos suspensivos si es largo
                     ),

@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart'; // Abrir la fuente en el navega
 
 import '../../../core/data/models.dart'; // Datos del catálogo
 import '../../../core/data/repositories.dart'; // Acceso al catálogo
+import '../../../core/i18n/t.dart'; // Textos traducidos
 import '../../../core/theme.dart'; // Colores y espaciados
 import '../../../core/widgets/curvas_de_nivel.dart'; // Motivo de relieve
 import '../../../core/widgets/estado_verificacion.dart'; // "Qué está comprobado"
@@ -38,39 +39,39 @@ class TerritoryScreen extends ConsumerWidget {
         error: (e, _) => ErrorConReintento(error: e, onRetry: () => ref.invalidate(territoryProvider(args))), // Error claro
         data: (result) {
           final (territory, sections) = result; // Separa territorio y secciones
-          if (territory == null) return const Vacio(text: 'Este territorio no está publicado todavía.'); // No existe o es borrador
+          if (territory == null) return Vacio(text: context.t('territory.not_published')); // No existe o es borrador
           final sorted = [...sections]..sort((a, b) => _sectionOrder.indexOf(a.section).compareTo(_sectionOrder.indexOf(b.section))); // Orden editorial
           final verified = sorted.where((s) => s.verifiedAt != null).map((s) => s.verifiedAt!).toList(); // Secciones comprobadas
           return ListView(
             padding: const EdgeInsets.fromLTRB(TvSpace.s6, TvSpace.s4, TvSpace.s6, TvSpace.s12), // Márgenes
             children: [
-              SizedBox(height: 140, child: CurvasDeNivel(semanticLabel: 'Curvas de nivel de ${territory.shortName}')), // Motivo de relieve
+              SizedBox(height: 140, child: CurvasDeNivel(semanticLabel: context.t('territory.contours', {'name': territory.shortName}))), // Motivo de relieve
               const SizedBox(height: TvSpace.s4), // Espacio
               Text(territory.name, style: text.displayMedium), // Nombre oficial
               if (territory.capitalName != null)
-                Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text('Cabecera: ${territory.capitalName}', style: TextStyle(color: tv.inkMuted))), // Cabecera
+                Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text(context.t('territory.capital', {'name': territory.capitalName!}), style: TextStyle(color: tv.inkMuted))), // Cabecera
               const SizedBox(height: TvSpace.s6), // Espacio
               EstadoVerificacion(
                 rows: [
-                  ('Límites territoriales', const Pending()), // Aún sin capa oficial de límites
-                  ('Contenido editorial', verified.isEmpty ? const Unconfirmed() : Verified(verified.first)), // Fecha de comprobación
+                  ('field.boundaries', const Pending()), // Aún sin capa oficial de límites
+                  ('field.editorial', verified.isEmpty ? const Unconfirmed() : Verified(verified.first)), // Fecha de comprobación
                 ],
                 onOpenSource: territory.sourceUrl == null ? null : () => launchUrl(Uri.parse(territory.sourceUrl!), mode: LaunchMode.externalApplication), // Abre la fuente
               ),
               const SizedBox(height: TvSpace.s4), // Espacio
               OutlinedButton.icon(
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchScreen(query: '', departmentId: territory.id, title: 'En ${territory.shortName}'))), // Destinos y negocios del territorio
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchScreen(query: '', departmentId: territory.id, title: context.t('territory.in', {'name': territory.shortName})))), // Destinos y negocios del territorio
                 icon: const Icon(Icons.place_outlined), // Icono de lugar
-                label: const Text('Ver destinos y negocios'), // Texto
+                label: Text(context.t('territory.see_places')), // Texto
               ),
               const SizedBox(height: TvSpace.s8), // Espacio
               if (sorted.isEmpty)
-                const Vacio(text: 'Aún no hay contenido editorial publicado para este territorio en tu idioma.') // Sin secciones
+                Vacio(text: context.t('territory.no_content')) // Sin secciones
               else
                 for (final s in sorted) ...[
                   Semantics(header: true, child: Text(s.title, style: text.headlineSmall)), // Título de la sección
                   if (s.machineTranslated)
-                    Padding(padding: const EdgeInsets.only(top: TvSpace.s1), child: Text('Traducción automática.', style: TextStyle(color: tv.oroText, fontSize: 14))), // Aviso de traducción
+                    Padding(padding: const EdgeInsets.only(top: TvSpace.s1), child: Text(context.t('territory.machine'), style: TextStyle(color: tv.oroText, fontSize: 14))), // Aviso de traducción
                   const SizedBox(height: TvSpace.s2), // Espacio
                   Text(s.body, style: text.bodyLarge), // Texto
                   const SizedBox(height: TvSpace.s8), // Espacio entre secciones

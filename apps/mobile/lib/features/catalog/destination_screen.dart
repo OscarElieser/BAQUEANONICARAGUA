@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart'; // Abrir la fuente
 import '../../core/data/models.dart'; // Datos del catálogo
 import '../../core/data/repositories.dart'; // Acceso al catálogo
 import '../../core/data/verification.dart'; // Reglas de verificación
+import '../../core/i18n/t.dart'; // Textos traducidos
 import '../../core/theme.dart'; // Colores y espaciados
 import '../../core/widgets/estado_verificacion.dart'; // "Qué está comprobado"
 import '../../core/widgets/estados.dart'; // Cargando, error y vacío
@@ -30,7 +31,7 @@ class DestinationScreen extends ConsumerWidget {
         loading: () => const Cargando(), // Mientras carga
         error: (e, _) => ErrorConReintento(error: e, onRetry: () => ref.invalidate(destinationProvider(slug))), // Error claro
         data: (d) => d == null
-            ? const Vacio(text: 'Este destino no está publicado todavía.') // No existe
+            ? Vacio(text: context.t('destination.not_published')) // No existe
             : ListView(
                 padding: const EdgeInsets.fromLTRB(TvSpace.s6, TvSpace.s4, TvSpace.s6, TvSpace.s12), // Márgenes
                 children: [
@@ -43,7 +44,7 @@ class DestinationScreen extends ConsumerWidget {
                   ),
                   if (d.data['access_notes'] != null) ...[
                     const SizedBox(height: TvSpace.s6), // Espacio
-                    Semantics(header: true, child: Text('Cómo llegar', style: text.titleLarge)), // Título
+                    Semantics(header: true, child: Text(context.t('destination.access'), style: text.titleLarge)), // Título
                     const SizedBox(height: TvSpace.s2), // Espacio
                     Text(d.data['access_notes'] as String), // Indicaciones de acceso
                   ],
@@ -53,13 +54,13 @@ class DestinationScreen extends ConsumerWidget {
                   Tarifas(prices: d.prices), // Tarifas
                   if (d.data['description_md'] != null) ...[
                     const SizedBox(height: TvSpace.s6), // Espacio
-                    Semantics(header: true, child: Text('Sobre este lugar', style: text.titleLarge)), // Título
+                    Semantics(header: true, child: Text(context.t('destination.about'), style: text.titleLarge)), // Título
                     const SizedBox(height: TvSpace.s2), // Espacio
                     Text(d.data['description_md'] as String, style: text.bodyLarge), // Descripción
                   ],
                   if (d.data['environmental_notes'] != null) ...[
                     const SizedBox(height: TvSpace.s6), // Espacio
-                    Semantics(header: true, child: Text('Cuidado del lugar', style: text.titleLarge)), // Título
+                    Semantics(header: true, child: Text(context.t('destination.care'), style: text.titleLarge)), // Título
                     const SizedBox(height: TvSpace.s2), // Espacio
                     Text(d.data['environmental_notes'] as String), // Recomendaciones ambientales
                   ],

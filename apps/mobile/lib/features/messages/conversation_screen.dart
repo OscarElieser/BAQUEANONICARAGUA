@@ -68,7 +68,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> {
               error: (e, _) => ErrorConReintento(error: e, onRetry: () => ref.invalidate(conversationProvider(widget.conversationId))), // Error claro
               data: (result) {
                 final (me, messages) = result; // Perfil propio y mensajes
-                if (messages.isEmpty) return const Vacio(text: 'Todavía no hay mensajes en esta conversación.'); // Conversación vacía
+                if (messages.isEmpty) return Vacio(text: context.t('messages.empty_thread')); // Conversación vacía
                 return ListView.builder(
                   reverse: true, // Lo más reciente abajo, junto al campo de escribir
                   padding: const EdgeInsets.all(TvSpace.s4), // Márgenes
@@ -79,7 +79,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> {
                     return Align(
                       alignment: mine ? Alignment.centerRight : Alignment.centerLeft, // Propios a la derecha
                       child: Semantics(
-                        label: mine ? 'Tú' : widget.title, // Quién lo dijo, para lectores de pantalla
+                        label: mine ? context.t('messages.you') : widget.title, // Quién lo dijo, para lectores de pantalla
                         child: Container(
                           constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.8), // Máximo 80 % del ancho
                           margin: const EdgeInsets.symmetric(vertical: 4), // Separación entre burbujas
@@ -89,7 +89,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> {
                             borderRadius: BorderRadius.circular(TvSpace.radiusM), // Esquinas redondeadas
                           ),
                           child: m.body == null
-                              ? Text('Mensaje eliminado', style: TextStyle(color: tv.inkMuted, fontStyle: FontStyle.italic)) // Conserva el lugar sin contenido
+                              ? Text(context.t('messages.deleted'), style: TextStyle(color: tv.inkMuted, fontStyle: FontStyle.italic)) // Conserva el lugar sin contenido
                               : Text(m.body!, style: TextStyle(color: mine ? TvColors.onOro : tv.ink)), // Texto
                         ),
                       ),
@@ -116,13 +116,13 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> {
                       minLines: 1, // Empieza en una línea
                       maxLines: 4, // Crece hasta cuatro
                       maxLength: 8000, // Límite de la base de datos
-                      decoration: const InputDecoration(labelText: 'Escribe un mensaje', counterText: ''), // Etiqueta accesible
+                      decoration: InputDecoration(labelText: context.t('messages.write'), counterText: ''), // Etiqueta accesible
                     ),
                   ),
                   const SizedBox(width: TvSpace.s2), // Espacio
                   IconButton.filled(
                     onPressed: _sending ? null : _send, // Envía
-                    tooltip: 'Enviar', // Nombre accesible
+                    tooltip: context.t('messages.send'), // Nombre accesible
                     icon: const Icon(Icons.send), // Icono
                   ),
                 ],

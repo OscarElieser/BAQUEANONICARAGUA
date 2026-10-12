@@ -2,6 +2,8 @@
  * Franja tejida (hamacas de Masaya). Solo en Vitrina, perfiles y Comunidad.
  * Siempre decorativa: el nivel del perfil se dice en texto al lado.
  */
+import { t, type MessageKey } from '@/i18n/t'; // Textos traducidos
+
 export type ListingTier = 'community_info' | 'claimed' | 'verified';
 
 const tierPattern: Record<ListingTier, string> = {
@@ -10,11 +12,11 @@ const tierPattern: Record<ListingTier, string> = {
   verified: 'var(--band-anil)',
 };
 
-export const tierLabel: Record<ListingTier, string> = {
-  community_info: 'Información comunitaria',
-  claimed: 'Perfil reclamado',
-  verified: 'Negocio verificado',
-};
+export const tierLabel: Record<ListingTier, MessageKey> = {
+  community_info: 'tier.community_info', // Información comunitaria
+  claimed: 'tier.claimed', // Perfil reclamado
+  verified: 'tier.verified', // Negocio verificado
+}; // Clave del nombre de cada nivel
 
 export function FranjaTejida({ height = 18, className }: { height?: number; className?: string }) {
   return (
@@ -30,11 +32,11 @@ export function FranjaTejida({ height = 18, className }: { height?: number; clas
   );
 }
 
-export function FranjaNivel({ tier }: { tier: ListingTier }) {
+export function FranjaNivel({ tier, locale }: { tier: ListingTier; locale: string }) {
   return (
     <span className="inline-flex items-center gap-2 text-[15px] font-bold">
       <span aria-hidden="true" style={{ width: 28, height: 8, background: tierPattern[tier], display: 'inline-block' }} />
-      {tierLabel[tier]}
+      {t(locale, tierLabel[tier])} {/* Nivel en texto (la franja es decorativa) */}
     </span>
   );
 }

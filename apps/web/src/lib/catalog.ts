@@ -1,4 +1,5 @@
 import { publicDb } from './territories';
+import type { MessageKey } from '@/i18n/t'; // Claves de traducción
 import type { FieldState, VerificationRow } from '@/components/EstadoVerificacion';
 import type { ListingTier } from '@/components/FranjaTejida';
 
@@ -10,7 +11,7 @@ const latest = (dates: string[]) => dates.sort().at(-1);
 export function locationState(precision: 'exact' | 'approximate' | 'restricted'): FieldState {
   if (precision === 'exact') return { kind: 'pending' };
   if (precision === 'approximate') return { kind: 'approximate' };
-  return { kind: 'restricted', note: 'Ubicación protegida' };
+  return { kind: 'restricted', noteKey: 'ficha.location_protected' }; // Ubicación protegida (texto traducido en pantalla)
 }
 
 export function hoursState(hours: Hours[]): FieldState {
@@ -33,11 +34,11 @@ export async function getDestination(slug: string) {
     d.source_id ? db.from('data_sources').select('url').eq('id', d.source_id).maybeSingle() : Promise.resolve({ data: null }),
   ]);
   const rows: VerificationRow[] = [
-    { field: 'Ubicación', state: locationState(d.location_precision) },
-    { field: 'Horarios', state: hoursState((hours ?? []) as Hours[]) },
-    { field: 'Tarifas', state: pricesState((prices ?? []) as Price[]) },
+    { field: 'field.location', state: locationState(d.location_precision) }, // Ubicación
+    { field: 'field.hours', state: hoursState((hours ?? []) as Hours[]) }, // Horarios
+    { field: 'field.prices', state: pricesState((prices ?? []) as Price[]) }, // Tarifas
   ];
-  if (d.safety_notes) rows.push({ field: 'Seguridad', state: { kind: 'restricted', note: d.safety_notes } });
+  if (d.safety_notes) rows.push({ field: 'field.safety', state: { kind: 'restricted', note: d.safety_notes } });
   return { destination: d, prices: (prices ?? []) as Price[], rows, sourceHref: (src as { url?: string } | null)?.url };
 }
 
@@ -66,10 +67,10 @@ export async function getBusiness(slug: string) {
     db.from('price_observations').select('label, amount, currency, unit, observed_at, reported_by').eq('business_id', b.id),
   ]);
   const rows: VerificationRow[] = [
-    { field: 'Identidad', state: (b.verified_scope ?? []).includes('identity') && b.verified_at ? { kind: 'verified', date: b.verified_at } : { kind: 'pending' } },
-    { field: 'Ubicación', state: (b.verified_scope ?? []).includes('location') && b.verified_at ? { kind: 'verified', date: b.verified_at } : locationState(b.location_precision) },
-    { field: 'Horarios', state: hoursState((hours ?? []) as Hours[]) },
-    { field: 'Tarifas', state: pricesState((prices ?? []) as Price[]) },
+    { field: 'field.identity', state: (b.verified_scope ?? []).includes('identity') && b.verified_at ? { kind: 'verified', date: b.verified_at } : { kind: 'pending' } },
+    { field: 'field.location', state: (b.verified_scope ?? []).includes('location') && b.verified_at ? { kind: 'verified', date: b.verified_at } : locationState(b.location_precision) },
+    { field: 'field.hours', state: hoursState((hours ?? []) as Hours[]) }, // Horarios
+    { field: 'field.prices', state: pricesState((prices ?? []) as Price[]) }, // Tarifas
   ];
   return {
     business: b as typeof b & { listing_tier: ListingTier; is_sponsored: boolean },
@@ -79,8 +80,8 @@ export async function getBusiness(slug: string) {
   };
 }
 
-export const reportedByLabel: Record<Price['reported_by'], string> = {
-  owner: 'informada por el negocio',
-  editor: 'comprobada por el equipo editorial',
-  official_source: 'según fuente oficial',
-};
+export const reportedByKey: Record<Price['reported_by'], MessageKey> = {
+  owner: 'prices.by_owner', // Lo informó el negocio
+  editor: 'prices.by_editor', // Lo comprobó el equipo editorial
+  official_source: 'prices.by_official', // Fuente oficial
+}; // Clave de traducción de quién informó cada tarifa

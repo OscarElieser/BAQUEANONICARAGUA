@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { CurvasDeNivel } from '@/components/CurvasDeNivel';
 import { EstadoVerificacion } from '@/components/EstadoVerificacion';
 import { getTerritory } from '@/lib/territories';
+import { t } from '@/i18n/t'; // Textos traducidos
 
 export const revalidate = 3600;
 
@@ -21,14 +22,14 @@ export default async function TerritoryPage({ params }: { params: Promise<{ loca
 
   return (
     <main className="mx-auto max-w-[1280px] px-4 pb-16 sm:px-12">
-      <nav aria-label="Ruta" className="pt-6 text-sm">
-        <Link href={`/${locale}`}>Descubrir</Link>
+      <nav aria-label={t(locale, 'nav.breadcrumb')} className="pt-6 text-sm">
+        <Link href={`/${locale}`}>{t(locale, 'nav.discover')}</Link>
       </nav>
 
       <header className="flex flex-wrap items-end gap-6 pt-4">
         <div className="min-w-0 flex-[1_1_420px]">
           <h1 className="m-0 font-display text-[40px] font-normal leading-[1.02] sm:text-[48px]">{territory.name}</h1>
-          {territory.capital_name && <p className="mt-2 text-ink-muted">Cabecera: {territory.capital_name}</p>}
+          {territory.capital_name && <p className="mt-2 text-ink-muted">{t(locale, 'territory.capital', { name: territory.capital_name })}</p>}
         </div>
         <CurvasDeNivel className="h-auto w-full max-w-[360px] flex-[0_1_360px]" />
       </header>
@@ -37,13 +38,13 @@ export default async function TerritoryPage({ params }: { params: Promise<{ loca
         <div className="min-w-0 max-w-[var(--measure)] flex-[999_1_560px]">
           {sorted.length === 0 ? (
             <p className="text-ink-muted">
-              Aún no hay contenido editorial publicado para este territorio en tu idioma.
+              {t(locale, 'territory.no_content')} {/* Sin secciones en este idioma */}
             </p>
           ) : (
             sorted.map((s) => (
               <section key={s.section} className="mb-10">
                 <h2 className="mb-3 font-display text-[28px] font-normal">{s.title}</h2>
-                {s.machine_translated && <p className="text-sm text-oro-text">Traducción automática.</p>}
+                {s.machine_translated && <p className="text-sm text-oro-text">{t(locale, 'territory.machine')}</p>}
                 {/* body_md se renderiza con un parser Markdown sanitizado (pendiente de elegir en Fase 3) */}
                 <div className="whitespace-pre-line text-[17px] leading-[28px]">{s.body_md}</div>
               </section>
@@ -55,8 +56,8 @@ export default async function TerritoryPage({ params }: { params: Promise<{ loca
             locale={locale}
             sourceHref={source}
             rows={[
-              { field: 'Límites territoriales', state: { kind: 'pending' } },
-              { field: 'Contenido editorial', state: sorted.some((s) => s.verified_at) ? { kind: 'verified', date: sorted.find((s) => s.verified_at)!.verified_at! } : { kind: 'unconfirmed' } },
+              { field: 'field.boundaries', state: { kind: 'pending' } }, // Límites: sin capa oficial todavía
+              { field: 'field.editorial', state: sorted.some((s) => s.verified_at) ? { kind: 'verified', date: sorted.find((s) => s.verified_at)!.verified_at! } : { kind: 'unconfirmed' } },
             ]}
           />
         </aside>

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Acceso a los proveedores
 
+import '../../core/i18n/t.dart'; // Textos traducidos
 import '../../core/theme.dart'; // Colores y espaciados del sistema de diseño
 import 'legal_content.dart'; // Textos legales
 
@@ -12,10 +13,10 @@ class LegalIndexScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final legal = ref.watch(legalProvider); // Textos cargados (o cargando)
     return Scaffold(
-      appBar: AppBar(title: const Text('Información y legal')), // Barra superior con botón de volver
+      appBar: AppBar(title: Text(context.t('profile.legal'))), // Barra superior con botón de volver
       body: legal.when(
         loading: () => const Center(child: CircularProgressIndicator()), // Mientras carga
-        error: (_, __) => const Center(child: Text('No se pudieron cargar los textos. Cierra y vuelve a abrir la app.')), // Error claro
+        error: (_, __) => Center(child: Text(context.t('legal.load_error'))), // Error claro
         data: (file) => ListView(
           padding: const EdgeInsets.symmetric(vertical: TvSpace.s4), // Margen vertical
           children: [
@@ -60,7 +61,7 @@ class LegalPageScreen extends StatelessWidget {
             spacing: TvSpace.s2, // Espacio horizontal
             runSpacing: TvSpace.s2, // Espacio vertical
             children: [
-              Chip(label: Text('Versión del ${_fecha(file.version)}')), // Fecha de la versión
+              Chip(label: Text(context.t('legal.version', {'date': _fecha(file.version)}))), // Fecha de la versión
               _BorradorChip(note: file.statusNote), // Aviso de borrador
             ],
           ),

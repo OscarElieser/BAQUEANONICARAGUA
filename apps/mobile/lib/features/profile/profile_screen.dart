@@ -18,7 +18,7 @@ class ProfileScreen extends ConsumerWidget {
     final session = ref.watch(authStateProvider); // Escucha la sesión en tiempo real
     return session.when(
       loading: () => const Center(child: CircularProgressIndicator()), // Mientras comprueba la sesión
-      error: (_, __) => const Center(child: Text('No se pudo comprobar la sesión.')), // Error al leer la sesión
+      error: (_, __) => Center(child: Text(context.t('profile.check_error'))), // Error al leer la sesión
       data: (user) => user == null
           ? const Column(
               children: [
@@ -64,22 +64,22 @@ class _AccountState extends ConsumerState<_Account> {
     final tv = context.tv; // Colores del tema
     final text = Theme.of(context).textTheme; // Estilos de texto
     final repo = ref.read(authRepositoryProvider); // Repositorio de autenticación
-    final String name = widget.user.displayName ?? widget.user.email ?? 'Mi cuenta'; // Nombre visible
+    final String name = widget.user.displayName ?? widget.user.email ?? context.t('session.my_account'); // Nombre visible
     final bool verified = widget.user.emailVerified; // Si el correo está verificado
 
     return ListView(
       padding: const EdgeInsets.all(TvSpace.s6), // Margen
       children: [
-        Text('Hola, $name', style: text.displayMedium), // Saludo
+        Text(context.t('profile.hello', {'name': name}), style: text.displayMedium), // Saludo
         const SizedBox(height: TvSpace.s2), // Espacio
         Text(widget.user.email ?? '', style: text.bodyMedium?.copyWith(color: tv.inkMuted)), // Correo
         const SizedBox(height: TvSpace.s6), // Espacio
         if (!verified) ...[
-          Text('Tu correo no está verificado.', style: TextStyle(color: tv.oroText)), // Aviso
+          Text(context.t('session.unverified'), style: TextStyle(color: tv.oroText)), // Aviso
           const SizedBox(height: TvSpace.s2), // Espacio
           OutlinedButton(
-            onPressed: _busy ? null : () => _do(repo.resendVerification, 'Te enviamos de nuevo el correo de verificación.'), // Reenvía
-            child: const Text('Reenviar correo'), // Texto del botón
+            onPressed: _busy ? null : () => _do(repo.resendVerification, context.t('profile.resent')), // Reenvía
+            child: Text(context.t('profile.resend')), // Texto del botón
           ),
           const SizedBox(height: TvSpace.s6), // Espacio
         ],
@@ -94,7 +94,7 @@ class _AccountState extends ConsumerState<_Account> {
             foregroundColor: tv.statusAlert, // Texto en color de alerta
             side: BorderSide(color: tv.statusAlert, width: 1.5), // Borde en color de alerta
           ),
-          onPressed: _busy ? null : () => _do(repo.signOut, 'Sesión cerrada.'), // Cierra la sesión
+          onPressed: _busy ? null : () => _do(repo.signOut, context.t('profile.signed_out')), // Cierra la sesión
           child: Text(_busy ? context.t('session.signing_out') : context.t('session.sign_out')), // Texto según el estado
         ),
         if (_message != null) ...[

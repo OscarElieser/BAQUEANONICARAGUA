@@ -4,6 +4,7 @@ import 'package:intl/intl.dart'; // Formato de fechas
 
 import '../../core/data/models.dart'; // Datos de la mensajería
 import '../../core/data/repositories.dart'; // Acceso a la mensajería
+import '../../core/i18n/t.dart'; // Textos traducidos
 import '../../core/theme.dart'; // Colores y espaciados
 import '../../core/widgets/estados.dart'; // Cargando, error y vacío
 import 'conversation_screen.dart'; // Conversación
@@ -21,14 +22,14 @@ class InboxScreen extends ConsumerWidget {
     final tv = context.tv; // Colores
     final locale = Localizations.localeOf(context).toLanguageTag(); // Idioma para las fechas
     return Scaffold(
-      appBar: AppBar(title: const Text('Mensajes')), // Barra superior
+      appBar: AppBar(title: Text(context.t('messages.title'))), // Barra superior
       body: RefreshIndicator(
         onRefresh: () => ref.refresh(inboxProvider.future), // Deslizar hacia abajo recarga
         child: inbox.when(
           loading: () => const Cargando(), // Mientras carga
           error: (e, _) => ListView(children: [ErrorConReintento(error: e, onRetry: () => ref.invalidate(inboxProvider))]), // Error claro (desplazable para recargar)
           data: (threads) => threads.isEmpty
-              ? ListView(children: const [Vacio(text: 'Aún no tienes conversaciones. Escribe a un negocio desde su ficha.')]) // Sin conversaciones
+              ? ListView(children: [Vacio(text: context.t('messages.empty_inbox'))]) // Sin conversaciones
               : ListView.separated(
                   itemCount: threads.length, // Cantidad
                   separatorBuilder: (_, __) => const Divider(height: 1), // Línea entre filas
@@ -36,7 +37,7 @@ class InboxScreen extends ConsumerWidget {
                     final t = threads[i]; // Conversación
                     return ListTile(
                       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: TvSpace.s1), // Área táctil
-                      title: Text(t.businessName ?? 'Conversación', style: const TextStyle(fontWeight: FontWeight.w700)), // Con quién
+                      title: Text(t.businessName ?? context.t('messages.conversation'), style: const TextStyle(fontWeight: FontWeight.w700)), // Con quién
                       subtitle: Text(t.lastMessage ?? '', maxLines: 1, overflow: TextOverflow.ellipsis), // Último mensaje
                       trailing: Column(
                         mainAxisAlignment: MainAxisAlignment.center, // Centrado vertical
@@ -45,7 +46,7 @@ class InboxScreen extends ConsumerWidget {
                           if (t.lastMessageAt != null) Text(DateFormat.MMMd(locale).format(t.lastMessageAt!.toLocal()), style: TextStyle(color: tv.inkMuted, fontSize: 13)), // Fecha
                           if (t.unread > 0)
                             Semantics(
-                              label: '${t.unread} sin leer', // Para lectores de pantalla
+                              label: context.t('messages.unread', {'n': t.unread}), // Para lectores de pantalla
                               child: Container(
                                 margin: const EdgeInsets.only(top: 4), // Separación
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2), // Relleno
@@ -56,7 +57,7 @@ class InboxScreen extends ConsumerWidget {
                         ],
                       ),
                       onTap: () async {
-                        await Navigator.of(context).push(MaterialPageRoute(builder: (_) => ConversationScreen(conversationId: t.conversationId, title: t.businessName ?? 'Conversación'))); // Abre la conversación
+                        await Navigator.of(context).push(MaterialPageRoute(builder: (_) => ConversationScreen(conversationId: t.conversationId, title: t.businessName ?? context.t('messages.conversation')))); // Abre la conversación
                         ref.invalidate(inboxProvider); // Al volver, actualiza los no leídos
                       },
                     );
