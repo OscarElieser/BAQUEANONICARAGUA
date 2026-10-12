@@ -44,7 +44,7 @@ export function ThemeToggle({ locale }: { locale: string }) {
       onClick={cycle} // Cambia de tema
       aria-label={`${name}. ${t(locale, 'theme.change')}`} // Estado y acción para lectores de pantalla
       title={name} // Ayuda al pasar el cursor
-      className="flex h-11 w-11 items-center justify-center rounded-pill bg-ground-raised text-ink"
+      className="boton-neu flex h-11 w-11 items-center justify-center rounded-pill text-ink"
     >
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
         {theme === 'dark' ? (

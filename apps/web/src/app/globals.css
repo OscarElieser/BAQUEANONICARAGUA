@@ -451,3 +451,30 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
 .explorador.en-transicion .exp-velo { view-transition-name: exp-velo; } /* La sombra queda sobre el fondo que crece… */
 .explorador.en-transicion .exp-textos { view-transition-name: exp-textos; } /* …y el texto por encima de todo */
 .explorador.en-transicion .exp-flechas { view-transition-name: exp-flechas; } /* Y las flechas */
+
+/* ===== Cabecera: selector en relieve suave (neumorfismo) con indicador deslizante ===== */
+:root { --neu-luz: color-mix(in oklab, var(--ground-raised) 92%, transparent); --neu-sombra: color-mix(in oklab, var(--ground-deep) 90%, var(--ink) 6%); } /* Luz y sombra del relieve en claro */
+:root[data-theme="dark"] { --neu-luz: color-mix(in oklab, var(--ground) 78%, var(--band-marfil) 10%); --neu-sombra: color-mix(in oklab, var(--ground-deep) 80%, transparent); } /* En oscuro, la luz es un verde más claro */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --neu-luz: color-mix(in oklab, var(--ground) 78%, var(--band-marfil) 10%); --neu-sombra: color-mix(in oklab, var(--ground-deep) 80%, transparent); } } /* Igual con el sistema en oscuro */
+.nav-neu { position: relative; display: flex; gap: 2px; padding: 5px; border-radius: var(--radius-pill); background: var(--ground); box-shadow: 6px 6px 14px var(--neu-sombra), -6px -6px 14px var(--neu-luz); } /* Píldora que sobresale del fondo */
+.nav-opcion { position: relative; z-index: 1; white-space: nowrap; padding: 10px 14px; border-radius: var(--radius-pill); color: var(--ink-muted); font-size: 14px; font-weight: 700; text-decoration: none; transition: color 200ms ease-out; } /* Opción */
+@media (min-width: 640px) { .nav-opcion { padding: 10px 20px; font-size: 15px; } } /* Más aire en pantallas grandes */
+.nav-opcion[aria-current="page"], .nav-opcion:hover { color: var(--ink); } /* La actual y la apuntada, en tinta plena */
+.nav-indicador { position: absolute; top: 5px; bottom: 5px; left: 0; width: var(--w, 0); transform: translateX(var(--x, 0)); border-radius: var(--radius-pill); background: var(--ground); box-shadow: inset 3px 3px 7px var(--neu-sombra), inset -3px -3px 7px var(--neu-luz); opacity: 0; transition: transform 340ms cubic-bezier(.3,.8,.2,1), width 340ms cubic-bezier(.3,.8,.2,1), opacity 200ms ease-out; } /* Hueco que se desliza */
+.nav-neu[data-listo="true"] .nav-indicador { opacity: 1; } /* Visible cuando ya se midió */
+.nav-neu:not([data-listo="true"]) .nav-opcion[aria-current="page"] { box-shadow: inset 3px 3px 7px var(--neu-sombra), inset -3px -3px 7px var(--neu-luz); } /* Antes de medir, la actual se ve hundida */
+.nav-opcion:focus-visible { outline-offset: 1px; } /* Foco visible ajustado a la píldora */
+@media (prefers-reduced-motion: reduce) { .nav-indicador { transition: none; } } /* Sin deslizamiento si así se pidió */
+.boton-neu { background: var(--ground); box-shadow: 4px 4px 10px var(--neu-sombra), -4px -4px 10px var(--neu-luz); transition: box-shadow 200ms ease-out; } /* Botón redondo en relieve */
+.boton-neu:active { box-shadow: inset 3px 3px 7px var(--neu-sombra), inset -3px -3px 7px var(--neu-luz); } /* Se hunde al tocarlo */
+
+/* Inicio de sesión: la tarjeta se despliega desde el centro y el orbe de la marca flota encima */
+.login-orbe { position: relative; width: 64px; height: 64px; margin: 0 auto -20px; border-radius: 50%; z-index: 1; background: radial-gradient(circle at 32% 28%, var(--band-marfil) 0 8%, var(--marca-naranja) 34%, color-mix(in oklab, var(--marca-naranja) 40%, var(--marca-turquesa)) 70%, var(--marca-profundo)); box-shadow: 0 0 40px color-mix(in oklab, var(--marca-naranja) 45%, transparent), 0 0 90px color-mix(in oklab, var(--marca-turquesa) 30%, transparent); } /* Esfera de marca con resplandor */
+@keyframes orbe-llega { 0% { opacity: 0; transform: translateY(40px) scale(0.6); } 60% { opacity: 1; transform: translateY(-6px) scale(1.04); } 100% { transform: none; } } /* El orbe sube y se asienta */
+.login-orbe { animation: orbe-llega 1.1s cubic-bezier(.2,.7,.2,1) both; } /* Una sola vez */
+@keyframes desplegar { from { clip-path: inset(36% 22% 36% 22% round 28px); opacity: 0.4; } to { clip-path: inset(0 round 28px); opacity: 1; } } /* La tarjeta se abre desde el centro */
+.login-vidrio { animation: desplegar 900ms cubic-bezier(.2,.75,.15,1) 250ms both; } /* Se despliega tras el orbe */
+@keyframes aparecer { from { opacity: 0; transform: translateY(10px); } } /* El contenido sube un poco */
+.login-vidrio > * { animation: aparecer 500ms ease-out both; animation-delay: 750ms; } /* El contenido aparece cuando la tarjeta ya se abrió */
+.login-vidrio > *:nth-child(3) { animation-delay: 850ms; } /* El formulario, un poco después */
+@media (prefers-reduced-motion: reduce) { .login-orbe, .login-vidrio, .login-vidrio > * { animation: none; } } /* Sin movimiento si así se pidió */
