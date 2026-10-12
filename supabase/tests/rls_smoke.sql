@@ -864,6 +864,13 @@ begin
 end $$;
 reset role;
 
+insert into results select 'funciones con search_path fijo (asesor de seguridad 0011)', -- Ninguna de las ocho queda sin search_path
+  not exists (
+    select 1 from pg_proc p join pg_namespace n on n.oid = p.pronamespace -- Funciones y su esquema
+    where (n.nspname, p.proname) in (('app','touch_updated_at'),('app','current_firebase_uid'),('app','public_point'),('app','slugify'),('app','risk_for_categories'),('app','incident_transition_allowed'),('audit','block_mutation'),('public','my_profile_id')) -- Las señaladas
+      and not coalesce(p.proconfig::text like '%search_path=%', false) -- Sin search_path fijo
+  );
+
 select case when ok then 'PASS' else 'FAIL' end as status, name from results order by ok, name;
 select count(*) filter (where not ok) as failures, count(*) as total from results;
 

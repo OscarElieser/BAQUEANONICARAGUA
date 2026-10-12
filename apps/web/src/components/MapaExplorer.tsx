@@ -1,5 +1,6 @@
 'use client';
 
+import publica from '@/config/publica.json'; // Valores públicos del proyecto oficial (el entorno puede cambiarlos)
 import { t } from '@/i18n/t'; // Textos traducidos
 
 import { useEffect, useRef, useState } from 'react';
@@ -34,7 +35,7 @@ export function MapaExplorer({ locale }: { locale: string }) {
       try {
         const mod = await import('maplibre-gl'); // Carga MapLibre solo al abrir el mapa
         const maplibre = ((mod as unknown as { default?: typeof mod }).default ?? mod) as typeof mod; // Funciona con la exportación por defecto (v4) y con exportaciones con nombre (v5 en adelante)
-        const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!);
+        const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL || publica.supabaseUrl, process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || publica.supabasePublishableKey);
         const { data, error } = await db.rpc('map_points');
         if (error) throw error;
         if (cancelled || !container.current) return;

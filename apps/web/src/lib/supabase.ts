@@ -1,10 +1,11 @@
 import { createClient } from '@supabase/supabase-js'; // Cliente oficial de Supabase
 import { getAuth } from 'firebase/auth'; // Servicio de autenticación de Firebase
+import publica from '@/config/publica.json'; // Valores públicos del proyecto oficial
 
 // Dirección del proyecto de Supabase (con valor oficial por defecto del proyecto)
 // Panel de control: https://supabase.com/dashboard/project/nupjhqrvxjrngtpslfjq/
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://nupjhqrvxjrngtpslfjq.supabase.co'; // Dirección de la base de datos
-const supabasePublishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || ''; // Clave pública segura para clientes
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || publica.supabaseUrl; // Dirección de la base de datos
+const supabasePublishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || publica.supabasePublishableKey; // Clave pública segura para clientes
 
 /**
  * Cliente Supabase que envía el ID token de Firebase (Third-Party Auth).

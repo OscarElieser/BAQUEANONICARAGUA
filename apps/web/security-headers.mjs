@@ -1,5 +1,6 @@
 // Cabeceras de seguridad de la web. Se calculan con las direcciones configuradas en el entorno,
 // así la política solo permite los servicios que de verdad usamos.
+import publica from './src/config/publica.json' with { type: 'json' }; // Valores públicos del proyecto oficial (si el entorno no trae otros)
 
 /** Devuelve solo el origen (https://dominio) de una dirección, o null si está vacía o es inválida. */
 function origin(url) {
@@ -12,10 +13,10 @@ function origin(url) {
 
 /** Arma la política de seguridad de contenido (CSP) y el resto de cabeceras. */
 export function securityHeaders(env = process.env, dev = env.NODE_ENV !== 'production') {
-  const supabase = origin(env.NEXT_PUBLIC_SUPABASE_URL); // Proyecto de Supabase
+  const supabase = origin(env.NEXT_PUBLIC_SUPABASE_URL || publica.supabaseUrl); // Proyecto de Supabase
   const api = origin(env.NEXT_PUBLIC_API_URL); // Nuestra API
   const mapStyle = origin(env.NEXT_PUBLIC_MAP_STYLE_URL); // Proveedor del estilo del mapa
-  const authDomain = env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ? `https://${env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN}` : null; // Dominio de inicio de sesión de Firebase
+  const authDomain = `https://${env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || publica.firebaseAuthDomain}`; // Dominio de inicio de sesión de Firebase
   const extra = (env.CSP_EXTRA_CONNECT ?? '').split(/\s+/).filter((s) => s.startsWith('https://')); // Proveedores extra (por ejemplo, teselas del mapa)
 
   const connect = [

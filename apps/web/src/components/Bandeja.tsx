@@ -1,5 +1,6 @@
 'use client';
 
+import publica from '@/config/publica.json'; // Valores públicos del proyecto oficial (el entorno puede cambiarlos)
 import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
@@ -43,7 +44,7 @@ export function Bandeja({ locale, initial }: { locale: string; initial?: string 
 
   useEffect(() => {
     if (!user) return;
-    db.current = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!, {
+    db.current = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL || publica.supabaseUrl, process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || publica.supabasePublishableKey, {
       accessToken: async () => (await user.getIdToken()) ?? null,
     });
     db.current.rpc('my_profile_id').then(({ data }) => setMe(data as string));

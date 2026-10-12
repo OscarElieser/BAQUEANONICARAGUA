@@ -38,8 +38,13 @@ export function getFirebaseApp(): FirebaseApp | null {
 
 let analyticsInstance: Analytics | null = null; // Guarda la instancia de analítica
 
-/** Obtiene o inicializa Firebase Analytics respetando soporte del entorno del navegador */
-export async function getFirebaseAnalytics(): Promise<Analytics | null> {
+/**
+ * Obtiene o inicializa Firebase Analytics respetando soporte del entorno del navegador.
+ * Solo con consentimiento: quien la llame debe pasar la elección de "Medición" del aviso de cookies.
+ * Además, la política de seguridad (CSP) no permite todavía los dominios de Google Analytics: hay que agregarlos a propósito.
+ */
+export async function getFirebaseAnalytics(consentimiento: boolean): Promise<Analytics | null> {
+  if (!consentimiento) return null; // Sin consentimiento no hay analítica (regla de privacidad del proyecto)
   if (typeof window === 'undefined') return null; // En el servidor no se ejecuta analítica
   const app = getFirebaseApp(); // Obtiene la aplicación de Firebase
   if (!app) return null; // Si no hay app configurada no se inicializa analítica

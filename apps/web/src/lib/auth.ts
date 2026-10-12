@@ -13,11 +13,12 @@ import {
   updateProfile, // Guarda el nombre visible en la cuenta
   type User, // Tipo que describe al usuario con sesión
 } from 'firebase/auth';
+import publica from '@/config/publica.json'; // Valores públicos del proyecto oficial
 import { firebaseAuth } from './firebase'; // Instancia de Firebase Auth (o null si no está configurado)
 import { t, type MessageKey } from '@/i18n/t'; // Textos traducidos
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL; // Dirección del proyecto de Supabase
-const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY; // Clave pública de Supabase (no es secreta)
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || publica.supabaseUrl; // Dirección del proyecto de Supabase
+const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || publica.supabasePublishableKey; // Clave pública de Supabase (no es secreta)
 
 /** Error propio con un código (app/...) para traducirlo al mostrarlo. */
 function appError(code: string): Error {

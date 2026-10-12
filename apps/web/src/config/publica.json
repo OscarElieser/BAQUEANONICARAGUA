@@ -1,0 +1,6 @@
+{
+  "_nota": "Configuración PÚBLICA del proyecto oficial (va al navegador y a la app, no es secreta). Las variables NEXT_PUBLIC_* del entorno la reemplazan. Nunca poner aquí claves secretas (service_role, cuentas de servicio).",
+  "supabaseUrl": "https://nupjhqrvxjrngtpslfjq.supabase.co",
+  "supabasePublishableKey": "sb_publishable_RM56EpgYxprblYCVyXD9Lw_17qwdZPc",
+  "firebaseAuthDomain": "baqueanonicaragua-95755.firebaseapp.com"
+}

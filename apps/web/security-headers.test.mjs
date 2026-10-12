@@ -28,3 +28,9 @@ test('direcciones vacías o inválidas no abren la política', () => {
   assert.doesNotMatch(csp, /http:\/\/inseguro/); // Solo se aceptan extras con HTTPS
   assert.match(csp, /https:\/\/teselas\.ejemplo/); // Extra con HTTPS aceptado
 });
+
+test('sin variables de entorno usa el proyecto oficial público (Supabase y Firebase)', () => {
+  const csp = get(securityHeaders({}, false), 'Content-Security-Policy'); // Entorno vacío
+  assert.match(csp, /connect-src [^;]*https:\/\/nupjhqrvxjrngtpslfjq\.supabase\.co/); // Supabase oficial permitido
+  assert.match(csp, /frame-src [^;]*https:\/\/baqueanonicaragua-95755\.firebaseapp\.com/); // Inicio de sesión oficial permitido
+});

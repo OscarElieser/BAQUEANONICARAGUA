@@ -1,11 +1,12 @@
 'use client'; // Escucha los cambios de página en el navegador
 
+import publica from '@/config/publica.json'; // Valores públicos del proyecto oficial (el entorno puede cambiarlos)
 import { usePathname } from 'next/navigation'; // Ruta actual
 import { useEffect, useState } from 'react'; // Efectos y estado
 import { browserOptsOut, CONSENT_EVENT, readConsent } from '@/lib/consent'; // Consentimiento
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL; // Dirección de Supabase
-const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY; // Clave pública (no secreta)
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || publica.supabaseUrl; // Dirección de Supabase
+const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || publica.supabasePublishableKey; // Clave pública (no secreta)
 const PRIVATE = /^\/[^/]+\/(cuenta|ops|mensajes|mi-aventura)(\/|$)/; // Zonas privadas que nunca se miden
 
 /** Ruta limpia: sin parámetros ni fragmentos y solo con caracteres seguros (así nunca viaja un dato personal). */

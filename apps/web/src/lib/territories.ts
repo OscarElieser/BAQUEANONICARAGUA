@@ -1,7 +1,8 @@
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js'; // Cliente de Supabase
+import publica from '@/config/publica.json'; // Valores públicos del proyecto oficial
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+export const url = process.env.NEXT_PUBLIC_SUPABASE_URL || publica.supabaseUrl; // Dirección del proyecto (el entorno puede cambiarla)
+export const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || publica.supabasePublishableKey; // Clave publicable (no es secreta: RLS decide qué se ve)
 
 /** true cuando el proyecto Supabase está configurado para este entorno. */
 export const isSupabaseConfigured = Boolean(url && key);
