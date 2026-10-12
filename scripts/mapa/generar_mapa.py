@@ -50,6 +50,35 @@ def simplify_ring(ring, tol):
     return simplify(ring[: far + 1], tol)[:-1] + simplify(ring[far:], tol)  # Simplifica las dos mitades y las une
 
 
+def inside(pt, ring):
+    """Si un punto está dentro de un anillo (regla del rayo)."""
+    x, y = pt  # Punto
+    hit = False  # Cantidad de cruces impar = dentro
+    for (x1, y1), (x2, y2) in zip(ring, ring[1:]):  # Cada lado
+        if (y1 > y) != (y2 > y) and x < (x2 - x1) * (y - y1) / (y2 - y1) + x1:  # El rayo horizontal cruza el lado
+            hit = not hit  # Cambia de lado
+    return hit  # Resultado
+
+
+def label_point(own_rings, water_rings):
+    """Punto de etiqueta en tierra y dentro del territorio, lo más lejos posible de sus bordes."""
+    outer = max(own_rings, key=len)  # Anillo principal
+    xs, ys = [p[0] for p in outer], [p[1] for p in outer]  # Coordenadas
+    best, best_d = None, -1.0  # Mejor punto hasta ahora
+    steps = 40  # Rejilla de 40 x 40 puntos candidatos
+    for i in range(1, steps):  # Columnas
+        for j in range(1, steps):  # Filas
+            c = (min(xs) + (max(xs) - min(xs)) * i / steps, min(ys) + (max(ys) - min(ys)) * j / steps)  # Candidato
+            if sum(inside(c, r) for r in own_rings) % 2 == 0:  # Fuera del territorio (o en un hueco)
+                continue  # Descarta
+            if any(inside(c, w) for w in water_rings):  # Dentro de un lago
+                continue  # Descarta
+            d = min((c[0] - p[0]) ** 2 + (c[1] - p[1]) ** 2 for r in own_rings for p in r)  # Distancia al borde más cercano
+            if d > best_d:  # Más centrado que el anterior
+                best, best_d = c, d  # Lo guarda
+    return best or ((min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2)  # El mejor punto (o el centro del recuadro)
+
+
 def main():
     admin1 = json.load(open(sys.argv[1], encoding="utf-8"))  # Límites de primer nivel del mundo
     lakes_src = json.load(open(sys.argv[2], encoding="utf-8"))  # Lagos del mundo
@@ -81,13 +110,11 @@ def main():
             parts.append("M" + "L".join(f"{x} {y}" for x, y in proj) + "Z")  # Camino cerrado
         return "".join(parts)  # Camino completo
 
+    water = [r for f in lakes for r in rings(f["geometry"])]  # Anillos de los lagos (en grados)
+
     def label(geom):
-        """Punto para la etiqueta: centro del anillo exterior más grande."""
-        polys = [geom["coordinates"]] if geom["type"] == "Polygon" else geom["coordinates"]  # Polígonos
-        outer = max((p[0] for p in polys), key=len)  # Anillo exterior con más puntos
-        lon = sum(p[0] for p in outer) / len(outer)  # Longitud media
-        lat = sum(p[1] for p in outer) / len(outer)  # Latitud media
-        return xy((lon, lat))  # Punto proyectado
+        """Punto para la etiqueta: en tierra, dentro del territorio y lejos de sus bordes."""
+        return xy(label_point(rings(geom), water))  # Punto proyectado
 
     out = {
         "source": "Natural Earth 1:10m Admin 1 y Lakes (dominio público, naturalearthdata.com)",  # Fuente citada
