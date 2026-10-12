@@ -369,13 +369,13 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
 /* ===== Galería en arco 3D (catálogos de territorios y destinos) ===== */
 .arco-escena { --ink: var(--band-marfil); --ink-muted: #C9D8D0; --focus: var(--marca-naranja); --oro-text: #E9BB74; --status-verified: #9FD9C2; --accent: #E9BB74; --line: color-mix(in oklab, var(--band-marfil) 14%, var(--marca-nocturno)); margin: 40px 0; padding: 48px 0 28px; border-radius: 28px; color: var(--ink); background: radial-gradient(120% 80% at 50% 0%, color-mix(in oklab, var(--marca-turquesa) 22%, var(--marca-profundo)), var(--marca-nocturno) 70%); } /* Sala oscura: las portadas brillan */
 .arco-titulo { margin: 0; font-family: var(--font-young-serif), Georgia, serif; font-weight: 400; font-size: clamp(30px, 4vw, 48px); line-height: 1.05; } /* Título editorial centrado */
-.arco { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 28px 0 16px; -webkit-mask: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); mask: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); } /* Fila deslizable con bordes que se desvanecen */
+.arco { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 48px 0 36px; -webkit-mask: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); mask: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); } /* Fila deslizable con bordes que se desvanecen */
 .arco::-webkit-scrollbar { display: none; } /* Sin barra visible (se desliza con el dedo, la rueda, el teclado o las flechas) */
 .arco:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; } /* Foco visible */
 .arco-lista { display: flex; gap: 24px; width: max-content; margin: 0; padding: 0 calc(50vw - 120px); list-style: none; } /* Margen para que la primera y la última puedan quedar al centro */
 .arco-item { width: 220px; flex: none; scroll-snap-align: center; backface-visibility: hidden; } /* Cada tarjeta se detiene al centro */
 @supports (animation-timeline: view()) {
-  @keyframes arco-giro { 0% { transform: perspective(900px) rotateY(46deg) scale(0.84); opacity: 0.8; } 50% { transform: perspective(900px) rotateY(0deg) scale(1); opacity: 1; } 100% { transform: perspective(900px) rotateY(-46deg) scale(0.84); opacity: 0.8; } } /* De derecha a izquierda: entra girada, queda de frente al centro y sale girada */
+  @keyframes arco-giro { 0% { transform: perspective(900px) rotateY(-44deg) scale(1.14); } 50% { transform: perspective(900px) rotateY(0deg) scale(0.94); } 100% { transform: perspective(900px) rotateY(44deg) scale(1.14); } } /* Vista desde dentro de un cilindro: las de los bordes se acercan y miran al centro */
   .arco-item { animation: arco-giro linear both; animation-timeline: view(inline); } /* El giro sigue al desplazamiento */
 }
 @keyframes arco-entrada { from { opacity: 0; transform: translateY(46px) rotateX(18deg); } } /* Las tarjetas suben al aparecer */

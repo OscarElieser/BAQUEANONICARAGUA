@@ -66,8 +66,8 @@ class _GaleriaArcoState extends State<GaleriaArco> {
                   builder: (context, hijo) {
                     final pagina = _pagina.hasClients && _pagina.position.haveDimensions ? (_pagina.page ?? 0) : 0.0; // Página visible (con decimales mientras se desliza)
                     final delta = (i - pagina).clamp(-1.5, 1.5).toDouble(); // Distancia al centro
-                    final giro = quieto ? 0.0 : -0.8 * delta; // Las de la derecha alejan su borde derecho, y al revés
-                    final escala = 1 - 0.14 * (delta.abs() > 1 ? 1.0 : delta.abs()); // Las de los lados, un poco más pequeñas
+                    final giro = quieto ? 0.0 : 0.75 * delta; // Vista desde dentro de un cilindro: las de los lados acercan su borde exterior y miran al centro
+                    final escala = 0.94 + 0.18 * (delta.abs() > 1 ? 1.0 : delta.abs()); // Las de los lados, un poco más grandes (están más cerca)
                     return Transform(
                       alignment: Alignment.center, // Gira sobre su centro
                       transform: Matrix4.identity()
