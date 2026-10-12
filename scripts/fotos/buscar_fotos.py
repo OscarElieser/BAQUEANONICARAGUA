@@ -17,24 +17,24 @@ UA = "BaqueanoFotos/0.1 (https://github.com/OscarElieser/BAQUEANONICARAGUA)"  # 
 
 # Lugares reales de cada territorio que se buscan en Commons (de lo más representativo a lo más general)
 BUSQUEDAS = {
-    "portada": ["Ometepe Concepcion volcano", "Laguna de Apoyo", "Somoto Canyon", "Corn Island beach", "Granada Nicaragua cathedral"],
-    "boaco": ["Boaco Nicaragua"],
-    "carazo": ["Jinotepe Nicaragua", "Carazo Nicaragua"],
-    "chinandega": ["San Cristobal volcano Nicaragua", "Chinandega Nicaragua"],
-    "chontales": ["Juigalpa", "Chontales Nicaragua"],
-    "costa-caribe-norte": ["Bilwi Puerto Cabezas", "Region Autonoma Costa Caribe Norte"],
-    "costa-caribe-sur": ["Little Corn Island", "Corn Islands Nicaragua", "Bluefields Nicaragua"],
-    "esteli": ["Esteli Nicaragua", "Tisey Esteli"],
-    "granada": ["Granada Nicaragua", "Isletas de Granada"],
-    "jinotega": ["Jinotega Nicaragua", "Lago de Apanas"],
-    "leon": ["Leon Cathedral Nicaragua", "Cerro Negro Nicaragua", "Leon Nicaragua"],
-    "madriz": ["Somoto Canyon", "Madriz Nicaragua"],
-    "managua": ["Laguna de Tiscapa", "Managua Nicaragua"],
-    "masaya": ["Masaya Volcano", "Laguna de Apoyo", "Masaya Nicaragua"],
-    "matagalpa": ["Matagalpa Nicaragua"],
-    "nueva-segovia": ["Ocotal Nicaragua", "Nueva Segovia Nicaragua"],
-    "rio-san-juan": ["El Castillo Rio San Juan", "Rio San Juan Nicaragua"],
-    "rivas": ["Ometepe", "San Juan del Sur"],
+    "portada": ["Ometepe Concepcion volcano", "Laguna de Apoyo Nicaragua", "Somoto Canyon", "Little Corn Island beach", "Granada Nicaragua cathedral"],
+    "boaco": ["Boaco Nicaragua ciudad", "Boaco Nicaragua", "Laguna Las Canoas"],
+    "carazo": ["La Boquita Nicaragua", "Diriamba Nicaragua", "Jinotepe Nicaragua"],
+    "chinandega": ["San Cristobal volcano Nicaragua", "Cosiguina Nicaragua", "El Viejo Nicaragua", "Chinandega Nicaragua"],
+    "chontales": ["Juigalpa Nicaragua", "Cuapa Nicaragua", "Chontales Nicaragua"],
+    "costa-caribe-norte": ["Cayos Miskitos", "Bilwi Nicaragua", "Puerto Cabezas Nicaragua"],
+    "costa-caribe-sur": ["Little Corn Island beach", "Pearl Lagoon Nicaragua", "Big Corn Island beach"],
+    "esteli": ["Tisey Esteli", "Miraflor Nicaragua", "Esteli Nicaragua"],
+    "granada": ["Granada Nicaragua cathedral", "Calzada Granada Nicaragua", "Isletas Granada Nicaragua", "Mombacho"],
+    "jinotega": ["Lago de Apanas", "Pena de la Cruz Jinotega", "Jinotega Nicaragua"],
+    "leon": ["Leon Cathedral Nicaragua", "Cerro Negro Nicaragua", "Leon Viejo ruins"],
+    "madriz": ["Somoto Canyon", "Somoto Nicaragua"],
+    "managua": ["Laguna de Tiscapa", "Malecon Managua", "Catedral Managua", "Momotombo"],
+    "masaya": ["Masaya volcano crater", "Laguna de Apoyo Nicaragua", "Masaya Nicaragua market"],
+    "matagalpa": ["Matagalpa Nicaragua", "Selva Negra Matagalpa", "Matagalpa mountains"],
+    "nueva-segovia": ["Ocotal Nicaragua", "Dipilto Nicaragua", "Jalapa Nueva Segovia"],
+    "rio-san-juan": ["Fortaleza El Castillo Nicaragua", "El Castillo Rio San Juan Nicaragua", "San Carlos Rio San Juan"],
+    "rivas": ["Ometepe Concepcion", "San Juan del Sur bay", "Ometepe Maderas"],
 }
 
 LICENCIA_OK = re.compile(r"^(CC0|Public domain|CC BY(-SA)? (2\.0|2\.5|3\.0|4\.0)( .*)?)$", re.I)  # Licencias libres aceptadas
@@ -78,6 +78,7 @@ def candidatas(consulta):
         if ancho < 1600 or not (1.25 <= ancho / max(alto, 1) <= 2.4): continue  # Grande y apaisada
         if NO_FOTO.search(titulo): continue  # Mapas, banderas, escudos
         cats = limpio(meta.get("Categories", {}).get("value"))  # Categorías de Commons
+        if "nicaragua" not in (titulo + " " + cats + " " + limpio(meta.get("ImageDescription", {}).get("value"))).lower(): continue  # Solo fotos tomadas en Nicaragua
         puntos = (100 if re.search(r"Quality images|Featured pictures", cats) else 0) + (40 if "Valued images" in cats else 0) + min(ancho, 6000) / 200  # Calidad reconocida y tamaño
         res.append({
             "archivo": titulo,  # Nombre en Commons
@@ -108,7 +109,7 @@ def main():
                     vistas.add(c["archivo"]); elegidas.append(c)  # La guarda
             time.sleep(1)  # Pausa de cortesía
         elegidas.sort(key=lambda c: -c["puntos"])  # Las mejores primero
-        elegidas = elegidas[:6]  # Hasta 6 candidatas
+        elegidas = elegidas[:9]  # Hasta 9 candidatas
         carpeta = salida / clave  # Carpeta del territorio
         carpeta.mkdir(exist_ok=True)  # La crea
         for i, c in enumerate(elegidas):  # Descarga la vista de cada candidata
