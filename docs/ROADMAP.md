@@ -3,6 +3,10 @@
 Estados: `no iniciado` · `en desarrollo` · `bloqueado` · `probado` · `publicado`
 Regla: un módulo solo pasa a `probado` cuando cumple los criterios de la sección 30 del prompt maestro **en staging**.
 
+> **Actualización del 12 de octubre de 2026.** La auditoría `docs/AUDITORIA.md` tiene el estado vigente de cada módulo, en cinco niveles: esquema, código, integración, prueba y producción.
+> Donde la tabla de abajo dice "sin compilar", ya no es cierto: CI compila y prueba web, API, Android, funciones y migraciones en cada cambio.
+> Ningún módulo está validado en producción todavía.
+
 ## Estado al 2026-10-11
 
 | Módulo | Estado | Evidencia / bloqueo |

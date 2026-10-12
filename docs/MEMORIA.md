@@ -101,6 +101,23 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
     - Mapa por zonas de paisaje (web y Android): cada territorio lleva el color de su zona, el mismo de su portada. Una leyenda con botones resalta una zona y avisa que la agrupación no es oficial.
     - El dueño subió el 12 de octubre librerías oficiales (Firebase, Supabase, Octokit, Cloudflare, ssh2 y `firebase_analytics`). En el mismo envío entraron archivos que no son del proyecto: `.claude/data/healthcare/…sqlite`, `.snapshots/` y `apps/mobile/.flutter-plugins*`. Falta que el dueño confirme si se quitan.
 
+16. **Prompt maestro de BAQUEANO y directiva de integración (12 de octubre de 2026):**
+    - El dueño entregó la especificación general del producto:
+      - nombre BAQUEANO;
+      - eslogan "Descubre lo que no sale en el mapa";
+      - asistente BAQÜI;
+      - paleta naranja `#F65E01`, turquesa `#165D6F`, verde `#4A7A5A` y azules `#0D1B2A` y `#102A43`;
+      - 19 secciones de navegación;
+      - BAQUEANO no gestiona reservas: facilita el descubrimiento y el contacto directo;
+      - dominio `baqueanonicaragua.com` y correo `baqueanonicaragua@gmail.com`.
+    - Directiva de integración:
+      - trabajar solo sobre Firebase `baqueanonicaragua-95755`, Supabase `nupjhqrvxjrngtpslfjq`, el repositorio `BAQUEANONICARAGUA`, Cloudflare y Hostinger;
+      - sin Azure;
+      - conservar el stack actual;
+      - no escribir en producción sin migración revisada y respaldo;
+      - no declarar completo un módulo solo porque existan tablas o rutas.
+    - Hecho: auditoría de la Fase 0 en `docs/AUDITORIA.md`, con una matriz de cinco niveles por módulo, seguridad, riesgos y las decisiones pendientes del dueño. La paleta nueva queda pendiente de decisión y no se aplicó.
+
 ## 4b. Estado del proyecto oficial (revisado el 2026-10-12)
 
 - Supabase `nupjhqrvxjrngtpslfjq`: las 15 migraciones originales ya están aplicadas por el dueño. Hay 17 territorios, todos en borrador (0 publicados), y ningún destino ni negocio. `app.settings.firebase_project_id` está vacío (el seed no corrió).
