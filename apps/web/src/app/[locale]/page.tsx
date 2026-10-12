@@ -3,6 +3,7 @@ import { RelieveVivo3D } from '@/components/RelieveVivo3D'; // Relieve 3D "Relie
 import { listTerritories } from '@/lib/territories'; // Territorios publicados desde Supabase
 import { MapaTerritorios } from '@/components/MapaTerritorios'; // Mapa ilustrado de los 17 territorios
 import { GaleriaTerritorios } from '@/components/GaleriaTerritorios'; // Desfile de las 17 portadas
+import { PuertaCultura } from '@/components/PuertaCultura'; // Puerta al mundo de Cultura
 import { t } from '@/i18n/t'; // Textos traducidos
 import type { Metadata } from 'next'; // Tipo de los metadatos
 import { jsonLd, pageMetadata, SITE_URL, absolute } from '@/lib/seo'; // Canónica, idiomas, vista previa y datos estructurados
@@ -65,6 +66,8 @@ export default async function Descubrir({ params }: { params: Promise<{ locale: 
       </section>
 
       <GaleriaTerritorios locale={locale} published={(territories ?? []).map((ter) => ter.slug)} /> {/* Las 17 portadas en movimiento */}
+
+      <PuertaCultura locale={locale} /> {/* Historia, arte y cultura */}
 
       <section aria-labelledby="territorios" className="border-t border-line pb-10 pt-7">
         <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">

@@ -352,5 +352,6 @@
   "gallery.label": "Desfile de portadas de los 17 territorios",
   "relief.territory_aria": "{name} en relieve 3D, hecho con su forma real. Arrastra para girarlo.",
   "relief.territory_static": "Portada ilustrada de {name}, hecha con su forma real",
-  "relief.territory_note": "Forma real; alturas ilustrativas, no es topografía."
+  "relief.territory_note": "Forma real; alturas ilustrativas, no es topografía.",
+  "culture.door": "Línea de tiempo y patrimonio del país, cada dato con su fuente."
 }

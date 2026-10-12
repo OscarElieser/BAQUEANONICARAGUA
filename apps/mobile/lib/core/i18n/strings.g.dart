@@ -367,6 +367,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_aria': '{name} en relieve 3D, hecho con su forma real. Arrastra para girarlo.',
     'relief.territory_static': 'Portada ilustrada de {name}, hecha con su forma real',
     'relief.territory_note': 'Forma real; alturas ilustrativas, no es topografía.',
+    'culture.door': 'Línea de tiempo y patrimonio del país, cada dato con su fuente.',
   },
   'en': {
     'meta.title_default': 'Nicaragua, contour by contour',
@@ -718,6 +719,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_aria': '{name} in 3D relief, built from its real shape. Drag to turn it.',
     'relief.territory_static': 'Illustrated cover of {name}, built from its real shape',
     'relief.territory_note': 'Real shape; heights are illustrative, not topography.',
+    'culture.door': 'The country\'s timeline and heritage, every fact with its source.',
   },
   'zh-Hans': {
     'meta.title_default': '尼加拉瓜，一线一景',
@@ -1069,6 +1071,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_aria': '{name} 的 3D 浮雕，依据真实轮廓制作。拖动可旋转。',
     'relief.territory_static': '{name} 的插画封面，依据真实轮廓制作',
     'relief.territory_note': '轮廓真实；高度仅为示意，并非地形数据。',
+    'culture.door': '国家的历史年表与遗产，每条信息都注明来源。',
   },
   'ko': {
     'meta.title_default': '니카라과, 등고선 따라 한 굽이씩',
@@ -1420,6 +1423,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_aria': '실제 모양으로 만든 {name}의 3D 입체 지형. 끌어서 돌려 보세요.',
     'relief.territory_static': '실제 모양으로 만든 {name}의 일러스트 표지',
     'relief.territory_note': '실제 모양이며, 높이는 설명용으로 지형 자료가 아닙니다.',
+    'culture.door': '나라의 연표와 유산, 모든 내용에 출처를 밝힙니다.',
   },
   'it': {
     'meta.title_default': 'Nicaragua, curva dopo curva',
@@ -1771,6 +1775,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_aria': '{name} in rilievo 3D, costruito dalla sua forma reale. Trascina per ruotarlo.',
     'relief.territory_static': 'Copertina illustrata di {name}, costruita dalla sua forma reale',
     'relief.territory_note': 'Forma reale; altezze illustrative, non è topografia.',
+    'culture.door': 'Cronologia e patrimonio del paese, ogni dato con la sua fonte.',
   },
   'fr': {
     'meta.title_default': 'Nicaragua, courbe après courbe',
@@ -2122,6 +2127,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_aria': '{name} en relief 3D, construit à partir de sa forme réelle. Faites glisser pour le tourner.',
     'relief.territory_static': 'Couverture illustrée de {name}, construite à partir de sa forme réelle',
     'relief.territory_note': 'Forme réelle ; hauteurs illustratives, ce n’est pas de la topographie.',
+    'culture.door': 'La chronologie et le patrimoine du pays, chaque fait avec sa source.',
   },
   'pt': {
     'meta.title_default': 'Nicarágua, curva a curva',
@@ -2473,6 +2479,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_aria': '{name} em relevo 3D, feito com sua forma real. Arraste para girar.',
     'relief.territory_static': 'Capa ilustrada de {name}, feita com sua forma real',
     'relief.territory_note': 'Forma real; alturas ilustrativas, não é topografia.',
+    'culture.door': 'Linha do tempo e patrimônio do país, cada dado com sua fonte.',
   },
   'de': {
     'meta.title_default': 'Nicaragua, Höhenlinie für Höhenlinie',
@@ -2824,6 +2831,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_aria': '{name} als 3D-Relief, aus der echten Form erstellt. Zum Drehen ziehen.',
     'relief.territory_static': 'Illustriertes Titelbild von {name}, aus der echten Form erstellt',
     'relief.territory_note': 'Echte Form; Höhen nur zur Veranschaulichung, keine Topografie.',
+    'culture.door': 'Zeitleiste und Kulturerbe des Landes, jede Angabe mit Quelle.',
   },
   'ru': {
     'meta.title_default': 'Никарагуа, изгиб за изгибом',
@@ -3175,6 +3183,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_aria': '{name} в 3D-рельефе по реальной форме. Потяните, чтобы повернуть.',
     'relief.territory_static': 'Иллюстрированная обложка: {name}, по реальной форме',
     'relief.territory_note': 'Форма реальная; высоты условные, это не топография.',
+    'culture.door': 'Хронология и наследие страны, у каждого факта есть источник.',
   },
   'ja': {
     'meta.title_default': 'ニカラグア、等高線をたどって',
@@ -3526,5 +3535,6 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_aria': '実際の形から作った{name}の3D立体地図。ドラッグで回せます。',
     'relief.territory_static': '実際の形から作った{name}のイラストカバー',
     'relief.territory_note': '形は実際のもの。高さはイメージで、地形データではありません。',
+    'culture.door': '国の年表と遺産。すべての情報に出典があります。',
   },
 };

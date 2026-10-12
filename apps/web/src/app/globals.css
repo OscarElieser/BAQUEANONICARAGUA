@@ -206,3 +206,6 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
   .ruta-parada { opacity: 1; } /* Paradas visibles */
 }
 .desfile:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: var(--radius-m); } /* Foco visible del desfile */
+.puerta-cultura { transition: transform 260ms cubic-bezier(.2,.7,.2,1); } /* La puerta se eleva un poco al apuntarla */
+.puerta-cultura:hover { transform: translateY(-3px); } /* Elevación */
+.puerta-cultura:focus-visible { outline: 3px solid var(--oro); outline-offset: 4px; } /* Foco visible en ambos temas */

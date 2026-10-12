@@ -352,5 +352,6 @@
   "gallery.label": "Sfilata delle copertine dei 17 territori",
   "relief.territory_aria": "{name} in rilievo 3D, costruito dalla sua forma reale. Trascina per ruotarlo.",
   "relief.territory_static": "Copertina illustrata di {name}, costruita dalla sua forma reale",
-  "relief.territory_note": "Forma reale; altezze illustrative, non è topografia."
+  "relief.territory_note": "Forma reale; altezze illustrative, non è topografia.",
+  "culture.door": "Cronologia e patrimonio del paese, ogni dato con la sua fonte."
 }
