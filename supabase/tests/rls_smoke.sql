@@ -286,6 +286,84 @@ begin
   end;
 end $$;
 
+-- ===========================================================================
+-- Fase 3 · alta de negocio → revisión → publicación; búsqueda justa; municipios
+-- ===========================================================================
+create temp table ctx (k text primary key, v uuid);
+grant select, insert on ctx to authenticated;
+
+-- 18. La emprendedora registra su negocio: queda en revisión y no es público
+select pg_temp.act_as('fb_owner');
+insert into ctx values ('biz', public.register_business('Comedor Doña Prueba', 11::smallint, array['comedores'], 'Sopa de queso'));
+reset role;
+insert into results select 'negocio nuevo queda en revisión',
+  (select editorial = 'in_review' and listing_tier = 'claimed' from public.businesses where id = (select v from ctx where k = 'biz'));
+insert into results select 'negocio en revisión no aparece en la vista pública',
+  not exists (select 1 from public.public_businesses where id = (select v from ctx where k = 'biz'));
+insert into results select 'riesgo estándar para comedores',
+  (select risk_level = 'standard' from public.verification_requests where subject_id = (select v from ctx where k = 'biz'));
+insert into results select 'alta queda auditada',
+  exists (select 1 from audit.logs where action = 'business.register' and target_id = (select v::text from ctx where k = 'biz'));
+
+-- 19. Sin sesión no se puede registrar
+set local role anon;
+select set_config('request.jwt.claims', '{}', true);
+do $$
+begin
+  begin
+    perform public.register_business('Anónimo', 6::smallint, array['comedores']);
+    insert into results values ('anónimo no puede registrar negocio', false);
+  exception when insufficient_privilege then
+    insert into results values ('anónimo no puede registrar negocio', true);
+  end;
+end $$;
+reset role;
+
+-- 20. El auditor no puede resolver verificaciones
+select pg_temp.act_as('fb_auditor');
+do $$
+begin
+  begin
+    perform public.review_business_verification(
+      (select id from public.verification_requests where subject_id = (select v from ctx where k = 'biz')),
+      'approve', 'Documentos completos', array['identity']);
+    insert into results values ('auditor no puede aprobar negocios', false);
+  exception when insufficient_privilege then
+    insert into results values ('auditor no puede aprobar negocios', true);
+  end;
+end $$;
+reset role;
+
+-- 21. El administrador lo verifica y aparece en la vista pública (y en el mapa)
+select pg_temp.act_as('fb_admin');
+select public.review_business_verification(
+  (select id from public.verification_requests where subject_id = (select v from ctx where k = 'biz')),
+  'approve', 'Identidad y ubicación comprobadas en visita', array['identity','location']);
+reset role;
+insert into results select 'negocio verificado aparece en la vista pública',
+  exists (select 1 from public.public_businesses where id = (select v from ctx where k = 'biz') and listing_tier = 'verified');
+insert into results select 'verificación queda auditada con antes y después',
+  exists (select 1 from audit.logs where action = 'business.verification.approve'
+          and target_id = (select v::text from ctx where k = 'biz') and before_data is not null);
+
+-- 22. Búsqueda sin acentos y sin patrocinados
+insert into public.businesses (slug, name, department_id, editorial, is_sponsored)
+values ('comedor-pagado', 'Comedor Pagado', 11, 'published', true);
+set local role anon;
+insert into results select 'búsqueda "dona prueba" encuentra "Doña Prueba"',
+  exists (select 1 from public.search_catalog('dona prueba') where name = 'Comedor Doña Prueba');
+insert into results select 'patrocinado no aparece en resultados orgánicos',
+  not exists (select 1 from public.search_catalog('comedor') where name = 'Comedor Pagado');
+reset role;
+
+-- 23. Municipios: 153, todos en borrador y con fuente
+insert into results select 'hay 153 municipios con fuente', count(*) = 153 and bool_and(source_id is not null) from public.municipalities;
+insert into results select 'municipios siguen en borrador hasta confirmar con INIDE/INETER',
+  bool_and(editorial = 'draft') from public.municipalities;
+set local role anon;
+insert into results select 'anónimo no ve municipios en borrador', count(*) = 0 from public.municipalities;
+reset role;
+
 select case when ok then 'PASS' else 'FAIL' end as status, name from results order by ok, name;
 select count(*) filter (where not ok) as failures, count(*) as total from results;
 
