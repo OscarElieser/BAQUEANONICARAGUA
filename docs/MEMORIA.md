@@ -2,7 +2,7 @@
 
 Resumen de todo lo conversado y decidido con el dueño del proyecto, para que cualquier persona o sesión nueva de Claude siga sin perder el hilo. **Leer antes de trabajar.** Se actualiza al final de cada etapa.
 
-Última actualización: 2026-10-12.
+Última actualización: 2026-10-12 (destinos y negocios con mundo propio).
 
 ## 1. Qué estamos construyendo
 
@@ -83,6 +83,8 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
     - **Cultura:** barro de San Juan de Oriente, greca precolombina que se traza al cargar y letra Caprasimo. Existe en web y Android.
     - **Comunidad:** hamacas de Masaya (franja que se teje al cargar), letra Bricolage Grotesque y relatos colgados de hilos de colores.
     - **Mi aventura:** buses pintados (añil con franjas), rótulo en Anybody que se estira al llegar y ruta ilustrativa que se dibuja.
+    - **Destinos:** cabecera en forma de boleto de viaje con talón perforado, que lleva la portada de su territorio real y enlaza a él. Las tarifas van como talones con fecha y fuente. Existe en web y Android.
+    - **Negocios:** mundo de Nuestra gente (franja de hamaca y Bricolage Grotesque). Lo que ofrece va como pizarra de pulpería, oscura y con puntos guía hasta el precio. Existe en web y Android.
     - **Mapa y páginas legales:** calma, solo la letra de lectura.
 14. **Skills sugeridas por el dueño:**
     - Ya activas: Frontend Design, PDF, Word, PowerPoint, Excel y Skill Creator.
@@ -99,7 +101,7 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
 
 ## 6. Próximos pasos propuestos
 
-1. Darles un mundo propio a las fichas de destinos y negocios.
+1. Conectar Supabase de staging para ver las fichas reales (territorio, destino y negocio) en las capturas.
 2. Al tener las cuentas: desplegar en staging, probar el inicio de sesión de punta a punta, y luego Search Console y Bing Webmaster Tools.
 3. Fotos reales verificadas que reemplacen a las ilustraciones en la galería, siempre con crédito y licencia.
 
