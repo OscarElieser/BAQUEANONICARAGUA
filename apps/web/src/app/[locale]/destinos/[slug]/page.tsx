@@ -4,8 +4,19 @@ import { CurvasDeNivel } from '@/components/CurvasDeNivel';
 import { EstadoVerificacion } from '@/components/EstadoVerificacion';
 import { getDestination, reportedByKey } from '@/lib/catalog'; // Datos de la ficha y quién informó cada tarifa
 import { t } from '@/i18n/t'; // Textos traducidos
+import type { Metadata } from 'next'; // Tipo de los metadatos
+import { absolute, jsonLd, pageMetadata } from '@/lib/seo'; // Canónica, idiomas, vista previa y datos estructurados
 
 export const revalidate = 1800;
+
+/** Metadatos de la ficha de destino. */
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+  const { locale, slug } = await params; // Idioma y destino
+  const data = await getDestination(slug); // Datos publicados
+  if (!data) return {}; // No existe: la página dará 404
+  const d = data.destination as { name: string; summary?: string | null }; // Nombre y resumen
+  return pageMetadata(locale, `/destinos/${slug}`, d.name, d.summary || t(locale, 'destination.meta_desc', { name: d.name })); // Metadatos
+}
 
 export default async function DestinoPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params;
@@ -15,8 +26,17 @@ export default async function DestinoPage({ params }: { params: Promise<{ locale
   const money = (n: number, c: string) => new Intl.NumberFormat(locale, { style: 'currency', currency: c }).format(n);
   const date = (iso: string) => new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(new Date(iso));
 
+  const structured = {
+    '@context': 'https://schema.org', // Vocabulario de datos estructurados
+    '@type': 'TouristAttraction', // Lugar turístico
+    name: d.name, // Nombre
+    ...(d.summary ? { description: d.summary } : {}), // Resumen, si existe
+    url: absolute(locale, `/destinos/${slug}`), // Dirección de la ficha
+    containedInPlace: { '@type': 'Country', name: 'Nicaragua' }, // País
+  }; // Datos estructurados (sin coordenadas ni horarios que no estén comprobados)
   return (
     <main className="mx-auto max-w-[1280px] px-4 pb-16 sm:px-12">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structured) }} /> {/* Datos para buscadores */}
       <nav aria-label={t(locale, 'nav.breadcrumb')} className="pt-6 text-sm">
         <Link href={`/${locale}`}>{t(locale, 'nav.discover')}</Link>
       </nav>

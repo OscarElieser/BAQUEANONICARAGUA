@@ -326,5 +326,13 @@
   "relief.aria": "奥梅特佩岛两座火山的 3D 地形图。拖动可旋转，点击山顶可查看名称。",
   "relief.aria_touch": "奥梅特佩岛两座火山的 3D 地形图。滑动可旋转，点击山顶可查看名称。",
   "relief.aria_static": "奥梅特佩岛两座火山的等高线",
-  "relief.loading": "正在加载地形…"
+  "relief.loading": "正在加载地形…",
+  "territory.meta_desc": "尼加拉瓜{name}：地理、历史、文化和经核实的地点，附来源和日期。",
+  "destination.meta_desc": "尼加拉瓜{name}。条目附来源、核实日期以及经核实的营业时间和价格。",
+  "business.meta_desc": "{name}，尼加拉瓜本地商家。直接联系，没有中间商，也不收佣金。",
+  "pagination.aria": "分页",
+  "pagination.prev": "上一页",
+  "pagination.next": "下一页",
+  "pagination.page": "第 {n} 页",
+  "community.newest": "返回最新内容"
 }

@@ -326,5 +326,13 @@
   "relief.aria": "오메테페섬 두 화산의 3D 지형입니다. 드래그해 돌리고 정상을 누르면 이름이 보입니다.",
   "relief.aria_touch": "오메테페섬 두 화산의 3D 지형입니다. 밀어서 돌리고 정상을 누르면 이름이 보입니다.",
   "relief.aria_static": "오메테페섬 두 화산의 등고선",
-  "relief.loading": "지형을 불러오는 중…"
+  "relief.loading": "지형을 불러오는 중…",
+  "territory.meta_desc": "니카라과 {name}: 지리, 역사, 문화와 확인된 장소를 출처와 날짜와 함께 소개합니다.",
+  "destination.meta_desc": "니카라과의 {name}. 출처, 확인 날짜, 확인된 영업시간과 요금을 담은 항목입니다.",
+  "business.meta_desc": "니카라과의 지역 업체 {name}. 중개인이나 수수료 없이 직접 연락하세요.",
+  "pagination.aria": "페이지 이동",
+  "pagination.prev": "이전",
+  "pagination.next": "다음",
+  "pagination.page": "{n}페이지",
+  "community.newest": "최신 글로 돌아가기"
 }

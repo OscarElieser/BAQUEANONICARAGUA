@@ -33,6 +33,7 @@ services:
         NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-} # Supabase (público)
         NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:-} # Clave pública de Supabase
         NEXT_PUBLIC_API_URL: http://localhost:4000 # API local
+        NEXT_PUBLIC_SITE_URL: http://localhost:3000 # Dirección pública en local (canónicas y sitemap)
         NEXT_PUBLIC_MAP_STYLE_URL: ${NEXT_PUBLIC_MAP_STYLE_URL:-} # Estilo del mapa
         NEXT_PUBLIC_FIREBASE_API_KEY: ${NEXT_PUBLIC_FIREBASE_API_KEY:-} # Firebase (público)
         NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN:-} # Firebase (público)

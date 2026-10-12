@@ -105,3 +105,26 @@ En Settings → Environments, crear `staging` y `production`. En `production`, a
 
 - Cada migración debe funcionar con la versión anterior de la web y la API, porque la base se actualiza antes que el servidor. Por eso nunca se borra ni se renombra una columna en uso en el mismo despliegue que deja de usarla: primero se publica el código nuevo y la limpieza va en un despliegue posterior.
 - Todo cambio de base de datos lleva RLS y pruebas en `supabase/tests/rls_smoke.sql` (CI las corre en cada commit).
+
+## Buscadores (Google, Bing y los demás)
+
+Lo que ya hace el sitio:
+
+- `robots.txt` anuncia el sitemap y bloquea las zonas privadas (cuenta, mensajes, denuncias y Ops Center).
+- `sitemap.xml` lista cada página pública en los 10 idiomas, con sus versiones alternativas (`hreflang`) y `x-default` en español. Incluye territorios, destinos y negocios publicados, y se regenera cada hora.
+- Cada página tiene su dirección canónica, sus versiones por idioma, su título y su descripción traducidos, y vista previa para compartir.
+- Datos estructurados (schema.org):
+  - el sitio, con su buscador;
+  - los territorios;
+  - los destinos (TouristAttraction);
+  - los negocios (LocalBusiness), solo con datos reales: sin precios, reseñas ni coordenadas inventadas.
+- Paginación con enlaces reales: el mapa por páginas y Comunidad hacia atrás en el tiempo. Las búsquedas y las páginas siguientes llevan `noindex, follow`, para no llenar Google de páginas repetidas sin perder los enlaces.
+- CI comprueba en cada commit el sitemap, el robots, las canónicas y el `noindex` de las búsquedas.
+
+Lo que hay que hacer al publicar (necesita el dominio):
+
+1. Definir la variable `WEB_DOMAIN`. El flujo la convierte en `NEXT_PUBLIC_SITE_URL` para canónicas y sitemap.
+2. Google Search Console: agregar la propiedad de dominio y verificarla con un registro TXT en Cloudflare. Después enviar `https://<dominio>/sitemap.xml`.
+3. Bing Webmaster Tools: importar el sitio desde Search Console. Bing también alimenta a DuckDuckGo, Yahoo y Ecosia.
+4. Yandex Webmaster y Naver Search Advisor (opcional): útiles para el público de Rusia y de Corea. Se verifican con una etiqueta o un registro TXT, que se agrega cuando existan las cuentas.
+5. Baidu: requiere registro con datos de empresa en China. No se hace por ahora.

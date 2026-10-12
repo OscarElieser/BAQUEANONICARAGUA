@@ -2,15 +2,32 @@ import Link from 'next/link';
 import { RelieveVivo3D } from '@/components/RelieveVivo3D'; // Relieve 3D "Relieve vivo"
 import { listTerritories } from '@/lib/territories';
 import { t } from '@/i18n/t'; // Textos traducidos
+import type { Metadata } from 'next'; // Tipo de los metadatos
+import { jsonLd, pageMetadata, SITE_URL, absolute } from '@/lib/seo'; // Canónica, idiomas, vista previa y datos estructurados
 
 export const revalidate = 3600;
+
+/** Metadatos de la portada en el idioma de la página. */
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params; // Idioma
+  return pageMetadata(locale, '', t(locale, 'meta.title_default'), t(locale, 'meta.description')); // Canónica y versiones por idioma
+}
 
 export default async function Descubrir({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const { data: territories, error } = await listTerritories();
 
+  const site = {
+    '@context': 'https://schema.org', // Vocabulario de datos estructurados
+    '@type': 'WebSite', // Es un sitio web
+    url: absolute(locale), // Dirección de la portada en este idioma
+    name: t(locale, 'meta.title_default'), // Nombre visible
+    inLanguage: locale, // Idioma
+    potentialAction: { '@type': 'SearchAction', target: `${SITE_URL}/${locale}/mapa?q={search_term_string}`, 'query-input': 'required name=search_term_string' }, // Buscador del sitio (Google puede mostrarlo en sus resultados)
+  }; // Datos estructurados del sitio
   return (
     <main className="mx-auto max-w-[1280px] px-4 sm:px-12">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(site) }} /> {/* Datos para buscadores */}
       <section className="flex flex-wrap items-center gap-6 pb-2 pt-10">
         <div className="min-w-0 max-w-[520px] flex-[1_1_420px]">
           <h1 className="m-0 font-display text-[44px] font-normal leading-[0.98] tracking-[-0.01em] sm:text-[76px]">

@@ -2,6 +2,18 @@ import Link from 'next/link';
 import { FranjaTejida } from '@/components/FranjaTejida';
 import { publicDb } from '@/lib/territories';
 import { t } from '@/i18n/t'; // Textos traducidos
+import type { Metadata } from 'next'; // Tipo de los metadatos
+import { Paginacion } from '@/components/Paginacion'; // Anterior / siguiente
+import { pageMetadata } from '@/lib/seo'; // Canónica, idiomas y vista previa
+
+const PER_PAGE = 20; // Relatos por página
+
+/** La primera página se indexa; las anteriores en el tiempo no, pero sus enlaces sí se siguen. */
+export async function generateMetadata({ params, searchParams }: { params: Promise<{ locale: string }>; searchParams: Promise<{ antes?: string }> }): Promise<Metadata> {
+  const { locale } = await params; // Idioma
+  const { antes } = await searchParams; // Cursor de paginación
+  return pageMetadata(locale, '/comunidad', t(locale, 'community.title'), t(locale, 'community.intro'), { noindex: Boolean(antes) }); // Metadatos
+}
 
 export const revalidate = 120;
 
@@ -10,10 +22,15 @@ type FeedPost = {
   author_name: string | null; is_promotional: boolean; reactions: number; comments: number;
 };
 
-export default async function Comunidad({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  const { data } = await publicDb().rpc('public_feed', { p_limit: 20 });
-  const feed = (data ?? []) as FeedPost[];
+export default async function Comunidad({ params, searchParams }: { params: Promise<{ locale: string }>; searchParams: Promise<{ antes?: string }> }) {
+  const { locale } = await params; // Idioma
+  const { antes } = await searchParams; // Cursor: relatos anteriores a esta fecha
+  const before = antes && !Number.isNaN(Date.parse(antes)) ? new Date(antes).toISOString() : null; // Solo fechas válidas
+  const { data } = await publicDb().rpc('public_feed', { p_limit: PER_PAGE + 1, p_before: before }); // Uno de más para saber si hay más
+  const all = (data ?? []) as FeedPost[]; // Relatos recibidos
+  const feed = all.slice(0, PER_PAGE); // Los de esta página
+  const nextHref = all.length > PER_PAGE ? `/${locale}/comunidad?antes=${encodeURIComponent(feed[feed.length - 1].created_at)}` : undefined; // Relatos anteriores
+  const firstHref = before ? `/${locale}/comunidad` : undefined; // Volver a los más recientes
   return (
     <main>
       <FranjaTejida height={22} />
@@ -52,6 +69,7 @@ export default async function Comunidad({ params }: { params: Promise<{ locale: 
               ))}
             </ol>
           )}
+          <Paginacion locale={locale} prevHref={firstHref} nextHref={nextHref} /> {/* Volver a lo reciente / relatos anteriores */}
         </section>
       </div>
     </main>

@@ -26,6 +26,8 @@ ARG NEXT_PUBLIC_FIREBASE_API_KEY=""
 ARG NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=""
 ARG NEXT_PUBLIC_FIREBASE_PROJECT_ID=""
 ARG NEXT_PUBLIC_FIREBASE_APP_ID=""
+# Dirección pública del sitio (canónicas, sitemap y robots.txt)
+ARG NEXT_PUBLIC_SITE_URL=""
 # Proveedores extra permitidos en la política de seguridad (por ejemplo, teselas del mapa)
 ARG CSP_EXTRA_CONNECT=""
 # Next.js no envía estadísticas de uso

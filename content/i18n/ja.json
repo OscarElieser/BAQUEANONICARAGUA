@@ -326,5 +326,13 @@
   "relief.aria": "オメテペ島の 2 つの火山の 3D 地形。ドラッグで回転し、山頂をタップすると名前が表示されます。",
   "relief.aria_touch": "オメテペ島の 2 つの火山の 3D 地形。スワイプで回転し、山頂をタップすると名前が表示されます。",
   "relief.aria_static": "オメテペ島の 2 つの火山の等高線",
-  "relief.loading": "地形を読み込み中…"
+  "relief.loading": "地形を読み込み中…",
+  "territory.meta_desc": "ニカラグア・{name}：地理、歴史、文化、確認済みの場所を情報源と日付つきで紹介。",
+  "destination.meta_desc": "ニカラグアの{name}。情報源、確認日、確認済みの営業時間と料金を掲載。",
+  "business.meta_desc": "ニカラグアの地元事業者「{name}」。仲介や手数料なしで直接連絡できます。",
+  "pagination.aria": "ページ送り",
+  "pagination.prev": "前へ",
+  "pagination.next": "次へ",
+  "pagination.page": "{n} ページ目",
+  "community.newest": "最新に戻る"
 }

@@ -2,6 +2,14 @@ import { FranjaTejida } from '@/components/FranjaTejida';
 import { RegistrarNegocioForm } from '@/components/RegistrarNegocioForm';
 import { listTerritories } from '@/lib/territories'; // Territorios para el selector
 import { t } from '@/i18n/t'; // Textos traducidos
+import type { Metadata } from 'next'; // Tipo de los metadatos
+import { pageMetadata } from '@/lib/seo'; // Canónica, idiomas y vista previa
+
+/** Metadatos para buscadores en el idioma de la página. */
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params; // Idioma
+  return pageMetadata(locale, '/comunidad/registrar', t(locale, 'register.title'), t(locale, 'register.intro')); // Canónica y versiones por idioma
+}
 
 export default async function RegistrarNegocio({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

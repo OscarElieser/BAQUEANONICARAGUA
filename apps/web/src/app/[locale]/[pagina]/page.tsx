@@ -5,6 +5,7 @@ import { locales } from '@/i18n/config'; // Idiomas disponibles
 import { TextoLegal } from '@/components/TextoLegal'; // Texto con marcadores resaltados
 import { legalFor, legalSlugs } from '@/lib/legal'; // Textos legales
 import { t } from '@/i18n/t'; // Textos de la interfaz
+import { pageMetadata } from '@/lib/seo'; // Canónica, idiomas y vista previa
 
 export const dynamicParams = false; // Solo existen las páginas declaradas: cualquier otra dirección da 404
 
@@ -17,7 +18,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; pagina: string }> }): Promise<Metadata> {
   const { locale, pagina } = await params; // Idioma y página pedidos
   const page = legalFor(locale).file.pages.find((p) => p.slug === pagina); // Busca la página
-  return page ? { title: page.title, description: page.summary } : {}; // Metadatos si existe
+  return page ? pageMetadata(locale, `/${pagina}`, page.title, page.summary) : {}; // Metadatos con canónica y versiones por idioma
 }
 
 /** Convierte "2026-10-12" en "12 de octubre de 2026". */

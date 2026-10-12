@@ -1,5 +1,13 @@
 import { Planificador } from '@/components/Planificador'; // Intérprete del viaje
 import { t } from '@/i18n/t'; // Textos traducidos
+import type { Metadata } from 'next'; // Tipo de los metadatos
+import { pageMetadata } from '@/lib/seo'; // Canónica, idiomas y vista previa
+
+/** Metadatos para buscadores en el idioma de la página. */
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params; // Idioma
+  return pageMetadata(locale, '/mi-aventura', t(locale, 'adventure.title'), t(locale, 'adventure.intro')); // Canónica y versiones por idioma
+}
 
 export default async function MiAventura({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

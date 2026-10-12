@@ -326,5 +326,13 @@
   "relief.aria": "Relevo em 3D dos dois vulcões da ilha de Ometepe. Arraste para girá-lo e toque em um cume para ver o nome.",
   "relief.aria_touch": "Relevo em 3D dos dois vulcões da ilha de Ometepe. Deslize para girá-lo e toque em um cume para ver o nome.",
   "relief.aria_static": "Curvas de nível dos dois vulcões da ilha de Ometepe",
-  "relief.loading": "Carregando o relevo…"
+  "relief.loading": "Carregando o relevo…",
+  "territory.meta_desc": "{name}, Nicarágua: geografia, história, cultura e lugares verificados, com fonte e data.",
+  "destination.meta_desc": "{name}, na Nicarágua. Ficha com fonte, data de verificação, horários e tarifas verificados.",
+  "business.meta_desc": "{name}, negócio local na Nicarágua. Contato direto, sem intermediários nem comissões.",
+  "pagination.aria": "Paginação",
+  "pagination.prev": "Anterior",
+  "pagination.next": "Próxima",
+  "pagination.page": "Página {n}",
+  "community.newest": "Voltar aos mais recentes"
 }

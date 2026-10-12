@@ -21,7 +21,9 @@ jobs:
       - name: Flujos de GitHub Actions bien escritos (actionlint) # Detecta errores en ci.yml, codeql.yml y deploy.yml antes de usarlos
         run: |
           bash <(curl -fsSL https://raw.githubusercontent.com/rhysd/actionlint/v1.7.7/scripts/download-actionlint.bash) 1.7.7 # Descarga una versión fija
-          ./actionlint -format '{{range $err := .}}::error file={{$err.Filepath}},line={{$err.Line}},col={{$err.Column}}::{{$err.Message}}{{"\n"}}{{end}}' # Revisa todos los flujos y publica cada error como anotación
+          ./actionlint -oneline > actionlint.txt || status=$? # Revisa todos los flujos (una línea por error)
+          sed -E 's/^([^:]+):([0-9]+):([0-9]+): (.*)$/::error file=\1,line=\2,col=\3::\4/' actionlint.txt # Publica cada error como anotación
+          exit "${status:-0}" # Falla si hubo errores
       - name: Script de despliegue sin errores (shellcheck) # deploy/servidor/desplegar.sh
         run: shellcheck deploy/servidor/desplegar.sh
       - name: Textos legales iguales en web y Android # Sobre nosotros, privacidad, cookies, términos…
@@ -170,6 +172,18 @@ jobs:
           grep -qi "strict-transport-security" headers.txt # Y HSTS
           test "$(docker exec web id -u)" != "0" # Y no correr como administrador
           docker logs web | tail -20 # Deja el registro visible
+      - name: Buscadores - sitemap, robots y canónicas por idioma # Lo que Google necesita para indexar los 10 idiomas
+        run: |
+          curl -fsS http://127.0.0.1:3000/robots.txt | tee robots.txt # robots.txt
+          grep -q "Sitemap: .*/sitemap.xml" robots.txt # Anuncia el sitemap
+          curl -fsS http://127.0.0.1:3000/sitemap.xml -o sitemap.xml # sitemap.xml
+          grep -qi 'hreflang="ja"' sitemap.xml # Incluye las versiones por idioma
+          test "$(grep -c '<url>' sitemap.xml)" -ge 120 # Al menos las 12 páginas fijas en los 10 idiomas
+          curl -fsS http://127.0.0.1:3000/en/cultura -o cultura.html # Una página en inglés
+          grep -qi 'rel="canonical" href="[^"]*/en/cultura"' cultura.html # Su canónica es ella misma, no la portada
+          grep -qi 'hreflang="x-default"' cultura.html # Declara la versión por defecto
+          curl -fsS "http://127.0.0.1:3000/es/mapa?q=volcan" -o busqueda.html # Una búsqueda
+          grep -q 'name="robots" content="noindex, follow"' busqueda.html # Las búsquedas no se indexan, pero sus enlaces sí se siguen
       - uses: actions/setup-node@v4 # Node para la revisión de accesibilidad
         with: { node-version: 22 }
       - name: Accesibilidad WCAG 2.2 AA (axe, temas claro y oscuro) # Falla con problemas graves o críticos

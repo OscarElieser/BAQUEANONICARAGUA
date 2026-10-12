@@ -5,6 +5,7 @@ import { Young_Serif, Atkinson_Hyperlegible } from 'next/font/google';
 import { locales, type Locale } from '@/i18n/config';
 import { SiteHeader } from '@/components/SiteHeader';
 import { t } from '@/i18n/t'; // Textos traducidos
+import { SITE_URL } from '@/lib/seo'; // Dirección pública del sitio
 import { SiteFooter } from '@/components/SiteFooter'; // Pie con páginas legales y preferencias de cookies
 import { AvisoCookies } from '@/components/AvisoCookies'; // Aviso de cookies con consentimiento real
 import { MedicionNavegacion } from '@/components/MedicionNavegacion'; // Medición anónima, solo con consentimiento
@@ -20,9 +21,11 @@ const themeBoot = `try{var t=localStorage.getItem('theme');if(t==='light'||t==='
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params; // Idioma de la página
   return {
+    metadataBase: new URL(SITE_URL), // Base para convertir rutas en direcciones absolutas
     title: { default: t(locale, 'meta.title_default'), template: '%s | Nicaragua' }, // Título por defecto y plantilla
     description: t(locale, 'meta.description'), // Descripción para buscadores
-    alternates: { languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])) }, // Avisa a los buscadores de las versiones en otros idiomas
+    openGraph: { siteName: 'Nicaragua', locale, type: 'website' }, // Datos comunes para la vista previa al compartir
+    // La canónica y las versiones por idioma las pone cada página (lib/seo.ts), para no apuntar todas a la portada
   };
 }
 

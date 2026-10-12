@@ -1,5 +1,7 @@
 import { publicDb } from '@/lib/territories'; // Acceso público a la base de datos
 import { t, type MessageKey } from '@/i18n/t'; // Textos traducidos
+import type { Metadata } from 'next'; // Tipo de los metadatos
+import { pageMetadata } from '@/lib/seo'; // Canónica, idiomas y vista previa
 
 export const revalidate = 3600;
 
@@ -11,6 +13,12 @@ const eraKey: Record<string, MessageKey> = {
 }; // Clave del nombre de cada época
 
 const year = (locale: string, y: number) => (y < 0 ? t(locale, 'culture.bce', { year: -y }) : String(y)); // Año, con "a. C." si es antes de Cristo
+
+/** Metadatos para buscadores en el idioma de la página. */
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params; // Idioma
+  return pageMetadata(locale, '/cultura', t(locale, 'culture.title'), t(locale, 'culture.intro')); // Canónica y versiones por idioma
+}
 
 export default async function Cultura({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params; // Idioma de la página

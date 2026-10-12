@@ -4,6 +4,8 @@ import { CurvasDeNivel } from '@/components/CurvasDeNivel';
 import { EstadoVerificacion } from '@/components/EstadoVerificacion';
 import { getTerritory } from '@/lib/territories';
 import { t } from '@/i18n/t'; // Textos traducidos
+import type { Metadata } from 'next'; // Tipo de los metadatos
+import { absolute, jsonLd, pageMetadata } from '@/lib/seo'; // Canónica, idiomas, vista previa y datos estructurados
 
 export const revalidate = 3600;
 
@@ -11,6 +13,14 @@ const sectionOrder = [
   'overview', 'geography', 'history', 'culture', 'gastronomy', 'peoples',
   'nature', 'heritage', 'festivities', 'climate', 'transport', 'routes', 'community',
 ];
+
+/** Metadatos de la ficha de territorio (nombre real y descripción traducida). */
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+  const { locale, slug } = await params; // Idioma y territorio
+  const { territory } = await getTerritory(slug, locale); // Datos publicados
+  if (!territory) return {}; // No existe: la página dará 404
+  return pageMetadata(locale, `/territorios/${slug}`, territory.name, t(locale, 'territory.meta_desc', { name: territory.name })); // Metadatos
+}
 
 export default async function TerritoryPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params;
@@ -20,8 +30,16 @@ export default async function TerritoryPage({ params }: { params: Promise<{ loca
   const sorted = [...sections].sort((a, b) => sectionOrder.indexOf(a.section) - sectionOrder.indexOf(b.section));
   const source = (territory as { data_sources?: { url?: string } | null }).data_sources?.url;
 
+  const structured = {
+    '@context': 'https://schema.org', // Vocabulario de datos estructurados
+    '@type': 'AdministrativeArea', // Departamento o región autónoma
+    name: territory.name, // Nombre oficial
+    url: absolute(locale, `/territorios/${slug}`), // Dirección de la ficha
+    containedInPlace: { '@type': 'Country', name: 'Nicaragua' }, // País
+  }; // Datos estructurados del territorio (solo datos reales)
   return (
     <main className="mx-auto max-w-[1280px] px-4 pb-16 sm:px-12">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structured) }} /> {/* Datos para buscadores */}
       <nav aria-label={t(locale, 'nav.breadcrumb')} className="pt-6 text-sm">
         <Link href={`/${locale}`}>{t(locale, 'nav.discover')}</Link>
       </nav>

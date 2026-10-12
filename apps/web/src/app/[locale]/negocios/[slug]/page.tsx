@@ -5,11 +5,22 @@ import { EstadoVerificacion } from '@/components/EstadoVerificacion';
 import { FranjaNivel, FranjaTejida } from '@/components/FranjaTejida';
 import { contactHref, getBusiness, reportedByKey } from '@/lib/catalog'; // Datos de la ficha, enlaces de contacto y quién informó cada tarifa
 import { t, type MessageKey } from '@/i18n/t'; // Textos traducidos
+import type { Metadata } from 'next'; // Tipo de los metadatos
+import { absolute, jsonLd, pageMetadata } from '@/lib/seo'; // Canónica, idiomas, vista previa y datos estructurados
 
 export const revalidate = 600;
 
 const contactKey: Record<string, MessageKey> = { phone: 'contact.phone', email: 'contact.email', website: 'contact.website' }; // Contactos con nombre traducible
 const brandName: Record<string, string> = { whatsapp: 'WhatsApp', facebook: 'Facebook', instagram: 'Instagram', tiktok: 'TikTok' }; // Marcas: no se traducen
+
+/** Metadatos de la ficha de negocio. */
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+  const { locale, slug } = await params; // Idioma y negocio
+  const data = await getBusiness(slug); // Datos publicados
+  if (!data) return {}; // No existe: la página dará 404
+  const b = data.business as { name: string; summary?: string | null }; // Nombre y resumen
+  return pageMetadata(locale, `/negocios/${slug}`, b.name, b.summary || t(locale, 'business.meta_desc', { name: b.name })); // Metadatos
+}
 
 export default async function NegocioPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params;
@@ -20,8 +31,19 @@ export default async function NegocioPage({ params }: { params: Promise<{ locale
   const date = (iso: string) => new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(new Date(iso));
   const links = contacts.map((c) => ({ ...c, href: contactHref(c) })).filter((c) => c.href);
 
+  const phone = contacts.find((c) => c.kind === 'phone'); // Teléfono publicado por el negocio (si hay)
+  const structured = {
+    '@context': 'https://schema.org', // Vocabulario de datos estructurados
+    '@type': 'LocalBusiness', // Negocio local
+    name: b.name, // Nombre
+    ...(b.summary ? { description: b.summary } : {}), // Resumen, si existe
+    url: absolute(locale, `/negocios/${slug}`), // Dirección de la ficha
+    ...(phone ? { telephone: phone.value } : {}), // Teléfono solo si el negocio lo publicó
+    address: { '@type': 'PostalAddress', addressCountry: 'NI' }, // País (la dirección exacta no se inventa)
+  }; // Datos estructurados (sin precios, horarios ni reseñas que no estén comprobados)
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structured) }} /> {/* Datos para buscadores */}
       <FranjaTejida height={22} />
       <div className="mx-auto max-w-[1280px] px-4 pb-16 sm:px-12">
         <nav aria-label={t(locale, 'nav.breadcrumb')} className="pt-6 text-sm">

@@ -326,5 +326,13 @@
   "relief.aria": "3D-Relief der beiden Vulkane der Insel Ometepe. Ziehen zum Drehen, auf einen Gipfel tippen, um seinen Namen zu sehen.",
   "relief.aria_touch": "3D-Relief der beiden Vulkane der Insel Ometepe. Wischen zum Drehen, auf einen Gipfel tippen, um seinen Namen zu sehen.",
   "relief.aria_static": "Höhenlinien der beiden Vulkane der Insel Ometepe",
-  "relief.loading": "Relief wird geladen…"
+  "relief.loading": "Relief wird geladen…",
+  "territory.meta_desc": "{name}, Nicaragua: Geografie, Geschichte, Kultur und geprüfte Orte, mit Quelle und Datum.",
+  "destination.meta_desc": "{name} in Nicaragua. Eintrag mit Quelle, Prüfdatum sowie geprüften Öffnungszeiten und Preisen.",
+  "business.meta_desc": "{name}, ein lokaler Betrieb in Nicaragua. Direkter Kontakt, ohne Vermittler und Provision.",
+  "pagination.aria": "Seitennavigation",
+  "pagination.prev": "Zurück",
+  "pagination.next": "Weiter",
+  "pagination.page": "Seite {n}",
+  "community.newest": "Zurück zu den neuesten"
 }

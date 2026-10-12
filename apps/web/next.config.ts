@@ -16,7 +16,7 @@ const config: NextConfig = {
         headers: securityHeaders(), // Cabeceras de seguridad
       },
       {
-        source: '/:locale/(cuenta|ops|mensajes|mi-aventura)/:path*', // Paneles privados
+        source: '/:locale/(cuenta|ops|mensajes|denunciar)/:path*', // Paneles privados y formularios confidenciales
         headers: [
           { key: 'Cache-Control', value: 'private, no-store' }, // Cloudflare no debe guardarlos en caché
           { key: 'X-Robots-Tag', value: 'noindex, nofollow' }, // Los buscadores no deben indexarlos
