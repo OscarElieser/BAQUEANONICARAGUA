@@ -1,0 +1,27 @@
+// Gestión de plugins y repositorios para la aplicación móvil
+pluginManagement {
+    val flutterSdkPath = run {
+        val properties = java.util.Properties() // Propiedades de configuración local
+        file("local.properties").inputStream().use { properties.load(it) } // Carga la ruta de Flutter SDK
+        val flutterSdkPath = properties.getProperty("flutter.sdk") // Obtiene la ruta del SDK
+        require(flutterSdkPath != null) { "flutter.sdk no está configurado en local.properties" } // Valida que exista
+        flutterSdkPath // Retorna la ruta
+    }
+
+    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle") // Incluye las herramientas de Gradle de Flutter
+
+    repositories {
+        google() // Repositorio de Google para librerías de Android
+        mavenCentral() // Repositorio central Maven
+        gradlePluginPortal() // Portal de plugins de Gradle
+    }
+}
+
+plugins {
+    id("dev.flutter.flutter-plugin-loader") version "1.0.0" // Cargador de dependencias de plugins Flutter
+    id("com.android.application") version "8.7.0" apply false // Plugin oficial de compilación de aplicaciones Android
+    id("org.jetbrains.kotlin.android") version "1.8.22" apply false // Soporte del lenguaje Kotlin en el proyecto
+    id("com.google.gms.google-services") version "4.5.0" apply false // Plugin de Google Services para Firebase
+}
+
+include(":app") // Incluye el módulo de la aplicación móvil

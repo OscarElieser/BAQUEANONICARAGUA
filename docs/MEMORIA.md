@@ -94,7 +94,7 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
 ## 5. Pendiente del dueño (Claude no puede hacerlo)
 
 - Proteger `main` en GitHub y borrar las ramas viejas: ci-verde, fase-6, login, ops-center, relieve-3d, funciones-supabase, seguridad-legal, fase-7-android, fase-9-idiomas e idiomas-lote-2. Cerrar los PR viejos de Dependabot.
-- Dar las cuentas para publicar: VPS de Hostinger, Cloudflare, Supabase, Firebase, dominio y proveedor de mapas.
+- Dar las cuentas para publicar: VPS de Hostinger, Cloudflare, dominio y proveedor de mapas (cuentas de Firebase `baqueanonicaragua-95755` y Supabase `nupjhqrvxjrngtpslfjq` ya agregadas y configuradas).
 - Revisión legal de los textos de `content/legal` y los datos de la empresa (hoy van como `[marcador]`).
 - Revisión nativa de las 9 traducciones.
 - Elegir el nombre de la marca y el proveedor de IA para el chat.

@@ -1,0 +1,33 @@
+{
+  "project_info": {
+    "project_number": "680635942850",
+    "project_id": "baqueanonicaragua-95755",
+    "storage_bucket": "baqueanonicaragua-95755.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:680635942850:android:4e95398ea13e8990e2785b",
+        "android_client_info": {
+          "package_name": "com.baqueano.nicaragua"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9Qe0XfaS54ew1IakQSZC_kxg398Lrfrc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

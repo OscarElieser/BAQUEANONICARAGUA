@@ -6,8 +6,8 @@
 -- (principio 3: no inventar datos).
 
 insert into app.settings (key, value) values
-  ('firebase_project_id', 'REEMPLAZAR-por-project-id-de-firebase')
-on conflict (key) do nothing;
+  ('firebase_project_id', 'baqueanonicaragua-95755')
+on conflict (key) do update set value = excluded.value where app.settings.value = 'REEMPLAZAR-por-project-id-de-firebase';
 
 insert into public.departments (id, iso_code, slug, name, kind) values
   ( 1, 'NI-BO', 'boaco',          'Boaco',          'department'),

@@ -81,8 +81,8 @@ En Settings → Environments, crear `staging` y `production`. En `production`, a
 
 | Nombre | Ejemplo |
 | --- | --- |
-| `SUPABASE_PROJECT_REF` | `abcdefghijklmnop` |
-| `FIREBASE_PROJECT_ID` | `nica-produccion` |
+| `SUPABASE_PROJECT_REF` | `nupjhqrvxjrngtpslfjq` (https://supabase.com/dashboard/project/nupjhqrvxjrngtpslfjq/) |
+| `FIREBASE_PROJECT_ID` | `baqueanonicaragua-95755` |
 | `WEB_DOMAIN` | `[marcador: dominio web]` |
 | `API_DOMAIN` | `[marcador: dominio de la API]` |
 | `CLOUDFLARE_ZONE_ID` | ID de la zona |

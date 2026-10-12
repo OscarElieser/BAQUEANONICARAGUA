@@ -6,16 +6,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'core/env.dart';
-import 'core/theme.dart';
-import 'features/home/home_shell.dart';
+import 'core/env.dart'; // Variables de configuración de entorno
+import 'core/firebase_options.dart'; // Opciones de configuración de Firebase
+import 'core/theme.dart'; // Estilos y tema del sistema de diseño
+import 'features/home/home_shell.dart'; // Estructura visual de inicio
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await initializeDateFormatting();
+  WidgetsFlutterBinding.ensureInitialized(); // Garantiza la inicialización de los enlaces del framework
+  await initializeDateFormatting(); // Carga las configuraciones de fechas regionales
   // google-services.json se agrega localmente por entorno (no se versiona).
   try {
-    await Firebase.initializeApp(); // Inicia Firebase si la compilación trae su configuración
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform, // Inicia Firebase con las opciones del proyecto
+    );
   } catch (e) {
     debugPrint('Firebase sin configurar: el inicio de sesión mostrará "No disponible todavía" ($e)'); // Sin configuración la app sigue abriendo
   }
