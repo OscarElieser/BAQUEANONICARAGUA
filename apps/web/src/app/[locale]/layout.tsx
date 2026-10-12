@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'; // Tipo de los metadatos de la página
 import type { ReactNode } from 'react';
 import { notFound } from 'next/navigation';
 import { Young_Serif, Atkinson_Hyperlegible } from 'next/font/google';
@@ -13,6 +14,12 @@ const atkinson = Atkinson_Hyperlegible({ weight: ['400', '700'], subsets: ['lati
 
 // Aplica el tema guardado antes de pintar (evita parpadeo). Tolera storage bloqueado.
 const themeBoot = `try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}`;
+
+/** Título de la pestaña: cada página pone el suyo y se agrega el nombre del sitio. */
+export const metadata: Metadata = {
+  title: { default: 'Nicaragua, curva por curva', template: '%s | Nicaragua' }, // Título por defecto y plantilla
+  description: 'Territorios, destinos, negocios verificados, cultura y música de Nicaragua.', // Descripción para buscadores
+};
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

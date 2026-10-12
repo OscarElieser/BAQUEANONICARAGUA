@@ -57,7 +57,20 @@ jobs:
       - name: Build
         run: pnpm -r --if-present run build
       - name: Dependencias sin vulnerabilidades críticas # Falla solo con avisos críticos en dependencias de producción
-        run: pnpm audit --prod --audit-level critical
+        run: |
+          pnpm audit --prod --json > audit.json || true # Reporte completo (no corta aquí)
+          python3 - <<'PY'
+          import json, sys
+          data = json.load(open('audit.json'))
+          bad = [a for a in data.get('advisories', {}).values() if a.get('severity') == 'critical']
+          for a in bad:
+              paths = ', '.join(sorted({f['paths'][0] for f in a.get('findings', []) if f.get('paths')})[:3])
+              print(f"::error title=Dependencia crítica: {a['module_name']}::{a['title']}. Afectadas: {a['vulnerable_versions']}. Corregida en: {a['patched_versions']}. Ruta: {paths}. {a.get('url','')}")
+          high = [a for a in data.get('advisories', {}).values() if a.get('severity') == 'high']
+          for a in high[:5]:
+              print(f"::warning title=Dependencia con riesgo alto: {a['module_name']}::{a['title']}. Corregida en: {a['patched_versions']}.")
+          sys.exit(1 if bad else 0)
+          PY
       - name: Guardar pnpm-lock.yaml generado
         if: always()
         uses: actions/upload-artifact@v4
@@ -104,23 +117,8 @@ jobs:
             echo "::error file=${rel},line=${line},col=${col}::${code}: ${msg}"
           done
           exit ${status:-0}
-      - name: Pruebas
-        run: |
-          flutter test --machine > test.jsonl || status=$? # Resultado en formato de máquina
-          # Publica cada prueba fallida con su error como anotación visible en GitHub
-          python3 - <<'PY'
-          import json
-          names, errors = {}, {}
-          for line in open('test.jsonl', encoding='utf-8'):
-              try: e = json.loads(line)
-              except ValueError: continue
-              if e.get('type') == 'testStart': names[e['test']['id']] = e['test']['name']
-              if e.get('type') == 'error': errors.setdefault(e['testID'], []).append(e['error'])
-          for tid, errs in errors.items():
-              msg = ' '.join(errs)[:900].replace('\n', ' ')
-              print(f"::error title=Prueba Android: {names.get(tid, tid)}::{msg}")
-          PY
-          exit ${status:-0}
+      - name: Pruebas # El reporte "github" publica cada prueba fallida como anotación visible
+        run: flutter test --reporter github
 
   docker:
     name: Imágenes Docker (web y API)
