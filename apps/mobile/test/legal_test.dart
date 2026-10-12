@@ -33,7 +33,8 @@ void main() {
       await tester.scrollUntilVisible(find.text(title), 200); // Desplaza si hace falta
       expect(find.text(title), findsOneWidget); // Está en la lista
     }
-    await tester.scrollUntilVisible(find.text('Aviso de privacidad'), -200); // Vuelve a la página de privacidad
+    await tester.ensureVisible(find.text('Aviso de privacidad')); // Lleva la fila de privacidad a la vista (sin quedar bajo la barra superior)
+    await tester.pumpAndSettle(); // Espera a que termine el desplazamiento
     await tester.tap(find.text('Aviso de privacidad')); // La abre
     await tester.pumpAndSettle(); // Espera la transición
     await tester.scrollUntilVisible(find.text('Tus derechos'), 300, scrollable: find.byType(Scrollable).last); // Desplaza la página abierta (la lista sigue debajo)
