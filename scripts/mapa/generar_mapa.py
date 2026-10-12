@@ -13,6 +13,13 @@ ISO = {  # Códigos ISO 3166-2 de Nicaragua y la dirección de cada territorio e
     "NI-MS": "masaya", "NI-MT": "matagalpa", "NI-NS": "nueva-segovia", "NI-SJ": "rio-san-juan", "NI-RI": "rivas",
     "NI-AN": "costa-caribe-norte", "NI-AS": "costa-caribe-sur",
 }
+NAMES = {  # Nombre oficial corto de cada territorio (los nombres propios no se traducen)
+    "boaco": "Boaco", "carazo": "Carazo", "chinandega": "Chinandega", "chontales": "Chontales", "esteli": "Estelí",
+    "granada": "Granada", "jinotega": "Jinotega", "leon": "León", "madriz": "Madriz", "managua": "Managua",
+    "masaya": "Masaya", "matagalpa": "Matagalpa", "nueva-segovia": "Nueva Segovia", "rio-san-juan": "Río San Juan", "rivas": "Rivas",
+    "costa-caribe-norte": "Costa Caribe Norte", "costa-caribe-sur": "Costa Caribe Sur",
+}
+LAKE_NAMES = {"cocibolca": "Lago Cocibolca", "xolotlan": "Lago Xolotlán"}  # Nombres de los lagos
 LAKES = {"Lago de Nicaragua": "cocibolca", "Lago de Managua": "xolotlan"}  # Lagos que se dibujan como agua
 WIDTH = 1000  # Ancho del dibujo en unidades SVG
 TOLERANCE = 0.004  # Simplificación en grados (unos 400 m): suficiente para un mapa ilustrado
@@ -121,10 +128,10 @@ def main():
         "note": "Límites aproximados para ilustración; no son límites oficiales. Los oficiales los publica INETER.",  # Aviso honesto
         "viewBox": f"0 0 {WIDTH} {height}",  # Tamaño del dibujo
         "territories": sorted(
-            [{"iso": f["properties"]["iso_3166_2"], "slug": ISO[f["properties"]["iso_3166_2"]], "d": path(f["geometry"]), "label": label(f["geometry"])} for f in feats],
+            [{"iso": f["properties"]["iso_3166_2"], "slug": ISO[f["properties"]["iso_3166_2"]], "name": NAMES[ISO[f["properties"]["iso_3166_2"]]], "d": path(f["geometry"]), "label": label(f["geometry"])} for f in feats],
             key=lambda t: t["slug"],
         ),  # Un camino por territorio
-        "lakes": [{"id": LAKES[f["properties"]["name"]], "d": path(f["geometry"])} for f in lakes],  # Lagos
+        "lakes": [{"id": LAKES[f["properties"]["name"]], "name": LAKE_NAMES[LAKES[f["properties"]["name"]]], "d": path(f["geometry"]), "label": xy(label_point(rings(f["geometry"]), []))} for f in lakes],  # Lagos
     }
     json.dump(out, open(sys.argv[3], "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))  # Guarda compacto
     print(f"{len(out['territories'])} territorios, {len(out['lakes'])} lagos, {sum(len(t['d']) for t in out['territories'])} caracteres")  # Resumen
