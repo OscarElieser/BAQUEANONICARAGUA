@@ -4,7 +4,7 @@
 # y en la política de seguridad. Son públicas: nunca pasar aquí claves secretas.
 
 # --- Etapa 1: instalar y compilar ---
-FROM node:22-alpine AS build
+FROM node:26-alpine AS build
 # Activa pnpm en la versión que fija package.json
 RUN corepack enable
 # Carpeta de trabajo dentro de la imagen
@@ -34,7 +34,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm --filter @nica/web build
 
 # --- Etapa 2: imagen final mínima ---
-FROM node:22-alpine AS run
+FROM node:26-alpine AS run
 # Modo producción, puerto y escucha en todas las interfaces
 ENV NODE_ENV=production PORT=3000 HOSTNAME=0.0.0.0 NEXT_TELEMETRY_DISABLED=1
 # Carpeta de la aplicación
