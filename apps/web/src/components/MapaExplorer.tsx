@@ -30,7 +30,8 @@ export function MapaExplorer({ locale }: { locale: string }) {
 
     (async () => {
       try {
-        const maplibre = (await import('maplibre-gl')).default;
+        const mod = await import('maplibre-gl'); // Carga MapLibre solo al abrir el mapa
+        const maplibre = ((mod as unknown as { default?: typeof mod }).default ?? mod) as typeof mod; // Funciona con la exportación por defecto (v4) y con exportaciones con nombre (v5 en adelante)
         const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!);
         const { data, error } = await db.rpc('map_points');
         if (error) throw error;

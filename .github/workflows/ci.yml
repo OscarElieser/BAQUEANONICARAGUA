@@ -117,8 +117,29 @@ jobs:
             echo "::error file=${rel},line=${line},col=${col}::${code}: ${msg}"
           done
           exit ${status:-0}
-      - name: Pruebas # El reporte "github" publica cada prueba fallida como anotación visible
-        run: flutter test --reporter github
+      - name: Pruebas # Cada prueba fallida se publica como anotación con su error
+        run: |
+          flutter test --machine > test.jsonl || status=$? # Resultado en formato de máquina (una línea JSON por evento)
+          python3 - <<'PY'
+          import json
+          names, shown = {}, 0
+          for raw in open('test.jsonl', encoding='utf-8', errors='replace'):
+              raw = raw.strip()
+              if not raw.startswith('{'):
+                  continue
+              try:
+                  e = json.loads(raw)
+              except ValueError:
+                  continue
+              kind = e.get('type')
+              if kind == 'testStart':
+                  names[e['test']['id']] = e['test'].get('name', '')
+              elif kind == 'error' and shown < 8:
+                  shown += 1
+                  text = (str(e.get('error', '')) + ' ' + str(e.get('stackTrace', ''))[:600]).replace('\n', ' ').replace('%', '%25')
+                  print(f"::error title=Prueba Android: {names.get(e.get('testID'), '?')}::{text[:1800]}")
+          PY
+          exit ${status:-0}
 
   docker:
     name: Imágenes Docker (web y API)
