@@ -37,7 +37,7 @@ export interface Resource {
 
 export type OpsSectionKey =
   | 'panel' | 'usuarios' | 'territorios' | 'destinos' | 'negocios' | 'comunidad' | 'denuncias'
-  | 'ia' | 'cultura' | 'fuentes' | 'auditoria' | 'configuracion'
+  | 'ia' | 'cultura' | 'fuentes' | 'auditoria' | 'navegacion' | 'configuracion' // 'navegacion': resumen anónimo de páginas vistas
   | 'notificaciones' | 'traducciones' | 'seo';
 
 const precision = [

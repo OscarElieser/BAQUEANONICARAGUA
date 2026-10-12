@@ -1,3 +1,5 @@
+import 'dart:io'; // Leer el archivo de textos directamente desde el disco
+
 import 'package:flutter/material.dart'; // Componentes de Flutter
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // ProviderScope para los proveedores
 import 'package:flutter_test/flutter_test.dart'; // Herramientas de pruebas de widgets
@@ -16,6 +18,9 @@ void main() {
   testWidgets('lista las seis páginas y abre Privacidad con sus secciones', (tester) async {
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          legalProvider.overrideWith((ref) async => LegalFile.parse(File('assets/legal/es.json').readAsStringSync())), // Mismo archivo, leído sin esperas reales (las pruebas usan un reloj simulado)
+        ],
         child: MaterialApp(
           theme: buildTheme(Brightness.light, webFonts: false), // Tema sin descargar fuentes
           home: const LegalIndexScreen(), // Pantalla a probar
