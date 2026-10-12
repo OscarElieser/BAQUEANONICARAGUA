@@ -113,19 +113,21 @@ const oro400 = TvColors.oro;
 
 /// Letra de titulares propia de cada sección ("mundos"), igual que en la web.
 class LetrasMundo extends ThemeExtension<LetrasMundo> {
-  const LetrasMundo({required this.comunidad, required this.aventura, required this.cultura}); // Constructor
+  const LetrasMundo({required this.comunidad, required this.aventura, required this.cultura, required this.marca, required this.firma}); // Constructor
   final TextStyle comunidad; // Bricolage Grotesque
   final TextStyle aventura; // Anybody (en maíz, sobre añil)
   final TextStyle cultura; // Caprasimo
+  final TextStyle marca; // Archivo: eslogan de la portada de BAQUEANO
+  final TextStyle firma; // Kaushan Script: firma "Nicaragua" a mano
 
   @override
-  LetrasMundo copyWith({TextStyle? comunidad, TextStyle? aventura, TextStyle? cultura}) =>
-      LetrasMundo(comunidad: comunidad ?? this.comunidad, aventura: aventura ?? this.aventura, cultura: cultura ?? this.cultura); // Copia con cambios
+  LetrasMundo copyWith({TextStyle? comunidad, TextStyle? aventura, TextStyle? cultura, TextStyle? marca, TextStyle? firma}) =>
+      LetrasMundo(comunidad: comunidad ?? this.comunidad, aventura: aventura ?? this.aventura, cultura: cultura ?? this.cultura, marca: marca ?? this.marca, firma: firma ?? this.firma); // Copia con cambios
 
   @override
   LetrasMundo lerp(LetrasMundo? other, double t) => other == null
       ? this
-      : LetrasMundo(comunidad: TextStyle.lerp(comunidad, other.comunidad, t)!, aventura: TextStyle.lerp(aventura, other.aventura, t)!, cultura: TextStyle.lerp(cultura, other.cultura, t)!); // Transición entre temas
+      : LetrasMundo(comunidad: TextStyle.lerp(comunidad, other.comunidad, t)!, aventura: TextStyle.lerp(aventura, other.aventura, t)!, cultura: TextStyle.lerp(cultura, other.cultura, t)!, marca: TextStyle.lerp(marca, other.marca, t)!, firma: TextStyle.lerp(firma, other.firma, t)!); // Transición entre temas
 }
 
 /// [webFonts] = false en pruebas (sin red): usa las fuentes del sistema con los mismos tamaños.
@@ -168,6 +170,8 @@ ThemeData buildTheme(Brightness brightness, {bool webFonts = true}) {
         comunidad: webFonts ? GoogleFonts.getFont('Bricolage Grotesque', fontWeight: FontWeight.w800, color: c.ink, height: 0.98) : TextStyle(fontWeight: FontWeight.w800, color: c.ink, height: 0.98), // Comunidad: grotesca cálida
         aventura: webFonts ? GoogleFonts.getFont('Anybody', fontWeight: FontWeight.w800, color: TvColors.bandMaiz, height: 0.98) : const TextStyle(fontWeight: FontWeight.w800, color: TvColors.bandMaiz, height: 0.98), // Mi aventura: rótulo de bus
         cultura: webFonts ? GoogleFonts.getFont('Caprasimo', color: c.ink, height: 1) : TextStyle(fontFamily: 'serif', color: c.ink, height: 1), // Cultura: cartel popular
+        marca: webFonts ? GoogleFonts.getFont('Archivo', height: 0.92) : const TextStyle(height: 0.92), // Portada: eslogan en dos pesos
+        firma: webFonts ? GoogleFonts.getFont('Kaushan Script', color: TvColors.marcaNaranja, height: 1) : const TextStyle(fontStyle: FontStyle.italic, color: TvColors.marcaNaranja, height: 1), // Firma a mano en naranja
       ),
     ],
     textTheme: text.copyWith(

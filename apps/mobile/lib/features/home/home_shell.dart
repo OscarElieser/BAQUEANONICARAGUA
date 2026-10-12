@@ -7,6 +7,17 @@ import '../planner/planner_screen.dart'; // Pestaña Mi aventura
 import '../profile/profile_screen.dart'; // Pestaña de perfil con inicio y cierre de sesión
 import '../territories/presentation/territories_screen.dart'; // Pestaña Descubrir
 
+/// Permite que una pantalla cambie de pestaña (por ejemplo, "Crear mi viaje" abre Mi aventura).
+class PestanaShell extends InheritedWidget {
+  const PestanaShell({super.key, required this.ir, required super.child}); // Constructor
+  final void Function(int indice) ir; // Cambia a la pestaña indicada
+
+  static PestanaShell? of(BuildContext context) => context.dependOnInheritedWidgetOfExactType<PestanaShell>(); // La más cercana (o null fuera del menú principal)
+
+  @override
+  bool updateShouldNotify(PestanaShell old) => false; // La función no cambia de comportamiento
+}
+
 /// Navegación principal: Descubrir, Mi aventura, Comunidad, Perfil.
 /// Cada pestaña muestra datos reales o explica por qué aún no están disponibles.
 class HomeShell extends StatefulWidget {
@@ -29,7 +40,7 @@ class _HomeShellState extends State<HomeShell> {
     ];
 
     return Scaffold(
-      body: SafeArea(child: pages[_index]), // Muestra la pestaña elegida respetando las zonas seguras de la pantalla
+      body: PestanaShell(ir: (i) => setState(() => _index = i), child: SafeArea(child: pages[_index])), // Muestra la pestaña elegida respetando las zonas seguras; las pantallas pueden pedir otra pestaña
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index, // Marca la pestaña activa
         onDestinationSelected: (i) => setState(() => _index = i), // Cambia de pestaña al tocar

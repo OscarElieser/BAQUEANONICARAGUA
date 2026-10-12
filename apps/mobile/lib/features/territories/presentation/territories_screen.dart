@@ -8,7 +8,10 @@ import '../../../core/theme.dart'; // Colores y espaciados
 import '../../../core/widgets/estados.dart'; // Cargando, error y vacío
 import '../../../core/widgets/mapa_territorios.dart'; // Mapa ilustrado de los 17 territorios
 import '../../../core/widgets/portada_territorio.dart'; // Portadas y tarjetas de cada territorio
+import '../../../core/widgets/portada_baqueano.dart'; // Portada con ventana pintada
 import '../../../core/widgets/relieve_3d.dart'; // Relieve 3D interactivo
+import '../../home/home_shell.dart'; // Para pasar a la pestaña Mi aventura
+import '../../planner/planner_screen.dart'; // Mi aventura (si se abre fuera del menú principal)
 import '../../catalog/search_screen.dart'; // Resultados de búsqueda
 import '../../culture/culture_screen.dart'; // Mundo de Cultura
 import 'territory_screen.dart'; // Ficha de territorio
@@ -16,12 +19,28 @@ import 'territory_screen.dart'; // Ficha de territorio
 /// Territorios publicados (RLS filtra los borradores).
 final territoriesProvider = FutureProvider<List<Territory>>((ref) => ref.watch(catalogRepositoryProvider).territories()); // Lista de territorios
 
-/// Pestaña Descubrir: relieve 3D, búsqueda y territorios.
-class TerritoriesScreen extends ConsumerWidget {
+/// Pestaña Descubrir: portada de BAQUEANO, búsqueda, mapa, territorios y relieve 3D.
+class TerritoriesScreen extends ConsumerStatefulWidget {
   const TerritoriesScreen({super.key}); // Constructor constante
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TerritoriesScreen> createState() => _TerritoriesScreenState(); // Crea el estado
+}
+
+class _TerritoriesScreenState extends ConsumerState<TerritoriesScreen> {
+  final _mapa = GlobalKey(); // Para bajar hasta el mapa con "Explorar Nicaragua"
+
+  void _viaje() {
+    final shell = PestanaShell.of(context); // Menú principal, si existe
+    if (shell != null) {
+      shell.ir(1); // Pasa a la pestaña Mi aventura
+    } else {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const PlannerScreen())); // Fuera del menú: la abre encima
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final territories = ref.watch(territoriesProvider); // Territorios (o cargando)
     final tv = context.tv; // Colores
     final text = Theme.of(context).textTheme; // Estilos de texto
@@ -29,7 +48,13 @@ class TerritoriesScreen extends ConsumerWidget {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: Container(height: 280, color: tv.groundRaised, child: const RelieveVivo3D()), // Relieve 3D que se gira con el dedo
+          child: PortadaBaqueano(
+            onExplorar: () {
+              final ctx = _mapa.currentContext; // Mapa en pantalla
+              if (ctx != null) Scrollable.ensureVisible(ctx, duration: const Duration(milliseconds: 500), curve: Curves.easeOutCubic); // Baja hasta el mapa
+            },
+            onViaje: _viaje, // Abre Mi aventura
+          ),
         ),
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(TvSpace.s4 + 4, TvSpace.s6, TvSpace.s4 + 4, TvSpace.s2), // Márgenes
@@ -37,8 +62,6 @@ class TerritoriesScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
               children: [
-                Text(context.t('home.title'), style: text.displayLarge), // Título
-                const SizedBox(height: TvSpace.s3), // Espacio
                 Text(context.t('discover.intro'), style: text.bodyMedium?.copyWith(color: tv.inkMuted)), // Explicación
                 const SizedBox(height: TvSpace.s4), // Espacio
                 _Buscador(onSearch: (q) => Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchScreen(query: q)))), // Busca y abre resultados
@@ -60,7 +83,7 @@ class TerritoriesScreen extends ConsumerWidget {
         ),
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(TvSpace.s4 + 4, TvSpace.s4, TvSpace.s4 + 4, TvSpace.s4), // Márgenes
-          sliver: SliverToBoxAdapter(child: _MapaConDatos(territories: territories.valueOrNull ?? const [])), // Mapa (los publicados se abren)
+          sliver: SliverToBoxAdapter(child: KeyedSubtree(key: _mapa, child: _MapaConDatos(territories: territories.valueOrNull ?? const []))), // Mapa (los publicados se abren)
         ),
         territories.when(
           loading: () => const SliverToBoxAdapter(child: Cargando()), // Mientras carga
@@ -78,6 +101,12 @@ class TerritoriesScreen extends ConsumerWidget {
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => TerritoryScreen(slug: items[i].slug, name: items[i].shortName))), // Abre la ficha
                   ),
                 ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.only(top: TvSpace.s6), // Separación de la lista
+            child: Container(height: 280, color: tv.groundRaised, child: const RelieveVivo3D()), // Relieve 3D de Ometepe, que se gira con el dedo
+          ),
         ),
         const SliverToBoxAdapter(child: SizedBox(height: TvSpace.s8)), // Espacio al final
       ],
