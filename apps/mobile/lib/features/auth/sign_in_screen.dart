@@ -108,6 +108,26 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           ListView(
             padding: const EdgeInsets.fromLTRB(TvSpace.s4, TvSpace.s8, TvSpace.s4, TvSpace.s8), // Márgenes
             children: [
+              ExcludeSemantics(
+                child: TweenAnimationBuilder<double>(
+                  tween: Tween(begin: MediaQuery.of(context).disableAnimations ? 1 : 0, end: 1), // Sin animación si así se pidió
+                  duration: const Duration(milliseconds: 1100), // Sube y se asienta
+                  curve: Curves.easeOutBack, // Rebote leve
+                  builder: (context, v, hijo) => Opacity(opacity: v.clamp(0.0, 1.0).toDouble(), child: Transform.translate(offset: Offset(0, 40 * (1 - v)), child: hijo)), // Aparece desde abajo
+                  child: Center(
+                    child: Container(
+                      width: 64, // Tamaño del orbe
+                      height: 64, // Tamaño del orbe
+                      margin: const EdgeInsets.only(bottom: TvSpace.s4), // Separación de la tarjeta
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle, // Esfera
+                        gradient: RadialGradient(center: const Alignment(-0.35, -0.45), colors: [marfil, TvColors.marcaNaranja, Color.lerp(TvColors.marcaNaranja, TvColors.marcaTurquesa, 0.6)!, TvColors.marcaProfundo], stops: const [0, 0.35, 0.7, 1]), // Brillo, naranja y sombra
+                        boxShadow: [BoxShadow(color: TvColors.marcaNaranja.withValues(alpha: 0.45), blurRadius: 40), BoxShadow(color: TvColors.marcaTurquesaClaro.withValues(alpha: 0.25), blurRadius: 80)], // Resplandor
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               Container(
                 padding: const EdgeInsets.all(TvSpace.s6), // Relleno de la tarjeta
                 decoration: BoxDecoration(

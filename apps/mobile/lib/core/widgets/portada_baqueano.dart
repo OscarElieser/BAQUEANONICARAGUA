@@ -136,7 +136,7 @@ class _PortadaBaqueanoState extends State<PortadaBaqueano> with TickerProviderSt
               child: AnimatedBuilder(
                 animation: Listenable.merge([_pintar, _fundido]), // Redibuja al pintar o al cambiar de escena
                 builder: (_, __) => CustomPaint(
-                  painter: _PintorPortada(bandas: _bandas, avance: _pintar.value, escena: _escena, anterior: _anterior, fundido: _fundido.value, fondo: fondo), // Ventana y escena
+                  painter: _PintorPortada(bandas: _bandas, avance: _pintar.value, escena: _escena, anterior: _anterior, fundido: _fundido.value, fondo: fondo, palabras: {for (final e in escenasPortada) e: context.t('hero.word_$e')}, letra: marca), // Ventana, escena y palabra gigante
                 ),
               ),
             ),
@@ -220,7 +220,23 @@ Color _colorZona(String z) => switch (z) {
 
 /// Dibuja la ventana de pincel y, dentro, la escena (con fundido entre la anterior y la nueva).
 class _PintorPortada extends CustomPainter {
-  _PintorPortada({required this.bandas, required this.avance, required this.escena, required this.anterior, required this.fundido, required this.fondo}); // Constructor
+  _PintorPortada({required this.bandas, required this.avance, required this.escena, required this.anterior, required this.fundido, required this.fondo, required this.palabras, required this.letra}); // Constructor
+  final Map<String, String> palabras; // Palabra gigante de cada escena (traducida)
+  final TextStyle letra; // Letra de marca para la palabra
+
+  /// Palabra gigante entre capas: lo que se dibuja después (volcanes, cerros, cayos) la tapa en parte.
+  void _palabra(Canvas c, String escena, double y) {
+    final tp = TextPainter(
+      text: TextSpan(text: palabras[escena] ?? '', style: letra.copyWith(fontSize: 210, fontWeight: FontWeight.w900, color: Colors.white, height: 1)), // Blanca y enorme
+      textDirection: TextDirection.ltr, // Dirección del texto
+    )..layout(); // Mide el texto
+    final ancho = tp.width > 1100 ? 1100 / tp.width : 1.0; // Si es muy larga, se encoge para caber
+    c.save(); // Guarda el estado
+    c.translate(600, y); // Centro de la palabra
+    c.scale(ancho, 1); // Ajuste de ancho
+    tp.paint(c, Offset(-tp.width / 2, -tp.height * 0.78)); // Dibuja centrada sobre la línea base
+    c.restore(); // Devuelve el lienzo
+  }
   final List<Path> bandas; // Forma de la ventana
   final double avance; // 0 a 1: cuánto se ha pintado
   final String escena, anterior; // Escena nueva y la que se va
@@ -279,6 +295,7 @@ class _PintorPortada extends CustomPainter {
     c.drawCircle(const Offset(905, 215), 92, _p(TvColors.marcaNaranja.withValues(alpha: 0.18))); // Halo del sol
     c.drawCircle(const Offset(905, 215), 54, _p(TvColors.marcaNaranja)); // Sol
     c.drawPath(Path()..moveTo(0, 350)..quadraticBezierTo(140, 300, 260, 330)..quadraticBezierTo(520, 300, 820, 330)..quadraticBezierTo(1000, 320, 1200, 312)..lineTo(1200, 380)..lineTo(0, 380)..close(), _p(_mix(TvColors.marcaTurquesa, Colors.white, 0.35))); // Cordillera lejana
+    _palabra(c, 'pacifico', 330); // Detrás de los volcanes
     c.drawPath(Path()..moveTo(300, 372)..cubicTo(380, 300, 430, 170, 478, 122)..cubicTo(492, 110, 506, 112, 518, 124)..cubicTo(566, 176, 612, 300, 690, 372)..close(), _p(_mix(TvColors.marcaProfundo, TvColors.marcaVerde, 0.85))); // Volcán de cono alto
     c.drawPath(Path()..moveTo(640, 372)..cubicTo(690, 300, 730, 220, 790, 205)..cubicTo(850, 192, 902, 280, 980, 372)..close(), _p(_mix(TvColors.marcaVerde, TvColors.marcaProfundo, 0.75))); // Volcán redondeado
     c.drawRect(const Rect.fromLTWH(0, 380, 1200, 180), Paint()..shader = LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [_mix(TvColors.marcaTurquesa, TvColors.bandAnil, 0.7), TvColors.bandAnil]).createShader(const Rect.fromLTWH(0, 380, 1200, 180))); // Lago
@@ -300,6 +317,7 @@ class _PintorPortada extends CustomPainter {
     final neblina = Paint()..color = Colors.white.withValues(alpha: 0.55); // Neblina
     c.drawPath(Path()..moveTo(0, 300)..quadraticBezierTo(120, 220, 260, 260)..quadraticBezierTo(520, 200, 800, 250)..quadraticBezierTo(1000, 230, 1200, 220)..lineTo(1200, 560)..lineTo(0, 560)..close(), _p(_mix(TvColors.musgo, Colors.white, 0.55))); // Cerros lejanos
     c.drawRect(const Rect.fromLTWH(0, 280, 1200, 50), neblina); // Neblina
+    _palabra(c, 'norte', 345); // Entre los cerros lejanos y los medios
     c.drawPath(Path()..moveTo(0, 360)..quadraticBezierTo(160, 280, 330, 330)..quadraticBezierTo(700, 280, 1000, 320)..quadraticBezierTo(1100, 300, 1200, 290)..lineTo(1200, 560)..lineTo(0, 560)..close(), _p(TvColors.musgo)); // Cerros medios
     c.drawRect(const Rect.fromLTWH(0, 360, 1200, 50), neblina); // Segunda neblina
     c.drawPath(Path()..moveTo(0, 430)..quadraticBezierTo(200, 350, 420, 400)..quadraticBezierTo(860, 360, 1200, 400)..lineTo(1200, 560)..lineTo(0, 560)..close(), _p(TvColors.marcaVerde)); // Ladera cercana
@@ -319,6 +337,7 @@ class _PintorPortada extends CustomPainter {
     c.drawCircle(const Offset(230, 140), 32, nube); // Copete de la nube
     c.drawRRect(RRect.fromRectAndRadius(const Rect.fromLTWH(760, 100, 110, 40), const Radius.circular(20)), nube); // Otra nube
     c.drawRect(const Rect.fromLTWH(0, 300, 1200, 260), Paint()..shader = LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [TvColors.caribe, _mix(TvColors.marcaTurquesa, TvColors.bandAnil, 0.8)]).createShader(const Rect.fromLTWH(0, 300, 1200, 260))); // Mar
+    _palabra(c, 'caribe', 330); // Sobre el horizonte, detrás de los cayos
     c.drawOval(Rect.fromCenter(center: const Offset(840, 318), width: 240, height: 28), _p(_mix(TvColors.bandMaiz, TvColors.bandMarfil, 0.4))); // Cayo lejano
     c.drawPath(Path()..moveTo(430, 352)..lineTo(500, 352)..lineTo(490, 364)..lineTo(438, 364)..close()..moveTo(462, 352)..lineTo(462, 326)..lineTo(480, 348)..close(), _p(TvColors.marcaProfundo)); // Panga
     c.drawPath(Path()..moveTo(720, 560)..cubicTo(780, 470, 960, 440, 1200, 450)..lineTo(1200, 560)..close(), _p(_mix(TvColors.bandMaiz, TvColors.bandMarfil, 0.45))); // Playa cercana
@@ -334,5 +353,5 @@ class _PintorPortada extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_PintorPortada old) => old.avance != avance || old.escena != escena || old.fundido != fundido || old.fondo != fondo; // Solo si algo cambió
+  bool shouldRepaint(_PintorPortada old) => old.avance != avance || old.escena != escena || old.fundido != fundido || old.fondo != fondo || old.palabras['pacifico'] != palabras['pacifico']; // Solo si algo cambió
 }
