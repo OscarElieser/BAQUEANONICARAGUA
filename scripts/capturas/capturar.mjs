@@ -18,6 +18,8 @@ const shots = [
   { name: '08-cultura-ruso', path: '/ru/cultura', device: 'desktop', theme: 'dark' }, // Cultura en ruso
   { name: '09-privacidad', path: '/es/privacidad', device: 'desktop', theme: 'light', full: true }, // Aviso de privacidad (completo)
   { name: '10-cuenta-telefono', path: '/es/cuenta', device: 'phone', theme: 'dark' }, // Inicio de sesión en el teléfono
+  { name: '11-mapa-territorios', path: '/es', device: 'desktop', theme: 'dark', hover: 'Rivas' }, // Mapa ilustrado con un territorio resaltado
+  { name: '12-mapa-territorios-claro', path: '/es', device: 'desktop', theme: 'light', hover: 'Matagalpa' }, // El mismo mapa en tema claro
 ];
 
 const devices = {
@@ -38,6 +40,12 @@ for (const s of shots) {
   if (s.example) {
     // Pulsa "Probar con un ejemplo" para mostrar el resultado del planificador
     await page.getByRole('button', { name: s.example }).click();
+  }
+  if (s.hover) {
+    // Baja hasta el mapa y pasa el cursor por un territorio
+    const ter = page.getByRole('img', { name: new RegExp(`^${s.hover}:`) }).or(page.getByRole('link', { name: new RegExp(`^${s.hover}:`) })).first(); // El territorio (pendiente o publicado)
+    await page.evaluate(() => document.getElementById('territorios')?.scrollIntoView({ block: 'start' })); // Título del mapa arriba
+    await ter.dispatchEvent('mouseover'); // Resalta el territorio (como el cursor encima, sin depender de su centro geométrico)
   }
   await page.waitForTimeout(1500); // Deja que termine la animación del relieve 3D
   await page.screenshot({ path: `${OUT}/${s.name}.png`, fullPage: Boolean(s.full) }); // Guarda la imagen
