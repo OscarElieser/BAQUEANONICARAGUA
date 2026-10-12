@@ -44,7 +44,7 @@ class BusinessScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch, // Ocupa el ancho
                       children: [
-                        Text(b.name, style: text.displayMedium), // Nombre
+                        Text(b.name, style: Theme.of(context).extension<LetrasMundo>()?.comunidad.copyWith(fontSize: (text.displayMedium?.fontSize ?? 34) + 4) ?? text.displayMedium), // Nombre con la letra de Nuestra gente
                         if (b.isSponsored)
                           Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text(context.t('business.sponsored'), style: TextStyle(color: tv.oroText, fontWeight: FontWeight.w700))), // Siempre se marca
                         if (b.summary != null) Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text(b.summary!, style: text.bodyLarge?.copyWith(color: tv.inkMuted))), // Resumen
@@ -73,7 +73,7 @@ class BusinessScreen extends ConsumerWidget {
                         const SizedBox(height: TvSpace.s6), // Espacio
                         Horarios(hours: b.hours), // Horarios
                         const SizedBox(height: TvSpace.s6), // Espacio
-                        Tarifas(prices: b.prices), // Tarifas
+                        Tarifas(prices: b.prices, estilo: EstiloTarifas.pizarra, titleKey: 'business.offers'), // Lo que ofrece, en pizarra de pulpería
                         if (b.data['description_md'] != null) ...[
                           const SizedBox(height: TvSpace.s6), // Espacio
                           Semantics(header: true, child: Text(context.t('business.about'), style: text.titleLarge)), // Título
