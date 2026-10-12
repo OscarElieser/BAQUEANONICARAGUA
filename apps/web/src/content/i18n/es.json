@@ -374,5 +374,12 @@
   "auth.or_continue": "o continúa con",
   "gallery.prev": "Anterior",
   "gallery.next": "Siguiente",
-  "gallery.arc_label": "Galería de portadas de los 17 territorios. Desliza o usa las flechas."
+  "gallery.arc_label": "Galería de portadas de los 17 territorios. Desliza o usa las flechas.",
+  "explorer.title": "Explora los 17 territorios",
+  "explorer.label": "Explorador de territorios",
+  "explorer.open": "Explorar {name}",
+  "explorer.map": "Ver en el mapa",
+  "explorer.see": "Ver {name}",
+  "explorer.of": "de",
+  "explorer.note": "Ilustración de su silueta real; las fotos llegarán cuando estén verificadas."
 }

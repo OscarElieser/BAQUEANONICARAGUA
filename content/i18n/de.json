@@ -374,5 +374,12 @@
   "auth.or_continue": "oder weiter mit",
   "gallery.prev": "Zurück",
   "gallery.next": "Weiter",
-  "gallery.arc_label": "Galerie der Titelbilder der 17 Gebiete. Wischen oder Pfeile benutzen."
+  "gallery.arc_label": "Galerie der Titelbilder der 17 Gebiete. Wischen oder Pfeile benutzen.",
+  "explorer.title": "Entdecke die 17 Gebiete",
+  "explorer.label": "Gebiets-Explorer",
+  "explorer.open": "{name} entdecken",
+  "explorer.map": "Auf der Karte ansehen",
+  "explorer.see": "{name} ansehen",
+  "explorer.of": "von",
+  "explorer.note": "Illustration der echten Umrisse; Fotos folgen, sobald sie geprüft sind."
 }

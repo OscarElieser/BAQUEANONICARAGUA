@@ -374,5 +374,12 @@
   "auth.or_continue": "或使用以下方式继续",
   "gallery.prev": "上一个",
   "gallery.next": "下一个",
-  "gallery.arc_label": "17个地区的封面画廊。滑动或使用箭头。"
+  "gallery.arc_label": "17个地区的封面画廊。滑动或使用箭头。",
+  "explorer.title": "探索17个地区",
+  "explorer.label": "地区浏览器",
+  "explorer.open": "探索{name}",
+  "explorer.map": "在地图上查看",
+  "explorer.see": "查看{name}",
+  "explorer.of": "/",
+  "explorer.note": "根据真实轮廓绘制的插画；照片核实后再上线。"
 }

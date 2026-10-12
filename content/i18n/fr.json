@@ -374,5 +374,12 @@
   "auth.or_continue": "ou continuer avec",
   "gallery.prev": "Précédent",
   "gallery.next": "Suivant",
-  "gallery.arc_label": "Galerie des couvertures des 17 territoires. Faites glisser ou utilisez les flèches."
+  "gallery.arc_label": "Galerie des couvertures des 17 territoires. Faites glisser ou utilisez les flèches.",
+  "explorer.title": "Explore les 17 territoires",
+  "explorer.label": "Explorateur de territoires",
+  "explorer.open": "Explorer {name}",
+  "explorer.map": "Voir sur la carte",
+  "explorer.see": "Voir {name}",
+  "explorer.of": "sur",
+  "explorer.note": "Illustration de sa silhouette réelle ; les photos arriveront une fois vérifiées."
 }

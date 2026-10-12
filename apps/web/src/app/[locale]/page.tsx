@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { RelieveVivo3D } from '@/components/RelieveVivo3D'; // Relieve 3D "Relieve vivo"
 import { listTerritories } from '@/lib/territories'; // Territorios publicados desde Supabase
 import { MapaTerritorios } from '@/components/MapaTerritorios'; // Mapa ilustrado de los 17 territorios
-import { GaleriaTerritorios } from '@/components/GaleriaTerritorios'; // Desfile de las 17 portadas
+import { GaleriaTerritorios } from '@/components/GaleriaTerritorios'; // Galería en arco de las 17 portadas
+import { ExploradorTerritorios } from '@/components/ExploradorTerritorios'; // Explorador a pantalla completa
 import { PuertaCultura } from '@/components/PuertaCultura'; // Puerta al mundo de Cultura
 import { SpriteMapa } from '@/components/SpriteMapa'; // Formas del mapa, una sola vez por página
 import { InclinacionTarjetas } from '@/components/InclinacionTarjetas'; // Inclinación 3D de las tarjetas
@@ -39,10 +40,12 @@ export default async function Descubrir({ params }: { params: Promise<{ locale: 
       <PortadaBaqueano locale={locale} /> {/* Ventana pintada, eslogan, botones y buscador */}
 
       <SpriteMapa /> {/* Biblioteca de formas para portadas y mapa */}
-      <InclinacionTarjetas /> {/* Las tarjetas se inclinan hacia el cursor */}
-      <GaleriaTerritorios locale={locale} published={(territories ?? []).map((ter) => ter.slug)} /> {/* Las 17 portadas en movimiento */}
+      <ExploradorTerritorios locale={locale} published={(territories ?? []).map((ter) => ter.slug)} /> {/* Un territorio a pantalla completa, con los siguientes asomando */}
 
       <PuertaCultura locale={locale} /> {/* Historia, arte y cultura */}
+
+      <InclinacionTarjetas /> {/* Las tarjetas se inclinan hacia el cursor */}
+      <GaleriaTerritorios locale={locale} published={(territories ?? []).map((ter) => ter.slug)} /> {/* Las 17 portadas en arco 3D */}
 
       <figure className="relative m-0 border-t border-line pt-7">
         <RelieveVivo3D className="block h-auto w-full" locale={locale} /> {/* Relieve 3D interactivo (con versión ligera automática) */}

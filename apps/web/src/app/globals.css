@@ -382,3 +382,40 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
 .arco-flecha { display: inline-flex; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid color-mix(in oklab, var(--band-marfil) 24%, transparent); background: color-mix(in oklab, var(--band-marfil) 8%, transparent); color: var(--ink); cursor: pointer; transition: background-color 160ms ease-out; } /* Botón redondo de vidrio */
 .arco-flecha:hover { background: color-mix(in oklab, var(--band-marfil) 16%, transparent); } /* Se aclara al pasar el cursor */
 @media (prefers-reduced-motion: reduce) { .arco-item, .arco-carta { animation: none; } } /* Sin giro ni entrada: fila plana */
+
+/* ===== Explorador a pantalla completa ===== */
+.explorador { --ink: var(--band-marfil); --ink-muted: #C9D8D0; --focus: var(--marca-naranja); --oro-text: #E9BB74; --status-verified: #9FD9C2; --avance: 0.0588; position: relative; overflow: hidden; margin: 40px 0; border-radius: 28px; color: var(--ink); background: var(--marca-nocturno); } /* Sala nocturna: el fondo es la portada */
+.exp-fondos { position: absolute; inset: 0; } /* Capa de fondos */
+.exp-fondo { position: absolute; inset: 0; opacity: 0; transform: scale(1.08); transition: opacity 900ms ease-out, transform 2.4s cubic-bezier(.2,.7,.2,1); } /* Fondos esperando, algo ampliados */
+.exp-fondo.es-activo { opacity: 1; transform: scale(1); } /* El activo aparece y se asienta despacio */
+.exp-velo { position: absolute; inset: 0; background: linear-gradient(90deg, var(--marca-nocturno) 0%, color-mix(in oklab, var(--marca-nocturno) 88%, transparent) 34%, color-mix(in oklab, var(--marca-nocturno) 10%, transparent) 70%, transparent), linear-gradient(0deg, color-mix(in oklab, var(--marca-nocturno) 70%, transparent), transparent 30%); } /* Sombra a la izquierda y abajo para el texto */
+.exp-riel { position: absolute; left: 26px; top: 16%; bottom: 16%; width: 2px; border-radius: 2px; background: color-mix(in oklab, var(--band-marfil) 22%, transparent); } /* Riel de avance */
+.exp-riel-lleno { position: absolute; inset: 0; border-radius: 2px; background: var(--marca-naranja); transform-origin: top; transform: scaleY(var(--avance)); transition: transform 600ms cubic-bezier(.2,.7,.2,1); } /* Parte recorrida */
+.exp-cuerpo { position: relative; display: grid; gap: 28px; padding: 48px 20px 100px 48px; } /* Texto y tarjetas */
+@media (min-width: 960px) { .exp-cuerpo { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: center; min-height: 640px; padding: 64px 0 96px 72px; } } /* En escritorio, dos columnas */
+.exp-contador { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 13px; font-variant-numeric: tabular-nums; color: var(--ink-muted); } /* 01 — 17 */
+.exp-linea { display: inline-block; width: 48px; height: 1px; background: currentColor; } /* Línea entre números */
+.exp-zona { margin: 18px 0 0; font-size: 15px; color: var(--ink-muted); } /* Zona de paisaje */
+.exp-nombre { margin: 6px 0 0; font-family: var(--font-archivo), system-ui, sans-serif; font-weight: 900; font-stretch: 72%; text-transform: uppercase; font-size: clamp(44px, 7.2vw, 112px); line-height: 0.9; letter-spacing: -0.01em; overflow-wrap: anywhere; } /* Nombre enorme, como un cartel */
+.exp-estado { margin: 16px 0 0; font-weight: 700; } /* Ficha publicada o en verificación */
+.exp-nota { margin: 6px 0 0; max-width: 44ch; font-size: 14px; line-height: 22px; color: var(--ink-muted); } /* Aviso de ilustración */
+.exp-cta { display: inline-flex; align-items: center; min-height: 50px; margin-top: 22px; padding: 0 26px; border-radius: var(--radius-pill); background: var(--band-marfil); color: var(--marca-nocturno); font-weight: 700; text-decoration: none; transition: transform 140ms ease-out; } /* Botón claro */
+.exp-cta:active { transform: scale(0.97); } /* Se hunde al tocarlo */
+.exp-slide:not([hidden]) { animation: asomar 600ms cubic-bezier(.2,.7,.2,1) both; } /* El texto sube al cambiar de territorio */
+.exp-cartas { position: relative; height: 300px; margin: 0; padding: 0; list-style: none; } /* Tarjetas que asoman */
+@media (min-width: 960px) { .exp-cartas { height: 420px; } } /* Más altas en escritorio */
+.exp-cartas li { position: absolute; top: 0; left: 0; width: 160px; height: 230px; visibility: hidden; opacity: 0; transform: translateX(60px) scale(0.9); transition: transform 640ms cubic-bezier(.2,.7,.2,1), opacity 480ms ease-out, visibility 0s linear 640ms; } /* Esperan fuera de vista (sin foco) */
+@media (min-width: 960px) { .exp-cartas li { width: 230px; height: 330px; } } /* Tamaño en escritorio */
+.exp-cartas li[data-pos] { visibility: visible; opacity: 1; transition: transform 640ms cubic-bezier(.2,.7,.2,1), opacity 480ms ease-out, visibility 0s; } /* Las tres siguientes */
+.exp-cartas li[data-pos="1"] { transform: none; } /* La próxima, de frente */
+.exp-cartas li[data-pos="2"] { transform: translate(176px, 36px) scale(0.92); opacity: 0.92; } /* La segunda, un poco atrás */
+.exp-cartas li[data-pos="3"] { transform: translate(340px, 72px) scale(0.84); opacity: 0.85; } /* La tercera asoma cortada por el borde */
+@media (min-width: 960px) { .exp-cartas li[data-pos="2"] { transform: translate(250px, 44px) scale(0.92); } .exp-cartas li[data-pos="3"] { transform: translate(480px, 88px) scale(0.84); } } /* Separación en escritorio */
+.exp-carta { position: relative; display: block; width: 100%; height: 100%; padding: 0; overflow: hidden; border: 0; border-radius: 20px; background: var(--marca-profundo); color: var(--ink); text-align: left; cursor: pointer; box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--band-marfil) 22%, transparent), 0 24px 50px -20px var(--marca-nocturno); } /* Tarjeta de vidrio */
+.exp-carta-img { position: absolute; inset: 0; width: 100%; height: 100%; transition: transform 700ms cubic-bezier(.2,.7,.2,1); } /* Portada que llena la tarjeta */
+.exp-carta:hover .exp-carta-img { transform: scale(1.05); } /* Acercamiento al pasar el cursor */
+.exp-carta-num { position: absolute; top: 12px; right: 14px; font-size: 13px; font-variant-numeric: tabular-nums; } /* Número arriba a la derecha */
+.exp-carta-texto { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 14px 14px; background: linear-gradient(0deg, color-mix(in oklab, var(--marca-nocturno) 92%, transparent), transparent); } /* Nombre sobre sombra */
+.exp-flechas { position: absolute; left: 48px; bottom: 28px; display: flex; gap: 8px; } /* Flechas abajo a la izquierda */
+@media (min-width: 960px) { .exp-flechas { left: 72px; } } /* Alineadas con el texto */
+@media (prefers-reduced-motion: reduce) { .exp-fondo, .exp-cartas li, .exp-riel-lleno, .exp-carta-img { transition: none; } .exp-slide:not([hidden]) { animation: none; } } /* Sin movimiento si así se pidió */

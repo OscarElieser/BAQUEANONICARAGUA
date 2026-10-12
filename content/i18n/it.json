@@ -374,5 +374,12 @@
   "auth.or_continue": "o continua con",
   "gallery.prev": "Precedente",
   "gallery.next": "Successivo",
-  "gallery.arc_label": "Galleria delle copertine dei 17 territori. Scorri o usa le frecce."
+  "gallery.arc_label": "Galleria delle copertine dei 17 territori. Scorri o usa le frecce.",
+  "explorer.title": "Esplora i 17 territori",
+  "explorer.label": "Esploratore dei territori",
+  "explorer.open": "Esplora {name}",
+  "explorer.map": "Vedi sulla mappa",
+  "explorer.see": "Vedi {name}",
+  "explorer.of": "di",
+  "explorer.note": "Illustrazione della sua sagoma reale; le foto arriveranno quando saranno verificate."
 }

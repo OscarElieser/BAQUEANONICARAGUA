@@ -374,5 +374,12 @@
   "auth.or_continue": "または次で続行",
   "gallery.prev": "前へ",
   "gallery.next": "次へ",
-  "gallery.arc_label": "17地域の表紙ギャラリー。スワイプするか矢印を使ってください。"
+  "gallery.arc_label": "17地域の表紙ギャラリー。スワイプするか矢印を使ってください。",
+  "explorer.title": "17の地域を探検しよう",
+  "explorer.label": "地域エクスプローラー",
+  "explorer.open": "{name}を探検",
+  "explorer.map": "地図で見る",
+  "explorer.see": "{name}を見る",
+  "explorer.of": "/",
+  "explorer.note": "実際の輪郭のイラストです。写真は確認後に掲載します。"
 }

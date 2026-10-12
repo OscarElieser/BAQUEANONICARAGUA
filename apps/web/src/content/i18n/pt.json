@@ -374,5 +374,12 @@
   "auth.or_continue": "ou continue com",
   "gallery.prev": "Anterior",
   "gallery.next": "Próximo",
-  "gallery.arc_label": "Galeria das capas dos 17 territórios. Deslize ou use as setas."
+  "gallery.arc_label": "Galeria das capas dos 17 territórios. Deslize ou use as setas.",
+  "explorer.title": "Explore os 17 territórios",
+  "explorer.label": "Explorador de territórios",
+  "explorer.open": "Explorar {name}",
+  "explorer.map": "Ver no mapa",
+  "explorer.see": "Ver {name}",
+  "explorer.of": "de",
+  "explorer.note": "Ilustração do seu contorno real; as fotos virão quando forem verificadas."
 }

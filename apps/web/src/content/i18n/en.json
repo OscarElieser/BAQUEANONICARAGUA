@@ -374,5 +374,12 @@
   "auth.or_continue": "or continue with",
   "gallery.prev": "Previous",
   "gallery.next": "Next",
-  "gallery.arc_label": "Gallery of the 17 territory covers. Swipe or use the arrows."
+  "gallery.arc_label": "Gallery of the 17 territory covers. Swipe or use the arrows.",
+  "explorer.title": "Explore the 17 territories",
+  "explorer.label": "Territory explorer",
+  "explorer.open": "Explore {name}",
+  "explorer.map": "See on the map",
+  "explorer.see": "See {name}",
+  "explorer.of": "of",
+  "explorer.note": "Illustration of its real outline; photos will come once they are verified."
 }

@@ -374,5 +374,12 @@
   "auth.or_continue": "또는 다음으로 계속",
   "gallery.prev": "이전",
   "gallery.next": "다음",
-  "gallery.arc_label": "17개 지역 표지 갤러리. 밀어서 넘기거나 화살표를 사용하세요."
+  "gallery.arc_label": "17개 지역 표지 갤러리. 밀어서 넘기거나 화살표를 사용하세요.",
+  "explorer.title": "17개 지역을 탐험하세요",
+  "explorer.label": "지역 탐색기",
+  "explorer.open": "{name} 탐험하기",
+  "explorer.map": "지도에서 보기",
+  "explorer.see": "{name} 보기",
+  "explorer.of": "/",
+  "explorer.note": "실제 윤곽을 그린 일러스트입니다. 사진은 확인 후 게시됩니다."
 }
