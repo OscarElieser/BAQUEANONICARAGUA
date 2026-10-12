@@ -1,0 +1,15 @@
+{
+  // Revisión de tipos con Node para la lógica y las pruebas (index.ts usa Deno y se revisa con deno check)
+  "compilerOptions": {
+    "target": "ES2022", // JavaScript moderno, igual que Deno
+    "module": "NodeNext", // Módulos ES con extensiones explícitas
+    "moduleResolution": "NodeNext", // Resolución de importaciones como Node
+    "strict": true, // Revisión estricta
+    "noEmit": true, // Solo revisa, no genera archivos
+    "allowImportingTsExtensions": true, // Permite importar "./logic.ts" como exige Deno
+    "erasableSyntaxOnly": true, // Solo sintaxis que Node puede quitar al ejecutar
+    "skipLibCheck": true, // No revisa las definiciones de librerías
+    "types": ["node"] // Tipos de Node para las pruebas
+  },
+  "exclude": ["*/index.ts"] // Los puntos de entrada de Deno se revisan aparte
+}

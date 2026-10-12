@@ -54,8 +54,10 @@
 
 1. El usuario inicia sesión con Firebase (web o Android).
 2. Firebase debe incluir el claim personalizado `role: "authenticated"` en el ID token. Sin él, Supabase trata la petición como `anon`.
-   - Opción A: *blocking functions* (`beforeUserCreated` / `beforeUserSignedIn`) — requiere Firebase con Identity Platform.
-   - Opción B: Admin SDK + función `onCreate`; tras el registro, el cliente debe forzar `getIdToken(true)`.
+   - Lo agrega la **función de Supabase `preparar-sesion`** (`supabase/functions/preparar-sesion`), no Firebase Functions: no hace falta Identity Platform ni el plan Blaze para funciones.
+   - El cliente la llama justo después de iniciar sesión con su ID token de Firebase. La función verifica el token con las claves públicas de Google (firma RS256, emisor, proyecto, vencimiento), y si falta el claim lo agrega con la API de Identity Toolkit (`accounts:update`) usando la cuenta de servicio, conservando otros atributos. Responde `needs_refresh: true` y el cliente fuerza `getIdToken(true)`.
+   - `verify_jwt = false` en `supabase/config.toml` para esta función, porque el token es de Firebase y lo verifica la propia función.
+   - Secretos de la función: `FIREBASE_PROJECT_ID`, `FIREBASE_SERVICE_ACCOUNT`, `ALLOWED_ORIGINS`. Nunca en web ni Android.
 3. El cliente Supabase (web: `accessToken`, Flutter: equivalente) envía el ID token de Firebase.
 4. Supabase (integración *Third-Party Auth* configurada con el Project ID de Firebase) valida el token y rechaza proyectos Firebase no registrados.
 5. **Importante:** el `sub` de Firebase **no es un UUID**. Por eso:
@@ -63,7 +65,7 @@
    - Se usa `auth.jwt() ->> 'sub'` a través de la función `app.current_firebase_uid()`.
    - `profiles.id` es un UUID interno; `profiles.firebase_uid` (texto, único) lo vincula con Firebase.
 6. Los **roles de la plataforma** (superadmin, moderador, emprendedor…) viven en Postgres (`user_roles`, `role_permissions`), no en claims de Firebase. Así se revocan al instante y quedan auditados.
-7. El primer acceso crea el perfil mediante `POST /v1/me/bootstrap` en la API (idempotente), que verifica el token con Firebase Admin y hace *upsert* del perfil.
+7. La misma función crea el perfil (idempotente), mantiene `email_verified` al día, asegura el rol base `user` y responde 403 si la cuenta está suspendida o eliminada; en ese caso no agrega el claim y el cliente cierra la sesión.
 8. MFA obligatorio para roles administrativos: se exige en Firebase (MFA de Identity Platform) y la API comprueba el claim `firebase.sign_in_second_factor` antes de operaciones de Ops Center.
 
 ---
@@ -159,7 +161,7 @@ Principios aplicados en el esquema:
 
 ## 10. Dependencias externas (bloqueantes para conectar servicios reales)
 
-- [ ] Proyecto Firebase (dev / staging / prod) y decisión Identity Platform sí/no.
+- [ ] Proyecto Firebase (dev / staging / prod) y cuenta de servicio para la función `preparar-sesion`. Identity Platform solo si se quiere MFA administrado por Firebase.
 - [ ] Proyectos Supabase (dev / staging / prod) con PostGIS y pgvector habilitados.
 - [ ] Plan de Hostinger concreto (VPS recomendado).
 - [ ] Dominio en Cloudflare.

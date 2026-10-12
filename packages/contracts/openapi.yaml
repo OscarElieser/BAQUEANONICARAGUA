@@ -59,15 +59,6 @@ paths:
           description: OK
           content:
             application/json: { schema: { $ref: '#/components/schemas/Health' } }
-  /me/bootstrap:
-    post:
-      summary: Crea el perfil del usuario autenticado si no existe (idempotente)
-      responses:
-        '201':
-          description: Perfil
-          content:
-            application/json: { schema: { $ref: '#/components/schemas/Profile' } }
-        '401': { $ref: '#/components/responses/Unauthorized' }
   /catalog/search:
     get:
       summary: Búsqueda pública (relevancia; a igual relevancia, rotación diaria; sin patrocinados)

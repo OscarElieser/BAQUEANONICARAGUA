@@ -1,7 +1,8 @@
 'use client'; // Hook que solo funciona en el navegador
 
 import { useEffect, useState } from 'react'; // Estado y efectos de React
-import { getRedirectResult, onAuthStateChanged, type User } from 'firebase/auth'; // Escuchar cambios de sesión y completar redirecciones
+import { onAuthStateChanged, type User } from 'firebase/auth'; // Escuchar cambios de sesión
+import { completarRedireccion } from './auth'; // Termina un inicio con Google que volvió por redirección
 import { firebaseAuth, isFirebaseConfigured } from './firebase'; // Instancia de Firebase y si está configurado
 
 /** Estado de la sesión: sin configurar, cargando, sin sesión o con usuario. */
@@ -20,7 +21,7 @@ export function useSession(): Session {
   useEffect(() => {
     const auth = firebaseAuth(); // Instancia de Firebase Auth
     if (!auth) return; // Sin Firebase no hay nada que escuchar
-    getRedirectResult(auth).catch(() => undefined); // Completa un inicio con Google que volvió por redirección (si lo hubo)
+    completarRedireccion().catch((e) => console.error('No se pudo completar el inicio con Google', e)); // Prepara el perfil si se volvió de Google (el error queda registrado)
     return onAuthStateChanged(auth, (user) => {
       // Se ejecuta cada vez que alguien entra o sale
       setSession(user ? { status: 'signed_in', user } : { status: 'signed_out' }); // Actualiza el estado visible

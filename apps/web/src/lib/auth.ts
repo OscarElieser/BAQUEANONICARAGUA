@@ -2,6 +2,7 @@
 
 import {
   createUserWithEmailAndPassword, // Crea una cuenta con correo y contraseña
+  getRedirectResult, // Lee el resultado al volver de la página de Google
   GoogleAuthProvider, // Proveedor para entrar con una cuenta de Google
   sendEmailVerification, // Envía el correo para confirmar la dirección
   sendPasswordResetEmail, // Envía el correo para cambiar la contraseña
@@ -14,10 +15,12 @@ import {
 } from 'firebase/auth';
 import { firebaseAuth } from './firebase'; // Instancia de Firebase Auth (o null si no está configurado)
 
-const API = process.env.NEXT_PUBLIC_API_URL; // Dirección de nuestra API
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL; // Dirección del proyecto de Supabase
+const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY; // Clave pública de Supabase (no es secreta)
 
 /** Traduce los códigos de error de Firebase a mensajes claros en español. */
 export function authErrorMessage(error: unknown): string {
+  if (error instanceof CuentaBloqueada) return error.message; // Cuenta suspendida: se muestra tal cual
   const code = (error as { code?: string })?.code ?? ''; // Código del error, por ejemplo "auth/wrong-password"
   const messages: Record<string, string> = {
     // Tabla de códigos conocidos y su mensaje
@@ -44,20 +47,30 @@ function requireAuth() {
   return auth; // Devuelve la instancia lista para usar
 }
 
+/** Error que se muestra cuando la cuenta está suspendida o eliminada (la sesión se cierra). */
+export class CuentaBloqueada extends Error {}
+
 /**
- * Prepara la sesión en nuestra plataforma:
- * 1. renueva el token para que traiga el rol que Supabase necesita;
- * 2. crea el perfil en la base de datos si es la primera vez (la API lo hace de forma idempotente).
+ * Prepara la sesión en nuestra plataforma con la función de Supabase "preparar-sesion":
+ * 1. la función verifica el token, crea el perfil si es la primera vez y asegura el rol base;
+ * 2. si el token aún no trae el rol que Supabase necesita, la función lo agrega y aquí pedimos un token nuevo.
  */
 async function prepararSesion(user: User): Promise<void> {
-  const token = await user.getIdToken(true); // Fuerza un token nuevo con el rol asignado por la función de Firebase
-  if (!API) return; // Si la API no está configurada en este entorno, no hay perfil que crear
-  const res = await fetch(`${API}/v1/me/bootstrap`, {
-    // Pide a la API que cree o actualice el perfil
+  if (!SUPABASE_URL || !SUPABASE_KEY) return; // Si Supabase no está configurado en este entorno, no hay perfil que crear
+  const token = await user.getIdToken(); // Token actual de Firebase
+  const res = await fetch(`${SUPABASE_URL}/functions/v1/preparar-sesion`, {
+    // Llama a la función de Supabase
     method: 'POST', // Es una acción que escribe datos
-    headers: { Authorization: `Bearer ${token}` }, // Envía el token para que la API sepa quién es
+    headers: { Authorization: `Bearer ${token}`, apikey: SUPABASE_KEY }, // Token de Firebase y clave pública de Supabase
   });
+  if (res.status === 403) {
+    // Cuenta suspendida o eliminada
+    await signOut(requireAuth()); // Cerramos la sesión para no dejarla a medias
+    throw new CuentaBloqueada('Esta cuenta está suspendida. Escribe a soporte si crees que es un error.'); // Mensaje claro
+  }
   if (!res.ok) throw new Error('Tu sesión se abrió, pero no pudimos preparar tu perfil. Intenta de nuevo en un momento.'); // Error real, no se oculta
+  const body = (await res.json()) as { needs_refresh?: boolean }; // Respuesta de la función
+  if (body.needs_refresh) await user.getIdToken(true); // El rol se acaba de agregar: pedimos un token que ya lo traiga
 }
 
 /** Inicia sesión con correo y contraseña. */
@@ -94,6 +107,12 @@ export async function iniciarConGoogle(): Promise<User | null> {
     }
     throw error; // Cualquier otro error se muestra al usuario
   }
+}
+
+/** Al volver de la página de Google (cuando el navegador bloqueó la ventana), prepara rol y perfil. */
+export async function completarRedireccion(): Promise<void> {
+  const cred = await getRedirectResult(requireAuth()); // Resultado de la redirección (null si no se venía de Google)
+  if (cred) await prepararSesion(cred.user); // Solo si de verdad se inició sesión así
 }
 
 /** Envía el correo para recuperar la contraseña. */

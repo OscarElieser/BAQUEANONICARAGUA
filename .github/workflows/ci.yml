@@ -20,7 +20,7 @@ jobs:
       - run: python3 scripts/check_tokens.py
 
   ai-core:
-    name: Lógica del asistente (sin dependencias)
+    name: Lógica sin dependencias (asistente, Ops Center, funciones)
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -29,6 +29,12 @@ jobs:
       - run: node --test packages/ai-core/test/*.test.ts
       - name: Ops Center alineado con la base de datos
         run: node --test scripts/ops-resources.test.ts
+      - name: Función de Supabase preparar-sesion (pruebas sin red) # Verificación del token, perfil, rol y cuentas suspendidas
+        run: node --test supabase/functions/tests/*.test.ts
+      - uses: denoland/setup-deno@v2 # Instala Deno, el mismo motor que usan las funciones de Supabase
+        with: { deno-version: v2.x } # Última versión estable de Deno 2
+      - name: Tipos de las funciones de Supabase con Deno # Revisa index.ts tal como se desplegará
+        run: deno check supabase/functions/*/index.ts
 
   node:
     name: Web + API (tipos, pruebas, build)

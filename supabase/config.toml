@@ -18,3 +18,9 @@ enabled = true
 [auth.third_party.firebase]
 enabled = true
 project_id = "env(FIREBASE_PROJECT_ID)"
+
+# Función que prepara la sesión tras iniciar en Firebase (reemplaza las funciones de Firebase).
+# verify_jwt = false porque el token que llega es de Firebase y la función lo verifica ella misma
+# con las claves públicas de Google (firma, emisor, proyecto y vencimiento).
+[functions.preparar-sesion]
+verify_jwt = false # La verificación la hace la función, no la puerta de Supabase

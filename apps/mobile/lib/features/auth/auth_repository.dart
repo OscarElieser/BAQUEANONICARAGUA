@@ -1,7 +1,9 @@
+import 'dart:convert'; // Leer respuestas JSON
+
 import 'package:firebase_auth/firebase_auth.dart'; // Autenticación de Firebase (correo, Google, sesión)
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Gestión de estado con Riverpod
 import 'package:google_sign_in/google_sign_in.dart'; // Ventana nativa de Android para elegir cuenta de Google
-import 'package:http/http.dart' as http; // Peticiones HTTP a nuestra API
+import 'package:http/http.dart' as http; // Peticiones HTTP a la función de Supabase
 
 import '../../core/env.dart'; // Direcciones configuradas en la compilación (API, Supabase)
 
@@ -55,18 +57,27 @@ class AuthRepository {
     }
   }
 
-  /// Renueva el token (para que traiga el rol que Supabase necesita) y crea el perfil si hace falta.
+  /// Llama a la función de Supabase "preparar-sesion": verifica el token, crea el perfil si es la primera vez
+  /// y, si el token aún no trae el rol que Supabase necesita, lo agrega; entonces pedimos un token nuevo.
   Future<void> _prepararSesion(User user) async {
-    final token = await user.getIdToken(true); // Token nuevo con el rol asignado por la función de Firebase
-    if (Env.apiUrl.isEmpty || token == null) return; // Sin API configurada no hay perfil que crear
+    if (Env.supabaseUrl.isEmpty || Env.supabasePublishableKey.isEmpty) return; // Sin Supabase configurado no hay perfil que crear
+    final token = await user.getIdToken(); // Token actual de Firebase
+    if (token == null) return; // Sin token no se puede continuar (no debería pasar con sesión abierta)
     final res = await http.post(
-      Uri.parse('${Env.apiUrl}/v1/me/bootstrap'), // Endpoint que crea o actualiza el perfil
-      headers: {'Authorization': 'Bearer $token'}, // Identifica al usuario ante la API
+      Uri.parse('${Env.supabaseUrl}/functions/v1/preparar-sesion'), // Función de Supabase
+      headers: {'Authorization': 'Bearer $token', 'apikey': Env.supabasePublishableKey}, // Token de Firebase y clave pública
     );
+    if (res.statusCode == 403) {
+      // Cuenta suspendida o eliminada
+      await signOut(); // Cerramos la sesión para no dejarla a medias
+      throw const AuthFailure('Esta cuenta está suspendida. Escribe a soporte si crees que es un error.'); // Mensaje claro
+    }
     if (res.statusCode >= 300) {
-      // La API respondió con error: lo informamos tal cual, sin ocultarlo
+      // La función respondió con error: lo informamos tal cual, sin ocultarlo
       throw const AuthFailure('Tu sesión se abrió, pero no pudimos preparar tu perfil. Intenta de nuevo en un momento.');
     }
+    final body = jsonDecode(res.body) as Map<String, dynamic>; // Respuesta de la función
+    if (body['needs_refresh'] == true) await user.getIdToken(true); // El rol se acaba de agregar: token nuevo que ya lo trae
   }
 
   /// Inicia sesión con correo y contraseña.
