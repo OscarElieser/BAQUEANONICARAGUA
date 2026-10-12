@@ -2,4 +2,5 @@ packages:
   - "apps/web"
   - "apps/api"
   - "packages/*"
+  - "firebase/functions"
 # apps/mobile (Flutter) se gestiona con su propio toolchain (flutter pub).
