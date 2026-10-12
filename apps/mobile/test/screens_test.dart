@@ -10,6 +10,7 @@ import 'package:nica_app/core/theme.dart'; // Tema
 import 'package:nica_app/features/auth/auth_repository.dart'; // Sesión
 import 'package:nica_app/features/catalog/business_screen.dart'; // Ficha de negocio
 import 'package:nica_app/features/community/community_screen.dart'; // Comunidad
+import 'package:nica_app/features/culture/culture_screen.dart'; // Cultura
 import 'package:nica_app/features/messages/conversation_screen.dart'; // Conversación
 import 'package:nica_app/features/planner/planner_screen.dart'; // Mi aventura
 
@@ -39,6 +40,15 @@ class FakeCatalog implements CatalogRepository {
   Future<List<FeedPost>> feed() async => [
         FeedPost(id: 'p1', title: 'Una tarde en el lago', body: 'Texto del relato', createdAt: DateTime.utc(2026, 9, 1), authorName: 'Ana', isPromotional: true, reactions: 3, comments: 1), // Relato promocional
       ];
+
+  @override
+  Future<(List<HistoryEvent>, List<HeritageItem>)> culture() async => (
+        const [
+          HistoryEvent(id: 'e1', title: 'Hecho de prueba antiguo', era: 'prehispanic', startYear: -500, approximate: true, contested: false), // Antes de Cristo y aproximado
+          HistoryEvent(id: 'e2', title: 'Hecho de prueba discutido', era: 'colonial', startYear: 1524, approximate: false, contested: true), // Con interpretaciones distintas
+        ],
+        const [HeritageItem(id: 'h1', title: 'Pieza de prueba', unesco: true)], // Una pieza reconocida
+      );
 }
 
 /// Mensajería falsa, sin red.
@@ -128,5 +138,15 @@ void main() {
     await tester.tap(find.byTooltip('Enviar')); // Envía
     await tester.pumpAndSettle(); // Espera
     expect(messaging.sent, ['Quiero reservar para dos']); // Se envió el texto exacto
+  });
+
+  testWidgets('Cultura muestra la línea de tiempo con fechas honestas y el patrimonio', (tester) async {
+    await tester.pumpWidget(app(const CultureScreen())); // Pantalla de Cultura
+    await tester.pumpAndSettle(); // Espera los datos y que la greca termine de trazarse
+    expect(find.text('Hecho de prueba antiguo'), findsOneWidget); // Hecho publicado
+    expect(find.textContaining('500 a. C.'), findsOneWidget); // Año antes de Cristo, aproximado
+    expect(find.textContaining('interpretaciones distintas'), findsOneWidget); // Aviso de perspectivas
+    await tester.scrollUntilVisible(find.text('Pieza de prueba'), 200); // Baja hasta el patrimonio
+    expect(find.text('Reconocido por la UNESCO'), findsOneWidget); // Reconocimiento en texto
   });
 }

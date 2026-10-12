@@ -30,6 +30,7 @@ abstract class CatalogRepository {
   Future<DestinationDetail?> destination(String slug); // Ficha de destino
   Future<BusinessDetail?> business(String slug); // Ficha de negocio
   Future<List<FeedPost>> feed(); // Relatos recientes
+  Future<(List<HistoryEvent>, List<HeritageItem>)> culture(); // Línea de tiempo y patrimonio publicados
 }
 
 /// Mensajería con negocios (requiere sesión; RLS solo entrega las conversaciones propias).
@@ -107,6 +108,17 @@ class SupabaseCatalogRepository implements CatalogRepository {
   Future<List<FeedPost>> feed() async {
     final rows = await _client().rpc('public_feed', params: {'p_limit': 20}); // Relatos en orden cronológico
     return [for (final r in rows as List) FeedPost.fromJson(r as Map<String, dynamic>)]; // Convierte cada relato
+  }
+
+  @override
+  Future<(List<HistoryEvent>, List<HeritageItem>)> culture() async {
+    final db = _client(); // Cliente
+    final events = await db.rpc('history_timeline'); // Línea de tiempo (misma función que la web)
+    final items = await db.from('heritage_items').select('id, slug, title, kind, summary, unesco_recognized').order('title'); // Patrimonio publicado
+    return (
+      [for (final r in events as List) HistoryEvent.fromJson(r as Map<String, dynamic>)], // Hechos
+      [for (final r in items) HeritageItem.fromJson(r)], // Piezas
+    );
   }
 }
 

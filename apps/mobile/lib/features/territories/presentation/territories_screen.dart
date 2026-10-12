@@ -10,6 +10,7 @@ import '../../../core/widgets/mapa_territorios.dart'; // Mapa ilustrado de los 1
 import '../../../core/widgets/portada_territorio.dart'; // Portadas y tarjetas de cada territorio
 import '../../../core/widgets/relieve_3d.dart'; // Relieve 3D interactivo
 import '../../catalog/search_screen.dart'; // Resultados de búsqueda
+import '../../culture/culture_screen.dart'; // Mundo de Cultura
 import 'territory_screen.dart'; // Ficha de territorio
 
 /// Territorios publicados (RLS filtra los borradores).
@@ -41,6 +42,18 @@ class TerritoriesScreen extends ConsumerWidget {
                 Text(context.t('discover.intro'), style: text.bodyMedium?.copyWith(color: tv.inkMuted)), // Explicación
                 const SizedBox(height: TvSpace.s4), // Espacio
                 _Buscador(onSearch: (q) => Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchScreen(query: q)))), // Busca y abre resultados
+                const SizedBox(height: TvSpace.s4), // Espacio
+                Material(
+                  color: TvColors.barro, // Barro de San Juan de Oriente: puerta al mundo de Cultura
+                  borderRadius: BorderRadius.circular(TvSpace.radiusM), // Esquinas redondeadas
+                  child: ListTile(
+                    minTileHeight: TvSpace.touchMin + 12, // Área táctil cómoda
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(TvSpace.radiusM)), // Onda del toque redondeada
+                    title: Text(context.t('culture.title'), style: (Theme.of(context).extension<LetrasMundo>()?.cultura ?? const TextStyle()).copyWith(color: TvColors.bandMarfil, fontSize: 20)), // Nombre del mundo
+                    trailing: const Icon(Icons.chevron_right, color: TvColors.bandMarfil), // Indica que se abre
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CultureScreen())), // Abre Cultura
+                  ),
+                ),
               ],
             ),
           ),

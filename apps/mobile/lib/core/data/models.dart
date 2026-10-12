@@ -199,3 +199,45 @@ class Message {
         createdAt: DateTime.parse(j['created_at'] as String), // Fecha
       );
 }
+
+/// Hecho de la línea de tiempo (de la función history_timeline, solo publicados).
+class HistoryEvent {
+  const HistoryEvent({required this.id, required this.title, required this.era, required this.startYear, this.endYear, required this.approximate, this.summary, required this.contested}); // Constructor
+  final String id; // Identificador
+  final String title; // Título
+  final String era; // Época: prehispanic, colonial, republican o contemporary
+  final int startYear; // Año de inicio (negativo = antes de Cristo)
+  final int? endYear; // Año de fin, si lo hay
+  final bool approximate; // Si la fecha es aproximada ("hacia…")
+  final String? summary; // Resumen
+  final bool contested; // Si tiene interpretaciones distintas
+
+  /// Crea el hecho desde una fila.
+  factory HistoryEvent.fromJson(Map<String, dynamic> j) => HistoryEvent(
+        id: j['id'] as String, // Identificador
+        title: j['title'] as String, // Título
+        era: j['era'] as String, // Época
+        startYear: (j['start_year'] as num).toInt(), // Año de inicio
+        endYear: (j['end_year'] as num?)?.toInt(), // Año de fin
+        approximate: j['date_precision'] == 'approximate', // Fecha aproximada
+        summary: j['summary'] as String?, // Resumen
+        contested: j['contested'] as bool? ?? false, // Interpretaciones distintas
+      );
+}
+
+/// Pieza de patrimonio publicada.
+class HeritageItem {
+  const HeritageItem({required this.id, required this.title, this.summary, required this.unesco}); // Constructor
+  final String id; // Identificador
+  final String title; // Nombre
+  final String? summary; // Resumen
+  final bool unesco; // Reconocida por la UNESCO
+
+  /// Crea la pieza desde una fila de heritage_items.
+  factory HeritageItem.fromJson(Map<String, dynamic> j) => HeritageItem(
+        id: j['id'] as String, // Identificador
+        title: j['title'] as String, // Nombre
+        summary: j['summary'] as String?, // Resumen
+        unesco: j['unesco_recognized'] as bool? ?? false, // UNESCO
+      );
+}
