@@ -1,8 +1,9 @@
 // Portada ilustrada de un territorio: su silueta real con curvas de nivel que suben hacia una cima.
 // Cada una es distinta porque nace de la forma de su territorio y de los colores de su zona.
 // Es decorativa (aria-hidden): el nombre y el estado siempre van en texto al lado.
+// Necesita <SpriteMapa /> en la misma página: las formas se reutilizan con <use> en vez de repetirse.
 
-import { CURVAS, PALETA, encuadre, lagos, semilla, territorio, territorios } from '@/lib/portadas'; // Formas y colores
+import { CURVAS, PALETA, encuadre, lagos, semilla, territorio } from '@/lib/portadas'; // Encuadre, colores y lagos
 
 export function PortadaTerritorio({ slug, uid, className }: { slug: string; uid: string; className?: string }) {
   const ter = territorio(slug); // Territorio a dibujar
@@ -18,7 +19,7 @@ export function PortadaTerritorio({ slug, uid, className }: { slug: string; uid:
     <svg viewBox={caja} className={className} aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice">
       <defs>
         <clipPath id={`silueta-${id}`}>
-          <path d={ter.d} /> {/* Todo lo de adentro se recorta a la forma del territorio */}
+          <use href={`#ter-${slug}`} /> {/* Todo lo de adentro se recorta a la forma del territorio */}
         </clipPath>
         <pattern id={`textura-${id}`} width="9" height="9" patternUnits="userSpaceOnUse" patternTransform={`rotate(${giro})`}>
           {ter.zone === 'pacifico' && <path d="M0 4.5H9" stroke={color.curva} strokeOpacity="0.28" strokeWidth="0.8" />} {/* Ceniza: líneas finas */}
@@ -27,19 +28,15 @@ export function PortadaTerritorio({ slug, uid, className }: { slug: string; uid:
         </pattern>
       </defs>
       <rect x={bx} y={by} width={bw} height={bh} fill={color.fondo} /> {/* Fondo de la zona */}
-      {territorios
-        .filter((o) => o.slug !== slug) // Todos menos este
-        .map((o) => (
-          <path key={o.slug} d={o.d} fill="none" stroke={color.curva} strokeOpacity="0.2" strokeWidth="1" vectorEffect="non-scaling-stroke" /> // Límite de un vecino, tenue
-        ))}
+      <use href="#pais-todo" fill="none" stroke={color.curva} strokeOpacity="0.2" strokeWidth="1" vectorEffect="non-scaling-stroke" /> {/* Límites de todos los territorios, tenues */}
       {/* Vecinos apenas trazados: ubican el territorio en el país */}
       <g clipPath={`url(#silueta-${id})`}>
-        <path d={ter.d} fill={color.curva} fillOpacity="0.1" /> {/* Tierra del territorio */}
+        <use href={`#ter-${slug}`} fill={color.curva} fillOpacity="0.1" /> {/* Tierra del territorio */}
         <rect x={bx} y={by} width={bw} height={bh} fill={`url(#textura-${id})`} /> {/* Textura de su zona */}
         {CURVAS.map((s, i) => (
-          <path
+          <use
             key={s} // Una curva por escala
-            d={ter.d} // Misma silueta…
+            href={`#ter-${slug}`} // Misma silueta…
             transform={`translate(${lx} ${ly}) scale(${s}) translate(${-lx} ${-ly})`} // …encogida hacia la cima
             fill={i === CURVAS.length - 1 ? color.cima : 'none'} // La última es la cima, rellena
             stroke={color.curva} // Color de las curvas de su zona
@@ -49,9 +46,9 @@ export function PortadaTerritorio({ slug, uid, className }: { slug: string; uid:
           />
         ))}
       </g>
-      <path d={ter.d} fill="none" stroke={color.cima} strokeWidth="2" vectorEffect="non-scaling-stroke" /> {/* Contorno del territorio */}
+      <use href={`#ter-${slug}`} fill="none" stroke={color.cima} strokeWidth="2" vectorEffect="non-scaling-stroke" /> {/* Contorno del territorio */}
       {lagos.map((l) => (
-        <path key={l.id} d={l.d} fill="var(--band-anil)" stroke="var(--caribe)" strokeOpacity="0.6" strokeWidth="1" vectorEffect="non-scaling-stroke" fillRule="evenodd" /> // Agua con su orilla (Ometepe queda como isla)
+        <use key={l.id} href={`#lago-${l.id}`} fill="var(--band-anil)" stroke="var(--caribe)" strokeOpacity="0.6" strokeWidth="1" vectorEffect="non-scaling-stroke" /> // Agua con su orilla (Ometepe queda como isla)
       ))}
       {/* Lagos reales encima: tapan la parte del límite que cruza el agua */}
     </svg>

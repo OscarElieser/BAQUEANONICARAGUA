@@ -2,25 +2,24 @@
 
 import Link from 'next/link'; // Enlaces internos
 import { useState } from 'react'; // Territorio activo
-import mapa from '@/content/mapa.json'; // Mapa generado desde Natural Earth (scripts/mapa)
 import { t } from '@/i18n/t'; // Textos traducidos
 
-type Territorio = { slug: string; name: string; d: string; label: number[] }; // Forma de cada territorio
+export type TerritorioLigero = { slug: string; name: string; label: number[] }; // Lo mínimo de cada territorio (la forma viene de <SpriteMapa />)
+type Territorio = TerritorioLigero; // Alias interno
 
 /**
  * Mapa vivo de los 17 territorios. Cada territorio publicado es un enlace real a su ficha
  * (funciona con teclado, lector de pantalla y sin JavaScript); los que aún se verifican se ven
  * con borde punteado y lo dicen. Los lagos Cocibolca y Xolotlán se dibujan como agua.
  */
-export function MapaTerritorios({ locale, published }: { locale: string; published: string[] }) {
+export function MapaTerritorios({ locale, published, territories, lakes, viewBox }: { locale: string; published: string[]; territories: TerritorioLigero[]; lakes: string[]; viewBox: string }) {
   const [active, setActive] = useState<Territorio | null>(null); // Territorio resaltado
   const isPublished = (slug: string) => published.includes(slug); // Si tiene ficha publicada
-  const territories = mapa.territories as Territorio[]; // Los 17 territorios
 
   return (
     <figure className="m-0 min-w-0">
       <div className="relative">
-        <svg viewBox={mapa.viewBox} className="mapa-vivo block h-auto w-full" role="group" aria-label={t(locale, 'tmap.aria')}>
+        <svg viewBox={viewBox} className="mapa-vivo block h-auto w-full" role="group" aria-label={t(locale, 'tmap.aria')}>
           <defs>
             <pattern id="curvas" width="18" height="18" patternUnits="userSpaceOnUse">
               <circle cx="9" cy="9" r="7" fill="none" stroke="var(--on-oro)" strokeOpacity="0.22" strokeWidth="1" /> {/* Curva de nivel repetida: relieve al resaltar */}
@@ -33,8 +32,8 @@ export function MapaTerritorios({ locale, published }: { locale: string; publish
             const on = active?.slug === ter.slug; // Si está resaltado
             const shape = (
               <>
-                <path d={ter.d} pathLength={1} className={`territorio trazo ${isPublished(ter.slug) ? 'publicado' : 'pendiente'} ${on ? 'activo' : ''}`} /> {/* Forma del territorio */}
-                {on && <path d={ter.d} fill="url(#curvas)" pointerEvents="none" />} {/* Relieve de curvas al resaltar */}
+                <use href={`#ter-${ter.slug}`} className={`territorio ${isPublished(ter.slug) ? 'publicado' : 'pendiente'} ${on ? 'activo' : ''}`} /> {/* Forma del territorio (de SpriteMapa) */}
+                {on && <use href={`#ter-${ter.slug}`} fill="url(#curvas)" pointerEvents="none" />} {/* Relieve de curvas al resaltar */}
               </>
             ); // Dibujo del territorio
             return isPublished(ter.slug) ? (
@@ -62,10 +61,10 @@ export function MapaTerritorios({ locale, published }: { locale: string; publish
               </g>
             );
           })}
-          {mapa.lakes.map((lake) => (
-            <g key={lake.id} pointerEvents="none">
-              <path d={lake.d} className="lago" fillRule="evenodd" /> {/* Agua (Ometepe queda como isla) */}
-              <path d={lake.d} fill="url(#olas)" fillRule="evenodd" /> {/* Ondas */}
+          {lakes.map((id) => (
+            <g key={id} pointerEvents="none">
+              <use href={`#lago-${id}`} className="lago" /> {/* Agua (Ometepe queda como isla) */}
+              <use href={`#lago-${id}`} fill="url(#olas)" /> {/* Ondas */}
             </g>
           ))}
           {active && (

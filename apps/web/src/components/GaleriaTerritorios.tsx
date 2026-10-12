@@ -1,6 +1,5 @@
-'use client'; // Interactiva: se puede pausar
-
-import { useState } from 'react'; // Estado de pausa
+// Se dibuja en el servidor; solo el botón de pausa es interactivo (ControlDesfile).
+import { ControlDesfile } from './ControlDesfile'; // Botón de pausa
 import { TarjetaTerritorio } from './TarjetaTerritorio'; // Tarjeta de cada territorio
 import { territorios } from '@/lib/portadas'; // Los 17 territorios
 import { t } from '@/i18n/t'; // Textos traducidos
@@ -10,8 +9,6 @@ import { t } from '@/i18n/t'; // Textos traducidos
  * o con el botón (WCAG 2.2.2). Con "reducir movimiento" no se mueve: queda como fila que se desliza a mano.
  */
 export function GaleriaTerritorios({ locale, published }: { locale: string; published: string[] }) {
-  const [pausa, setPausa] = useState(false); // Si la persona lo detuvo
-
   return (
     <section aria-labelledby="galeria" className="py-10">
       <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
@@ -21,15 +18,9 @@ export function GaleriaTerritorios({ locale, published }: { locale: string; publ
           </h2>
           <p className="m-0 mt-2 text-ink-muted">{t(locale, 'gallery.intro')}</p> {/* Aclara que son ilustraciones, no fotos */}
         </div>
-        <button
-          type="button" // No envía formularios
-          onClick={() => setPausa((p) => !p)} // Alterna pausa y movimiento
-          className="desfile-control min-h-[44px] rounded-pill border border-control-border bg-transparent px-5 text-[15px] font-bold text-ink" // Botón secundario
-        >
-          {t(locale, pausa ? 'gallery.play' : 'gallery.pause')} {/* Lo que hará al pulsarlo */}
-        </button>
+        <ControlDesfile id="territorios" pausar={t(locale, 'gallery.pause')} reanudar={t(locale, 'gallery.play')} /> {/* Pausa (WCAG 2.2.2) */}
       </div>
-      <div className="desfile" data-pausa={pausa} role="region" aria-label={t(locale, 'gallery.label')} tabIndex={0}> {/* Enfocable: con el teclado se detiene y, sin animación, se desliza con las flechas */}
+      <div className="desfile" data-desfile="territorios" data-pausa="false" role="region" aria-label={t(locale, 'gallery.label')} tabIndex={0}> {/* Enfocable: con el teclado se detiene y, sin animación, se desliza con las flechas */}
         <div className="desfile-carril">
           <ul className="desfile-lista">
             {/* Las 17 tarjetas reales (enlaces si tienen ficha) */}

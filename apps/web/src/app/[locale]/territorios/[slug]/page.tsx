@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { SpriteMapa } from '@/components/SpriteMapa'; // Formas del mapa (las portadas las reutilizan)
 import { notFound } from 'next/navigation';
 import { CurvasDeNivel } from '@/components/CurvasDeNivel'; // Curvas genéricas (si el territorio no está en el mapa)
 import { RelieveTerritorio3D } from '@/components/RelieveTerritorio3D'; // Relieve 3D de su silueta real
@@ -42,6 +43,7 @@ export default async function TerritoryPage({ params }: { params: Promise<{ loca
   }; // Datos estructurados del territorio (solo datos reales)
   return (
     <main className="mx-auto max-w-[1280px] px-4 pb-16 sm:px-12">
+      <SpriteMapa /> {/* Formas del mapa para la portada */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structured) }} /> {/* Datos para buscadores */}
       <nav aria-label={t(locale, 'nav.breadcrumb')} className="pt-6 text-sm">
         <Link href={`/${locale}`}>{t(locale, 'nav.discover')}</Link>

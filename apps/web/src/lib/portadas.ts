@@ -18,6 +18,7 @@ export const ZONA_TEXTO = { pacifico: 'zone.pacifico', norte: 'zone.norte', cari
 
 export const territorios = mapa.territories as TerritorioMapa[]; // Los 17 territorios
 export const lagos = mapa.lakes as { id: string; name: string; d: string }[]; // Cocibolca y Xolotlán
+export const VIEWBOX_MAPA = mapa.viewBox; // Lienzo del mapa completo
 
 /** Rectángulo que contiene un trazo SVG (solo M, L y Z, que es lo que genera scripts/mapa). */
 export function cajaDe(d: string): { x: number; y: number; w: number; h: number } {

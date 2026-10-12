@@ -4,6 +4,9 @@ import { listTerritories } from '@/lib/territories'; // Territorios publicados d
 import { MapaTerritorios } from '@/components/MapaTerritorios'; // Mapa ilustrado de los 17 territorios
 import { GaleriaTerritorios } from '@/components/GaleriaTerritorios'; // Desfile de las 17 portadas
 import { PuertaCultura } from '@/components/PuertaCultura'; // Puerta al mundo de Cultura
+import { SpriteMapa } from '@/components/SpriteMapa'; // Formas del mapa, una sola vez por página
+import { InclinacionTarjetas } from '@/components/InclinacionTarjetas'; // Inclinación 3D de las tarjetas
+import { VIEWBOX_MAPA, lagos, territorios as formas } from '@/lib/portadas'; // Datos ligeros del mapa
 import { t } from '@/i18n/t'; // Textos traducidos
 import type { Metadata } from 'next'; // Tipo de los metadatos
 import { jsonLd, pageMetadata, SITE_URL, absolute } from '@/lib/seo'; // Canónica, idiomas, vista previa y datos estructurados
@@ -65,6 +68,8 @@ export default async function Descubrir({ params }: { params: Promise<{ locale: 
         </figure>
       </section>
 
+      <SpriteMapa /> {/* Biblioteca de formas para portadas y mapa */}
+      <InclinacionTarjetas /> {/* Las tarjetas se inclinan hacia el cursor */}
       <GaleriaTerritorios locale={locale} published={(territories ?? []).map((ter) => ter.slug)} /> {/* Las 17 portadas en movimiento */}
 
       <PuertaCultura locale={locale} /> {/* Historia, arte y cultura */}
@@ -89,7 +94,13 @@ export default async function Descubrir({ params }: { params: Promise<{ locale: 
         )}
         <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
           {/* Mapa ilustrado a la izquierda, lista accesible a la derecha (en el teléfono, uno debajo del otro) */}
-          <MapaTerritorios locale={locale} published={(territories ?? []).map((ter) => ter.slug)} /> {/* Solo los publicados son enlaces */}
+          <MapaTerritorios
+            locale={locale} // Idioma
+            published={(territories ?? []).map((ter) => ter.slug)} // Solo los publicados son enlaces
+            territories={formas.map(({ slug, name, label }) => ({ slug, name, label }))} // Nombres y etiquetas (las formas vienen del sprite)
+            lakes={lagos.map((l) => l.id)} // Lagos
+            viewBox={VIEWBOX_MAPA} // Lienzo
+          />
           <ul className="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(190px,1fr))] gap-x-6 gap-y-0.5 p-0">
             {/* Lista de territorios publicados (misma información que el mapa, en texto) */}
             {territories.map((ter) => (
