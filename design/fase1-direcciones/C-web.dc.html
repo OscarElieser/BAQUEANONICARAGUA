@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>C · Cocibolca — planificador web</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&amp;family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E4ECEA}
+a{color:#0F5C6B}a:hover{color:#08313A}
+a:focus-visible,button:focus-visible,textarea:focus-visible{outline:3px solid #F2A33A;outline-offset:3px}
+</style>
+</helmet>
+<div style="min-height: 900px; font-family: 'Atkinson Hyperlegible', sans-serif; color: #08313A; background: #E4ECEA">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 26px 48px 0; box-sizing: border-box">
+    <header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+      <a href="#" style="font-family: 'Gloock', serif; font-size: 26px; text-decoration: none; color: #08313A">[Marca]</a>
+      <nav aria-label="Experiencias" style="display: flex; flex-wrap: wrap; gap: 26px; font-size: 17px">
+        <a href="#" style="text-decoration: none">Descubrir</a>
+        <a href="#" aria-current="page" style="text-decoration: none; font-weight: 700; color: #08313A">Mi aventura</a>
+        <a href="#" style="text-decoration: none">Comunidad</a>
+      </nav>
+      <a href="#" style="font-size: 17px; font-weight: 700; text-decoration: none">Iniciar sesión</a>
+    </header>
+
+    <section style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-end; padding: 72px 0 56px">
+      <h1 style="flex: 1 1 460px; margin: 0; font-family: 'Gloock', serif; font-weight: 400; font-size: clamp(52px, 6.6vw, 92px); line-height: 0.98; letter-spacing: -0.01em">Planea tu viaje sin adivinar</h1>
+      <p style="flex: 1 1 340px; max-width: 46ch; margin: 0; font-size: 19px; line-height: 1.6; color: #234F58">Las rutas salen de un proveedor de mapas y cada tarifa trae su fecha. Cuando algo no está confirmado, el plan te lo dice y te conecta con quien puede cotizarlo.</p>
+    </section>
+  </div>
+
+  <div style="background: #0F5C6B; color: #EAF3F2; border-top: 6px solid #0B4A57">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 40px 48px 56px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 40px">
+      <form style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+        <label for="viaje-c" style="font-size: 19px; font-weight: 700">Cuéntale tu viaje al asistente</label>
+        <textarea id="viaje-c" rows="5" style="width: 100%; box-sizing: border-box; border: 0; border-radius: 6px; padding: 16px; font: inherit; font-size: 17px; line-height: 1.5; background: #EAF3F2; color: #08313A; resize: vertical">Vamos cinco días, somos cuatro, tenemos 600 dólares y queremos playa, buena comida y conocer pequeños negocios.</textarea>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+          <button type="submit" style="height: 52px; padding: 0 26px; border: 0; border-radius: 6px; background: #F2A33A; color: #08313A; font: inherit; font-size: 17px; font-weight: 700; cursor: pointer">Armar mi plan</button>
+          <a href="#" style="color: #EAF3F2; font-size: 16px">Prefiero armarlo yo</a>
+        </div>
+      </form>
+
+      <section aria-labelledby="dia-uno" style="flex: 1 1 460px; min-width: 0">
+        <h2 id="dia-uno" style="margin: 0 0 14px; font-family: 'Gloock', serif; font-weight: 400; font-size: 30px">Así se ve un día del plan</h2>
+        <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column">
+          <li style="display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-top: 1px solid #3C7E8B">
+            <span style="font-size: 15px; color: #B7D3D3">Mañana</span>
+            <div><strong style="font-size: 18px">Granada</strong><p style="margin: 4px 0 0; font-size: 15px; color: #CFE3E2">Paseo libre. Sin costo de entrada registrado.</p></div>
+          </li>
+          <li style="display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-top: 1px solid #3C7E8B">
+            <span style="font-size: 15px; color: #B7D3D3">Traslado</span>
+            <div><strong style="font-size: 18px">Hacia la costa de Rivas</strong><p style="margin: 4px 0 0; font-size: 15px; color: #CFE3E2">Tiempo y distancia: se calculan con el proveedor de rutas al guardar el plan.</p></div>
+          </li>
+          <li style="display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-top: 1px solid #3C7E8B">
+            <span style="font-size: 15px; color: #B7D3D3">Noche</span>
+            <div><strong style="font-size: 18px">Hospedaje familiar</strong><p style="margin: 4px 0 0; font-size: 15px; color: #F6C981">Costo por cotizar con el prestador.</p></div>
+          </li>
+        </ol>
+      </section>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

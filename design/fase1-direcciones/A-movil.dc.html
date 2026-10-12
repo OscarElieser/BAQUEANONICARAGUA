@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>A · Ficha de destino en Android</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&amp;family=Figtree:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#F2EFE5}a:hover{color:#E4B063}
+a:focus-visible,button:focus-visible{outline:2px solid #E4B063;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #0D5448; color: #F2EFE5; font-family: 'Figtree', sans-serif; display: flex; flex-direction: column; overflow: hidden">
+
+  <div style="position: relative; height: 250px; flex-shrink: 0; background: #0A4339">
+    <svg viewBox="0 0 390 250" style="position: absolute; inset: 0; width: 100%; height: 100%" aria-hidden="true">
+      <g fill="none" stroke="#E4B063" stroke-width="1.2">
+        <ellipse cx="210" cy="150" rx="190" ry="110" opacity="0.15"></ellipse>
+        <ellipse cx="210" cy="150" rx="150" ry="86" opacity="0.25"></ellipse>
+        <ellipse cx="210" cy="152" rx="110" ry="62" opacity="0.4"></ellipse>
+        <ellipse cx="210" cy="154" rx="72" ry="40" opacity="0.6"></ellipse>
+      </g>
+      <ellipse cx="210" cy="156" rx="44" ry="24" fill="#2B8C8A" opacity="0.9"></ellipse>
+    </svg>
+    <div style="position: relative; display: flex; justify-content: space-between; padding: 16px">
+      <button aria-label="Volver" style="width: 44px; height: 44px; border-radius: 999px; border: 0; background: #0D5448; color: #F2EFE5; display: flex; align-items: center; justify-content: center; cursor: pointer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>
+      </button>
+      <button aria-label="Guardar en favoritos" style="width: 44px; height: 44px; border-radius: 999px; border: 0; background: #0D5448; color: #F2EFE5; display: flex; align-items: center; justify-content: center; cursor: pointer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <div style="flex: 1; overflow: hidden; padding: 20px 20px 0; display: flex; flex-direction: column; gap: 18px">
+    <div>
+      <h1 style="font-family: 'Young Serif', serif; font-weight: 400; font-size: 34px; line-height: 1.05; margin: 0">Laguna de Apoyo</h1>
+      <p style="margin: 8px 0 0; font-size: 15px; color: #C9D8D0">Entre Masaya y Granada</p>
+    </div>
+
+    <section aria-labelledby="comprobado" style="background: #0A4339; border-radius: 18px; padding: 16px 16px 6px">
+      <h2 id="comprobado" style="margin: 0 0 8px; font-size: 16px; font-weight: 600">Qué está comprobado</h2>
+      <ul style="list-style: none; margin: 0; padding: 0">
+        <li style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid #1F6355; font-size: 15px">
+          <span>Ubicación</span><span style="color: #E4B063">Aproximada</span>
+        </li>
+        <li style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid #1F6355; font-size: 15px">
+          <span>Horarios</span><span style="color: #C9D8D0">Sin confirmar</span>
+        </li>
+        <li style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid #1F6355; font-size: 15px">
+          <span>Tarifas</span><span style="color: #C9D8D0">Consulta al prestador</span>
+        </li>
+        <li style="display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid #1F6355; font-size: 15px">
+          <span>Fuente</span><a href="#" style="color: #F2EFE5">Ver fuente</a>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="reciben">
+      <h2 id="reciben" style="margin: 0 0 6px; font-size: 16px; font-weight: 600">Quién te recibe</h2>
+      <p style="margin: 0 0 12px; font-size: 15px; line-height: 1.5; color: #C9D8D0">Aún no hay emprendimientos registrados aquí. Si tienes un negocio en la zona, publícalo gratis.</p>
+      <a href="#" style="display: inline-flex; align-items: center; height: 48px; padding: 0 22px; border-radius: 999px; background: #E4B063; color: #071C1B; font-weight: 600; text-decoration: none; font-size: 15px">Registrar mi negocio</a>
+    </section>
+  </div>
+
+  <nav aria-label="Principal" style="flex-shrink: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid #1F6355; background: #0A4339; padding: 6px 4px 10px">
+    <a href="#" aria-current="page" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 0; text-decoration: none; font-size: 12px; color: #E4B063">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M15.5 8.5l-2 5-5 2 2-5z"></path></svg>Descubrir</a>
+    <a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 0; text-decoration: none; font-size: 12px">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 19l5-14 6 10 5-6"></path></svg>Mi aventura</a>
+    <a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 0; text-decoration: none; font-size: 12px">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3"></circle><circle cx="17" cy="9" r="2.5"></circle><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2 1-4 3-4s3 2 3 4"></path></svg>Comunidad</a>
+    <a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 0; text-decoration: none; font-size: 12px">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"></path></svg>Perfil</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

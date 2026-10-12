@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>B · Hamaca y añil — inicio web</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#22306B}a:hover{color:#C23B22}
+a:focus-visible,button:focus-visible{outline:3px solid #E9B84A;outline-offset:3px}
+</style>
+</helmet>
+<div style="min-height: 900px; background: #FFFFFF; color: #22306B; font-family: 'Archivo', sans-serif">
+  <div aria-hidden="true" style="height: 22px; background: repeating-linear-gradient(90deg, #22306B 0 46px, #E9B84A 46px 58px, #C23B22 58px 104px, #FFFFFF 104px 110px, #4A2C1E 110px 140px, #E9B84A 140px 150px, #2E7D6B 150px 196px, #FFFFFF 196px 202px)"></div>
+
+  <div style="max-width: 1280px; margin: 0 auto; padding: 24px 48px 48px; box-sizing: border-box">
+    <header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+      <a href="#" style="font-size: 22px; font-weight: 900; font-stretch: 125%; text-decoration: none">[Marca]</a>
+      <nav aria-label="Experiencias" style="display: flex; flex-wrap: wrap; gap: 28px; font-size: 16px; font-weight: 500">
+        <a href="#" style="text-decoration: none">Descubrir</a>
+        <a href="#" style="text-decoration: none">Mi aventura</a>
+        <a href="#" aria-current="page" style="text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 8px; text-decoration-color: #C23B22">Comunidad</a>
+      </nav>
+      <a href="#" style="font-size: 16px; font-weight: 600; text-decoration: none">Iniciar sesión</a>
+    </header>
+
+    <section style="padding: 64px 0 40px">
+      <h1 style="margin: 0; font-size: clamp(48px, 7.4vw, 104px); line-height: 0.92; font-weight: 850; font-stretch: 125%; letter-spacing: -0.02em; max-width: 12ch">Detrás de cada viaje hay alguien con nombre</h1>
+      <div style="display: flex; flex-wrap: wrap; gap: 32px 64px; align-items: flex-end; margin-top: 36px">
+        <p style="margin: 0; flex: 1 1 380px; max-width: 52ch; font-size: 20px; line-height: 1.5; color: #3A456F">La Vitrina de Nuestra Gente da visibilidad gratuita a comedores, guías, artesanos y fincas de todo el país. Escríbeles directo, sin intermediarios ni comisiones.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px">
+          <a href="#" style="display: inline-flex; align-items: center; height: 56px; padding: 0 28px; background: #22306B; color: #FFFFFF; font-weight: 700; font-size: 17px; text-decoration: none">Conocer a la gente</a>
+          <a href="#" style="display: inline-flex; align-items: center; height: 56px; padding: 0 28px; border: 2px solid #22306B; font-weight: 700; font-size: 17px; text-decoration: none">Publicar mi negocio</a>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="sellos" style="border-top: 3px solid #22306B; padding-top: 28px">
+      <h2 id="sellos" style="margin: 0 0 22px; font-size: 26px; font-weight: 800; font-stretch: 110%">Sabes qué comprobamos de cada perfil</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px">
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <div aria-hidden="true" style="height: 10px; background: repeating-linear-gradient(90deg, #E9B84A 0 18px, #FFFFFF 18px 22px)"></div>
+          <h3 style="margin: 0; font-size: 20px; font-weight: 700">Información comunitaria</h3>
+          <p style="margin: 0; font-size: 16px; line-height: 1.55; color: #3A456F">Un dato aportado por la comunidad o un editor, con su fuente. El negocio todavía no lo administra.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <div aria-hidden="true" style="height: 10px; background: repeating-linear-gradient(90deg, #C23B22 0 30px, #FFFFFF 30px 34px)"></div>
+          <h3 style="margin: 0; font-size: 20px; font-weight: 700">Perfil reclamado</h3>
+          <p style="margin: 0; font-size: 16px; line-height: 1.55; color: #3A456F">La persona dueña lo administra y respondió a la revisión. Ella actualiza fotos, horarios y tarifas.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <div aria-hidden="true" style="height: 10px; background: #22306B"></div>
+          <h3 style="margin: 0; font-size: 20px; font-weight: 700">Negocio verificado</h3>
+          <p style="margin: 0; font-size: 16px; line-height: 1.55; color: #3A456F">Revisamos su identidad y ubicación, y en servicios de riesgo, sus permisos. La ficha dice exactamente qué se comprobó.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

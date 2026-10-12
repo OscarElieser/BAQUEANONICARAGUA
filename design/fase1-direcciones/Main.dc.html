@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>A · Curvas de nivel — inicio web</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&amp;family=Figtree:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0D5448}
+a{color:#F2EFE5}a:hover{color:#E4B063}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #E4B063;outline-offset:3px}
+</style>
+</helmet>
+<div style="min-height: 900px; background: #0D5448; color: #F2EFE5; font-family: 'Figtree', sans-serif; overflow: hidden">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 28px 48px 0; box-sizing: border-box">
+
+    <header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px">
+      <a href="#" style="font-family: 'Young Serif', serif; font-size: 24px; text-decoration: none">[Marca]</a>
+      <nav aria-label="Experiencias" style="display: flex; gap: 4px; background: #0A4339; border-radius: 999px; padding: 4px">
+        <a href="#" aria-current="page" style="padding: 10px 20px; border-radius: 999px; background: #F2EFE5; color: #0D5448; text-decoration: none; font-weight: 600; font-size: 15px">Descubrir</a>
+        <a href="#" style="padding: 10px 20px; border-radius: 999px; text-decoration: none; font-weight: 500; font-size: 15px">Mi aventura</a>
+        <a href="#" style="padding: 10px 20px; border-radius: 999px; text-decoration: none; font-weight: 500; font-size: 15px">Comunidad</a>
+      </nav>
+      <div style="display: flex; gap: 16px; align-items: center">
+        <a href="#" style="font-size: 15px; text-decoration: none">Español</a>
+        <a href="#" style="font-size: 15px; font-weight: 600; text-decoration: none; padding: 10px 18px; border: 1px solid #E4B063; border-radius: 999px">Iniciar sesión</a>
+      </div>
+    </header>
+
+    <section style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; padding: 40px 0 8px">
+      <div style="flex: 1 1 420px; min-width: 0; max-width: 520px">
+        <h1 style="font-family: 'Young Serif', serif; font-weight: 400; font-size: 76px; line-height: 0.98; letter-spacing: -0.01em; margin: 0">Nicaragua, curva por curva</h1>
+        <p style="font-size: 19px; line-height: 1.55; margin: 24px 0 0; color: #D9E3DC; max-width: 34ch">Recorre los 17 territorios del país por su relieve: volcanes, lagunas, comunidades y la gente que te recibe en cada uno.</p>
+        <form style="margin-top: 32px; display: flex; gap: 8px; flex-wrap: wrap" role="search">
+          <label for="buscar-a" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Buscar en el mapa</label>
+          <input id="buscar-a" type="search" placeholder="Un volcán, un pueblo, un plato…" style="flex: 1 1 240px; min-width: 0; height: 52px; border-radius: 999px; border: 1px solid #3E7A6E; background: #0A4339; color: #F2EFE5; padding: 0 22px; font: inherit; font-size: 16px">
+          <button type="submit" style="height: 52px; padding: 0 26px; border: 0; border-radius: 999px; background: #E4B063; color: #071C1B; font: inherit; font-weight: 600; font-size: 16px; cursor: pointer">Explorar el mapa</button>
+        </form>
+      </div>
+
+      <figure style="flex: 1 1 520px; min-width: 0; margin: 0; position: relative">
+        <svg viewBox="0 0 640 480" style="width: 100%; height: auto; display: block" role="img" aria-label="Curvas de nivel de los dos volcanes de la isla de Ometepe">
+          <g fill="none" stroke="#E4B063" stroke-width="1.4">
+            <ellipse cx="250" cy="250" rx="230" ry="170" opacity="0.18"></ellipse>
+            <ellipse cx="248" cy="246" rx="196" ry="144" opacity="0.25"></ellipse>
+            <ellipse cx="245" cy="240" rx="160" ry="118" opacity="0.35"></ellipse>
+            <ellipse cx="242" cy="234" rx="124" ry="92" opacity="0.45"></ellipse>
+            <ellipse cx="240" cy="228" rx="90" ry="66" opacity="0.6"></ellipse>
+            <ellipse cx="238" cy="222" rx="56" ry="42" opacity="0.75"></ellipse>
+            <ellipse cx="236" cy="218" rx="24" ry="18" opacity="0.95" stroke-width="2"></ellipse>
+            <ellipse cx="470" cy="320" rx="150" ry="112" opacity="0.18"></ellipse>
+            <ellipse cx="472" cy="316" rx="118" ry="88" opacity="0.28"></ellipse>
+            <ellipse cx="474" cy="312" rx="86" ry="64" opacity="0.42"></ellipse>
+            <ellipse cx="476" cy="308" rx="54" ry="40" opacity="0.6"></ellipse>
+            <ellipse cx="478" cy="305" rx="24" ry="18" opacity="0.9" stroke-width="2"></ellipse>
+          </g>
+          <circle cx="236" cy="218" r="5" fill="#C65F3E"></circle>
+          <circle cx="478" cy="305" r="5" fill="#E4B063"></circle>
+        </svg>
+        <figcaption style="position: absolute; left: 6%; bottom: 4%; display: flex; flex-direction: column; gap: 6px">
+          <a href="#" style="font-family: 'Young Serif', serif; font-size: 26px; text-decoration: none">Isla de Ometepe</a>
+          <span style="font-size: 14px; color: #B9CBC2">En Rivas. Ficha en verificación.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section aria-labelledby="territorios-a" style="border-top: 1px solid #2F6F62; padding: 28px 0 40px">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 18px">
+        <h2 id="territorios-a" style="font-family: 'Young Serif', serif; font-weight: 400; font-size: 28px; margin: 0">Elige un territorio</h2>
+        <p style="margin: 0; font-size: 14px; color: #B9CBC2">Cada ficha indica su fuente y la fecha en que se comprobó.</p>
+      </div>
+      <ul style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 2px 24px">
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Boaco</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Carazo</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Chinandega</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Chontales</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Estelí</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Granada</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Jinotega</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">León</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Madriz</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Managua</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Masaya</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Matagalpa</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Nueva Segovia</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Río San Juan</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Rivas</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Costa Caribe Norte</a></li>
+        <li><a href="#" style="display: block; padding: 10px 0; font-size: 17px; text-decoration: none; border-bottom: 1px solid #1F6355">Costa Caribe Sur</a></li>
+      </ul>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

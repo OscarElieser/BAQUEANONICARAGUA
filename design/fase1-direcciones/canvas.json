@@ -1,0 +1,22 @@
+{
+  "v": 3,
+  "createdOnFiles": {"v": 1, "at": "2026-10-12T04:40:00Z"},
+  "title": "Territorios vivos — tres direcciones",
+  "launch": {"view": "canvas"},
+  "pages": [],
+  "boards": {
+    "Main.dc.html": {"x": 0, "y": 0, "w": 1280, "h": 900, "title": "A · Curvas de nivel — web", "expand": "fill"},
+    "A-movil.dc.html": {"x": 1360, "y": 0, "w": 390, "h": 844, "title": "A · Curvas de nivel — Android"},
+    "B-web.dc.html": {"x": 0, "y": 1260, "w": 1280, "h": 900, "title": "B · Hamaca y añil — web", "expand": "fill"},
+    "B-movil.dc.html": {"x": 1360, "y": 1260, "w": 390, "h": 844, "title": "B · Hamaca y añil — Android"},
+    "C-web.dc.html": {"x": 0, "y": 2520, "w": 1280, "h": 900, "title": "C · Cocibolca — web", "expand": "fill"},
+    "C-movil.dc.html": {"x": 1360, "y": 2520, "w": 390, "h": 844, "title": "C · Cocibolca — Android"}
+  },
+  "order": ["Main.dc.html", "A-movil.dc.html", "B-web.dc.html", "B-movil.dc.html", "C-web.dc.html", "C-movil.dc.html"],
+  "notes": {
+    "tA": {"x": 0, "y": -280, "text": "A · Curvas de nivel", "kind": "title1", "maxW": 1750},
+    "tB": {"x": 0, "y": 980, "text": "B · Hamaca y añil", "kind": "title1", "maxW": 1750},
+    "tC": {"x": 0, "y": 2240, "text": "C · Cocibolca", "kind": "title1", "maxW": 1750}
+  },
+  "designSystems": []
+}

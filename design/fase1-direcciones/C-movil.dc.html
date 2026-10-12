@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>C · Asistente de viaje en Android</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&amp;family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0F5C6B}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #F2A33A;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #E4ECEA; color: #08313A; font-family: 'Atkinson Hyperlegible', sans-serif; display: flex; flex-direction: column; overflow: hidden">
+
+  <header style="flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 12px 12px 10px; border-bottom: 1px solid #C5D5D2">
+    <button aria-label="Volver" style="width: 44px; height: 44px; border: 0; border-radius: 6px; background: transparent; color: #08313A; display: flex; align-items: center; justify-content: center; cursor: pointer">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>
+    </button>
+    <h1 style="margin: 0; font-family: 'Gloock', serif; font-weight: 400; font-size: 24px">Tu plan</h1>
+  </header>
+
+  <div style="flex: 1; overflow: hidden; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+    <p style="align-self: flex-end; max-width: 82%; margin: 0; padding: 12px 14px; border-radius: 14px 14px 4px 14px; background: #0F5C6B; color: #EAF3F2; font-size: 16px; line-height: 1.45">Vamos cinco días, somos cuatro, tenemos 600 dólares y queremos playa, buena comida y conocer pequeños negocios.</p>
+
+    <div style="max-width: 92%; padding: 14px; border-radius: 14px 14px 14px 4px; background: #FFFFFF; font-size: 16px; line-height: 1.45; display: flex; flex-direction: column; gap: 10px">
+      <p style="margin: 0">Esto es lo que entendí:</p>
+      <ul style="margin: 0; padding-left: 20px">
+        <li>4 personas, 5 días</li>
+        <li>600 USD en total, unos 150 por persona</li>
+        <li>Playa, comida local y emprendimientos pequeños</li>
+      </ul>
+      <p style="margin: 0">Para armar rutas reales me falta saber:</p>
+      <ul style="margin: 0; padding-left: 20px">
+        <li>Fechas del viaje</li>
+        <li>Si tendrán vehículo o usarán transporte público</li>
+      </ul>
+      <p style="margin: 0; font-size: 14px; color: #4D6C72">Solo uso tarifas verificadas. Lo que no tenga precio confirmado aparecerá como “por cotizar”.</p>
+    </div>
+
+    <div role="group" aria-label="Respuestas rápidas" style="display: flex; flex-wrap: wrap; gap: 8px">
+      <button style="height: 44px; padding: 0 16px; border: 1.5px solid #0F5C6B; border-radius: 999px; background: transparent; color: #0F5C6B; font: inherit; font-size: 15px; font-weight: 700; cursor: pointer">Elegir fechas</button>
+      <button style="height: 44px; padding: 0 16px; border: 1.5px solid #0F5C6B; border-radius: 999px; background: transparent; color: #0F5C6B; font: inherit; font-size: 15px; font-weight: 700; cursor: pointer">Sin vehículo</button>
+      <button style="height: 44px; padding: 0 16px; border: 1.5px solid #0F5C6B; border-radius: 999px; background: transparent; color: #0F5C6B; font: inherit; font-size: 15px; font-weight: 700; cursor: pointer">Alquilaremos carro</button>
+    </div>
+  </div>
+
+  <form style="flex-shrink: 0; display: flex; gap: 8px; padding: 10px 12px 16px; border-top: 1px solid #C5D5D2; background: #E4ECEA">
+    <label for="msg-c" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Escribe al asistente</label>
+    <input id="msg-c" type="text" placeholder="Escribe aquí" style="flex: 1; min-width: 0; height: 48px; border: 1.5px solid #9FB9B6; border-radius: 999px; padding: 0 18px; font: inherit; font-size: 16px; background: #FFFFFF; color: #08313A">
+    <button type="submit" aria-label="Enviar" style="width: 48px; height: 48px; border: 0; border-radius: 999px; background: #F2A33A; color: #08313A; display: flex; align-items: center; justify-content: center; cursor: pointer">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+    </button>
+  </form>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
