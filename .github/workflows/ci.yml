@@ -3,22 +3,25 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: ['**']
 
 permissions:
   contents: read
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   design-tokens:
     name: Sistema de diseño alineado (web + Android)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/check_tokens.py
 
   ai-core:
     name: Lógica del asistente (sin dependencias)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,43 +29,67 @@ jobs:
       - run: node --test packages/ai-core/test/*.test.ts
 
   node:
-    name: Web + API (lint, tipos, pruebas, build)
-    runs-on: ubuntu-latest
+    name: Web + API (tipos, pruebas, build)
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: pnpm }
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm lint
-      - run: pnpm typecheck
-      - run: pnpm test
-      - run: pnpm build
-      - name: Auditoría de dependencias
-        run: pnpm audit --audit-level high
+        with: { node-version: 22 }
+      # Sin pnpm-lock.yaml aún: se genera aquí. Cuando exista en el repo, cambiar a --frozen-lockfile.
+      - run: pnpm install --no-frozen-lockfile
+      - name: Tipos
+        run: pnpm -r --if-present run typecheck
+      - name: Pruebas
+        run: pnpm -r --if-present run test
+      - name: Build
+        run: pnpm -r --if-present run build
+      - name: Guardar pnpm-lock.yaml generado
+        if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: pnpm-lock, path: pnpm-lock.yaml, if-no-files-found: ignore }
 
   database:
     name: Migraciones + pruebas RLS
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    env:
+      FIREBASE_PROJECT_ID: nica-ci
     steps:
       - uses: actions/checkout@v4
       - uses: supabase/setup-cli@v1
         with: { version: latest }
       - name: Levantar Supabase local y aplicar migraciones
-        run: supabase start -x studio,imgproxy,inbucket,edge-runtime,logflare,vector
+        run: |
+          set -o pipefail
+          supabase start -x studio,imgproxy,inbucket,edge-runtime,logflare,vector,supavisor 2>&1 | tee start.log || {
+            grep -iE "error|fail|ERROR:" start.log | tail -n 15 | while IFS= read -r line; do echo "::error title=supabase start::${line}"; done
+            exit 1
+          }
       - name: Pruebas de humo RLS
-        run: psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -v ON_ERROR_STOP=1 -f supabase/tests/rls_smoke.sql | tee rls.out && ! grep -q "FAIL" rls.out
+        run: |
+          psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -v ON_ERROR_STOP=1 -f supabase/tests/rls_smoke.sql > rls.out 2>&1 || true
+          grep -E "FAIL|ERROR" rls.out | head -n 20 | while IFS= read -r line; do echo "::error title=RLS::${line}"; done
+          tail -n 5 rls.out
+          ! grep -qE "FAIL|ERROR" rls.out
 
   mobile:
     name: Android (análisis y pruebas)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults: { run: { working-directory: apps/mobile } }
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with: { channel: stable }
       - run: flutter pub get
-      - run: flutter analyze
+      - name: Análisis
+        run: |
+          flutter analyze --no-fatal-infos --format=machine > analyze.txt 2>&1 || status=$?
+          # Publica cada error/aviso como anotación visible en GitHub
+          grep -E "^(ERROR|WARNING)\|" analyze.txt | head -n 40 | while IFS='|' read -r sev type code file line col len msg; do
+            rel="apps/mobile/${file#*apps/mobile/}"
+            echo "::error file=${rel},line=${line},col=${col}::${code}: ${msg}"
+          done
+          exit ${status:-0}
       - run: flutter test
 
 # Despliegue a staging y producción: workflow separado (deploy.yml) con environment

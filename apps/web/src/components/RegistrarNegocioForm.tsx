@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { firebaseAuth, isFirebaseConfigured } from '@/lib/firebase';
 import type { Territory } from '@/lib/territories';
 
@@ -30,7 +30,7 @@ export function RegistrarNegocioForm({ locale, territories }: { locale: string; 
     );
   }
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     const chosen = form.getAll('categories').map(String);

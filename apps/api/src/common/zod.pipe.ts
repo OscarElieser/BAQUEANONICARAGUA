@@ -6,11 +6,12 @@ import {
   NotFoundException,
   PipeTransform,
 } from '@nestjs/common';
-import type { ZodSchema } from 'zod';
+import type { ZodType, ZodTypeDef } from 'zod';
 
 /** Valida y normaliza entradas con zod; responde 400 con mensajes legibles. */
 export class ZodPipe<T> implements PipeTransform<unknown, T> {
-  constructor(private readonly schema: ZodSchema<T>) {}
+  // Entrada y salida pueden diferir (valores por defecto, coerción)
+  constructor(private readonly schema: ZodType<T, ZodTypeDef, unknown>) {}
 
   transform(value: unknown): T {
     const parsed = this.schema.safeParse(value);

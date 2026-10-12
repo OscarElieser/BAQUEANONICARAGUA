@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { api } from '@/lib/api';
 import { isFirebaseConfigured } from '@/lib/firebase';
@@ -29,7 +29,7 @@ export function EscribirNegocio({ businessId, businessName, locale }: { business
     );
   }
 
-  async function send(e: React.FormEvent<HTMLFormElement>) {
+  async function send(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const body = String(new FormData(e.currentTarget).get('body') ?? '').trim();
     if (body.length < 2) return setState({ kind: 'error', msg: 'Escribe tu mensaje.' });

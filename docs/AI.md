@@ -31,4 +31,4 @@ La IA solo puede `propose_correction` → `ai_correction_proposals` (estado `pen
 - Embeddings e indexado RAG.
 - Ejecución de las suites de evaluación con el modelo.
 
-`POST /v1/assistant/understand` y la página "Mi aventura" ya funcionan sin proveedor: interpretan el viaje y preguntan lo que falta.
+La página "Mi aventura" ya funciona sin proveedor: interpreta el viaje en el navegador y pregunta lo que falta. La API expondrá la misma lógica cuando `@nica/ai-core` tenga paso de compilación para Node CommonJS.

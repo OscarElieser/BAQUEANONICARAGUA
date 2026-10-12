@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { api } from '@/lib/api';
@@ -20,7 +20,7 @@ export function Bandeja({ locale, initial }: { locale: string; initial?: string 
   const [messages, setMessages] = useState<Message[]>([]);
   const [me, setMe] = useState<string>();
   const [error, setError] = useState<string>();
-  const db = useRef<SupabaseClient>();
+  const db = useRef<SupabaseClient | null>(null);
 
   useEffect(() => {
     const auth = firebaseAuth();
@@ -67,7 +67,7 @@ export function Bandeja({ locale, initial }: { locale: string; initial?: string 
   if (user === undefined) return <p className="text-ink-muted">Cargando…</p>;
   if (user === null) return <p>Inicia sesión para ver tus mensajes. <a href={`/${locale}/cuenta`}>Iniciar sesión</a></p>;
 
-  async function send(e: React.FormEvent<HTMLFormElement>) {
+  async function send(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!active) return;
     const form = e.currentTarget;

@@ -56,10 +56,10 @@ export function MapaExplorer({ locale }: { locale: string }) {
             cluster: true,
             clusterRadius: 44,
             data: {
-              type: 'FeatureCollection',
+              type: 'FeatureCollection' as const,
               features: points.map((p) => ({
-                type: 'Feature',
-                geometry: { type: 'Point', coordinates: [p.lng, p.lat] },
+                type: 'Feature' as const,
+                geometry: { type: 'Point' as const, coordinates: [p.lng, p.lat] },
                 properties: { name: p.name, href: `/${locale}/${p.kind === 'business' ? 'negocios' : 'destinos'}/${p.slug}`, approx: p.location_precision !== 'exact' },
               })),
             },
@@ -75,7 +75,7 @@ export function MapaExplorer({ locale }: { locale: string }) {
           map!.on('click', 'puntos', (e) => {
             const f = e.features?.[0];
             if (!f) return;
-            const { name, href, approx } = f.properties as { name: string; href: string; approx: boolean };
+            const { name, href, approx } = f.properties as unknown as { name: string; href: string; approx: boolean };
             const el = document.createElement('div');
             const a = document.createElement('a');
             a.href = href; a.textContent = name; a.style.fontWeight = '700';
