@@ -341,5 +341,16 @@
   "tmap.note": "Ungefähre Grenzen zur Veranschaulichung (Natural Earth, gemeinfrei). Die amtlichen Grenzen veröffentlicht INETER.",
   "tmap.hint": "Fahre mit der Maus über ein Gebiet oder tippe darauf, um seinen Namen zu sehen.",
   "tmap.status_published": "Eintrag veröffentlicht",
-  "tmap.status_pending": "Wird geprüft"
+  "tmap.status_pending": "Wird geprüft",
+  "gallery.title": "Alle 17, eins nach dem anderen",
+  "gallery.intro": "Jedes Titelbild entsteht aus der echten Form seines Gebiets. Es sind Illustrationen, keine Fotos: Fotos folgen, sobald sie geprüft sind.",
+  "gallery.pause": "Umzug anhalten",
+  "gallery.play": "Umzug fortsetzen",
+  "zone.pacifico": "Vulkanischer Pazifik",
+  "zone.norte": "Bergiges Nord-Zentrum",
+  "zone.caribe": "Karibik und Río San Juan",
+  "gallery.label": "Umzug der Titelbilder der 17 Gebiete",
+  "relief.territory_aria": "{name} als 3D-Relief, aus der echten Form erstellt. Zum Drehen ziehen.",
+  "relief.territory_static": "Illustriertes Titelbild von {name}, aus der echten Form erstellt",
+  "relief.territory_note": "Echte Form; Höhen nur zur Veranschaulichung, keine Topografie."
 }

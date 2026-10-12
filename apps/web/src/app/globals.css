@@ -15,6 +15,11 @@
   --band-maiz: #E9B84A;
   --band-verde: #2E7D6B;
   --band-marfil: #F2EFE5;
+  --zona-pacifico: #2A1612; /* Portadas del Pacífico volcánico (ceniza) */
+  --zona-norte: #0F3229; /* Portadas del Centro-norte (neblina de montaña) */
+  --musgo: #8DB89A; /* Curvas de las portadas del Centro-norte */
+  --caribe: #4FB8B0; /* Curvas de las portadas del Caribe y Río San Juan */
+  --barro: #9A4A2C; /* Barro de San Juan de Oriente: mundo de Cultura */
 
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
   --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
@@ -140,3 +145,30 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Tarjetas de territorio con inclinación 3D (sigue al cursor; con el dedo no se mueve) */
+.tarjeta-3d { --rx: 0deg; --ry: 0deg; --mx: 50%; --my: 30%; display: block; perspective: 800px; } /* Valores iniciales del giro y del brillo */
+.tarjeta-lamina { position: relative; display: block; overflow: hidden; border-radius: var(--radius-m); transform: rotateX(var(--rx)) rotateY(var(--ry)); transition: transform 380ms cubic-bezier(.2,.7,.2,1), box-shadow 380ms ease-out; box-shadow: 0 1px 0 var(--line); } /* Lámina que gira */
+.tarjeta-3d:hover .tarjeta-lamina, a.tarjeta-3d:focus-visible .tarjeta-lamina { box-shadow: 0 18px 36px -18px var(--ground-deep), 0 0 0 2px var(--oro); } /* Al apuntarla: se eleva con borde dorado */
+.tarjeta-brillo { position: absolute; inset: 0; background: radial-gradient(circle at var(--mx) var(--my), color-mix(in srgb, var(--band-marfil) 22%, transparent), transparent 55%); opacity: 0; transition: opacity 260ms ease-out; pointer-events: none; } /* Reflejo de luz */
+.tarjeta-3d:hover .tarjeta-brillo { opacity: 1; } /* El reflejo aparece al apuntar */
+a.tarjeta-3d:focus-visible { outline: none; } /* El foco se dibuja en la lámina (borde dorado) */
+a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); outline-offset: 3px; } /* Foco de teclado visible */
+
+/* Desfile de portadas: avanza despacio y sin fin; se detiene con el cursor, el teclado o el botón */
+.desfile { overflow: hidden; mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent); padding-block: 12px; } /* Bordes que se desvanecen */
+.desfile-carril { display: flex; width: max-content; animation: desfile 110s linear infinite; } /* Las dos copias, una tras otra */
+.desfile-lista { display: flex; gap: 24px; margin: 0; padding: 0 12px; list-style: none; } /* Fila de tarjetas */
+.desfile:hover .desfile-carril, .desfile:focus-within .desfile-carril, .desfile[data-pausa="true"] .desfile-carril { animation-play-state: paused; } /* Pausa */
+@keyframes desfile { from { transform: translateX(0); } to { transform: translateX(-50%); } } /* Avanza exactamente una copia y vuelve a empezar sin salto */
+@media (prefers-reduced-motion: reduce) {
+  .desfile { overflow-x: auto; mask-image: none; } /* Sin movimiento: se desliza a mano */
+  .desfile-eco, .desfile-control { display: none; } /* Ni copia ni botón de pausa */
+  .tarjeta-lamina { transform: none; } /* Sin inclinación */
+}
+
+/* Portada de cada territorio: fondo de su zona y texto marfil en ambos temas */
+.heroe-territorio { --ink: #F2EFE5; --ink-muted: #C9D8D0; --focus: #E4B063; color: var(--ink); background: var(--zona-fondo); } /* Tinta propia: el fondo es oscuro en los dos temas */
+.zona-pacifico { --zona-fondo: var(--zona-pacifico); } /* Ceniza volcánica */
+.zona-norte { --zona-fondo: var(--zona-norte); } /* Neblina de montaña */
+.zona-caribe { --zona-fondo: var(--band-anil); } /* Añil caribeño */

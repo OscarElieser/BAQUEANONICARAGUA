@@ -18,6 +18,8 @@ def main() -> None:
     slugs = {t["slug"] for t in data["territories"]}  # Territorios presentes
     if len(slugs) != 17 or any(not t["d"] for t in data["territories"]):  # Deben ser los 17, todos con forma
         sys.exit("El mapa debe tener los 17 territorios con su forma")  # Error claro
+    if any(t.get("zone") not in {"pacifico", "norte", "caribe"} for t in data["territories"]):  # Cada territorio con su zona de paisaje
+        sys.exit("Cada territorio debe tener zona: pacifico, norte o caribe")  # Error claro
     if "source" not in data or "note" not in data:  # Fuente y aviso obligatorios
         sys.exit("El mapa debe citar su fuente y su aviso de límites aproximados")  # Error claro
     stale = []  # Copias desactualizadas

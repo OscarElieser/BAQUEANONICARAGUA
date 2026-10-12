@@ -341,5 +341,16 @@
   "tmap.note": "説明用のおおよその境界です（Natural Earth、パブリックドメイン）。公式の境界は INETER が公開しています。",
   "tmap.hint": "地域にカーソルを合わせるかタップすると名前が表示されます。",
   "tmap.status_published": "ページ公開済み",
-  "tmap.status_pending": "確認中"
+  "tmap.status_pending": "確認中",
+  "gallery.title": "17の地域をひとつずつ",
+  "gallery.intro": "各カバーはその地域の実際の形から描いています。写真ではなくイラストです。写真は確認後に掲載します。",
+  "gallery.pause": "パレードを一時停止",
+  "gallery.play": "パレードを再開",
+  "zone.pacifico": "火山の太平洋側",
+  "zone.norte": "山の中北部",
+  "zone.caribe": "カリブ海とリオ・サン・フアン",
+  "gallery.label": "17地域のカバーのパレード",
+  "relief.territory_aria": "実際の形から作った{name}の3D立体地図。ドラッグで回せます。",
+  "relief.territory_static": "実際の形から作った{name}のイラストカバー",
+  "relief.territory_note": "形は実際のもの。高さはイメージで、地形データではありません。"
 }

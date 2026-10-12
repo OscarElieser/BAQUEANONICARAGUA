@@ -341,5 +341,16 @@
   "tmap.note": "Confini approssimativi a scopo illustrativo (Natural Earth, pubblico dominio). Quelli ufficiali sono pubblicati dall'INETER.",
   "tmap.hint": "Passa il cursore o tocca un territorio per vederne il nome.",
   "tmap.status_published": "Scheda pubblicata",
-  "tmap.status_pending": "In verifica"
+  "tmap.status_pending": "In verifica",
+  "gallery.title": "Tutti e 17, uno alla volta",
+  "gallery.intro": "Ogni copertina nasce dalla forma reale del suo territorio. Sono illustrazioni, non foto: le foto arriveranno quando saranno verificate.",
+  "gallery.pause": "Metti in pausa la sfilata",
+  "gallery.play": "Riprendi la sfilata",
+  "zone.pacifico": "Pacifico vulcanico",
+  "zone.norte": "Centro-nord di montagna",
+  "zone.caribe": "Caraibi e Río San Juan",
+  "gallery.label": "Sfilata delle copertine dei 17 territori",
+  "relief.territory_aria": "{name} in rilievo 3D, costruito dalla sua forma reale. Trascina per ruotarlo.",
+  "relief.territory_static": "Copertina illustrata di {name}, costruita dalla sua forma reale",
+  "relief.territory_note": "Forma reale; altezze illustrative, non è topografia."
 }

@@ -341,5 +341,16 @@
   "tmap.note": "Approximate boundaries for illustration (Natural Earth, public domain). Official boundaries are published by INETER.",
   "tmap.hint": "Hover over or tap a territory to see its name.",
   "tmap.status_published": "Listing published",
-  "tmap.status_pending": "Being verified"
+  "tmap.status_pending": "Being verified",
+  "gallery.title": "All 17, one by one",
+  "gallery.intro": "Each cover is drawn from the real shape of its territory. They are illustrations, not photos: photos will come once they are verified.",
+  "gallery.pause": "Pause the parade",
+  "gallery.play": "Resume the parade",
+  "zone.pacifico": "Volcanic Pacific",
+  "zone.norte": "Mountain north-centre",
+  "zone.caribe": "Caribbean and Río San Juan",
+  "gallery.label": "Parade of covers of the 17 territories",
+  "relief.territory_aria": "{name} in 3D relief, built from its real shape. Drag to turn it.",
+  "relief.territory_static": "Illustrated cover of {name}, built from its real shape",
+  "relief.territory_note": "Real shape; heights are illustrative, not topography."
 }

@@ -341,5 +341,16 @@
   "tmap.note": "Límites aproximados para ilustrar (Natural Earth, dominio público). Los oficiales los publica INETER.",
   "tmap.hint": "Pasa el cursor o toca un territorio para ver su nombre.",
   "tmap.status_published": "Ficha publicada",
-  "tmap.status_pending": "En verificación"
+  "tmap.status_pending": "En verificación",
+  "gallery.title": "Los 17, uno por uno",
+  "gallery.intro": "Cada portada nace de la forma real de su territorio. Son ilustraciones, no fotos: las fotos llegarán cuando estén verificadas.",
+  "gallery.pause": "Pausar el desfile",
+  "gallery.play": "Reanudar el desfile",
+  "zone.pacifico": "Pacífico volcánico",
+  "zone.norte": "Centro-norte de montaña",
+  "zone.caribe": "Caribe y Río San Juan",
+  "gallery.label": "Desfile de portadas de los 17 territorios",
+  "relief.territory_aria": "{name} en relieve 3D, hecho con su forma real. Arrastra para girarlo.",
+  "relief.territory_static": "Portada ilustrada de {name}, hecha con su forma real",
+  "relief.territory_note": "Forma real; alturas ilustrativas, no es topografía."
 }

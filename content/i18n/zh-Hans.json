@@ -341,5 +341,16 @@
   "tmap.note": "示意用的大致边界（Natural Earth，公有领域）。官方边界由 INETER 发布。",
   "tmap.hint": "将鼠标悬停或点按某个地区即可查看名称。",
   "tmap.status_published": "条目已发布",
-  "tmap.status_pending": "核实中"
+  "tmap.status_pending": "核实中",
+  "gallery.title": "17 个地区，逐一呈现",
+  "gallery.intro": "每张封面都取自该地区的真实轮廓。它们是插画，不是照片：照片核实后才会上线。",
+  "gallery.pause": "暂停轮播",
+  "gallery.play": "继续轮播",
+  "zone.pacifico": "火山太平洋",
+  "zone.norte": "中北部山区",
+  "zone.caribe": "加勒比与圣胡安河",
+  "gallery.label": "17 个地区封面轮播",
+  "relief.territory_aria": "{name} 的 3D 浮雕，依据真实轮廓制作。拖动可旋转。",
+  "relief.territory_static": "{name} 的插画封面，依据真实轮廓制作",
+  "relief.territory_note": "轮廓真实；高度仅为示意，并非地形数据。"
 }

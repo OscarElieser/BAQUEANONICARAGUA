@@ -24,6 +24,13 @@ LAKES = {"Lago de Nicaragua": "cocibolca", "Lago de Managua": "xolotlan"}  # Lag
 WIDTH = 1000  # Ancho del dibujo en unidades SVG
 TOLERANCE = 0.004  # Simplificación en grados (unos 400 m): suficiente para un mapa ilustrado
 
+# Zona de paisaje de cada territorio (agrupación de diseño para colores y portadas, no una división oficial)
+ZONES = {
+    **{s: "pacifico" for s in ["chinandega", "leon", "managua", "masaya", "carazo", "granada", "rivas"]},  # Pacífico volcánico
+    **{s: "norte" for s in ["nueva-segovia", "madriz", "esteli", "jinotega", "matagalpa", "boaco", "chontales"]},  # Centro-norte de montaña
+    **{s: "caribe" for s in ["costa-caribe-norte", "costa-caribe-sur", "rio-san-juan"]},  # Caribe y Río San Juan
+}
+
 
 def rings(geom):
     """Anillos exteriores e interiores de un Polygon o MultiPolygon."""
@@ -125,10 +132,11 @@ def main():
 
     out = {
         "source": "Natural Earth 1:10m Admin 1 y Lakes (dominio público, naturalearthdata.com)",  # Fuente citada
+        "zones_note": "Las zonas (pacifico, norte, caribe) agrupan territorios por paisaje para el diseño; no son una división oficial.",  # Aclara que las zonas son de diseño
         "note": "Límites aproximados para ilustración; no son límites oficiales. Los oficiales los publica INETER.",  # Aviso honesto
         "viewBox": f"0 0 {WIDTH} {height}",  # Tamaño del dibujo
         "territories": sorted(
-            [{"iso": f["properties"]["iso_3166_2"], "slug": ISO[f["properties"]["iso_3166_2"]], "name": NAMES[ISO[f["properties"]["iso_3166_2"]]], "d": path(f["geometry"]), "label": label(f["geometry"])} for f in feats],
+            [{"iso": f["properties"]["iso_3166_2"], "slug": ISO[f["properties"]["iso_3166_2"]], "name": NAMES[ISO[f["properties"]["iso_3166_2"]]], "zone": ZONES[ISO[f["properties"]["iso_3166_2"]]], "d": path(f["geometry"]), "label": label(f["geometry"])} for f in feats],
             key=lambda t: t["slug"],
         ),  # Un camino por territorio
         "lakes": [{"id": LAKES[f["properties"]["name"]], "name": LAKE_NAMES[LAKES[f["properties"]["name"]]], "d": path(f["geometry"]), "label": xy(label_point(rings(f["geometry"]), []))} for f in lakes],  # Lagos

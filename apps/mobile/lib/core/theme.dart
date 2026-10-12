@@ -31,6 +31,11 @@ class TvColors extends ThemeExtension<TvColors> {
   static const bandMaiz = Color(0xFFE9B84A);
   static const bandVerde = Color(0xFF2E7D6B);
   static const bandMarfil = Color(0xFFF2EFE5);
+  static const zonaPacifico = Color(0xFF2A1612); // Portadas del Pacífico volcánico (ceniza)
+  static const zonaNorte = Color(0xFF0F3229); // Portadas del Centro-norte (neblina de montaña)
+  static const musgo = Color(0xFF8DB89A); // Curvas de las portadas del Centro-norte
+  static const caribe = Color(0xFF4FB8B0); // Curvas de las portadas del Caribe y Río San Juan
+  static const barro = Color(0xFF9A4A2C); // Barro de San Juan de Oriente: mundo de Cultura
 
   static const dark = TvColors(
     ground: Color(0xFF0D5448),

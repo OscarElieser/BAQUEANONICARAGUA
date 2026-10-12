@@ -341,5 +341,16 @@
   "tmap.note": "설명용 대략적인 경계입니다(Natural Earth, 퍼블릭 도메인). 공식 경계는 INETER가 발표합니다.",
   "tmap.hint": "지역에 마우스를 올리거나 누르면 이름이 보입니다.",
   "tmap.status_published": "항목 게시됨",
-  "tmap.status_pending": "확인 중"
+  "tmap.status_pending": "확인 중",
+  "gallery.title": "17곳을 하나씩",
+  "gallery.intro": "각 표지는 그 지역의 실제 모양에서 그렸습니다. 사진이 아닌 일러스트이며, 사진은 확인된 후에 올라옵니다.",
+  "gallery.pause": "행렬 일시정지",
+  "gallery.play": "행렬 다시 재생",
+  "zone.pacifico": "화산 태평양",
+  "zone.norte": "중북부 산지",
+  "zone.caribe": "카리브해와 리오산후안",
+  "gallery.label": "17개 지역 표지 행렬",
+  "relief.territory_aria": "실제 모양으로 만든 {name}의 3D 입체 지형. 끌어서 돌려 보세요.",
+  "relief.territory_static": "실제 모양으로 만든 {name}의 일러스트 표지",
+  "relief.territory_note": "실제 모양이며, 높이는 설명용으로 지형 자료가 아닙니다."
 }
