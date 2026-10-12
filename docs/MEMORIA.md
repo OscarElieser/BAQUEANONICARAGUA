@@ -118,6 +118,27 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
       - no declarar completo un módulo solo porque existan tablas o rutas.
     - Hecho: auditoría de la Fase 0 en `docs/AUDITORIA.md`, con una matriz de cinco niveles por módulo, seguridad, riesgos y las decisiones pendientes del dueño. La paleta nueva queda pendiente de decisión y no se aplicó.
 
+17. **Referencias visuales del dueño aplicadas (12 de octubre de 2026):**
+    - **Tokens de marca:** `marca-naranja #F65E01`, `marca-turquesa` (`#165D6F` en claro, `#7FC4D2` en oscuro), `marca-verde #4A7A5A`, `marca-nocturno #0D1B2A` y `marca-profundo #102A43`. Se agregaron sin reemplazar la paleta; reemplazarla queda pendiente de decisión del dueño.
+    - **Portada** (cartel de Guerrero y video de inmobiliaria):
+      - ventana pintada a brochazos con semilla fija (`lib/pincel.ts`, la misma en Android);
+      - tres escenas ilustradas por zona, con palabra gigante entre capas;
+      - eslogan en dos pesos (Archivo) y firma "Nicaragua" (Kaushan Script);
+      - barras para cambiar de escena;
+      - botones Explorar Nicaragua y Crear mi viaje.
+    - **Explorador a pantalla completa** (VoyageX, Meridian y video): la tarjeta crece hasta ser el fondo con View Transitions; contador 01/17 y riel de avance.
+    - **Galería en arco 3D** (referencia de tarjetas y video del carrusel): vista desde dentro de un cilindro, ligada al desplazamiento. Reemplaza al desfile automático.
+    - **Ops Center** (Stakent): tema nocturno, barra lateral por grupos y tarjetas con cifras reales, sin gráficas inventadas.
+    - **Inicio de sesión** (tarjeta de vidrio y video): arco de luz, pestañas, campos con icono, orbe de marca y tarjeta que se despliega. Solo correo y Google; Apple y teléfono no están configurados.
+    - **Cabecera** (video de neumorfismo): selector en relieve con un indicador que se desliza.
+    - **Planes para negocios** (`/planes`):
+      - precios en C$ y US$, cada uno fijado a mano en `config/planes-negocios.json`;
+      - todo queda "Por definir" hasta que el dueño defina nombre, precio y beneficios;
+      - sin cobro, porque no hay pasarela de pago;
+      - la página no se indexa mientras no esté confirmada.
+    - Android tiene la portada, el explorador, la galería en arco, el login de vidrio y la palabra gigante. El Ops Center y los planes solo están en la web.
+    - Regla aprendida: no importar `react-dom` en la web (el proyecto no trae sus tipos y CI falla).
+
 ## 4b. Estado del proyecto oficial (revisado el 2026-10-12)
 
 - Supabase `nupjhqrvxjrngtpslfjq`: las 15 migraciones originales ya están aplicadas por el dueño. Hay 17 territorios, todos en borrador (0 publicados), y ningún destino ni negocio. `app.settings.firebase_project_id` está vacío (el seed no corrió).
