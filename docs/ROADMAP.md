@@ -15,7 +15,7 @@ Regla: un módulo solo pasa a `probado` cuando cumple los criterios de la secci�
 | Esquema viajes / itinerarios / favoritos | en desarrollo | Migración 0005; costos "verificados" exigen observación con fuente y los tiempos de traslado exigen origen (probado). |
 | Esquema comunidad y mensajería | en desarrollo | Migración 0006; mensaje turista→prestador visible desde otra sesión, bloqueos, no edición de mensajes, sin acceso de moderadores a chats, sin autorreseñas (probado). |
 | Esquema denuncias e IA | en desarrollo | Migración 0007; denuncias visibles solo para denunciante y `reports.manage`; remisión "transmitida" exige acuse; correcciones de IA exigen revisor humano (probado). |
-| Pruebas RLS | probado | 79/79 PASS localmente y en CI con Supabase real (PostGIS incluido). en PostgreSQL 16 local (PostGIS y pgvector simulados). Falta correr en Supabase real. |
+| Pruebas RLS | probado | 79/79 PASS localmente y en CI con Supabase real (PostGIS incluido). |
 | Comunidad y mensajería (BD) | probado (local) | Migración 0011: consultas a negocios (reanuda conversación, bloqueos, 10 nuevas/día), no leídos, notificaciones con estado real por canal, feed cronológico, moderación auditada, límites anti-spam. Escenario Mensajería de la sección 30 probado. |
 | API comunidad / mensajería / notificaciones | en desarrollo | Endpoints de feed, publicaciones, comentarios, reacciones, reportes, bloqueos, moderación, conversaciones, tokens push y preferencias. Sin compilar. |
 | Web comunidad / mensajes | en desarrollo | Feed en Comunidad, botón "Escribir por la plataforma" en fichas, bandeja con tiempo real (Supabase Realtime). Desactivados con aviso hasta tener Firebase. Sin compilar. |
