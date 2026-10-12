@@ -21,7 +21,10 @@ Regla: un módulo solo pasa a `probado` cuando cumple los criterios de la secci�
 | Android Flutter | en desarrollo | Esqueleto Riverpod + lectura de territorios. No compilado (sin SDK en este entorno). |
 | CI GitHub Actions | en desarrollo | `ci.yml` escrito, no ejecutado. **Bloqueado**: repositorio. |
 | Despliegue (Hostinger/Cloudflare) | bloqueado | Falta plan Hostinger y dominio. |
-| Diseño "Territorios vivos" | no iniciado | Fase 1: tres direcciones visuales para comparar. |
+| Diseño: tres direcciones | probado | `design/fase1-direcciones/`: A Curvas de nivel, B Hamaca y añil, C Cocibolca (web + Android). |
+| Sistema de diseño "Territorios vivos" | en desarrollo | Síntesis elegida: base A + franja tejida de B + Atkinson Hyperlegible de C. `design/sistema/`, `docs/DESIGN_SYSTEM.md`. Contraste AA calculado en ambos temas; `scripts/check_tokens.py` verifica que web y Android usan los mismos colores (en CI). |
+| Web con el sistema aplicado | en desarrollo | Portada Descubrir, página de territorio, selector de experiencia, tema claro/oscuro/automático, páginas honestas "No disponible todavía" para Mi aventura, Comunidad, Mapa y Cuenta. Sin compilar aún. |
+| Android con el sistema aplicado | en desarrollo | Tema Flutter con los mismos tokens, CurvasDeNivel, FranjaTejida, EstadoVerificacion, navegación de 4 secciones. Sin compilar aún. |
 | Mapa, IA, itinerarios, comunidad, mensajería, cultura, música, denuncias, clima, notificaciones, Ops Center | no iniciado | Fases 3–8 |
 
 ## Fases y criterios de salida

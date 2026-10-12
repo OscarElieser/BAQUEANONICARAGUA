@@ -1,0 +1,30 @@
+<!-- @dsCard group="Comunidad" height=240 subtitle="Franja de perfil y franjas de nivel" -->
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--font-text); }
+  .wrap { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-6); }
+  .perfil { height: 18px; background: repeating-linear-gradient(90deg, var(--band-anil) 0 30px, var(--band-maiz) 30px 38px, var(--band-achiote) 38px 68px, var(--band-marfil) 68px 72px, var(--band-verde) 72px 100px, var(--band-marfil) 100px 104px); }
+  .niveles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+  .nivel { display: flex; flex-direction: column; gap: var(--space-2); font-size: 15px; font-weight: 700; }
+  .bar { height: 10px; }
+  .comunitaria { background: repeating-linear-gradient(90deg, var(--band-maiz) 0 18px, transparent 18px 24px); }
+  .reclamado { background: repeating-linear-gradient(90deg, var(--band-achiote) 0 30px, transparent 30px 35px); }
+  .verificado { background: var(--band-anil); outline: 1px solid var(--band-marfil); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="perfil" aria-hidden="true"></div>
+  <div class="niveles">
+    <div class="nivel"><div class="bar comunitaria" aria-hidden="true"></div>Información comunitaria</div>
+    <div class="nivel"><div class="bar reclamado" aria-hidden="true"></div>Perfil reclamado</div>
+    <div class="nivel"><div class="bar verificado" aria-hidden="true"></div>Negocio verificado</div>
+  </div>
+</div>
+<script></script>
+</body>
+</html>

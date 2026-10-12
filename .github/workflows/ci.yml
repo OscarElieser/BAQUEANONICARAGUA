@@ -9,6 +9,13 @@ permissions:
   contents: read
 
 jobs:
+  design-tokens:
+    name: Sistema de diseño alineado (web + Android)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/check_tokens.py
+
   node:
     name: Web + API (lint, tipos, pruebas, build)
     runs-on: ubuntu-latest

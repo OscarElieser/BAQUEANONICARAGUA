@@ -1,0 +1,51 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: var(--ground); }
+  .cover { position: relative; width: 960px; height: 288px; overflow: hidden; background: var(--ground); }
+  svg { position: absolute; left: 0; top: 0; }
+  .slab { fill: var(--band-verde); }
+  .oro { fill: var(--oro); rx: var(--radius-m); }
+  .anil { fill: var(--band-anil); }
+  .peak { fill: var(--terracota); }
+  .cut { fill: none; stroke: var(--ground); stroke-width: 2; }
+  .ring { fill: none; stroke: var(--oro); stroke-width: 1.4; }
+  .text { position: absolute; left: 48px; bottom: 40px; max-width: 440px; }
+  .name { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 72px; line-height: 0.95; color: var(--ink); }
+  .tag { margin: 16px 0 0; font-family: var(--font-text); font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+  <svg width="960" height="288" viewBox="0 0 960 288" aria-hidden="true">
+    <!--
+      blocks: band-verde slab 400×288 (bleeds top, bottom, right); oro 240×192 (space-12 offsets, radius-m); band-anil 120×88 bleeding bottom; terracota peak r=6
+      arrangement: one tall slab with satellites, all right of x=480
+      pattern: literal motif, contour rings, because the README's first principle is "el territorio es la interfaz" drawn as curvas de nivel
+      steps and radii: space-12 (48) insets, space-16 (64) block offsets, radius-m on the oro block, rings at space-6 (24) pitch
+    -->
+    <rect class="slab" x="560" y="0" width="400" height="288"/>
+    <rect class="anil" x="480" y="200" width="120" height="88"/>
+    <rect class="oro" x="624" y="48" width="240" height="192"/>
+    <g>
+      <ellipse class="ring" cx="744" cy="144" rx="216" ry="136" opacity="0.35"/>
+      <ellipse class="ring" cx="744" cy="144" rx="192" ry="120" opacity="0.5"/>
+      <ellipse class="cut" cx="744" cy="144" rx="96" ry="72"/>
+      <ellipse class="cut" cx="744" cy="144" rx="72" ry="54"/>
+      <ellipse class="cut" cx="744" cy="144" rx="48" ry="36"/>
+      <ellipse class="cut" cx="744" cy="144" rx="24" ry="18"/>
+    </g>
+    <circle class="peak" cx="744" cy="144" r="6"/>
+  </svg>
+  <div class="text">
+    <h1 class="name">Territorios vivos</h1>
+    <p class="tag">Relieve volcánico y hamaca tejida para la web y Android.</p>
+  </div>
+</div>
+<script></script>
+</body>
+</html>
