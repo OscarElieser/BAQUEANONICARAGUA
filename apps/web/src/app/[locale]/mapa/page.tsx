@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { MapaExplorer } from '@/components/MapaExplorer';
-import { publicDb } from '@/lib/territories';
+import { publicDb } from '@/lib/territories'; // Acceso público a la base de datos
+import { t } from '@/i18n/t'; // Textos traducidos
 
 type Result = { kind: 'destination' | 'business'; id: string; slug: string; name: string; summary: string | null };
 
@@ -25,21 +26,21 @@ export default async function Mapa({
 
   return (
     <main className="mx-auto max-w-[1280px] px-4 pb-16 sm:px-12">
-      <h1 className="mb-2 mt-8 font-display text-[40px] font-normal leading-[1.02]">{term ? `Resultados para “${term}”` : 'Explorar el mapa'}</h1>
+      <h1 className="mb-2 mt-8 font-display text-[40px] font-normal leading-[1.02]">{term ? t(locale, 'search.results_for', { q: term }) : t(locale, 'home.search_button')}</h1>
       <form role="search" className="mb-8 flex flex-wrap gap-2">
-        <label htmlFor="q" className="visually-hidden">Buscar</label>
-        <input id="q" name="q" type="search" defaultValue={term ?? ''} placeholder="Un volcán, un pueblo, un plato…"
+        <label htmlFor="q" className="visually-hidden">{t(locale, 'discover.search_button')}</label>
+        <input id="q" name="q" type="search" defaultValue={term ?? ''} placeholder={t(locale, 'home.search_placeholder')}
           className="h-[52px] min-w-0 flex-[1_1_240px] rounded-pill border border-control-border bg-ground-raised px-[22px] text-base text-ink" />
-        <button type="submit" className="h-[52px] rounded-pill bg-oro px-[26px] font-bold text-on-oro">Buscar</button>
+        <button type="submit" className="h-[52px] rounded-pill bg-oro px-[26px] font-bold text-on-oro">{t(locale, 'discover.search_button')}</button>
       </form>
 
       <div className="flex flex-wrap gap-8">
         <section aria-labelledby="resultados" className="min-w-0 flex-[1_1_320px]">
-          <h2 id="resultados" className="visually-hidden">Resultados</h2>
-          {error && <p role="alert" className="text-status-alert">No se pudo completar la búsqueda. Intenta de nuevo.</p>}
+          <h2 id="resultados" className="visually-hidden">{t(locale, 'map.results')}</h2>
+          {error && <p role="alert" className="text-status-alert">{t(locale, 'map.error')}</p>}
           {!error && results.length === 0 && (
             <p className="text-ink-muted">
-              {term ? 'No encontramos lugares publicados con ese nombre. Prueba con otra palabra o con el nombre del municipio.' : 'Todavía no hay lugares publicados. El catálogo crece a medida que se verifican las fuentes.'}
+              {term ? t(locale, 'map.empty_query') : t(locale, 'map.empty')}
             </p>
           )}
           <ul className="m-0 list-none p-0">
@@ -48,11 +49,11 @@ export default async function Mapa({
                 <Link href={`/${locale}/${r.kind === 'business' ? 'negocios' : 'destinos'}/${r.slug}`} className="text-[17px] font-bold text-ink no-underline hover:text-accent">
                   {r.name}
                 </Link>
-                <p className="m-0 text-sm text-ink-muted">{r.kind === 'business' ? 'Emprendimiento' : 'Destino'}{r.summary ? `. ${r.summary}` : ''}</p>
+                <p className="m-0 text-sm text-ink-muted">{r.kind === 'business' ? t(locale, 'search.business') : t(locale, 'search.destination')}{r.summary ? `. ${r.summary}` : ''}</p>
               </li>
             ))}
           </ul>
-          <p className="mt-4 text-sm text-ink-muted">Orden: relevancia; entre resultados igual de relevantes el orden rota cada día. Nadie paga por aparecer aquí.</p>
+          <p className="mt-4 text-sm text-ink-muted">{t(locale, 'map.order_note')}</p>
         </section>
         <div className="min-w-0 flex-[2_1_480px]">
           <MapaExplorer locale={locale} />

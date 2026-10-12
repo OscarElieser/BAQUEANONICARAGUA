@@ -1,5 +1,7 @@
 'use client'; // Componente interactivo que solo corre en el navegador
 
+import { t } from '@/i18n/t'; // Textos traducidos
+
 import { useEffect, useRef, useState } from 'react'; // Referencias, efectos y estado de React
 import { CurvasDeNivel } from './CurvasDeNivel'; // Versión ligera (SVG) para equipos sin 3D o con movimiento reducido
 
@@ -31,7 +33,7 @@ function puedeUsar3D(): boolean {
  * Se gira arrastrando, flota suavemente y al tocar una cima muestra su nombre.
  * Si el equipo no puede, muestra la versión SVG con el mismo diseño.
  */
-export function RelieveVivo3D({ className }: { className?: string }) {
+export function RelieveVivo3D({ className, locale }: { className?: string; locale: string }) {
   const contenedor = useRef<HTMLDivElement>(null); // Elemento donde se dibuja la escena
   const [modo, setModo] = useState<'cargando' | '3d' | 'ligero'>('cargando'); // Qué versión se muestra
   const [cimaElegida, setCimaElegida] = useState<string | null>(null); // Nombre de la cima tocada
@@ -179,7 +181,7 @@ export function RelieveVivo3D({ className }: { className?: string }) {
 
   if (modo === 'ligero') {
     // Versión ligera con el mismo diseño
-    return <CurvasDeNivel label="Curvas de nivel de los dos volcanes de la isla de Ometepe" className={className} />;
+    return <CurvasDeNivel label={t(locale, 'relief.aria_static')} className={className} />; // Misma figura sin 3D
   }
 
   return (
@@ -187,10 +189,10 @@ export function RelieveVivo3D({ className }: { className?: string }) {
       <div
         ref={contenedor} // Aquí se inserta el lienzo 3D
         role="img" // Para lectores de pantalla es una imagen
-        aria-label="Relieve en 3D de los dos volcanes de la isla de Ometepe. Arrastra para girarlo y toca una cima para ver su nombre." // Descripción accesible
+        aria-label={t(locale, 'relief.aria')} // Descripción accesible
         className="aspect-[4/3] w-full cursor-grab touch-pan-y active:cursor-grabbing" // Proporción fija; el desplazamiento vertical del dedo sigue moviendo la página
       />
-      {modo === 'cargando' && <p className="absolute inset-0 m-0 grid place-items-center text-sm text-ink-muted">Cargando relieve…</p>} {/* Aviso mientras carga */}
+      {modo === 'cargando' && <p className="absolute inset-0 m-0 grid place-items-center text-sm text-ink-muted">{t(locale, 'relief.loading')}</p>} {/* Aviso mientras carga */}
       <p aria-live="polite" className="absolute left-[6%] top-[4%] m-0 font-display text-[22px] text-ink">
         {cimaElegida ?? ''} {/* Nombre de la cima tocada */}
       </p>

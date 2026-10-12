@@ -2,6 +2,7 @@ import 'dart:math' as math; // Funciones trigonométricas para la proyección 3D
 
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 
+import '../i18n/t.dart'; // Textos traducidos
 import '../theme.dart'; // Colores del sistema de diseño
 
 /// Cima del relieve: posición, tamaño de la base, altura, número de capas y nombre.
@@ -67,7 +68,7 @@ class _RelieveVivo3DState extends State<RelieveVivo3D> with SingleTickerProvider
     final tv = context.tv; // Colores del tema actual
     final flotar = math.sin(_reloj.value * math.pi * 2 * 8) * 4; // Flotación suave (píxeles)
     return Semantics(
-      label: 'Relieve en 3D de los dos volcanes de la isla de Ometepe. Desliza para girarlo y toca una cima para ver su nombre.', // Descripción accesible
+      label: context.t('relief.aria_touch'), // Descripción accesible
       image: true, // Para lectores de pantalla es una imagen
       child: GestureDetector(
         onPanStart: (_) => _tocando = true, // Empieza a girar con el dedo

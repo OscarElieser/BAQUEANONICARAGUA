@@ -1,5 +1,7 @@
 'use client';
 
+import { t } from '@/i18n/t'; // Textos traducidos
+
 import { useEffect, useRef, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -83,7 +85,7 @@ export function MapaExplorer({ locale }: { locale: string }) {
             el.appendChild(a);
             if (approx) {
               const note = document.createElement('p');
-              note.textContent = 'Ubicación aproximada';
+              note.textContent = t(locale, 'map.approx'); // Aviso en la ventana del punto
               note.style.margin = '4px 0 0';
               el.appendChild(note);
             }
@@ -102,18 +104,18 @@ export function MapaExplorer({ locale }: { locale: string }) {
   if (status === 'no-provider') {
     return (
       <div className="rounded-m bg-ground-raised p-6">
-        <p className="m-0 font-bold">El mapa interactivo se activa al conectar el proveedor de mapas.</p>
-        <p className="m-0 mt-2 text-ink-muted">Mientras tanto, usa la búsqueda: los resultados son los mismos.</p>
+        <p className="m-0 font-bold">{t(locale, 'map.off')}</p>
+        <p className="m-0 mt-2 text-ink-muted">{t(locale, 'map.off_note')}</p>
       </div>
     );
   }
   return (
     <div>
-      <div ref={container} className="h-[520px] w-full overflow-hidden rounded-m bg-ground-deep" aria-label="Mapa de destinos y negocios" role="region" />
+      <div ref={container} className="h-[520px] w-full overflow-hidden rounded-m bg-ground-deep" aria-label={t(locale, 'map.aria')} role="region" />
       <p className="mt-2 text-sm text-ink-muted" aria-live="polite">
-        {status === 'loading' && 'Cargando el mapa…'}
-        {status === 'ready' && `${count} lugares publicados en el mapa. Las ubicaciones protegidas se muestran aproximadas o no se muestran.`}
-        {status === 'error' && 'No se pudo cargar el mapa. La búsqueda sigue disponible.'}
+        {status === 'loading' && t(locale, 'map.loading')}
+        {status === 'ready' && t(locale, 'map.ready', { n: count })}
+        {status === 'error' && t(locale, 'map.error_load')}
       </p>
     </div>
   );

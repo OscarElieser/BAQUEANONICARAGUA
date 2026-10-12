@@ -12,7 +12,7 @@ void main() {
       ),
     );
     await tester.pump(const Duration(milliseconds: 100)); // Avanza un poco la animación
-    expect(find.bySemanticsLabel(RegExp('Relieve en 3D')), findsOneWidget); // Tiene descripción para lectores de pantalla
+    expect(find.bySemanticsLabel(RegExp('3D')), findsOneWidget); // Tiene descripción para lectores de pantalla (en el idioma del teléfono)
     await tester.drag(find.byType(RelieveVivo3D), const Offset(120, -40)); // Gira con un deslizamiento
     await tester.pump(); // Redibuja tras el giro
     expect(tester.takeException(), isNull); // No hubo errores al dibujar ni al girar

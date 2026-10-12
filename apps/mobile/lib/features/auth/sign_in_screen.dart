@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Acceso a los proveedores de Riverpod
 
+import '../../core/i18n/t.dart'; // Textos traducidos
 import '../../core/theme.dart'; // Colores y espaciados del sistema de diseño
 import 'auth_repository.dart'; // Lógica de autenticación
 
@@ -44,9 +45,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       await action(); // Ejecuta la acción
       if (mounted && ok != null) setState(() => _info = ok); // Muestra la confirmación si la pantalla sigue abierta
     } on AuthFailure catch (e) {
-      if (mounted) setState(() => _error = e.message); // Muestra el error traducido
+      if (mounted) setState(() => _error = context.t(e.key)); // Muestra el error traducido
     } catch (_) {
-      if (mounted) setState(() => _error = 'No se pudo completar. Intenta de nuevo.'); // Error inesperado
+      if (mounted) setState(() => _error = context.t('auth.err.generic')); // Error inesperado
     } finally {
       if (mounted) setState(() => _busy = false); // Libera los botones
     }
@@ -62,12 +63,12 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       case _Mode.signUp:
         _run(
           () => repo.signUp(_name.text, _email.text, _password.text), // Crea la cuenta
-          ok: 'Cuenta creada. Te enviamos un correo para verificar tu dirección.', // Confirmación
+          ok: context.t('auth.created'), // Confirmación
         );
       case _Mode.reset:
         _run(
           () => repo.resetPassword(_email.text), // Envía el enlace de recuperación
-          ok: 'Si existe una cuenta con ese correo, recibirás un enlace para cambiar la contraseña.', // Confirmación sin revelar datos
+          ok: context.t('auth.reset_sent'), // Confirmación sin revelar datos
         );
     }
   }
@@ -77,9 +78,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     final tv = context.tv; // Colores del tema actual
     final text = Theme.of(context).textTheme; // Estilos de texto del tema
     final title = switch (_mode) {
-      _Mode.signIn => 'Inicia sesión', // Título al iniciar sesión
-      _Mode.signUp => 'Crea tu cuenta', // Título al crear cuenta
-      _Mode.reset => 'Recupera tu contraseña', // Título al recuperar
+      _Mode.signIn => context.t('auth.sign_in_title'), // Título al iniciar sesión
+      _Mode.signUp => context.t('auth.sign_up_title'), // Título al crear cuenta
+      _Mode.reset => context.t('auth.reset_title'), // Título al recuperar
     };
 
     return ListView(
@@ -88,7 +89,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         Text(title, style: text.displayMedium), // Título de la vista
         const SizedBox(height: TvSpace.s3), // Espacio
         Text(
-          'Entra para guardar favoritos e itinerarios, escribir a los negocios y publicar tus relatos.', // Para qué sirve la cuenta
+          context.t('auth.intro'), // Para qué sirve la cuenta
           style: text.bodyMedium?.copyWith(color: tv.inkMuted), // Texto secundario
         ),
         const SizedBox(height: TvSpace.s6), // Espacio
@@ -100,34 +101,34 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               if (_mode == _Mode.signUp) ...[
                 TextFormField(
                   controller: _name, // Texto del nombre
-                  decoration: const InputDecoration(labelText: 'Tu nombre'), // Etiqueta visible
+                  decoration: InputDecoration(labelText: context.t('auth.name')), // Etiqueta visible
                   textCapitalization: TextCapitalization.words, // Mayúscula al inicio de cada palabra
                   autofillHints: const [AutofillHints.name], // Permite autocompletar el nombre
-                  validator: (v) => (v ?? '').trim().isEmpty ? 'Escribe tu nombre' : null, // Obligatorio
+                  validator: (v) => (v ?? '').trim().isEmpty ? context.t('auth.name_required') : null, // Obligatorio
                 ),
                 const SizedBox(height: TvSpace.s4), // Espacio
               ],
               TextFormField(
                 controller: _email, // Texto del correo
-                decoration: const InputDecoration(labelText: 'Correo'), // Etiqueta visible
+                decoration: InputDecoration(labelText: context.t('auth.email')), // Etiqueta visible
                 keyboardType: TextInputType.emailAddress, // Teclado con @
                 autofillHints: const [AutofillHints.email], // Permite autocompletar el correo
-                validator: (v) => (v ?? '').contains('@') ? null : 'Escribe un correo válido', // Validación básica
+                validator: (v) => (v ?? '').contains('@') ? null : context.t('auth.email_invalid'), // Validación básica
               ),
               if (_mode != _Mode.reset) ...[
                 const SizedBox(height: TvSpace.s4), // Espacio
                 TextFormField(
                   controller: _password, // Texto de la contraseña
                   decoration: InputDecoration(
-                    labelText: 'Contraseña', // Etiqueta visible
-                    helperText: _mode == _Mode.signUp ? 'Al menos 8 caracteres' : null, // Ayuda al crear cuenta
+                    labelText: context.t('auth.password'), // Etiqueta visible
+                    helperText: _mode == _Mode.signUp ? context.t('auth.password_hint') : null, // Ayuda al crear cuenta
                   ),
                   obscureText: true, // Oculta los caracteres
                   autofillHints: [_mode == _Mode.signUp ? AutofillHints.newPassword : AutofillHints.password], // Gestor de contraseñas
                   validator: (v) {
                     final value = v ?? ''; // Contraseña escrita
-                    if (value.isEmpty) return 'Escribe tu contraseña'; // Obligatoria
-                    if (_mode == _Mode.signUp && value.length < 8) return 'Al menos 8 caracteres'; // Mínimo al crear cuenta
+                    if (value.isEmpty) return context.t('auth.password_required'); // Obligatoria
+                    if (_mode == _Mode.signUp && value.length < 8) return context.t('auth.password_hint'); // Mínimo al crear cuenta
                     return null; // Es válida
                   },
                 ),
@@ -141,11 +142,11 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               FilledButton(
                 onPressed: _busy ? null : _submit, // Desactivado mientras trabaja
                 child: Text(_busy
-                    ? 'Procesando…' // Texto mientras trabaja
+                    ? context.t('auth.processing') // Texto mientras trabaja
                     : switch (_mode) {
-                        _Mode.signIn => 'Iniciar sesión', // Acción de entrar
-                        _Mode.signUp => 'Crear cuenta', // Acción de crear cuenta
-                        _Mode.reset => 'Enviar enlace', // Acción de recuperar
+                        _Mode.signIn => context.t('session.sign_in'), // Acción de entrar
+                        _Mode.signUp => context.t('auth.create'), // Acción de crear cuenta
+                        _Mode.reset => context.t('auth.send_link'), // Acción de recuperar
                       }),
               ),
             ],
@@ -155,7 +156,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         if (_mode == _Mode.signIn)
           TextButton(
             onPressed: () => setState(() => _mode = _Mode.reset), // Cambia a recuperar contraseña
-            child: const Text('Olvidé mi contraseña'), // Texto del enlace
+            child: Text(context.t('auth.forgot')), // Texto del enlace
           ),
         TextButton(
           onPressed: () => setState(() {
@@ -163,18 +164,18 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             _error = null; // Limpia errores
             _info = null; // Limpia avisos
           }),
-          child: Text(_mode == _Mode.signIn ? 'Crear una cuenta nueva' : 'Ya tengo cuenta: iniciar sesión'), // Texto según la vista
+          child: Text(_mode == _Mode.signIn ? context.t('auth.create_new') : context.t('auth.have_account')), // Texto según la vista
         ),
         if (_mode != _Mode.reset) ...[
           const Divider(height: TvSpace.s8), // Separador
           OutlinedButton.icon(
             onPressed: _busy ? null : () => _run(() => ref.read(authRepositoryProvider).signInWithGoogle()), // Entra con Google
             icon: const Icon(Icons.account_circle_outlined), // Ícono genérico de cuenta
-            label: const Text('Continuar con Google'), // Texto del botón
+            label: Text(context.t('auth.google')), // Texto del botón
           ),
           const SizedBox(height: TvSpace.s2), // Espacio
           Text(
-            'Al continuar aceptas los términos y la política de privacidad (en revisión jurídica).', // Aviso legal honesto
+            context.t('auth.terms_note'), // Aviso legal honesto
             style: text.bodySmall, // Texto pequeño
           ),
         ],

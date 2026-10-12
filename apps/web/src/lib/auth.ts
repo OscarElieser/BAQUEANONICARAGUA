@@ -14,41 +14,46 @@ import {
   type User, // Tipo que describe al usuario con sesión
 } from 'firebase/auth';
 import { firebaseAuth } from './firebase'; // Instancia de Firebase Auth (o null si no está configurado)
+import { t, type MessageKey } from '@/i18n/t'; // Textos traducidos
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL; // Dirección del proyecto de Supabase
 const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY; // Clave pública de Supabase (no es secreta)
 
-/** Traduce los códigos de error de Firebase a mensajes claros en español. */
-export function authErrorMessage(error: unknown): string {
-  if (error instanceof CuentaBloqueada) return error.message; // Cuenta suspendida: se muestra tal cual
+/** Error propio con un código (app/...) para traducirlo al mostrarlo. */
+function appError(code: string): Error {
+  return Object.assign(new Error(code), { code }); // El código viaja en el error, igual que los de Firebase
+}
+
+/** Traduce los códigos de error (de Firebase o propios) a un mensaje claro en el idioma de la página. */
+export function authErrorMessage(locale: string, error: unknown): string {
   const code = (error as { code?: string })?.code ?? ''; // Código del error, por ejemplo "auth/wrong-password"
-  const messages: Record<string, string> = {
-    // Tabla de códigos conocidos y su mensaje
-    'auth/invalid-email': 'El correo no tiene un formato válido.',
-    'auth/missing-password': 'Escribe tu contraseña.',
-    'auth/invalid-credential': 'El correo o la contraseña no coinciden.',
-    'auth/wrong-password': 'El correo o la contraseña no coinciden.',
-    'auth/user-not-found': 'El correo o la contraseña no coinciden.',
-    'auth/user-disabled': 'Esta cuenta está desactivada. Escribe a soporte si crees que es un error.',
-    'auth/email-already-in-use': 'Ya existe una cuenta con ese correo. Inicia sesión o recupera tu contraseña.',
-    'auth/weak-password': 'La contraseña debe tener al menos 8 caracteres.',
-    'auth/too-many-requests': 'Demasiados intentos. Espera unos minutos y vuelve a intentar.',
-    'auth/network-request-failed': 'Sin conexión. Revisa tu internet e intenta de nuevo.',
-    'auth/popup-closed-by-user': 'Cerraste la ventana de Google antes de terminar.',
-    'auth/cancelled-popup-request': 'Cerraste la ventana de Google antes de terminar.',
-  };
-  return messages[code] ?? 'No se pudo completar. Intenta de nuevo.'; // Mensaje genérico si el código no está en la tabla
+  const keys: Record<string, MessageKey> = {
+    'auth/invalid-email': 'auth.err.invalid_email', // Correo mal escrito
+    'auth/missing-password': 'auth.err.missing_password', // Falta la contraseña
+    'auth/invalid-credential': 'auth.err.invalid_credential', // No coinciden
+    'auth/wrong-password': 'auth.err.invalid_credential', // No revelamos cuál de los dos falló
+    'auth/user-not-found': 'auth.err.invalid_credential', // No revelamos si la cuenta existe
+    'auth/user-disabled': 'auth.err.user_disabled', // Cuenta desactivada
+    'auth/email-already-in-use': 'auth.err.email_in_use', // Correo ya registrado
+    'auth/weak-password': 'auth.err.weak_password', // Contraseña corta
+    'auth/too-many-requests': 'auth.err.too_many', // Bloqueo temporal
+    'auth/network-request-failed': 'auth.err.network', // Sin conexión
+    'auth/popup-closed-by-user': 'auth.err.popup_closed', // Cerró la ventana de Google
+    'auth/cancelled-popup-request': 'auth.err.popup_closed', // Cerró la ventana de Google
+    'app/account-blocked': 'auth.err.blocked', // Cuenta suspendida
+    'app/profile-failed': 'auth.err.profile_failed', // No se pudo preparar el perfil
+    'app/sign-in-first': 'auth.err.sign_in_first', // Falta iniciar sesión
+    'app/not-available': 'auth.err.not_available', // Firebase sin configurar
+  }; // Código del error y su clave de traducción
+  return t(locale, keys[code] ?? 'auth.err.generic'); // Mensaje traducido o genérico
 }
 
 /** Devuelve la instancia de Auth o lanza un error claro si Firebase no está configurado. */
 function requireAuth() {
   const auth = firebaseAuth(); // Intenta obtener Firebase Auth
-  if (!auth) throw new Error('El inicio de sesión aún no está disponible.'); // Sin configuración, avisamos sin fallar en silencio
+  if (!auth) throw appError('app/not-available'); // Sin configuración, avisamos sin fallar en silencio
   return auth; // Devuelve la instancia lista para usar
 }
-
-/** Error que se muestra cuando la cuenta está suspendida o eliminada (la sesión se cierra). */
-export class CuentaBloqueada extends Error {}
 
 /**
  * Prepara la sesión en nuestra plataforma con la función de Supabase "preparar-sesion":
@@ -66,9 +71,9 @@ async function prepararSesion(user: User): Promise<void> {
   if (res.status === 403) {
     // Cuenta suspendida o eliminada
     await signOut(requireAuth()); // Cerramos la sesión para no dejarla a medias
-    throw new CuentaBloqueada('Esta cuenta está suspendida. Escribe a soporte si crees que es un error.'); // Mensaje claro
+    throw appError('app/account-blocked'); // Cuenta suspendida (mensaje traducido al mostrarlo)
   }
-  if (!res.ok) throw new Error('Tu sesión se abrió, pero no pudimos preparar tu perfil. Intenta de nuevo en un momento.'); // Error real, no se oculta
+  if (!res.ok) throw appError('app/profile-failed'); // Error real, no se oculta
   const body = (await res.json()) as { needs_refresh?: boolean }; // Respuesta de la función
   if (body.needs_refresh) await user.getIdToken(true); // El rol se acaba de agregar: pedimos un token que ya lo traiga
 }
@@ -123,7 +128,7 @@ export async function recuperarContrasena(email: string): Promise<void> {
 /** Vuelve a enviar el correo de verificación. */
 export async function reenviarVerificacion(): Promise<void> {
   const user = requireAuth().currentUser; // Usuario con la sesión abierta
-  if (!user) throw new Error('Inicia sesión primero.'); // Sin sesión no hay a quién enviarlo
+  if (!user) throw appError('app/sign-in-first'); // Sin sesión no hay a quién enviarlo
   await sendEmailVerification(user); // Envía de nuevo el correo de verificación
 }
 

@@ -1,27 +1,35 @@
-import { DenunciaForm } from '@/components/DenunciaForm';
+import { DenunciaForm } from '@/components/DenunciaForm'; // Formulario de denuncia
+import { t } from '@/i18n/t'; // Textos traducidos
 
-export const metadata = { robots: { index: false, follow: false } };
+export const metadata = { robots: { index: false, follow: false } }; // Los buscadores no indexan esta página
 
-export default function Denunciar() {
+const numbers = [
+  { n: '118', key: 'report.police' }, // Policía
+  { n: '115', key: 'report.fire' }, // Bomberos
+  { n: '128', key: 'report.medical' }, // Emergencias médicas
+] as const; // Teléfonos oficiales de emergencia
+
+export default async function Denunciar({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params; // Idioma de la página
   return (
     <main className="mx-auto max-w-[720px] px-4 py-12">
-      <h1 className="m-0 font-display text-[40px] font-normal leading-[1.02]">Reportar un problema</h1>
-      <p className="mt-4 text-[19px] leading-[30px] text-ink-muted">
-        Contaminación, daño a la fauna, riesgos en senderos, acoso o información engañosa.
-      </p>
-
+      <h1 className="m-0 font-display text-[40px] font-normal leading-[1.02]">{t(locale, 'report.title')}</h1> {/* Título */}
+      <p className="mt-4 text-[19px] leading-[30px] text-ink-muted">{t(locale, 'report.intro')}</p> {/* Qué se puede reportar */}
       {/* Información de seguridad: siempre visible, sin necesidad de iniciar sesión */}
       <section aria-labelledby="emergencia" className="my-8 rounded-m border-2 border-status-alert p-5">
-        <h2 id="emergencia" className="m-0 text-[20px] font-bold">¿Hay una emergencia ahora?</h2>
-        <p className="mb-3 mt-2">Esta plataforma no avisa a las autoridades por ti. Llama de inmediato:</p>
+        <h2 id="emergencia" className="m-0 text-[20px] font-bold">{t(locale, 'report.emergency_title')}</h2> {/* ¿Emergencia? */}
+        <p className="mb-3 mt-2">{t(locale, 'report.emergency_body')}</p> {/* La plataforma no avisa por ti */}
         <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
-          <li><a href="tel:118" className="flex h-[52px] items-center rounded-pill bg-ink px-6 font-bold text-ground no-underline">Policía 118</a></li>
-          <li><a href="tel:115" className="flex h-[52px] items-center rounded-pill bg-ink px-6 font-bold text-ground no-underline">Bomberos 115</a></li>
-          <li><a href="tel:128" className="flex h-[52px] items-center rounded-pill bg-ink px-6 font-bold text-ground no-underline">Emergencias médicas 128</a></li>
+          {numbers.map((x) => (
+            <li key={x.n}>
+              <a href={`tel:${x.n}`} className="flex h-[52px] items-center rounded-pill bg-ink px-6 font-bold text-ground no-underline">
+                {t(locale, x.key, { n: x.n })} {/* Servicio y número */}
+              </a>
+            </li>
+          ))}
         </ul>
       </section>
-
-      <DenunciaForm />
+      <DenunciaForm locale={locale} /> {/* Formulario */}
     </main>
   );
 }

@@ -37,7 +37,7 @@ export default async function Descubrir({ params }: { params: Promise<{ locale: 
         </div>
 
         <figure className="relative m-0 min-w-0 flex-[1_1_520px]">
-          <RelieveVivo3D className="block h-auto w-full" /> {/* Relieve 3D interactivo (con versión ligera automática) */}
+          <RelieveVivo3D className="block h-auto w-full" locale={locale} /> {/* Relieve 3D interactivo (con versión ligera automática) */}
           <figcaption className="absolute bottom-[4%] left-[6%] flex flex-col gap-1.5">
             <span className="font-display text-[26px]">Isla de Ometepe</span>
             <span className="text-sm text-ink-muted">{t(locale, 'home.figure_note')}</span>

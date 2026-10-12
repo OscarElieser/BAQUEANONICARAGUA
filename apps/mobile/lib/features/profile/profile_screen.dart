@@ -53,7 +53,7 @@ class _AccountState extends ConsumerState<_Account> {
       await action(); // Ejecuta la acción
       if (mounted) setState(() => _message = ok); // Confirma si la pantalla sigue abierta
     } on AuthFailure catch (e) {
-      if (mounted) setState(() => _message = e.message); // Muestra el error traducido
+      if (mounted) setState(() => _message = context.t(e.key)); // Muestra el error traducido
     } finally {
       if (mounted) setState(() => _busy = false); // Libera los botones
     }
