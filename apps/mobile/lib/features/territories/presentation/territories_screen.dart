@@ -6,6 +6,7 @@ import '../../../core/data/repositories.dart'; // Acceso al catálogo
 import '../../../core/i18n/t.dart'; // Textos traducidos
 import '../../../core/theme.dart'; // Colores y espaciados
 import '../../../core/widgets/estados.dart'; // Cargando, error y vacío
+import '../../../core/widgets/mapa_territorios.dart'; // Mapa ilustrado de los 17 territorios
 import '../../../core/widgets/relieve_3d.dart'; // Relieve 3D interactivo
 import '../../catalog/search_screen.dart'; // Resultados de búsqueda
 import 'territory_screen.dart'; // Ficha de territorio
@@ -43,6 +44,10 @@ class TerritoriesScreen extends ConsumerWidget {
             ),
           ),
         ),
+        SliverPadding(
+          padding: const EdgeInsets.fromLTRB(TvSpace.s4 + 4, TvSpace.s4, TvSpace.s4 + 4, TvSpace.s4), // Márgenes
+          sliver: SliverToBoxAdapter(child: _MapaConDatos(territories: territories.valueOrNull ?? const [])), // Mapa (los publicados se abren)
+        ),
         territories.when(
           loading: () => const SliverToBoxAdapter(child: Cargando()), // Mientras carga
           error: (e, _) => SliverToBoxAdapter(child: ErrorConReintento(error: e, onRetry: () => ref.invalidate(territoriesProvider))), // Error claro
@@ -62,6 +67,24 @@ class TerritoriesScreen extends ConsumerWidget {
         ),
         const SliverToBoxAdapter(child: SizedBox(height: TvSpace.s8)), // Espacio al final
       ],
+    );
+  }
+}
+
+/// Mapa ilustrado cuando su archivo ya cargó; mientras tanto no ocupa espacio (la lista sigue disponible).
+class _MapaConDatos extends ConsumerWidget {
+  const _MapaConDatos({required this.territories}); // Recibe los territorios publicados
+  final List<Territory> territories; // Publicados
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mapa = ref.watch(datosMapaProvider).valueOrNull; // Formas del mapa (o null mientras carga)
+    if (mapa == null) return const SizedBox.shrink(); // Sin mapa todavía: no se muestra nada
+    final bySlug = {for (final t in territories) t.slug: t}; // Territorios publicados por slug
+    return MapaTerritorios(
+      mapa: mapa, // Formas
+      published: bySlug.keys.toSet(), // Cuáles se pueden abrir
+      onOpen: (f) => Navigator.of(context).push(MaterialPageRoute(builder: (_) => TerritoryScreen(slug: f.id, name: bySlug[f.id]?.shortName ?? f.name))), // Abre la ficha
     );
   }
 }
