@@ -19,12 +19,15 @@ const shots = [
   { name: '09-privacidad', path: '/es/privacidad', device: 'desktop', theme: 'light', full: true }, // Aviso de privacidad (completo)
   { name: '10-cuenta-telefono', path: '/es/cuenta', device: 'phone', theme: 'dark' }, // Inicio de sesión en el teléfono
   { name: '11-mapa-territorios', path: '/es', device: 'desktop', theme: 'dark', hover: 'Rivas' }, // Mapa ilustrado con un territorio resaltado
+  { name: '14-compartir-granada', path: '/es/territorios/granada/opengraph-image', device: 'og', theme: 'dark' }, // Imagen al compartir un territorio
+  { name: '15-compartir-sitio', path: '/es/opengraph-image', device: 'og', theme: 'dark' }, // Imagen al compartir el sitio
   { name: '13-pagina-404', path: '/es/territorios/no-existe', device: 'desktop', theme: 'dark' }, // "Te perdiste en la neblina"
   { name: '12-mapa-territorios-claro', path: '/es', device: 'desktop', theme: 'light', hover: 'Matagalpa' }, // El mismo mapa en tema claro
 ];
 
 const devices = {
   desktop: { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 }, // Computadora
+  og: { viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 }, // Tamaño de la imagen para compartir
   phone: { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }, // Teléfono (tamaño de un Android o iPhone común)
 };
 
