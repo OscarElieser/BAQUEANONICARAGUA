@@ -90,6 +90,16 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
     - Ya activas: Frontend Design, PDF, Word, PowerPoint, Excel y Skill Creator.
     - No se pudieron instalar desde aquí (el registro npm está bloqueado y son de terceros sin revisar): UI/UX Pro Max, Impeccable, Superpowers, Super Memory, MCP Builder y el pack de Marketing.
     - "Webapp testing" ya lo cubren el CI y las capturas, y "memoria" la cubren este archivo y `CLAUDE.md`.
+15. **"Modo pro premium" (diseño, frontend, backend, web y Android), 12 de octubre de 2026:**
+    - Rendimiento: las formas del mapa se dibujan una sola vez por página (`SpriteMapa`) y la galería y las tarjetas se dibujan en el servidor. El HTML de la portada pasó de 1,25 MB a unos 140 KB.
+    - Auditoría con la guía de interfaz (`web-design-guidelines`):
+      - la barra del navegador sigue el tema claro u oscuro;
+      - toques sin espera ni destello gris;
+      - títulos con líneas parejas;
+      - cifras del mismo ancho en tarifas y pizarras;
+      - el borde punteado de los territorios en verificación vuelve a verse.
+    - Mapa por zonas de paisaje (web y Android): cada territorio lleva el color de su zona, el mismo de su portada. Una leyenda con botones resalta una zona y avisa que la agrupación no es oficial.
+    - El dueño subió el 12 de octubre librerías oficiales (Firebase, Supabase, Octokit, Cloudflare, ssh2 y `firebase_analytics`). En el mismo envío entraron archivos que no son del proyecto: `.claude/data/healthcare/…sqlite`, `.snapshots/` y `apps/mobile/.flutter-plugins*`. Falta que el dueño confirme si se quitan.
 
 ## 4b. Estado del proyecto oficial (revisado el 2026-10-12)
 
