@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'; // Proveedores de River
 
 import '../../core/data/models.dart'; // Datos de la mensajería
 import '../../core/data/repositories.dart'; // Acceso a la mensajería
+import '../../core/i18n/t.dart'; // Idioma actual
 import '../../core/theme.dart'; // Colores y espaciados
 import '../../core/widgets/estados.dart'; // Cargando, error y vacío
 
@@ -47,7 +48,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> {
       _controller.clear(); // Limpia el campo
       ref.invalidate(conversationProvider(widget.conversationId)); // Recarga los mensajes
     } catch (e) {
-      if (mounted) setState(() => _error = dataErrorMessage(e)); // Muestra el error
+      if (mounted) setState(() => _error = dataErrorMessage(e, context.langCode)); // Muestra el error
     } finally {
       if (mounted) setState(() => _sending = false); // Libera el botón
     }

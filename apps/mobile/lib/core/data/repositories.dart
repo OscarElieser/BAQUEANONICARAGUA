@@ -6,13 +6,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'; // Proveedores de River
 import 'package:supabase_flutter/supabase_flutter.dart'; // Cliente de Supabase
 
 import '../env.dart'; // Configuración de la compilación
+import '../i18n/t.dart'; // Textos traducidos
 import 'models.dart'; // Datos del catálogo y la mensajería
 
 /// Error cuando Supabase no está configurado en esta compilación (se muestra como "No disponible todavía").
 class NotConfigured implements Exception {
   const NotConfigured(); // Constructor
   @override
-  String toString() => 'El catálogo se activa al conectar Supabase. No disponible todavía.'; // Mensaje para la persona
+  String toString() => tr('es', 'error.not_configured'); // Mensaje para registros (en pantalla se traduce)
 }
 
 /// Devuelve el cliente de Supabase o lanza NotConfigured si falta la configuración.
@@ -151,20 +152,20 @@ class SupabaseMessagingRepository implements MessagingRepository {
 final catalogRepositoryProvider = Provider<CatalogRepository>((ref) => SupabaseCatalogRepository()); // Catálogo (reemplazable en pruebas)
 final messagingRepositoryProvider = Provider<MessagingRepository>((ref) => SupabaseMessagingRepository()); // Mensajería (reemplazable en pruebas)
 
-/// Convierte cualquier error de datos en un mensaje claro en español.
-String dataErrorMessage(Object e) {
-  if (e is NotConfigured) return e.toString(); // Falta configuración
+/// Convierte cualquier error de datos en un mensaje claro en el idioma indicado (código como 'es' o 'ja').
+String dataErrorMessage(Object e, [String lang = 'es']) {
+  if (e is NotConfigured) return tr(lang, 'error.not_configured'); // Falta configuración
   if (e is PostgrestException) {
     // Error de la base de datos
     switch (e.code) {
       case '42501':
-        return 'No tienes permiso para esto. Inicia sesión con la cuenta correcta.'; // Sin permiso
+        return tr(lang, 'error.permission'); // Sin permiso
       case '54000':
-        return 'Llegaste al límite de mensajes nuevos por hoy. Intenta mañana.'; // Límite anti-spam
+        return tr(lang, 'error.limit'); // Límite anti-spam
       case 'P0002':
-        return 'No encontramos lo que buscas. Puede que ya no esté publicado.'; // No existe
+        return tr(lang, 'error.not_found'); // No existe
     }
-    return 'La base de datos respondió con un error. Intenta de nuevo en un momento.'; // Otro error
+    return tr(lang, 'error.database'); // Otro error
   }
-  return 'Sin conexión o el servicio no respondió. Revisa tu internet e intenta de nuevo.'; // Red u otro
+  return tr(lang, 'error.network'); // Red u otro
 }

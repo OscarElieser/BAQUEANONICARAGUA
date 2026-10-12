@@ -3,6 +3,7 @@
 import Link from 'next/link'; // Enlace a la página de cookies
 import { useEffect, useRef, useState } from 'react'; // Estado, efectos y referencia al panel
 import { browserOptsOut, OPEN_EVENT, readConsent, saveConsent } from '@/lib/consent'; // Lógica del consentimiento
+import { t } from '@/i18n/t'; // Textos traducidos
 
 /**
  * Aviso de cookies. Aparece la primera vez y cuando se pide desde el pie de página.
@@ -50,11 +51,11 @@ export function AvisoCookies({ locale }: { locale: string }) {
       className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-[640px] rounded-m border border-line bg-ground-raised p-5 text-ink shadow-[0_12px_40px_rgba(7,28,27,0.35)] sm:p-6"
     >
       <h2 id="cookies-titulo" className="m-0 font-display text-[24px] font-normal">
-        Tu navegador, tus reglas {/* Título del aviso */}
+        {t(locale, 'cookies.title')} {/* Título del aviso */}
       </h2>
       <p className="mt-2 text-[16px] leading-[25px] text-ink-muted">
-        Guardamos lo necesario para que la página funcione. Si aceptas, también contamos qué páginas se visitan, sin tu nombre, correo ni IP.{' '}
-        <Link href={`/${locale}/cookies`}>Qué guardamos exactamente</Link> {/* Enlace al detalle */}
+        {t(locale, 'cookies.body')}{' '}
+        <Link href={`/${locale}/cookies`}>{t(locale, 'cookies.details')}</Link> {/* Enlace al detalle */}
       </p>
 
       <label className="mt-4 flex items-start gap-3">
@@ -66,21 +67,21 @@ export function AvisoCookies({ locale }: { locale: string }) {
           className="mt-1 h-5 w-5 accent-[var(--accent)]" // Tamaño cómodo y color del sistema
         />
         <span>
-          <span className="font-bold">Medición anónima de navegación</span> {/* Nombre de la categoría */}
+          <span className="font-bold">{t(locale, 'cookies.measure_name')}</span> {/* Nombre de la categoría */}
           <span className="block text-[15px] text-ink-muted">
             {gpc
-              ? 'Tu navegador pide no ser medido (Global Privacy Control), así que queda apagada.' // Explica por qué está bloqueado
-              : 'Opcional. Nos ayuda a saber qué partes se usan. Se borra a los 90 días.'} {/* Explica para qué sirve */}
+              ? t(locale, 'cookies.gpc') // Explica por qué está bloqueado
+              : t(locale, 'cookies.measure_desc')} {/* Explica para qué sirve */}
           </span>
         </span>
       </label>
 
       <div className="mt-5 flex flex-wrap gap-2">
         <button type="button" onClick={() => elegir(false)} className="h-[48px] flex-1 rounded-pill border border-control-border px-5 font-bold text-ink">
-          Solo las necesarias {/* Rechaza la medición */}
+          {t(locale, 'cookies.only_needed')} {/* Rechaza la medición */}
         </button>
         <button type="button" onClick={() => elegir(medicion)} className="h-[48px] flex-1 rounded-pill border border-control-border px-5 font-bold text-ink">
-          Guardar mi elección {/* Guarda lo marcado en el interruptor */}
+          {t(locale, 'cookies.save')} {/* Guarda lo marcado en el interruptor */}
         </button>
       </div>
     </div>

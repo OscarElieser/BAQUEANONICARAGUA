@@ -3,6 +3,7 @@ import type { Locale } from '@/i18n/config'; // Tipo de los idiomas disponibles
 import { ExperienceNav } from './ExperienceNav'; // Selector Descubrir / Mi aventura / Comunidad
 import { SessionButton } from './SessionButton'; // Botón de iniciar sesión o menú del usuario
 import { ThemeToggle } from './ThemeToggle'; // Botón de tema claro / oscuro / automático
+import { LanguageSwitcher } from './LanguageSwitcher'; // Selector de idioma
 
 /** Cabecera común a todas las páginas públicas. */
 export function SiteHeader({ locale }: { locale: Locale }) {
@@ -13,7 +14,8 @@ export function SiteHeader({ locale }: { locale: Locale }) {
       </Link>
       <ExperienceNav locale={locale} /> {/* Las tres experiencias principales */}
       <div className="flex items-center gap-3">
-        <ThemeToggle /> {/* Cambio de tema */}
+        <LanguageSwitcher locale={locale} /> {/* Idioma de la interfaz */}
+        <ThemeToggle locale={locale} /> {/* Cambio de tema */}
         <SessionButton locale={locale} /> {/* Iniciar sesión o menú con "Cerrar sesión" */}
       </div>
     </header>

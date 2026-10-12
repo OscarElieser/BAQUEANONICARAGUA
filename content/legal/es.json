@@ -141,6 +141,7 @@
           "heading": "Necesarios (siempre activos)",
           "items": [
             "nica_consentimiento (cookie, 12 meses): recuerda tu elección sobre la medición.",
+            "locale (cookie, 12 meses): recuerda el idioma que elegiste en el selector de idioma.",
             "theme (almacenamiento local, sin vencimiento): recuerda si elegiste tema claro u oscuro.",
             "Sesión de inicio de sesión (almacenamiento del navegador, hasta que cierres sesión): la guarda el servicio de inicio de sesión solo si entras con tu cuenta."
           ]

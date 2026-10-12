@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart'; // Tipo User de Firebase
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Acceso a los proveedores de Riverpod
 
+import '../../core/i18n/t.dart'; // Textos traducidos
 import '../../core/theme.dart'; // Colores y espaciados del sistema de diseño
 import '../auth/auth_repository.dart'; // Sesión y acciones de autenticación
 import '../auth/sign_in_screen.dart'; // Pantalla de acceso
@@ -85,7 +86,7 @@ class _AccountState extends ConsumerState<_Account> {
         FilledButton.icon(
           onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InboxScreen())), // Abre la bandeja
           icon: const Icon(Icons.chat_bubble_outline), // Icono de mensajes
-          label: const Text('Mis mensajes'), // Texto
+          label: Text(context.t('profile.messages')), // Texto
         ),
         const SizedBox(height: TvSpace.s3), // Espacio
         OutlinedButton(
@@ -94,7 +95,7 @@ class _AccountState extends ConsumerState<_Account> {
             side: BorderSide(color: tv.statusAlert, width: 1.5), // Borde en color de alerta
           ),
           onPressed: _busy ? null : () => _do(repo.signOut, 'Sesión cerrada.'), // Cierra la sesión
-          child: Text(_busy ? 'Cerrando sesión…' : 'Cerrar sesión'), // Texto según el estado
+          child: Text(_busy ? context.t('session.signing_out') : context.t('session.sign_out')), // Texto según el estado
         ),
         if (_message != null) ...[
           const SizedBox(height: TvSpace.s3), // Espacio
@@ -118,7 +119,7 @@ class LegalLink extends StatelessWidget {
       child: TextButton.icon(
         onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const LegalIndexScreen())), // Abre la lista
         icon: const Icon(Icons.info_outline), // Icono de información
-        label: const Text('Información y legal'), // Texto del enlace
+        label: Text(context.t('profile.legal')), // Texto del enlace
       ),
     );
   }

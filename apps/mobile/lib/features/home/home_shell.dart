@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 
+import '../../core/i18n/t.dart'; // Textos traducidos
+
 import '../community/community_screen.dart'; // Pestaña Comunidad
 import '../planner/planner_screen.dart'; // Pestaña Mi aventura
 import '../profile/profile_screen.dart'; // Pestaña de perfil con inicio y cierre de sesión
@@ -31,11 +33,11 @@ class _HomeShellState extends State<HomeShell> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index, // Marca la pestaña activa
         onDestinationSelected: (i) => setState(() => _index = i), // Cambia de pestaña al tocar
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.explore_outlined), label: 'Descubrir'), // Pestaña Descubrir
-          NavigationDestination(icon: Icon(Icons.terrain_outlined), label: 'Mi aventura'), // Pestaña Mi aventura
-          NavigationDestination(icon: Icon(Icons.people_outline), label: 'Comunidad'), // Pestaña Comunidad
-          NavigationDestination(icon: Icon(Icons.person_outline), label: 'Perfil'), // Pestaña Perfil
+        destinations: [
+          NavigationDestination(icon: const Icon(Icons.explore_outlined), label: context.t('nav.discover')), // Pestaña Descubrir
+          NavigationDestination(icon: const Icon(Icons.terrain_outlined), label: context.t('nav.adventure')), // Pestaña Mi aventura
+          NavigationDestination(icon: const Icon(Icons.people_outline), label: context.t('nav.community')), // Pestaña Comunidad
+          NavigationDestination(icon: const Icon(Icons.person_outline), label: context.t('nav.profile')), // Pestaña Perfil
         ],
       ),
     );

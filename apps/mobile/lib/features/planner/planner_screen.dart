@@ -1,24 +1,9 @@
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 import 'package:intl/intl.dart'; // Formato de dinero
 
+import '../../core/i18n/t.dart'; // Textos traducidos
 import '../../core/theme.dart'; // Colores y espaciados
 import 'trip_intent.dart'; // Interpretación del viaje (igual que la web)
-
-const _interestLabel = {
-  'beach': 'Playa', 'food': 'Comida local', 'small_business': 'Pequeños negocios', 'nature': 'Naturaleza', // Intereses 1 a 4
-  'volcano': 'Volcanes', 'culture': 'Cultura', 'history': 'Historia', 'adventure': 'Aventura', // Intereses 5 a 8
-  'coffee': 'Café', 'nightlife': 'Vida nocturna', 'family': 'En familia', // Intereses 9 a 11
-}; // Nombres visibles (mismos que la web)
-
-const _questions = {
-  'travelers': '¿Cuántas personas viajan?', // Falta cuántos son
-  'days': '¿Cuántos días dura el viaje?', // Faltan los días
-  'budget_currency': '¿Tu presupuesto es en dólares o en córdobas?', // Falta la moneda
-  'dates': '¿En qué fechas viajan?', // Faltan las fechas
-  'transport': '¿Tendrán vehículo o usarán transporte público?', // Falta el transporte
-}; // Preguntas para lo que falta (mismas que la web)
-
-const _example = 'Vamos cinco días, somos cuatro, tenemos 600 dólares y queremos playa, buena comida y conocer pequeños negocios.'; // Ejemplo
 
 /// Mi aventura: entiende el viaje en el propio teléfono (funciona sin conexión) y pregunta solo lo que falta.
 class PlannerScreen extends StatefulWidget {
@@ -53,33 +38,38 @@ class _PlannerScreenState extends State<PlannerScreen> {
     final budget = intent == null ? null : budgetBreakdown(intent); // Desglose del presupuesto
     String money(num n, String c) => NumberFormat.simpleCurrency(locale: locale, name: c).format(n); // Dinero con su moneda
     Widget missing(String label) => Text(label, style: TextStyle(color: tv.oroText)); // Dato que falta, en oro
+    final example = context.t('planner.example'); // Ejemplo en un idioma que el intérprete entiende
+    final understoodLanguage = context.langCode == 'es' || context.langCode == 'en'; // El intérprete entiende español e inglés
+    final notGiven = context.t('planner.not_given'); // Texto de dato faltante
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(TvSpace.s6, TvSpace.s6, TvSpace.s6, TvSpace.s12), // Márgenes
       children: [
-        Text('Mi aventura', style: text.displayMedium), // Título
+        Text(context.t('nav.adventure'), style: text.displayMedium), // Título
         const SizedBox(height: TvSpace.s2), // Espacio
-        Text('Escribe con tus palabras: cuántos son, cuántos días, presupuesto y qué les gusta.', style: TextStyle(color: tv.inkMuted)), // Instrucción
+        Text(context.t('planner.hint'), style: TextStyle(color: tv.inkMuted)), // Instrucción
+        if (!understoodLanguage)
+          Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text(context.t('planner.languages_note'), style: TextStyle(color: tv.oroText))), // Aviso honesto de idiomas
         const SizedBox(height: TvSpace.s4), // Espacio
         TextField(
           controller: _controller, // Texto
           minLines: 4, // Cuatro líneas visibles
           maxLines: 8, // Crece hasta ocho
           maxLength: 2000, // Límite
-          decoration: const InputDecoration(labelText: 'Cuéntame tu viaje', hintText: _example, alignLabelWithHint: true), // Etiqueta y ejemplo
+          decoration: InputDecoration(labelText: context.t('planner.label'), hintText: example, alignLabelWithHint: true), // Etiqueta y ejemplo
         ),
         Wrap(
           spacing: TvSpace.s2, // Espacio horizontal
           runSpacing: TvSpace.s2, // Espacio vertical
           crossAxisAlignment: WrapCrossAlignment.center, // Centrado vertical
           children: [
-            FilledButton(onPressed: () => _understand(_controller.text), child: const Text('Entender mi viaje')), // Interpreta
+            FilledButton(onPressed: () => _understand(_controller.text), child: Text(context.t('planner.understand'))), // Interpreta
             TextButton(
               onPressed: () {
-                _controller.text = _example; // Escribe el ejemplo
-                _understand(_example); // Y lo interpreta
+                _controller.text = example; // Escribe el ejemplo
+                _understand(example); // Y lo interpreta
               },
-              child: const Text('Probar con un ejemplo'), // Texto
+              child: Text(context.t('planner.try_example')), // Texto
             ),
           ],
         ),
@@ -93,35 +83,32 @@ class _PlannerScreenState extends State<PlannerScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
                 children: [
-                  Semantics(header: true, child: Text('Esto es lo que entendí', style: text.titleLarge)), // Título
+                  Semantics(header: true, child: Text(context.t('planner.understood'), style: text.titleLarge)), // Título
                   const SizedBox(height: TvSpace.s3), // Espacio
-                  _Fila('Viajeros', intent.travelers == null ? missing('sin indicar') : Text('${intent.travelers}')), // Personas
-                  _Fila('Días', intent.days == null ? missing('sin indicar') : Text('${intent.days}')), // Días
+                  _Fila(context.t('planner.travelers'), intent.travelers == null ? missing(notGiven) : Text('${intent.travelers}')), // Personas
+                  _Fila(context.t('planner.days'), intent.days == null ? missing(notGiven) : Text('${intent.days}')), // Días
                   _Fila(
-                    'Presupuesto', // Etiqueta
+                    context.t('planner.budget'), // Etiqueta
                     budget != null
                         ? Text([
-                            '${money(budget.total, budget.currency)} en total', // Total
-                            if (budget.perPerson != null) '${money(budget.perPerson!, budget.currency)} por persona', // Por persona
-                            if (budget.perPersonPerDay != null) '${money(budget.perPersonPerDay!, budget.currency)} por persona al día', // Por persona al día
+                            context.t('planner.total', {'amount': money(budget.total, budget.currency)}), // Total
+                            if (budget.perPerson != null) context.t('planner.per_person', {'amount': money(budget.perPerson!, budget.currency)}), // Por persona
+                            if (budget.perPersonPerDay != null) context.t('planner.per_person_day', {'amount': money(budget.perPersonPerDay!, budget.currency)}), // Por persona al día
                           ].join(', '))
                         : intent.budget != null
-                            ? missing('${intent.budget!.amount}, falta la moneda') // Hay cantidad pero no moneda
-                            : missing('sin indicar'), // Sin presupuesto
+                            ? missing(context.t('planner.currency_missing', {'amount': intent.budget!.amount})) // Hay cantidad pero no moneda
+                            : missing(notGiven), // Sin presupuesto
                   ),
-                  _Fila('Intereses', intent.interests.isEmpty ? missing('sin indicar') : Text(intent.interests.map((i) => _interestLabel[i] ?? i).join(', '))), // Intereses
-                  if (intent.accessibilityNeeds) const _Fila('Accesibilidad', Text('Solo sugeriré lugares con accesibilidad comprobada.')), // Necesidades de accesibilidad
+                  _Fila(context.t('planner.interests'), intent.interests.isEmpty ? missing(notGiven) : Text(intent.interests.map((i) => context.t('interest.$i')).join(', '))), // Intereses
+                  if (intent.accessibilityNeeds) _Fila(context.t('planner.accessibility'), Text(context.t('planner.accessibility_note'))), // Necesidades de accesibilidad
                   if (intent.missing.isNotEmpty) ...[
                     const SizedBox(height: TvSpace.s4), // Espacio
-                    Text('Para armar rutas reales me falta saber', style: text.titleMedium), // Subtítulo
+                    Text(context.t('planner.missing_title'), style: text.titleMedium), // Subtítulo
                     const SizedBox(height: TvSpace.s1), // Espacio
-                    for (final m in intent.missing.take(2)) Text('• ${_questions[m]}'), // Máximo dos preguntas a la vez
+                    for (final m in intent.missing.take(2)) Text('• ${context.t('question.$m')}'), // Máximo dos preguntas a la vez
                   ],
                   const SizedBox(height: TvSpace.s4), // Espacio
-                  Text(
-                    'Solo uso tarifas verificadas. Lo que no tenga precio confirmado aparecerá como "por cotizar", y los traslados se calculan con un proveedor de mapas.', // Promesa honesta
-                    style: TextStyle(color: tv.inkMuted, fontSize: 14),
-                  ),
+                  Text(context.t('planner.promise'), style: TextStyle(color: tv.inkMuted, fontSize: 14)), // Promesa honesta
                 ],
               ),
             ),

@@ -30,6 +30,8 @@ if (!user) return null; // Sin sesión no hay nada que mostrar
 - Toda tabla nueva lleva RLS y pruebas en `supabase/tests/rls_smoke.sql`.
 - Los colores salen del sistema de diseño (`design/sistema/tokens.json`); `scripts/check_tokens.py` lo verifica.
 - Los recursos del Ops Center se declaran en `apps/web/src/ops/resources.ts` y en `app.admin_resources`; `scripts/ops-resources.test.ts` verifica que coincidan.
+- Los textos de la interfaz se escriben primero en `content/i18n/es.json` y luego en los otros 9 idiomas; `python3 scripts/sync_i18n.py` los valida y los copia a web y Android. Nada de textos de interfaz fijos en el código de pantallas nuevas.
+- Las traducciones hechas sin revisión nativa llevan `status: needs_review` y la web y la app lo dicen.
 - Los textos legales se editan solo en `content/legal/`; `python3 scripts/sync_legal.py` los copia a web y Android.
 - Ningún dato legal o de contacto se inventa: lo que falta va como `[marcador: …]`.
 - La medición de navegación solo corre con consentimiento y nunca guarda datos personales ni rutas privadas.

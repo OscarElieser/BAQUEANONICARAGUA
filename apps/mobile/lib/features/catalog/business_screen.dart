@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart'; // Abrir WhatsApp, llamadas y s
 import '../../core/data/models.dart'; // Datos del catálogo
 import '../../core/data/repositories.dart'; // Acceso al catálogo y mensajería
 import '../../core/data/verification.dart'; // Reglas de verificación y contactos
+import '../../core/i18n/t.dart'; // Idioma actual
 import '../../core/theme.dart'; // Colores y espaciados
 import '../../core/widgets/estado_verificacion.dart'; // "Qué está comprobado"
 import '../../core/widgets/estados.dart'; // Cargando, error y vacío
@@ -129,7 +130,7 @@ class _EscribirNegocioState extends ConsumerState<_EscribirNegocio> {
       setState(() => _open = false); // Cierra el formulario
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => ConversationScreen(conversationId: id, title: widget.businessName))); // Abre la conversación
     } catch (e) {
-      if (mounted) setState(() => _error = dataErrorMessage(e)); // Muestra el error
+      if (mounted) setState(() => _error = dataErrorMessage(e, context.langCode)); // Muestra el error
     } finally {
       if (mounted) setState(() => _sending = false); // Libera el botón
     }

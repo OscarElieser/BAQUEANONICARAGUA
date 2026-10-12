@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart'; // Tipo User
 import 'package:flutter/material.dart'; // Componentes de Flutter
+import 'package:flutter_localizations/flutter_localizations.dart'; // Textos del sistema en cada idioma
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Reemplazo de proveedores
 import 'package:flutter_test/flutter_test.dart'; // Herramientas de pruebas de widgets
+import 'package:intl/date_symbol_data_local.dart'; // Formatos de fecha por idioma
 import 'package:nica_app/core/data/models.dart'; // Datos
 import 'package:nica_app/core/data/repositories.dart'; // Interfaces a reemplazar
 import 'package:nica_app/core/theme.dart'; // Tema
@@ -58,16 +60,24 @@ class FakeMessaging implements MessagingRepository {
 }
 
 /// Monta una pantalla con los datos falsos y sin sesión.
-Widget app(Widget home, {FakeMessaging? messaging}) => ProviderScope(
+Widget app(Widget home, {FakeMessaging? messaging, Locale locale = const Locale('es')}) => ProviderScope(
       overrides: [
         catalogRepositoryProvider.overrideWithValue(FakeCatalog()), // Catálogo falso
         messagingRepositoryProvider.overrideWithValue(messaging ?? FakeMessaging()), // Mensajería falsa
         authStateProvider.overrideWith((ref) => Stream<User?>.value(null)), // Sin sesión
       ],
-      child: MaterialApp(theme: buildTheme(Brightness.light, webFonts: false), home: Scaffold(body: home)), // Tema sin descargar fuentes
+      child: MaterialApp(
+        theme: buildTheme(Brightness.light, webFonts: false), // Tema sin descargar fuentes
+        locale: locale, // Idioma de la prueba (español por defecto)
+        supportedLocales: const [Locale('es'), Locale('en'), Locale('fr'), Locale('ja')], // Idiomas usados en las pruebas
+        localizationsDelegates: GlobalMaterialLocalizations.delegates, // Textos del sistema en esos idiomas
+        home: Scaffold(body: home), // Pantalla a probar
+      ),
     );
 
 void main() {
+  setUpAll(() => initializeDateFormatting()); // Carga los formatos de fecha de todos los idiomas
+
   testWidgets('ficha de negocio: marca patrocinado, solo enlaza contactos válidos y no inventa tarifas', (tester) async {
     await tester.pumpWidget(app(const BusinessScreen(slug: 'comedor', name: 'Comedor de prueba'))); // Abre la ficha
     await tester.pumpAndSettle(); // Espera los datos
@@ -96,6 +106,16 @@ void main() {
     await tester.scrollUntilVisible(find.text('Una tarde en el lago'), 200); // Baja hasta el relato
     expect(find.textContaining('Promocional'), findsOneWidget); // Aviso promocional
     expect(find.text('3 reacciones, 1 comentarios'), findsOneWidget); // Interacción informativa
+  });
+
+  testWidgets('en francés: el planificador avisa que entiende español e inglés y usa el ejemplo en inglés', (tester) async {
+    await tester.pumpWidget(app(const PlannerScreen(), locale: const Locale('fr'))); // Teléfono en francés
+    expect(find.text('Mon aventure'), findsOneWidget); // Título traducido
+    expect(find.text('Pour l\'instant, je comprends les voyages décrits en espagnol ou en anglais.'), findsOneWidget); // Aviso honesto
+    await tester.tap(find.text('Essayer un exemple')); // Usa el ejemplo (en inglés)
+    await tester.pumpAndSettle(); // Espera el resultado
+    expect(find.text('Voici ce que j\'ai compris'), findsOneWidget); // Resultado en francés
+    expect(find.text('4'), findsOneWidget); // Entendió cuatro viajeros
   });
 
   testWidgets('conversación: burbujas, mensaje eliminado y envío', (tester) async {

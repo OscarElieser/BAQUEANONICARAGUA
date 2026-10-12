@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart'; // Abrir el registro en la web
 import '../../core/data/models.dart'; // Datos de la comunidad
 import '../../core/data/repositories.dart'; // Acceso al catálogo
 import '../../core/env.dart'; // Dirección de la web
+import '../../core/i18n/t.dart'; // Textos traducidos
 import '../../core/theme.dart'; // Colores y espaciados
 import '../../core/widgets/estados.dart'; // Cargando, error y vacío
 import '../../core/widgets/franja_tejida.dart'; // Franja tejida de la comunidad
@@ -36,12 +37,9 @@ class CommunityScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
               children: [
-                Text('Detrás de cada viaje hay alguien con nombre', style: text.displayMedium), // Título
+                Text(context.t('community.title'), style: text.displayMedium), // Título
                 const SizedBox(height: TvSpace.s3), // Espacio
-                Text(
-                  'La Vitrina de Nuestra Gente da visibilidad gratuita a comedores, guías, artesanos y fincas de todo el país. Escríbeles directo, sin intermediarios ni comisiones.', // Qué es
-                  style: text.bodyLarge?.copyWith(color: tv.inkMuted),
-                ),
+                Text(context.t('community.intro'), style: text.bodyLarge?.copyWith(color: tv.inkMuted)), // Qué es la Vitrina
                 const SizedBox(height: TvSpace.s6), // Espacio
                 Wrap(
                   spacing: TvSpace.s2, // Espacio horizontal
@@ -49,20 +47,20 @@ class CommunityScreen extends ConsumerWidget {
                   children: [
                     FilledButton(
                       onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SearchScreen(query: '', kind: 'business', title: 'Nuestra gente'))), // Lista de negocios publicados
-                      child: const Text('Conocer a la gente'), // Texto
+                      child: Text(context.t('community.meet')), // Texto
                     ),
                     OutlinedButton(
                       onPressed: Env.webUrl.isEmpty
                           ? () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('El registro de negocios aún no está disponible en Android. No disponible todavía.'))) // Honesto si no hay web configurada
                           : () => launchUrl(Uri.parse('${Env.webUrl}/es/comunidad/registrar'), mode: LaunchMode.externalApplication), // Abre el registro en la web
-                      child: const Text('Publicar mi negocio'), // Texto
+                      child: Text(context.t('community.publish')), // Texto
                     ),
                   ],
                 ),
                 const SizedBox(height: TvSpace.s8), // Espacio
-                Semantics(header: true, child: Text('Relatos recientes', style: text.headlineSmall)), // Título
+                Semantics(header: true, child: Text(context.t('community.stories'), style: text.headlineSmall)), // Título
                 const SizedBox(height: TvSpace.s1), // Espacio
-                Text('En orden cronológico. No ordenamos por interacción ni vendemos posiciones.', style: TextStyle(color: tv.inkMuted, fontSize: 14)), // Regla del feed
+                Text(context.t('community.order_note'), style: TextStyle(color: tv.inkMuted, fontSize: 14)), // Regla del feed
               ],
             ),
           ),
@@ -70,7 +68,7 @@ class CommunityScreen extends ConsumerWidget {
             loading: () => const Cargando(), // Mientras carga
             error: (e, _) => ErrorConReintento(error: e, onRetry: () => ref.invalidate(feedProvider)), // Error claro
             data: (posts) => posts.isEmpty
-                ? const Vacio(text: 'Todavía no hay relatos publicados. Sé la primera persona en compartir uno desde la web.') // Sin relatos
+                ? Vacio(text: context.t('community.empty')) // Sin relatos
                 : Column(
                     children: [
                       for (final p in posts)
@@ -81,14 +79,14 @@ class CommunityScreen extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
                             children: [
                               Text(
-                                [p.authorName ?? 'Viajero', DateFormat.yMMMd(locale).format(p.createdAt.toLocal()), if (p.isPromotional) 'Promocional'].join(', '), // Autor, fecha y aviso promocional
+                                [p.authorName ?? context.t('community.traveler'), DateFormat.yMMMd(locale).format(p.createdAt.toLocal()), if (p.isPromotional) context.t('community.promotional')].join(', '), // Autor, fecha y aviso promocional
                                 style: TextStyle(color: tv.inkMuted, fontSize: 14),
                               ),
                               if (p.title != null) Padding(padding: const EdgeInsets.only(top: TvSpace.s1), child: Text(p.title!, style: text.titleMedium)), // Título del relato
                               const SizedBox(height: TvSpace.s1), // Espacio
                               Text(p.body, maxLines: 4, overflow: TextOverflow.ellipsis), // Texto (resumido)
                               const SizedBox(height: TvSpace.s1), // Espacio
-                              Text('${p.reactions} reacciones, ${p.comments} comentarios', style: TextStyle(color: tv.inkMuted, fontSize: 14)), // Interacción (solo informativa)
+                              Text(context.t('community.interactions', {'reactions': p.reactions, 'comments': p.comments}), style: TextStyle(color: tv.inkMuted, fontSize: 14)), // Interacción (solo informativa)
                             ],
                           ),
                         ),

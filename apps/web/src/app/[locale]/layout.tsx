@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { Young_Serif, Atkinson_Hyperlegible } from 'next/font/google';
 import { locales, type Locale } from '@/i18n/config';
 import { SiteHeader } from '@/components/SiteHeader';
+import { t } from '@/i18n/t'; // Textos traducidos
 import { SiteFooter } from '@/components/SiteFooter'; // Pie con páginas legales y preferencias de cookies
 import { AvisoCookies } from '@/components/AvisoCookies'; // Aviso de cookies con consentimiento real
 import { MedicionNavegacion } from '@/components/MedicionNavegacion'; // Medición anónima, solo con consentimiento
@@ -15,11 +16,15 @@ const atkinson = Atkinson_Hyperlegible({ weight: ['400', '700'], subsets: ['lati
 // Aplica el tema guardado antes de pintar (evita parpadeo). Tolera storage bloqueado.
 const themeBoot = `try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}`;
 
-/** Título de la pestaña: cada página pone el suyo y se agrega el nombre del sitio. */
-export const metadata: Metadata = {
-  title: { default: 'Nicaragua, curva por curva', template: '%s | Nicaragua' }, // Título por defecto y plantilla
-  description: 'Territorios, destinos, negocios verificados, cultura y música de Nicaragua.', // Descripción para buscadores
-};
+/** Título de la pestaña en el idioma de la página: cada página pone el suyo y se agrega el nombre del sitio. */
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params; // Idioma de la página
+  return {
+    title: { default: t(locale, 'meta.title_default'), template: '%s | Nicaragua' }, // Título por defecto y plantilla
+    description: t(locale, 'meta.description'), // Descripción para buscadores
+    alternates: { languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])) }, // Avisa a los buscadores de las versiones en otros idiomas
+  };
+}
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -43,7 +48,7 @@ export default async function LocaleLayout({
       </head>
       <body>
         <a href="#contenido" className="saltar">
-          Saltar al contenido {/* Primer elemento con teclado: evita recorrer toda la cabecera */}
+          {t(locale, 'a11y.skip')} {/* Primer elemento con teclado: evita recorrer toda la cabecera */}
         </a>
         <SiteHeader locale={locale as Locale} />
         <div id="contenido" tabIndex={-1} className="outline-none">

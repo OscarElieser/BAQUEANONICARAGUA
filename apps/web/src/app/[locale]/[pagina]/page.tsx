@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'; // Respuesta 404
 import { locales } from '@/i18n/config'; // Idiomas disponibles
 import { TextoLegal } from '@/components/TextoLegal'; // Texto con marcadores resaltados
 import { legalFor, legalSlugs } from '@/lib/legal'; // Textos legales
+import { t } from '@/i18n/t'; // Textos de la interfaz
 
 export const dynamicParams = false; // Solo existen las páginas declaradas: cualquier otra dirección da 404
 
@@ -20,8 +21,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 /** Convierte "2026-10-12" en "12 de octubre de 2026". */
-function fechaLarga(iso: string): string {
-  return new Intl.DateTimeFormat('es-NI', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T00:00:00Z`)); // Fecha en español de Nicaragua
+function fechaLarga(iso: string, locale: string): string {
+  return new Intl.DateTimeFormat(locale === 'es' ? 'es-NI' : locale, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T00:00:00Z`)); // Fecha en español de Nicaragua
 }
 
 /** Página legal o institucional: Sobre nosotros, Privacidad, Cookies, Términos, Accesibilidad, Contacto. */
@@ -38,20 +39,20 @@ export default async function PaginaLegal({ params }: { params: Promise<{ locale
         <h1 className="m-0 font-display text-[40px] font-normal leading-[1.02] sm:text-[56px]">{page.title}</h1> {/* Título */}
         <p className="mt-4 text-[19px] leading-[30px] text-ink-muted">{page.summary}</p> {/* Resumen */}
         <div className="mt-5 flex flex-wrap gap-2 text-[15px]">
-          <span className="rounded-pill bg-ground-raised px-3 py-1">Versión del {fechaLarga(file.version)}</span> {/* Fecha de la versión vigente */}
+          <span className="rounded-pill bg-ground-raised px-3 py-1">{t(locale, 'legal.version', { date: fechaLarga(file.version, locale) })}</span> {/* Fecha de la versión vigente */}
           <span className="rounded-pill border border-dashed border-oro-text px-3 py-1 text-oro-text">{file.status_note}</span> {/* Aviso de borrador */}
         </div>
         {!translated && (
-          <p lang="es" className="mt-4 text-[15px] text-ink-muted">
-            Este texto está disponible por ahora solo en español. {/* Aviso honesto cuando falta la traducción */}
+          <p className="mt-4 text-[15px] text-ink-muted">
+            {t(locale, 'legal.spanish_only')} {/* Aviso honesto cuando falta la traducción (en el idioma de la persona) */}
           </p>
         )}
       </header>
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[240px_minmax(0,64ch)]">
-        <nav aria-label="En esta página" className="lg:sticky lg:top-6 lg:self-start">
+        <nav aria-label={t(locale, 'legal.on_this_page')} className="lg:sticky lg:top-6 lg:self-start">
           <details open className="group">
-            <summary className="cursor-pointer list-none font-bold">En esta página</summary> {/* Índice plegable en el teléfono */}
+            <summary className="cursor-pointer list-none font-bold">{t(locale, 'legal.on_this_page')}</summary> {/* Índice plegable en el teléfono */}
             <ol className="m-0 mt-3 list-none space-y-1 p-0 text-[15px]">
               {page.sections.map((s, i) => (
                 <li key={s.heading}>
@@ -88,7 +89,7 @@ export default async function PaginaLegal({ params }: { params: Promise<{ locale
         </ol>
       </div>
 
-      <nav aria-label="Otras páginas" className="mt-6 max-w-[64ch] border-t border-line pt-6">
+      <nav aria-label={t(locale, 'legal.other_pages')} className="mt-6 max-w-[64ch] border-t border-line pt-6">
         <ul className="m-0 flex list-none flex-wrap gap-x-6 gap-y-2 p-0">
           {file.pages
             .filter((p) => p.slug !== page.slug) // Todas menos la actual

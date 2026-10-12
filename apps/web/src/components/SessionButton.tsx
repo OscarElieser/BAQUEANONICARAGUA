@@ -4,6 +4,7 @@ import Link from 'next/link'; // Enlaces internos sin recargar la página
 import { useState } from 'react'; // Estado local
 import { cerrarSesion } from '@/lib/auth'; // Función para cerrar sesión
 import { useSession } from '@/lib/useSession'; // Estado de la sesión
+import { t } from '@/i18n/t'; // Textos traducidos
 
 /** Botón de la cabecera: "Iniciar sesión" o el nombre del usuario con "Cerrar sesión". */
 export function SessionButton({ locale }: { locale: string }) {
@@ -18,12 +19,12 @@ export function SessionButton({ locale }: { locale: string }) {
         href={`/${locale}/cuenta`} // Página de inicio de sesión
         className="flex h-11 items-center rounded-pill border border-oro px-[18px] text-[15px] font-bold text-ink no-underline" // Botón con borde dorado
       >
-        Iniciar sesión {/* Texto del botón */}
+        {t(locale, 'session.sign_in')} {/* Texto del botón */}
       </Link>
     );
   }
 
-  const name = session.user.displayName || session.user.email || 'Mi cuenta'; // Nombre visible, o correo si no hay nombre
+  const name = session.user.displayName || session.user.email || t(locale, 'session.my_account'); // Nombre visible, o correo si no hay nombre
 
   async function salir() {
     setBusy(true); // Muestra que estamos cerrando
@@ -51,13 +52,13 @@ export function SessionButton({ locale }: { locale: string }) {
         <div role="menu" className="absolute right-0 z-10 mt-2 flex w-60 flex-col gap-1 rounded-m bg-ground-raised p-2 shadow-none ring-1 ring-line">
           {!session.user.emailVerified && (
             // Aviso si el correo aún no está verificado
-            <p className="m-0 px-3 py-2 text-sm text-oro-text">Tu correo no está verificado.</p>
+            <p className="m-0 px-3 py-2 text-sm text-oro-text">{t(locale, 'session.unverified')}</p>
           )}
           <Link role="menuitem" href={`/${locale}/cuenta`} onClick={() => setOpen(false)} className="rounded-[12px] px-3 py-2 text-ink no-underline hover:bg-ground">
-            Mi cuenta {/* Enlace a la página de la cuenta */}
+            {t(locale, 'session.my_account')} {/* Enlace a la página de la cuenta */}
           </Link>
           <Link role="menuitem" href={`/${locale}/mensajes`} onClick={() => setOpen(false)} className="rounded-[12px] px-3 py-2 text-ink no-underline hover:bg-ground">
-            Mensajes {/* Enlace a la bandeja */}
+            {t(locale, 'session.messages')} {/* Enlace a la bandeja */}
           </Link>
           <button
             role="menuitem" // Elemento del menú
@@ -66,7 +67,7 @@ export function SessionButton({ locale }: { locale: string }) {
             disabled={busy} // Evita doble clic
             className="rounded-[12px] px-3 py-2 text-left font-bold text-status-alert hover:bg-ground disabled:opacity-45" // Estilo de acción de salida
           >
-            {busy ? 'Cerrando sesión…' : 'Cerrar sesión'} {/* Texto según el estado */}
+            {busy ? t(locale, 'session.signing_out') : t(locale, 'session.sign_out')} {/* Texto según el estado */}
           </button>
         </div>
       )}

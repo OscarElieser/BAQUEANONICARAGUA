@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'; // Proveedores de River
 
 import '../../../core/data/models.dart'; // Datos del catálogo
 import '../../../core/data/repositories.dart'; // Acceso al catálogo
+import '../../../core/i18n/t.dart'; // Textos traducidos
 import '../../../core/theme.dart'; // Colores y espaciados
 import '../../../core/widgets/estados.dart'; // Cargando, error y vacío
 import '../../../core/widgets/relieve_3d.dart'; // Relieve 3D interactivo
@@ -33,10 +34,9 @@ class TerritoriesScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
               children: [
-                Text('Nicaragua, curva por curva', style: text.displayLarge), // Título
+                Text(context.t('home.title'), style: text.displayLarge), // Título
                 const SizedBox(height: TvSpace.s3), // Espacio
-                Text('Elige un territorio o busca un volcán, un pueblo o un plato. Cada ficha indica su fuente y la fecha en que se comprobó.',
-                    style: text.bodyMedium?.copyWith(color: tv.inkMuted)), // Explicación
+                Text(context.t('discover.intro'), style: text.bodyMedium?.copyWith(color: tv.inkMuted)), // Explicación
                 const SizedBox(height: TvSpace.s4), // Espacio
                 _Buscador(onSearch: (q) => Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchScreen(query: q)))), // Busca y abre resultados
               ],
@@ -47,7 +47,7 @@ class TerritoriesScreen extends ConsumerWidget {
           loading: () => const SliverToBoxAdapter(child: Cargando()), // Mientras carga
           error: (e, _) => SliverToBoxAdapter(child: ErrorConReintento(error: e, onRetry: () => ref.invalidate(territoriesProvider))), // Error claro
           data: (items) => items.isEmpty
-              ? const SliverToBoxAdapter(child: Vacio(text: 'Los territorios se publican a medida que el equipo editorial verifica sus fuentes. Vuelve pronto.')) // Aún nada publicado
+              ? SliverToBoxAdapter(child: Vacio(text: context.t('home.empty'))) // Aún nada publicado
               : SliverList.separated(
                   itemCount: items.length, // Cantidad de territorios
                   separatorBuilder: (_, __) => const Divider(indent: 20, endIndent: 20), // Línea entre filas
@@ -96,9 +96,9 @@ class _BuscadorState extends State<_Buscador> {
       textInputAction: TextInputAction.search, // Botón "buscar" en el teclado
       onSubmitted: (_) => _submit(), // Busca al confirmar
       decoration: InputDecoration(
-        labelText: 'Buscar en el catálogo', // Etiqueta accesible
-        hintText: 'Un volcán, un pueblo, un plato…', // Ejemplo
-        suffixIcon: IconButton(icon: const Icon(Icons.search), tooltip: 'Buscar', onPressed: _submit), // Botón de búsqueda
+        labelText: context.t('discover.search_label'), // Etiqueta accesible
+        hintText: context.t('home.search_placeholder'), // Ejemplo
+        suffixIcon: IconButton(icon: const Icon(Icons.search), tooltip: context.t('discover.search_button'), onPressed: _submit), // Botón de búsqueda
       ),
     );
   }

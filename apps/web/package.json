@@ -15,7 +15,6 @@
     "firebase": "^11.0.0",
     "maplibre-gl": "^6.4.1",
     "next": "^15.0.0",
-    "next-intl": "^3.20.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "three": "^0.169.0"

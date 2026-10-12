@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 
 import '../data/repositories.dart'; // Mensajes de error claros
+import '../i18n/t.dart'; // Textos traducidos
 import '../theme.dart'; // Colores y espaciados
 
 /// Cargando: indicador con descripción para lectores de pantalla.
@@ -8,10 +9,10 @@ class Cargando extends StatelessWidget {
   const Cargando({super.key}); // Constructor constante
 
   @override
-  Widget build(BuildContext context) => const Center(
+  Widget build(BuildContext context) => Center(
         child: Padding(
-          padding: EdgeInsets.all(TvSpace.s8), // Margen
-          child: CircularProgressIndicator(semanticsLabel: 'Cargando'), // Indicador accesible
+          padding: const EdgeInsets.all(TvSpace.s8), // Margen
+          child: CircularProgressIndicator(semanticsLabel: context.t('common.loading')), // Indicador accesible
         ),
       );
 }
@@ -34,11 +35,11 @@ class ErrorConReintento extends StatelessWidget {
         children: [
           Semantics(
             liveRegion: true, // Se anuncia al aparecer
-            child: Text(dataErrorMessage(error), style: TextStyle(color: notConfigured ? tv.ink : tv.statusAlert)), // Mensaje claro
+            child: Text(dataErrorMessage(error, context.langCode), style: TextStyle(color: notConfigured ? tv.ink : tv.statusAlert)), // Mensaje claro
           ),
           if (!notConfigured) ...[
             const SizedBox(height: TvSpace.s3), // Espacio
-            OutlinedButton(onPressed: onRetry, child: const Text('Reintentar')), // Vuelve a pedir los datos
+            OutlinedButton(onPressed: onRetry, child: Text(context.t('common.retry'))), // Vuelve a pedir los datos
           ],
         ],
       ),
