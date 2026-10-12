@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/theme.dart';
-import '../../../core/widgets/curvas_de_nivel.dart';
+import '../../../core/widgets/relieve_3d.dart'; // Relieve 3D interactivo
 
 /// Territorios publicados (RLS filtra los borradores).
 final territoriesProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {
@@ -29,9 +29,9 @@ class TerritoriesScreen extends ConsumerWidget {
       slivers: [
         SliverToBoxAdapter(
           child: Container(
-            height: 220,
+            height: 280, // Alto del relieve 3D
             color: tv.groundRaised,
-            child: const CurvasDeNivel(semanticLabel: 'Curvas de nivel de un volcán'),
+            child: const RelieveVivo3D(), // Relieve 3D que se gira con el dedo
           ),
         ),
         SliverPadding(

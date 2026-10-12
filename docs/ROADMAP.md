@@ -35,6 +35,7 @@ Regla: un módulo solo pasa a `probado` cuando cumple los criterios de la secci�
 | Android Flutter | en desarrollo | Esqueleto Riverpod + lectura de territorios. No compilado (sin SDK en este entorno). |
 | CI GitHub Actions | en desarrollo | `ci.yml` escrito, no ejecutado. **Bloqueado**: repositorio. |
 | Despliegue (Hostinger/Cloudflare) | bloqueado | Falta plan Hostinger y dominio. |
+| Relieve vivo 3D | en desarrollo | Web: Three.js con capas de curvas de nivel, giro por arrastre, cimas tocables, pausa fuera de pantalla; versión SVG automática con movimiento reducido, ahorro de datos o sin WebGL. Android: proyección en perspectiva con giro por gesto y prueba de widget; se detiene con "quitar animaciones". |
 | Diseño: tres direcciones | probado | `design/fase1-direcciones/`: A Curvas de nivel, B Hamaca y añil, C Cocibolca (web + Android). |
 | Sistema de diseño "Territorios vivos" | en desarrollo | Síntesis elegida: base A + franja tejida de B + Atkinson Hyperlegible de C. `design/sistema/`, `docs/DESIGN_SYSTEM.md`. Contraste AA calculado en ambos temas; `scripts/check_tokens.py` verifica que web y Android usan los mismos colores (en CI). |
 | Web con el sistema aplicado | en desarrollo | Portada Descubrir, página de territorio, selector de experiencia, tema claro/oscuro/automático, páginas honestas "No disponible todavía" para Mi aventura, Comunidad, Mapa y Cuenta. Sin compilar aún. |
