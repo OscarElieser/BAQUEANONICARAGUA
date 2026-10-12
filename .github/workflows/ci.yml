@@ -83,7 +83,7 @@ jobs:
       - run: flutter pub get
       - name: Análisis
         run: |
-          flutter analyze --no-fatal-infos --format=machine > analyze.txt 2>&1 || status=$?
+          dart analyze --format=machine > analyze.txt 2>&1 || status=$?
           # Publica cada error/aviso como anotación visible en GitHub
           grep -E "^(ERROR|WARNING)\|" analyze.txt | head -n 40 | while IFS='|' read -r sev type code file line col len msg; do
             rel="apps/mobile/${file#*apps/mobile/}"
