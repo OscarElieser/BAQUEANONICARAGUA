@@ -139,6 +139,25 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
     - Android tiene la portada, el explorador, la galería en arco, el login de vidrio y la palabra gigante. El Ops Center y los planes solo están en la web.
     - Regla aprendida: no importar `react-dom` en la web (el proyecto no trae sus tipos y CI falla).
 
+18. **"Hacerlo más real" (12 de octubre de 2026):**
+    - El dueño eligió usar fotos de Wikimedia Commons ahora y reemplazarlas por fotos propias después.
+    - Cómo se consiguen las fotos:
+      - el flujo "Datos de fotos" (`scripts/fotos/buscar_fotos.py`) busca candidatas en Commons y las deja en `refs/datos/fotos`;
+      - solo entran fotos tomadas en Nicaragua con licencia libre (CC0, dominio público, CC BY o CC BY-SA);
+      - las 20 finales se eligieron a mano, mirándolas una por una.
+    - Dónde viven:
+      - el catálogo único es `content/fotos/fotos.json` (lugar, autor, licencia y origen);
+      - las imágenes van en WebP de 1600 y 800 px en `apps/web/public/fotos`;
+      - `scripts/sync_fotos.py` valida el catálogo y lo copia a web y Android (paso de CI).
+    - Dónde se usan, siempre con crédito visible o en `/creditos`:
+      - la portada, dentro de la ventana de pincel;
+      - el explorador;
+      - la galería, con la silueta del territorio en la esquina;
+      - la ficha de cada territorio;
+      - Android, que además tiene su propia pantalla de créditos.
+    - Las ilustraciones quedan como respaldo donde no haya foto.
+    - Próximo paso propuesto: relieves con alturas reales (modelo de elevación público, generado en Actions) y un mapa con proveedor de teselas cuando el dueño lo elija.
+
 ## 4b. Estado del proyecto oficial (revisado el 2026-10-12)
 
 - Supabase `nupjhqrvxjrngtpslfjq`: las 15 migraciones originales ya están aplicadas por el dueño. Hay 17 territorios, todos en borrador (0 publicados), y ningún destino ni negocio. `app.settings.firebase_project_id` está vacío (el seed no corrió).
