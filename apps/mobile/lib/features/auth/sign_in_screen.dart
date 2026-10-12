@@ -75,7 +75,6 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final tv = context.tv; // Colores del tema actual
     final text = Theme.of(context).textTheme; // Estilos de texto del tema
     final title = switch (_mode) {
       _Mode.signIn => context.t('auth.sign_in_title'), // Título al iniciar sesión
@@ -83,103 +82,186 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       _Mode.reset => context.t('auth.reset_title'), // Título al recuperar
     };
 
-    return ListView(
-      padding: const EdgeInsets.all(TvSpace.s6), // Margen alrededor del contenido
-      children: [
-        Text(title, style: text.displayMedium), // Título de la vista
-        const SizedBox(height: TvSpace.s3), // Espacio
-        Text(
-          context.t('auth.intro'), // Para qué sirve la cuenta
-          style: text.bodyMedium?.copyWith(color: tv.inkMuted), // Texto secundario
-        ),
-        const SizedBox(height: TvSpace.s6), // Espacio
-        Form(
-          key: _form, // Llave para validar
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch, // Campos a todo el ancho
+    const marfil = TvColors.bandMarfil; // Tinta clara sobre la noche
+    const tenue = Color(0xFFC9D8D0); // Texto secundario (11.8:1 sobre azul nocturno)
+    final borde = marfil.withValues(alpha: 0.16); // Borde fino del vidrio
+    InputDecoration campo(String etiqueta, IconData icono, {String? ayuda}) => InputDecoration(
+          labelText: etiqueta, // Etiqueta siempre visible
+          helperText: ayuda, // Ayuda opcional
+          prefixIcon: Icon(icono, color: tenue, size: 20), // Icono a la izquierda
+          filled: true, // Fondo de vidrio
+          fillColor: marfil.withValues(alpha: 0.06), // Casi transparente
+          labelStyle: const TextStyle(color: tenue), // Etiqueta legible
+          helperStyle: const TextStyle(color: tenue), // Ayuda legible
+          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: marfil.withValues(alpha: 0.18))), // Borde en reposo
+          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: TvColors.marcaTurquesaClaro, width: 1.5)), // Borde activo
+          errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFFF5B49A))), // Borde con error
+          focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFFF5B49A), width: 1.5)), // Error activo
+          errorStyle: const TextStyle(color: Color(0xFFF5B49A)), // Texto de error legible sobre oscuro
+        ); // Estilo común de los campos
+
+    return Container(
+      decoration: const BoxDecoration(color: TvColors.marcaNocturno), // Noche de fondo
+      child: Stack(
+        children: [
+          const Positioned.fill(child: ExcludeSemantics(child: CustomPaint(painter: _ArcoDeLuz()))), // Arco de luz con los colores de la marca (decoración)
+          ListView(
+            padding: const EdgeInsets.fromLTRB(TvSpace.s4, TvSpace.s8, TvSpace.s4, TvSpace.s8), // Márgenes
             children: [
-              if (_mode == _Mode.signUp) ...[
-                TextFormField(
-                  controller: _name, // Texto del nombre
-                  decoration: InputDecoration(labelText: context.t('auth.name')), // Etiqueta visible
-                  textCapitalization: TextCapitalization.words, // Mayúscula al inicio de cada palabra
-                  autofillHints: const [AutofillHints.name], // Permite autocompletar el nombre
-                  validator: (v) => (v ?? '').trim().isEmpty ? context.t('auth.name_required') : null, // Obligatorio
+              Container(
+                padding: const EdgeInsets.all(TvSpace.s6), // Relleno de la tarjeta
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(28), // Esquinas suaves
+                  border: Border.all(color: borde), // Borde de vidrio
+                  gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [marfil.withValues(alpha: 0.10), TvColors.marcaNocturno.withValues(alpha: 0.75)]), // Brillo arriba
                 ),
-                const SizedBox(height: TvSpace.s4), // Espacio
-              ],
-              TextFormField(
-                controller: _email, // Texto del correo
-                decoration: InputDecoration(labelText: context.t('auth.email')), // Etiqueta visible
-                keyboardType: TextInputType.emailAddress, // Teclado con @
-                autofillHints: const [AutofillHints.email], // Permite autocompletar el correo
-                validator: (v) => (v ?? '').contains('@') ? null : context.t('auth.email_invalid'), // Validación básica
-              ),
-              if (_mode != _Mode.reset) ...[
-                const SizedBox(height: TvSpace.s4), // Espacio
-                TextFormField(
-                  controller: _password, // Texto de la contraseña
-                  decoration: InputDecoration(
-                    labelText: context.t('auth.password'), // Etiqueta visible
-                    helperText: _mode == _Mode.signUp ? context.t('auth.password_hint') : null, // Ayuda al crear cuenta
+                child: Theme(
+                  data: Theme.of(context).copyWith(textTheme: Theme.of(context).textTheme.apply(bodyColor: marfil, displayColor: marfil)), // Texto claro dentro de la tarjeta
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch, // A todo el ancho
+                    children: [
+                      Text(context.t('auth.intro'), style: text.bodyMedium?.copyWith(color: tenue)), // Para qué sirve la cuenta
+                      const SizedBox(height: TvSpace.s4), // Espacio
+                      if (_mode != _Mode.reset)
+                        Align(
+                          alignment: Alignment.centerLeft, // Pestañas a la izquierda
+                          child: SegmentedButton<_Mode>(
+                            segments: [
+                              ButtonSegment(value: _Mode.signIn, label: Text(context.t('session.sign_in'))), // Iniciar sesión
+                              ButtonSegment(value: _Mode.signUp, label: Text(context.t('auth.create'))), // Crear cuenta
+                            ],
+                            selected: {_mode}, // Vista actual
+                            showSelectedIcon: false, // Sin marca de verificación
+                            style: SegmentedButton.styleFrom(foregroundColor: tenue, selectedForegroundColor: marfil, selectedBackgroundColor: marfil.withValues(alpha: 0.14), side: BorderSide(color: borde)), // Pestañas de vidrio
+                            onSelectionChanged: (v) => setState(() {
+                              _mode = v.first; // Cambia de vista
+                              _error = null; // Limpia errores
+                              _info = null; // Limpia avisos
+                            }),
+                          ),
+                        ),
+                      const SizedBox(height: TvSpace.s4), // Espacio
+                      Semantics(header: true, child: Text(title, style: text.headlineSmall?.copyWith(color: marfil, fontWeight: FontWeight.w700))), // Título de la vista
+                      const SizedBox(height: TvSpace.s4), // Espacio
+                      Form(
+                        key: _form, // Llave para validar
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch, // Campos a todo el ancho
+                          children: [
+                            if (_mode == _Mode.signUp) ...[
+                              TextFormField(
+                                controller: _name, // Texto del nombre
+                                style: const TextStyle(color: marfil), // Texto escrito, claro
+                                decoration: campo(context.t('auth.name'), Icons.person_outline), // Etiqueta e icono
+                                textCapitalization: TextCapitalization.words, // Mayúscula al inicio de cada palabra
+                                autofillHints: const [AutofillHints.name], // Permite autocompletar el nombre
+                                validator: (v) => (v ?? '').trim().isEmpty ? context.t('auth.name_required') : null, // Obligatorio
+                              ),
+                              const SizedBox(height: TvSpace.s4), // Espacio
+                            ],
+                            TextFormField(
+                              controller: _email, // Texto del correo
+                              style: const TextStyle(color: marfil), // Texto escrito, claro
+                              decoration: campo(context.t('auth.email'), Icons.mail_outline), // Etiqueta e icono
+                              keyboardType: TextInputType.emailAddress, // Teclado con @
+                              autofillHints: const [AutofillHints.email], // Permite autocompletar el correo
+                              validator: (v) => (v ?? '').contains('@') ? null : context.t('auth.email_invalid'), // Validación básica
+                            ),
+                            if (_mode != _Mode.reset) ...[
+                              const SizedBox(height: TvSpace.s4), // Espacio
+                              TextFormField(
+                                controller: _password, // Texto de la contraseña
+                                style: const TextStyle(color: marfil), // Texto escrito, claro
+                                decoration: campo(context.t('auth.password'), Icons.lock_outline, ayuda: _mode == _Mode.signUp ? context.t('auth.password_hint') : null), // Etiqueta, icono y ayuda
+                                obscureText: true, // Oculta los caracteres
+                                autofillHints: [_mode == _Mode.signUp ? AutofillHints.newPassword : AutofillHints.password], // Gestor de contraseñas
+                                validator: (v) {
+                                  final value = v ?? ''; // Contraseña escrita
+                                  if (value.isEmpty) return context.t('auth.password_required'); // Obligatoria
+                                  if (_mode == _Mode.signUp && value.length < 8) return context.t('auth.password_hint'); // Mínimo al crear cuenta
+                                  return null; // Es válida
+                                },
+                              ),
+                            ],
+                            const SizedBox(height: TvSpace.s3), // Espacio
+                            if (_error != null) Text(_error!, style: const TextStyle(color: Color(0xFFF5B49A))), // Error visible
+                            if (_info != null) Text(_info!, style: const TextStyle(color: Color(0xFF9FD9C2))), // Confirmación visible
+                            const SizedBox(height: TvSpace.s3), // Espacio
+                            FilledButton(
+                              style: FilledButton.styleFrom(backgroundColor: marfil, foregroundColor: TvColors.marcaNocturno, minimumSize: const Size.fromHeight(50), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))), // Botón principal claro
+                              onPressed: _busy ? null : _submit, // Desactivado mientras trabaja
+                              child: Text(_busy
+                                  ? context.t('auth.processing') // Texto mientras trabaja
+                                  : switch (_mode) {
+                                      _Mode.signIn => context.t('session.sign_in'), // Acción de entrar
+                                      _Mode.signUp => context.t('auth.create'), // Acción de crear cuenta
+                                      _Mode.reset => context.t('auth.send_link'), // Acción de recuperar
+                                    }, style: const TextStyle(fontWeight: FontWeight.w700)),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: TvSpace.s2), // Espacio
+                      if (_mode == _Mode.signIn)
+                        TextButton(
+                          style: TextButton.styleFrom(foregroundColor: TvColors.marcaTurquesaClaro), // Enlace turquesa
+                          onPressed: () => setState(() => _mode = _Mode.reset), // Cambia a recuperar contraseña
+                          child: Text(context.t('auth.forgot')), // Texto del enlace
+                        ),
+                      if (_mode == _Mode.reset)
+                        TextButton(
+                          style: TextButton.styleFrom(foregroundColor: TvColors.marcaTurquesaClaro), // Enlace turquesa
+                          onPressed: () => setState(() => _mode = _Mode.signIn), // Vuelve a iniciar sesión
+                          child: Text(context.t('auth.back')), // Texto del enlace
+                        ),
+                      if (_mode != _Mode.reset) ...[
+                        const SizedBox(height: TvSpace.s3), // Espacio
+                        Row(
+                          children: [
+                            Expanded(child: Divider(color: borde)), // Línea izquierda
+                            Padding(padding: const EdgeInsets.symmetric(horizontal: TvSpace.s3), child: Text(context.t('auth.or_continue'), style: text.bodySmall?.copyWith(color: tenue))), // "o continúa con"
+                            Expanded(child: Divider(color: borde)), // Línea derecha
+                          ],
+                        ),
+                        const SizedBox(height: TvSpace.s3), // Espacio
+                        OutlinedButton.icon(
+                          style: OutlinedButton.styleFrom(foregroundColor: marfil, backgroundColor: marfil.withValues(alpha: 0.07), side: BorderSide(color: marfil.withValues(alpha: 0.18)), minimumSize: const Size.fromHeight(50), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))), // Botón de vidrio
+                          onPressed: _busy ? null : () => _run(() => ref.read(authRepositoryProvider).signInWithGoogle()), // Entra con Google
+                          icon: const Icon(Icons.account_circle_outlined), // Ícono genérico de cuenta
+                          label: Text(context.t('auth.google'), style: const TextStyle(fontWeight: FontWeight.w700)), // Texto del botón
+                        ),
+                        const SizedBox(height: TvSpace.s3), // Espacio
+                        Text(context.t('auth.terms_note'), textAlign: TextAlign.center, style: text.bodySmall?.copyWith(color: tenue)), // Aviso legal honesto
+                      ],
+                    ],
                   ),
-                  obscureText: true, // Oculta los caracteres
-                  autofillHints: [_mode == _Mode.signUp ? AutofillHints.newPassword : AutofillHints.password], // Gestor de contraseñas
-                  validator: (v) {
-                    final value = v ?? ''; // Contraseña escrita
-                    if (value.isEmpty) return context.t('auth.password_required'); // Obligatoria
-                    if (_mode == _Mode.signUp && value.length < 8) return context.t('auth.password_hint'); // Mínimo al crear cuenta
-                    return null; // Es válida
-                  },
                 ),
-              ],
-              const SizedBox(height: TvSpace.s4), // Espacio
-              if (_error != null)
-                Text(_error!, style: TextStyle(color: tv.statusAlert)), // Error visible
-              if (_info != null)
-                Text(_info!, style: TextStyle(color: tv.statusVerified)), // Confirmación visible
-              const SizedBox(height: TvSpace.s4), // Espacio
-              FilledButton(
-                onPressed: _busy ? null : _submit, // Desactivado mientras trabaja
-                child: Text(_busy
-                    ? context.t('auth.processing') // Texto mientras trabaja
-                    : switch (_mode) {
-                        _Mode.signIn => context.t('session.sign_in'), // Acción de entrar
-                        _Mode.signUp => context.t('auth.create'), // Acción de crear cuenta
-                        _Mode.reset => context.t('auth.send_link'), // Acción de recuperar
-                      }),
               ),
             ],
           ),
-        ),
-        const SizedBox(height: TvSpace.s3), // Espacio
-        if (_mode == _Mode.signIn)
-          TextButton(
-            onPressed: () => setState(() => _mode = _Mode.reset), // Cambia a recuperar contraseña
-            child: Text(context.t('auth.forgot')), // Texto del enlace
-          ),
-        TextButton(
-          onPressed: () => setState(() {
-            _mode = _mode == _Mode.signIn ? _Mode.signUp : _Mode.signIn; // Alterna entre entrar y crear cuenta
-            _error = null; // Limpia errores
-            _info = null; // Limpia avisos
-          }),
-          child: Text(_mode == _Mode.signIn ? context.t('auth.create_new') : context.t('auth.have_account')), // Texto según la vista
-        ),
-        if (_mode != _Mode.reset) ...[
-          const Divider(height: TvSpace.s8), // Separador
-          OutlinedButton.icon(
-            onPressed: _busy ? null : () => _run(() => ref.read(authRepositoryProvider).signInWithGoogle()), // Entra con Google
-            icon: const Icon(Icons.account_circle_outlined), // Ícono genérico de cuenta
-            label: Text(context.t('auth.google')), // Texto del botón
-          ),
-          const SizedBox(height: TvSpace.s2), // Espacio
-          Text(
-            context.t('auth.terms_note'), // Aviso legal honesto
-            style: text.bodySmall, // Texto pequeño
-          ),
         ],
-      ],
+      ),
     );
   }
+}
+
+/// Arco de luz al pie de la pantalla, como el borde iluminado de un planeta, con los colores de la marca.
+class _ArcoDeLuz extends CustomPainter {
+  const _ArcoDeLuz(); // Constructor constante
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final centro = Offset(size.width / 2, size.height * 1.35); // Centro del círculo, por debajo de la pantalla
+    final radio = size.height * 0.75; // Radio del arco
+    final rect = Rect.fromCircle(center: centro, radius: radio); // Caja del círculo
+    final pincel = Paint()
+      ..style = PaintingStyle.stroke // Solo el borde
+      ..strokeWidth = 34 // Banda ancha
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 26) // Difuminado como luz
+      ..shader = const SweepGradient(colors: [TvColors.marcaTurquesaClaro, TvColors.marcaVerde, TvColors.marcaNaranja, TvColors.bandAchiote], startAngle: 3.4, endAngle: 6.0).createShader(rect); // Colores a lo largo del arco
+    canvas.drawArc(rect, 3.5, 2.4, false, pincel); // Arco superior del círculo
+  }
+
+  @override
+  bool shouldRepaint(_ArcoDeLuz oldDelegate) => false; // Nunca cambia
 }
