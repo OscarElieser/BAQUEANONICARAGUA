@@ -3,7 +3,7 @@
 # Los secretos (SUPABASE_SECRET_KEY, cuenta de servicio) se pasan al ejecutar, nunca al construir.
 
 # --- Etapa 1: instalar y compilar ---
-FROM node:22-alpine AS build
+FROM node:26-alpine AS build
 # Activa pnpm en la versión que fija package.json
 RUN corepack enable
 # Carpeta de trabajo
@@ -18,7 +18,7 @@ RUN pnpm --filter @nica/api build
 RUN pnpm --filter @nica/api deploy --prod /out && rm -rf /out/dist && cp -r apps/api/dist /out/dist
 
 # --- Etapa 2: imagen final mínima ---
-FROM node:22-alpine AS run
+FROM node:26-alpine AS run
 # Modo producción y puerto
 ENV NODE_ENV=production API_PORT=4000
 # Carpeta de la aplicación
