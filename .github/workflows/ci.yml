@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with: { node-version: 22 }
       - run: node --test packages/ai-core/test/*.test.ts
       - name: Ops Center alineado con la base de datos
@@ -46,7 +46,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with: { node-version: 22 }
       # Sin pnpm-lock.yaml aún: se genera aquí. Cuando exista en el repo, cambiar a --frozen-lockfile.
       - run: pnpm install --no-frozen-lockfile
@@ -162,7 +162,7 @@ jobs:
           grep -qi "strict-transport-security" headers.txt # Y HSTS
           test "$(docker exec web id -u)" != "0" # Y no correr como administrador
           docker logs web | tail -20 # Deja el registro visible
-      - uses: actions/setup-node@v4 # Node para la revisión de accesibilidad
+      - uses: actions/setup-node@v7 # Node para la revisión de accesibilidad
         with: { node-version: 22 }
       - name: Accesibilidad WCAG 2.2 AA (axe, temas claro y oscuro) # Falla con problemas graves o críticos
         working-directory: scripts/a11y
