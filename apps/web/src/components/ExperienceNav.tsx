@@ -25,7 +25,7 @@ export function ExperienceNav({ locale }: { locale: string }) {
             key={e.href}
             href={`/${locale}${e.href}`}
             aria-current={active ? 'page' : undefined}
-            className={`rounded-pill px-4 py-2.5 text-[15px] font-bold no-underline sm:px-5 ${
+            className={`whitespace-nowrap rounded-pill px-3 py-2.5 text-[14px] font-bold no-underline sm:px-5 sm:text-[15px] ${
               active ? 'bg-ink text-ground' : 'text-ink'
             }`}
           >
