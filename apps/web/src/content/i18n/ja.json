@@ -334,5 +334,12 @@
   "pagination.prev": "前へ",
   "pagination.next": "次へ",
   "pagination.page": "{n} ページ目",
-  "community.newest": "最新に戻る"
+  "community.newest": "最新に戻る",
+  "tmap.aria": "ニカラグア 17 地域の地図",
+  "tmap.open": "{name}：ページを開く",
+  "tmap.unpublished": "{name}：確認中",
+  "tmap.note": "説明用のおおよその境界です（Natural Earth、パブリックドメイン）。公式の境界は INETER が公開しています。",
+  "tmap.hint": "地域にカーソルを合わせるかタップすると名前が表示されます。",
+  "tmap.status_published": "ページ公開済み",
+  "tmap.status_pending": "確認中"
 }

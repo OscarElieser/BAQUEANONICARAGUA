@@ -334,5 +334,12 @@
   "pagination.prev": "Zurück",
   "pagination.next": "Weiter",
   "pagination.page": "Seite {n}",
-  "community.newest": "Zurück zu den neuesten"
+  "community.newest": "Zurück zu den neuesten",
+  "tmap.aria": "Karte der 17 Gebiete Nicaraguas",
+  "tmap.open": "{name}: Eintrag öffnen",
+  "tmap.unpublished": "{name}: wird noch geprüft",
+  "tmap.note": "Ungefähre Grenzen zur Veranschaulichung (Natural Earth, gemeinfrei). Die amtlichen Grenzen veröffentlicht INETER.",
+  "tmap.hint": "Fahre mit der Maus über ein Gebiet oder tippe darauf, um seinen Namen zu sehen.",
+  "tmap.status_published": "Eintrag veröffentlicht",
+  "tmap.status_pending": "Wird geprüft"
 }

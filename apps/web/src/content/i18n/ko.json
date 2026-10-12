@@ -334,5 +334,12 @@
   "pagination.prev": "이전",
   "pagination.next": "다음",
   "pagination.page": "{n}페이지",
-  "community.newest": "최신 글로 돌아가기"
+  "community.newest": "최신 글로 돌아가기",
+  "tmap.aria": "니카라과 17개 지역 지도",
+  "tmap.open": "{name}: 항목 열기",
+  "tmap.unpublished": "{name}: 아직 확인 중",
+  "tmap.note": "설명용 대략적인 경계입니다(Natural Earth, 퍼블릭 도메인). 공식 경계는 INETER가 발표합니다.",
+  "tmap.hint": "지역에 마우스를 올리거나 누르면 이름이 보입니다.",
+  "tmap.status_published": "항목 게시됨",
+  "tmap.status_pending": "확인 중"
 }

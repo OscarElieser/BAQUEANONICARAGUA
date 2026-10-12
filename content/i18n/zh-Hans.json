@@ -334,5 +334,12 @@
   "pagination.prev": "上一页",
   "pagination.next": "下一页",
   "pagination.page": "第 {n} 页",
-  "community.newest": "返回最新内容"
+  "community.newest": "返回最新内容",
+  "tmap.aria": "尼加拉瓜 17 个地区地图",
+  "tmap.open": "{name}：打开条目",
+  "tmap.unpublished": "{name}：仍在核实中",
+  "tmap.note": "示意用的大致边界（Natural Earth，公有领域）。官方边界由 INETER 发布。",
+  "tmap.hint": "将鼠标悬停或点按某个地区即可查看名称。",
+  "tmap.status_published": "条目已发布",
+  "tmap.status_pending": "核实中"
 }

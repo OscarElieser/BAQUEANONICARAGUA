@@ -334,5 +334,12 @@
   "pagination.prev": "Previous",
   "pagination.next": "Next",
   "pagination.page": "Page {n}",
-  "community.newest": "Back to the most recent"
+  "community.newest": "Back to the most recent",
+  "tmap.aria": "Map of Nicaragua's 17 territories",
+  "tmap.open": "{name}: open listing",
+  "tmap.unpublished": "{name}: still being verified",
+  "tmap.note": "Approximate boundaries for illustration (Natural Earth, public domain). Official boundaries are published by INETER.",
+  "tmap.hint": "Hover over or tap a territory to see its name.",
+  "tmap.status_published": "Listing published",
+  "tmap.status_pending": "Being verified"
 }

@@ -334,5 +334,12 @@
   "pagination.prev": "Anterior",
   "pagination.next": "Siguiente",
   "pagination.page": "Página {n}",
-  "community.newest": "Volver a los más recientes"
+  "community.newest": "Volver a los más recientes",
+  "tmap.aria": "Mapa de los 17 territorios de Nicaragua",
+  "tmap.open": "{name}: abrir ficha",
+  "tmap.unpublished": "{name}: aún en verificación",
+  "tmap.note": "Límites aproximados para ilustrar (Natural Earth, dominio público). Los oficiales los publica INETER.",
+  "tmap.hint": "Pasa el cursor o toca un territorio para ver su nombre.",
+  "tmap.status_published": "Ficha publicada",
+  "tmap.status_pending": "En verificación"
 }

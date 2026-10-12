@@ -120,6 +120,19 @@
 }
 .saltar:focus { top: 12px; } /* Aparece al recibir el foco */
 
+/* Mapa vivo de los territorios */
+.mapa-vivo .territorio { stroke: var(--oro); stroke-width: 1.4; stroke-linejoin: round; transition: fill 160ms ease-out, stroke-width 160ms ease-out; } /* Borde dorado de cada territorio */
+.mapa-vivo .publicado { fill: var(--ground-raised); cursor: pointer; } /* Con ficha: relleno elevado */
+.mapa-vivo .pendiente { fill: var(--ground-deep); stroke-dasharray: 0.004 0.004; opacity: 0.85; } /* En verificación: borde punteado */
+.mapa-vivo .activo.publicado { fill: var(--oro); stroke: var(--on-oro); stroke-width: 2; } /* Resaltado con ficha: oro */
+.mapa-vivo .activo.pendiente { fill: var(--line); } /* Resaltado sin ficha: tono neutro */
+.mapa-vivo a:focus-visible { outline: none; } /* El foco se ve en el propio territorio (abajo) */
+.mapa-vivo a:focus-visible .territorio { stroke: var(--focus); stroke-width: 4; } /* Foco visible con teclado */
+.mapa-vivo .lago { fill: var(--band-anil); stroke: var(--oro); stroke-width: 1; } /* Lagos en añil */
+.mapa-vivo .etiqueta-mapa { font-family: var(--font-young-serif), Georgia, serif; font-size: 22px; fill: var(--ink); paint-order: stroke; stroke: var(--ground); stroke-width: 5px; } /* Nombre legible sobre cualquier fondo */
+@keyframes trazo-aparece { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } } /* El borde se dibuja */
+.mapa-vivo .publicado.trazo { stroke-dasharray: 1; animation: trazo-aparece 1200ms ease-out both; } /* Una sola vez, al cargar */
+
 /* Un solo momento orquestado: las curvas se dibujan de la base a la cima */
 @keyframes curva-aparece { from { opacity: 0; } }
 .curva { animation: curva-aparece 600ms ease-out both; }

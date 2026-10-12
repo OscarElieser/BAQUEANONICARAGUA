@@ -334,5 +334,12 @@
   "pagination.prev": "Précédent",
   "pagination.next": "Suivant",
   "pagination.page": "Page {n}",
-  "community.newest": "Revenir aux plus récents"
+  "community.newest": "Revenir aux plus récents",
+  "tmap.aria": "Carte des 17 territoires du Nicaragua",
+  "tmap.open": "{name} : ouvrir la fiche",
+  "tmap.unpublished": "{name} : en cours de vérification",
+  "tmap.note": "Limites approximatives à titre d'illustration (Natural Earth, domaine public). Les limites officielles sont publiées par l'INETER.",
+  "tmap.hint": "Survolez ou touchez un territoire pour voir son nom.",
+  "tmap.status_published": "Fiche publiée",
+  "tmap.status_pending": "En vérification"
 }

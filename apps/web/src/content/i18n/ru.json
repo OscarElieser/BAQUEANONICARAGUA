@@ -334,5 +334,12 @@
   "pagination.prev": "Назад",
   "pagination.next": "Далее",
   "pagination.page": "Страница {n}",
-  "community.newest": "К самым свежим"
+  "community.newest": "К самым свежим",
+  "tmap.aria": "Карта 17 территорий Никарагуа",
+  "tmap.open": "{name}: открыть карточку",
+  "tmap.unpublished": "{name}: ещё проверяется",
+  "tmap.note": "Приблизительные границы для иллюстрации (Natural Earth, общественное достояние). Официальные границы публикует INETER.",
+  "tmap.hint": "Наведите курсор или нажмите на территорию, чтобы увидеть её название.",
+  "tmap.status_published": "Карточка опубликована",
+  "tmap.status_pending": "На проверке"
 }

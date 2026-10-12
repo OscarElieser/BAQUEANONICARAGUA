@@ -334,5 +334,12 @@
   "pagination.prev": "Anterior",
   "pagination.next": "Próxima",
   "pagination.page": "Página {n}",
-  "community.newest": "Voltar aos mais recentes"
+  "community.newest": "Voltar aos mais recentes",
+  "tmap.aria": "Mapa dos 17 territórios da Nicarágua",
+  "tmap.open": "{name}: abrir ficha",
+  "tmap.unpublished": "{name}: ainda em verificação",
+  "tmap.note": "Limites aproximados para ilustração (Natural Earth, domínio público). Os oficiais são publicados pelo INETER.",
+  "tmap.hint": "Passe o cursor ou toque em um território para ver o nome.",
+  "tmap.status_published": "Ficha publicada",
+  "tmap.status_pending": "Em verificação"
 }

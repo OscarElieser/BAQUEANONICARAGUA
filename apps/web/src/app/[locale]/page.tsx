@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { RelieveVivo3D } from '@/components/RelieveVivo3D'; // Relieve 3D "Relieve vivo"
-import { listTerritories } from '@/lib/territories';
+import { listTerritories } from '@/lib/territories'; // Territorios publicados desde Supabase
+import { MapaTerritorios } from '@/components/MapaTerritorios'; // Mapa ilustrado de los 17 territorios
 import { t } from '@/i18n/t'; // Textos traducidos
 import type { Metadata } from 'next'; // Tipo de los metadatos
 import { jsonLd, pageMetadata, SITE_URL, absolute } from '@/lib/seo'; // Canónica, idiomas, vista previa y datos estructurados
@@ -80,18 +81,23 @@ export default async function Descubrir({ params }: { params: Promise<{ locale: 
             {t(locale, 'home.empty')} {/* Aún nada publicado */}
           </p>
         )}
-        <ul className="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(190px,1fr))] gap-x-6 gap-y-0.5 p-0">
-          {territories.map((t) => (
-            <li key={t.id}>
-              <Link
-                href={`/${locale}/territorios/${t.slug}`}
-                className="block border-b border-line py-2.5 text-[17px] text-ink no-underline hover:text-accent"
-              >
-                {t.kind === 'autonomous_region' ? t.name.replace('Región Autónoma de la ', '') : t.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+          {/* Mapa ilustrado a la izquierda, lista accesible a la derecha (en el teléfono, uno debajo del otro) */}
+          <MapaTerritorios locale={locale} published={(territories ?? []).map((ter) => ter.slug)} /> {/* Solo los publicados son enlaces */}
+          <ul className="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(190px,1fr))] gap-x-6 gap-y-0.5 p-0">
+            {/* Lista de territorios publicados (misma información que el mapa, en texto) */}
+            {territories.map((ter) => (
+              <li key={ter.id}>
+                <Link
+                  href={`/${locale}/territorios/${ter.slug}`} // Ficha del territorio
+                  className="block border-b border-line py-2.5 text-[17px] text-ink no-underline hover:text-accent" // Fila con línea inferior
+                >
+                  {ter.kind === 'autonomous_region' ? ter.name.replace('Región Autónoma de la ', '') : ter.name} {/* Nombre corto para las regiones autónomas */}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
     </main>
   );
