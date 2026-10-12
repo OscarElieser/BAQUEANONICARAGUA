@@ -91,6 +91,16 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
     - No se pudieron instalar desde aquí (el registro npm está bloqueado y son de terceros sin revisar): UI/UX Pro Max, Impeccable, Superpowers, Super Memory, MCP Builder y el pack de Marketing.
     - "Webapp testing" ya lo cubren el CI y las capturas, y "memoria" la cubren este archivo y `CLAUDE.md`.
 
+## 4b. Estado del proyecto oficial (revisado el 2026-10-12)
+
+- Supabase `nupjhqrvxjrngtpslfjq`: las 15 migraciones originales ya están aplicadas por el dueño. Hay 17 territorios, todos en borrador (0 publicados), y ningún destino ni negocio. `app.settings.firebase_project_id` está vacío (el seed no corrió).
+- La web y la app traen por defecto la configuración pública del proyecto oficial (`apps/web/src/config/publica.json` y `apps/mobile/lib/core/env.dart`). El entorno puede reemplazarla. Nunca se ponen claves secretas.
+- La migración 0016 (search_path fijo en 8 funciones) está en el repositorio, pero no se ha aplicado en producción: falta la aprobación del dueño.
+- Avisos del asesor de seguridad que quedan:
+  - las vistas `public_*` con SECURITY DEFINER (es a propósito: exponen solo lo publicado; revisar si se pasan a security_invoker);
+  - `public.rls_auto_enable()` se puede ejecutar sin sesión; no es de nuestras migraciones.
+- Android: falta registrar la app Android en Firebase (paquete `com.baqueano.nicaragua`) y agregar su `google-services.json`. Sin ese archivo, `flutter build apk` falla. Hoy usa el appId de la app web.
+
 ## 5. Pendiente del dueño (Claude no puede hacerlo)
 
 - Proteger `main` en GitHub y borrar las ramas viejas: ci-verde, fase-6, login, ops-center, relieve-3d, funciones-supabase, seguridad-legal, fase-7-android, fase-9-idiomas e idiomas-lote-2. Cerrar los PR viejos de Dependabot.
