@@ -1,6 +1,7 @@
 import 'dart:convert'; // Leer respuestas JSON
 
 import 'package:firebase_auth/firebase_auth.dart'; // Autenticación de Firebase (correo, Google, sesión)
+import 'package:firebase_core/firebase_core.dart'; // Saber si Firebase quedó inicializado
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Gestión de estado con Riverpod
 import 'package:google_sign_in/google_sign_in.dart'; // Ventana nativa de Android para elegir cuenta de Google
 import 'package:http/http.dart' as http; // Peticiones HTTP a la función de Supabase
@@ -9,6 +10,7 @@ import '../../core/env.dart'; // Direcciones configuradas en la compilación (AP
 
 /// Escucha la sesión: emite el usuario al entrar y null al salir.
 final authStateProvider = StreamProvider<User?>((ref) {
+  if (Firebase.apps.isEmpty) return Stream.value(null); // Sin Firebase configurado: nadie tiene sesión
   return FirebaseAuth.instance.authStateChanges(); // Flujo de cambios de sesión de Firebase
 });
 

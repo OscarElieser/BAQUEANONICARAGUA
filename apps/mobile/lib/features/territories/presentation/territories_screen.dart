@@ -1,98 +1,105 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/material.dart'; // Componentes visuales de Flutter
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // Proveedores de Riverpod
 
-import '../../../core/theme.dart';
+import '../../../core/data/models.dart'; // Datos del catálogo
+import '../../../core/data/repositories.dart'; // Acceso al catálogo
+import '../../../core/theme.dart'; // Colores y espaciados
+import '../../../core/widgets/estados.dart'; // Cargando, error y vacío
 import '../../../core/widgets/relieve_3d.dart'; // Relieve 3D interactivo
+import '../../catalog/search_screen.dart'; // Resultados de búsqueda
+import 'territory_screen.dart'; // Ficha de territorio
 
 /// Territorios publicados (RLS filtra los borradores).
-final territoriesProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {
-  final rows = await Supabase.instance.client.from('departments').select('id, slug, name, kind').order('name');
-  return List<Map<String, dynamic>>.from(rows);
-});
+final territoriesProvider = FutureProvider<List<Territory>>((ref) => ref.watch(catalogRepositoryProvider).territories()); // Lista de territorios
 
-String _shortName(Map<String, dynamic> t) {
-  final name = t['name'] as String;
-  return t['kind'] == 'autonomous_region' ? name.replaceFirst('Región Autónoma de la ', '') : name;
-}
-
+/// Pestaña Descubrir: relieve 3D, búsqueda y territorios.
 class TerritoriesScreen extends ConsumerWidget {
-  const TerritoriesScreen({super.key});
+  const TerritoriesScreen({super.key}); // Constructor constante
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final territories = ref.watch(territoriesProvider);
-    final tv = context.tv;
-    final text = Theme.of(context).textTheme;
+    final territories = ref.watch(territoriesProvider); // Territorios (o cargando)
+    final tv = context.tv; // Colores
+    final text = Theme.of(context).textTheme; // Estilos de texto
 
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: Container(
-            height: 280, // Alto del relieve 3D
-            color: tv.groundRaised,
-            child: const RelieveVivo3D(), // Relieve 3D que se gira con el dedo
-          ),
+          child: Container(height: 280, color: tv.groundRaised, child: const RelieveVivo3D()), // Relieve 3D que se gira con el dedo
         ),
         SliverPadding(
-          padding: const EdgeInsets.fromLTRB(TvSpace.s4 + 4, TvSpace.s6, TvSpace.s4 + 4, TvSpace.s2),
+          padding: const EdgeInsets.fromLTRB(TvSpace.s4 + 4, TvSpace.s6, TvSpace.s4 + 4, TvSpace.s2), // Márgenes
           sliver: SliverToBoxAdapter(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
               children: [
-                Text('Nicaragua, curva por curva', style: text.displayLarge),
-                const SizedBox(height: TvSpace.s3),
-                Text(
-                  'Elige un territorio. Cada ficha indica su fuente y la fecha en que se comprobó.',
-                  style: text.bodyMedium?.copyWith(color: tv.inkMuted),
-                ),
+                Text('Nicaragua, curva por curva', style: text.displayLarge), // Título
+                const SizedBox(height: TvSpace.s3), // Espacio
+                Text('Elige un territorio o busca un volcán, un pueblo o un plato. Cada ficha indica su fuente y la fecha en que se comprobó.',
+                    style: text.bodyMedium?.copyWith(color: tv.inkMuted)), // Explicación
+                const SizedBox(height: TvSpace.s4), // Espacio
+                _Buscador(onSearch: (q) => Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchScreen(query: q)))), // Busca y abre resultados
               ],
             ),
           ),
         ),
         territories.when(
-          loading: () => const SliverFillRemaining(child: Center(child: CircularProgressIndicator())),
-          error: (e, _) => SliverFillRemaining(
-            child: Padding(
-              padding: const EdgeInsets.all(TvSpace.s6),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('No se pudo cargar el catálogo territorial.', style: TextStyle(color: tv.statusAlert)),
-                  const SizedBox(height: TvSpace.s3),
-                  OutlinedButton(onPressed: () => ref.invalidate(territoriesProvider), child: const Text('Reintentar')),
-                ],
-              ),
-            ),
-          ),
+          loading: () => const SliverToBoxAdapter(child: Cargando()), // Mientras carga
+          error: (e, _) => SliverToBoxAdapter(child: ErrorConReintento(error: e, onRetry: () => ref.invalidate(territoriesProvider))), // Error claro
           data: (items) => items.isEmpty
-              ? SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(TvSpace.s6),
-                    child: Text(
-                      'Los territorios se publican a medida que el equipo editorial verifica sus fuentes. Vuelve pronto.',
-                      style: text.bodyMedium?.copyWith(color: tv.inkMuted),
-                    ),
-                  ),
-                )
+              ? const SliverToBoxAdapter(child: Vacio(text: 'Los territorios se publican a medida que el equipo editorial verifica sus fuentes. Vuelve pronto.')) // Aún nada publicado
               : SliverList.separated(
-                  itemCount: items.length,
-                  separatorBuilder: (_, __) => const Divider(indent: 20, endIndent: 20),
+                  itemCount: items.length, // Cantidad de territorios
+                  separatorBuilder: (_, __) => const Divider(indent: 20, endIndent: 20), // Línea entre filas
                   itemBuilder: (_, i) => ListTile(
-                    minTileHeight: TvSpace.touchMin + 8,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-                    title: Text(_shortName(items[i]), style: const TextStyle(fontSize: 17)),
-                    trailing: Icon(Icons.chevron_right, color: tv.inkMuted),
-                    onTap: () {
-                      // La ficha de territorio llega en la Fase 3; mientras tanto se informa sin fingir.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('La ficha del territorio estará disponible en la Fase 3.')),
-                      );
-                    },
+                    minTileHeight: TvSpace.touchMin + 8, // Área táctil cómoda
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 20), // Margen lateral
+                    title: Text(items[i].shortName, style: const TextStyle(fontSize: 17)), // Nombre
+                    trailing: Icon(Icons.chevron_right, color: tv.inkMuted), // Indica que se abre
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => TerritoryScreen(slug: items[i].slug, name: items[i].shortName))), // Abre la ficha
                   ),
                 ),
         ),
+        const SliverToBoxAdapter(child: SizedBox(height: TvSpace.s8)), // Espacio al final
       ],
+    );
+  }
+}
+
+/// Campo de búsqueda con forma de píldora.
+class _Buscador extends StatefulWidget {
+  const _Buscador({required this.onSearch}); // Recibe qué hacer al buscar
+  final void Function(String) onSearch; // Acción de búsqueda
+
+  @override
+  State<_Buscador> createState() => _BuscadorState(); // Crea el estado
+}
+
+class _BuscadorState extends State<_Buscador> {
+  final _controller = TextEditingController(); // Texto escrito
+
+  @override
+  void dispose() {
+    _controller.dispose(); // Libera el controlador
+    super.dispose(); // Libera el resto
+  }
+
+  void _submit() {
+    final q = _controller.text.trim(); // Texto sin espacios sobrantes
+    if (q.length >= 2) widget.onSearch(q); // Busca solo con al menos 2 letras
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: _controller, // Texto escrito
+      textInputAction: TextInputAction.search, // Botón "buscar" en el teclado
+      onSubmitted: (_) => _submit(), // Busca al confirmar
+      decoration: InputDecoration(
+        labelText: 'Buscar en el catálogo', // Etiqueta accesible
+        hintText: 'Un volcán, un pueblo, un plato…', // Ejemplo
+        suffixIcon: IconButton(icon: const Icon(Icons.search), tooltip: 'Buscar', onPressed: _submit), // Botón de búsqueda
+      ),
     );
   }
 }

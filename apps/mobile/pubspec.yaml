@@ -20,6 +20,7 @@ dependencies:
   google_fonts: ^6.2.1
   google_sign_in: ^6.2.1
   http: ^1.2.2
+  url_launcher: ^6.3.0 # Abrir WhatsApp, llamadas, correos y la fuente de cada dato
   intl: any
 
 dev_dependencies:

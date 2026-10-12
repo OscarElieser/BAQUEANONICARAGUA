@@ -1,0 +1,580 @@
+{
+  "generated_by": "packages/ai-core/scripts/write-golden.ts",
+  "cases": [
+    {
+      "input": "Voy a Nicaragua cinco días, somos cuatro personas, tenemos 600 dólares y queremos playas, gastronomía y conocer pequeños negocios.",
+      "intent": {
+        "travelers": 4,
+        "days": 5,
+        "budget": {
+          "amount": 600,
+          "currency": "USD",
+          "scope": "total"
+        },
+        "interests": [
+          "beach",
+          "food",
+          "small_business"
+        ],
+        "startDate": null,
+        "travelerType": "group",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": {
+        "total": 600,
+        "perPerson": 150,
+        "perPersonPerDay": 30,
+        "currency": "USD"
+      }
+    },
+    {
+      "input": "Tenemos 600 para 3 días",
+      "intent": {
+        "travelers": null,
+        "days": 3,
+        "budget": {
+          "amount": 600,
+          "currency": null,
+          "scope": "total"
+        },
+        "interests": [],
+        "startDate": null,
+        "travelerType": null,
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "travelers",
+          "budget_currency",
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": null
+    },
+    {
+      "input": "Vamos cinco días, somos cuatro, tenemos 600 dólares y queremos playa, buena comida y conocer pequeños negocios.",
+      "intent": {
+        "travelers": 4,
+        "days": 5,
+        "budget": {
+          "amount": 600,
+          "currency": "USD",
+          "scope": "total"
+        },
+        "interests": [
+          "beach",
+          "food",
+          "small_business"
+        ],
+        "startDate": null,
+        "travelerType": "group",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": {
+        "total": 600,
+        "perPerson": 150,
+        "perPersonPerDay": 30,
+        "currency": "USD"
+      }
+    },
+    {
+      "input": "Viajo sola una semana con C$ 10 mil, me gusta la historia colonial y los museos",
+      "intent": {
+        "travelers": 1,
+        "days": 7,
+        "budget": {
+          "amount": 10000,
+          "currency": "NIO",
+          "scope": "unknown"
+        },
+        "interests": [
+          "culture",
+          "history"
+        ],
+        "startDate": null,
+        "travelerType": "solo",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": {
+        "total": 10000,
+        "perPerson": 10000,
+        "perPersonPerDay": 1428.57,
+        "currency": "NIO"
+      }
+    },
+    {
+      "input": "Mi esposa y yo, luna de miel, 4 noches, $1,200 en total, volcanes y café",
+      "intent": {
+        "travelers": 2,
+        "days": 5,
+        "budget": {
+          "amount": 1200,
+          "currency": "USD",
+          "scope": "total"
+        },
+        "interests": [
+          "volcano",
+          "coffee"
+        ],
+        "startDate": null,
+        "travelerType": "couple",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": {
+        "total": 1200,
+        "perPerson": 600,
+        "perPersonPerDay": 120,
+        "currency": "USD"
+      }
+    },
+    {
+      "input": "We are 3 friends, 6 days, budget 900 usd, surf and nightlife, we will rent a car",
+      "intent": {
+        "travelers": 3,
+        "days": 6,
+        "budget": {
+          "amount": 900,
+          "currency": "USD",
+          "scope": "unknown"
+        },
+        "interests": [
+          "beach",
+          "nightlife"
+        ],
+        "startDate": null,
+        "travelerType": "group",
+        "hasVehicle": true,
+        "accessibilityNeeds": false,
+        "missing": [
+          "dates"
+        ]
+      },
+      "budget": {
+        "total": 900,
+        "perPerson": 300,
+        "perPersonPerDay": 50,
+        "currency": "USD"
+      }
+    },
+    {
+      "input": "Family trip with kids for a weekend, $300 per person, nature and birds",
+      "intent": {
+        "travelers": null,
+        "days": 2,
+        "budget": {
+          "amount": 300,
+          "currency": "USD",
+          "scope": "per_person"
+        },
+        "interests": [
+          "nature",
+          "family"
+        ],
+        "startDate": null,
+        "travelerType": "family",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "travelers",
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": null
+    },
+    {
+      "input": "Somos 2 adultos y 2 niños, 5 días, 80 dólares por día, sin carro, transporte público",
+      "intent": {
+        "travelers": 2,
+        "days": 5,
+        "budget": {
+          "amount": 80,
+          "currency": "USD",
+          "scope": "per_day"
+        },
+        "interests": [
+          "family"
+        ],
+        "startDate": null,
+        "travelerType": "family",
+        "hasVehicle": false,
+        "accessibilityNeeds": false,
+        "missing": [
+          "dates"
+        ]
+      },
+      "budget": {
+        "total": 400,
+        "perPerson": 200,
+        "perPersonPerDay": 40,
+        "currency": "USD"
+      }
+    },
+    {
+      "input": "Fin de semana en Granada para 2, presupuesto 5000 córdobas",
+      "intent": {
+        "travelers": 2,
+        "days": 2,
+        "budget": {
+          "amount": 5000,
+          "currency": "NIO",
+          "scope": "unknown"
+        },
+        "interests": [],
+        "startDate": null,
+        "travelerType": "couple",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": {
+        "total": 5000,
+        "perPerson": 2500,
+        "perPersonPerDay": 1250,
+        "currency": "NIO"
+      }
+    },
+    {
+      "input": "Llegamos el 2026-12-20, somos seis amigos, diez días, aventura, kayak y canopy",
+      "intent": {
+        "travelers": 6,
+        "days": 10,
+        "budget": null,
+        "interests": [
+          "adventure"
+        ],
+        "startDate": "2026-12-20",
+        "travelerType": "group",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "transport"
+        ]
+      },
+      "budget": null
+    },
+    {
+      "input": "Necesito lugares accesibles en silla de ruedas, viajamos tres personas 4 días",
+      "intent": {
+        "travelers": 3,
+        "days": 4,
+        "budget": null,
+        "interests": [],
+        "startDate": null,
+        "travelerType": "group",
+        "hasVehicle": null,
+        "accessibilityNeeds": true,
+        "missing": [
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": null
+    },
+    {
+      "input": "Quiero ir a la playa",
+      "intent": {
+        "travelers": null,
+        "days": null,
+        "budget": null,
+        "interests": [
+          "beach"
+        ],
+        "startDate": null,
+        "travelerType": null,
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "travelers",
+          "days",
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": null
+    },
+    {
+      "input": "4 noches para 2 personas con 2k dólares",
+      "intent": {
+        "travelers": 2,
+        "days": 5,
+        "budget": {
+          "amount": 2000,
+          "currency": "USD",
+          "scope": "unknown"
+        },
+        "interests": [],
+        "startDate": null,
+        "travelerType": "couple",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": {
+        "total": 2000,
+        "perPerson": 1000,
+        "perPersonPerDay": 200,
+        "currency": "USD"
+      }
+    },
+    {
+      "input": "I'm traveling alone for 12 days with 1500 dollars, hiking and volcanoes",
+      "intent": {
+        "travelers": 1,
+        "days": 12,
+        "budget": {
+          "amount": 1500,
+          "currency": "USD",
+          "scope": "unknown"
+        },
+        "interests": [
+          "nature",
+          "volcano"
+        ],
+        "startDate": null,
+        "travelerType": "solo",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": {
+        "total": 1500,
+        "perPerson": 1500,
+        "perPersonPerDay": 125,
+        "currency": "USD"
+      }
+    },
+    {
+      "input": "Somos quince estudiantes, tres días, tenemos 45000 cordobas entre todos",
+      "intent": {
+        "travelers": 15,
+        "days": 3,
+        "budget": {
+          "amount": 45000,
+          "currency": "NIO",
+          "scope": "total"
+        },
+        "interests": [],
+        "startDate": null,
+        "travelerType": "group",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": {
+        "total": 45000,
+        "perPerson": 3000,
+        "perPersonPerDay": 1000,
+        "currency": "NIO"
+      }
+    },
+    {
+      "input": "Viaje de 7 días, 150 usd cada uno, somos 4, cultura y artesanos",
+      "intent": {
+        "travelers": 4,
+        "days": 7,
+        "budget": {
+          "amount": 150,
+          "currency": "USD",
+          "scope": "per_person"
+        },
+        "interests": [
+          "small_business",
+          "culture"
+        ],
+        "startDate": null,
+        "travelerType": "group",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": {
+        "total": 600,
+        "perPerson": 150,
+        "perPersonPerDay": 21.43,
+        "currency": "USD"
+      }
+    },
+    {
+      "input": "Vamos en familia, dos días, queremos comer y ver volcanes",
+      "intent": {
+        "travelers": null,
+        "days": 2,
+        "budget": null,
+        "interests": [
+          "food",
+          "volcano",
+          "family"
+        ],
+        "startDate": null,
+        "travelerType": "family",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "travelers",
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": null
+    },
+    {
+      "input": "Presupuesto de 700, somos 2, una semana, playa",
+      "intent": {
+        "travelers": 2,
+        "days": 7,
+        "budget": {
+          "amount": 700,
+          "currency": null,
+          "scope": "unknown"
+        },
+        "interests": [
+          "beach"
+        ],
+        "startDate": null,
+        "travelerType": "couple",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "budget_currency",
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": null
+    },
+    {
+      "input": "Con nuestro carro, 3 días, somos 5, café y fincas de café",
+      "intent": {
+        "travelers": 5,
+        "days": 3,
+        "budget": null,
+        "interests": [
+          "coffee"
+        ],
+        "startDate": null,
+        "travelerType": "group",
+        "hasVehicle": true,
+        "accessibilityNeeds": false,
+        "missing": [
+          "dates"
+        ]
+      },
+      "budget": null
+    },
+    {
+      "input": "Tengo 250 dólares para gastar en 2 días, me gustan los bares y la vida nocturna",
+      "intent": {
+        "travelers": null,
+        "days": 2,
+        "budget": {
+          "amount": 250,
+          "currency": "USD",
+          "scope": "unknown"
+        },
+        "interests": [
+          "nightlife"
+        ],
+        "startDate": null,
+        "travelerType": null,
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "travelers",
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": {
+        "total": 250,
+        "perPerson": null,
+        "perPersonPerDay": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "input": "a week in Nicaragua for two people, honeymoon, $2,000 altogether, beaches",
+      "intent": {
+        "travelers": 2,
+        "days": 7,
+        "budget": {
+          "amount": 2000,
+          "currency": "USD",
+          "scope": "total"
+        },
+        "interests": [
+          "beach"
+        ],
+        "startDate": null,
+        "travelerType": "couple",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": {
+        "total": 2000,
+        "perPerson": 1000,
+        "perPersonPerDay": 142.86,
+        "currency": "USD"
+      }
+    },
+    {
+      "input": "Somos 4, 5 días, 600 y queremos playa",
+      "intent": {
+        "travelers": 4,
+        "days": 5,
+        "budget": null,
+        "interests": [
+          "beach"
+        ],
+        "startDate": null,
+        "travelerType": "group",
+        "hasVehicle": null,
+        "accessibilityNeeds": false,
+        "missing": [
+          "dates",
+          "transport"
+        ]
+      },
+      "budget": null
+    }
+  ]
+}

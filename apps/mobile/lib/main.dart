@@ -14,14 +14,20 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting();
   // google-services.json se agrega localmente por entorno (no se versiona).
-  await Firebase.initializeApp();
+  try {
+    await Firebase.initializeApp(); // Inicia Firebase si la compilación trae su configuración
+  } catch (e) {
+    debugPrint('Firebase sin configurar: el inicio de sesión mostrará "No disponible todavía" ($e)'); // Sin configuración la app sigue abriendo
+  }
 
-  // Supabase usa el ID token de Firebase (Third-Party Auth). Solo clave publicable.
-  await Supabase.initialize(
-    url: Env.supabaseUrl,
-    anonKey: Env.supabasePublishableKey,
-    accessToken: () async => FirebaseAuth.instance.currentUser?.getIdToken(),
-  );
+  if (Env.isSupabaseConfigured) {
+    // Supabase usa el ID token de Firebase (Third-Party Auth). Solo clave publicable.
+    await Supabase.initialize(
+      url: Env.supabaseUrl, // Proyecto de Supabase
+      anonKey: Env.supabasePublishableKey, // Clave pública
+      accessToken: () async => Firebase.apps.isEmpty ? null : FirebaseAuth.instance.currentUser?.getIdToken(), // Token de la sesión (o visitante anónimo)
+    );
+  }
 
   runApp(const ProviderScope(child: NicaApp()));
 }

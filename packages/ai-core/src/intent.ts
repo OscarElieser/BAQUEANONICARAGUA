@@ -40,7 +40,7 @@ function toNumber(token: string): number | null {
   return NUMBER_WORDS[token] ?? null;
 }
 
-const NUM = String.raw`(\d[\d.,]*|un|una|uno|one|dos|two|tres|three|cuatro|four|cinco|five|seis|six|siete|seven|ocho|eight|nueve|nine|diez|ten|once|doce|twelve|quince|fifteen|veinte|twenty)`;
+const NUM = String.raw`(\d(?:[\d.,]*\d)?|un|una|uno|one|dos|two|tres|three|cuatro|four|cinco|five|seis|six|siete|seven|ocho|eight|nueve|nine|diez|ten|once|doce|twelve|quince|fifteen|veinte|twenty)`;
 
 function findTravelers(t: string): { n: number | null; type: TripIntent['travelerType'] } {
   if (/\b(sol[oa]|by myself|alone|viajo solo|viajo sola|solo traveler)\b/.test(t)) return { n: 1, type: 'solo' };
@@ -70,7 +70,7 @@ function findDays(t: string): number | null {
 
 function findBudget(t: string): TripIntent['budget'] {
   const re = new RegExp(
-    String.raw`(us\$|\$|c\$|usd|nio|cordobas?)?\s?(\d[\d.,]*)\s?(k\b|mil\b)?\s?(dolares|dollars|usd|cordobas?|nio|bucks)?`,
+    String.raw`(us\$|\$|c\$|usd|nio|cordobas?)?\s?(\d(?:[\d.,]*\d)?)\s?(k\b|mil\b)?\s?(dolares|dollars|usd|cordobas?|nio|bucks)?`,
     'g',
   );
   // Primero cifras con moneda explícita; si no hay, cifras junto a palabras de dinero.

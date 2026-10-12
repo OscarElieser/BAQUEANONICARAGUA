@@ -1,0 +1,27 @@
+{
+  "description": "Frases para comprobar que la interpretación de viajes da exactamente lo mismo en la web (TypeScript) y en Android (Dart). El resultado esperado está en intent_golden.json.",
+  "inputs": [
+    "Voy a Nicaragua cinco días, somos cuatro personas, tenemos 600 dólares y queremos playas, gastronomía y conocer pequeños negocios.",
+    "Tenemos 600 para 3 días",
+    "Vamos cinco días, somos cuatro, tenemos 600 dólares y queremos playa, buena comida y conocer pequeños negocios.",
+    "Viajo sola una semana con C$ 10 mil, me gusta la historia colonial y los museos",
+    "Mi esposa y yo, luna de miel, 4 noches, $1,200 en total, volcanes y café",
+    "We are 3 friends, 6 days, budget 900 usd, surf and nightlife, we will rent a car",
+    "Family trip with kids for a weekend, $300 per person, nature and birds",
+    "Somos 2 adultos y 2 niños, 5 días, 80 dólares por día, sin carro, transporte público",
+    "Fin de semana en Granada para 2, presupuesto 5000 córdobas",
+    "Llegamos el 2026-12-20, somos seis amigos, diez días, aventura, kayak y canopy",
+    "Necesito lugares accesibles en silla de ruedas, viajamos tres personas 4 días",
+    "Quiero ir a la playa",
+    "4 noches para 2 personas con 2k dólares",
+    "I'm traveling alone for 12 days with 1500 dollars, hiking and volcanoes",
+    "Somos quince estudiantes, tres días, tenemos 45000 cordobas entre todos",
+    "Viaje de 7 días, 150 usd cada uno, somos 4, cultura y artesanos",
+    "Vamos en familia, dos días, queremos comer y ver volcanes",
+    "Presupuesto de 700, somos 2, una semana, playa",
+    "Con nuestro carro, 3 días, somos 5, café y fincas de café",
+    "Tengo 250 dólares para gastar en 2 días, me gustan los bares y la vida nocturna",
+    "a week in Nicaragua for two people, honeymoon, $2,000 altogether, beaches",
+    "Somos 4, 5 días, 600 y queremos playa"
+  ]
+}

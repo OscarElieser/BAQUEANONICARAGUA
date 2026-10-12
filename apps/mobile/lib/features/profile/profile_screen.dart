@@ -6,6 +6,7 @@ import '../../core/theme.dart'; // Colores y espaciados del sistema de diseño
 import '../auth/auth_repository.dart'; // Sesión y acciones de autenticación
 import '../auth/sign_in_screen.dart'; // Pantalla de acceso
 import '../legal/legal_screen.dart'; // Información y legal
+import '../messages/inbox_screen.dart'; // Bandeja de mensajes
 
 /// Pestaña "Perfil": muestra el acceso si no hay sesión, o la cuenta con "Cerrar sesión".
 class ProfileScreen extends ConsumerWidget {
@@ -81,6 +82,12 @@ class _AccountState extends ConsumerState<_Account> {
           ),
           const SizedBox(height: TvSpace.s6), // Espacio
         ],
+        FilledButton.icon(
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InboxScreen())), // Abre la bandeja
+          icon: const Icon(Icons.chat_bubble_outline), // Icono de mensajes
+          label: const Text('Mis mensajes'), // Texto
+        ),
+        const SizedBox(height: TvSpace.s3), // Espacio
         OutlinedButton(
           style: OutlinedButton.styleFrom(
             foregroundColor: tv.statusAlert, // Texto en color de alerta
