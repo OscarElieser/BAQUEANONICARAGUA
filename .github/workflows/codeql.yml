@@ -18,8 +18,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4 # Descarga el código
-      - uses: github/codeql-action/init@v3 # Prepara el análisis
+      - uses: github/codeql-action/init@v4 # Prepara el análisis
         with:
           languages: javascript-typescript # Web, API, funciones y paquetes
           queries: security-extended # Reglas de seguridad ampliadas
-      - uses: github/codeql-action/analyze@v3 # Ejecuta el análisis y publica resultados
+      - uses: github/codeql-action/analyze@v4 # Ejecuta el análisis y publica resultados
