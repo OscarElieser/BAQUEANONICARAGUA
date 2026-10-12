@@ -16,7 +16,7 @@
     "@nestjs/swagger": "^7.4.0",
     "@nestjs/throttler": "^6.2.0",
     "@supabase/supabase-js": "^2.45.0",
-    "firebase-admin": "^12.5.0",
+    "firebase-admin": "^14.5.0",
     "helmet": "^7.1.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
