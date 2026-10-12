@@ -122,7 +122,7 @@ jobs:
           flutter test --machine > test.jsonl || status=$? # Resultado en formato de máquina (una línea JSON por evento)
           python3 - <<'PY'
           import json
-          names, shown = {}, 0
+          names, shown, prints = {}, 0, {}
           for raw in open('test.jsonl', encoding='utf-8', errors='replace'):
               raw = raw.strip()
               if not raw.startswith('{'):
@@ -134,10 +134,13 @@ jobs:
               kind = e.get('type')
               if kind == 'testStart':
                   names[e['test']['id']] = e['test'].get('name', '')
+              elif kind == 'print':
+                  prints.setdefault(e.get('testID'), []).append(str(e.get('message', '')))
               elif kind == 'error' and shown < 8:
                   shown += 1
-                  text = (str(e.get('error', '')) + ' ' + str(e.get('stackTrace', ''))[:600]).replace('\n', ' ').replace('%', '%25')
-                  print(f"::error title=Prueba Android: {names.get(e.get('testID'), '?')}::{text[:1800]}")
+                  logs = ' '.join(prints.get(e.get('testID'), []))
+                  text = (str(e.get('error', '')) + ' ' + logs[:1400] + ' ' + str(e.get('stackTrace', ''))[:300]).replace('\n', ' ').replace('%', '%25')
+                  print(f"::error title=Prueba Android: {names.get(e.get('testID'), '?')}::{text[:3000]}")
           PY
           exit ${status:-0}
 
