@@ -2,6 +2,7 @@ import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 import 'package:flutter_test/flutter_test.dart'; // Herramientas de prueba
 
 import 'package:nica_app/core/theme.dart'; // Tema del sistema de diseño
+import 'package:nica_app/core/widgets/galeria_arco.dart'; // Galería en arco 3D
 import 'package:nica_app/core/widgets/portada_baqueano.dart'; // Portada con ventana pintada
 
 void main() {
@@ -42,5 +43,27 @@ void main() {
     await tester.tap(find.byType(OutlinedButton)); // "Crear mi viaje"
     expect(explorar, 1); // Pidió bajar al mapa
     expect(viaje, 1); // Pidió abrir Mi aventura
+  });
+
+  testWidgets('la galería en arco se desliza sin errores', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildTheme(Brightness.light, webFonts: false), // Tema sin descargar fuentes
+        home: Scaffold(
+          body: SingleChildScrollView(
+            child: SizedBox(
+              width: 390, // Ancho de teléfono
+              child: GaleriaArco(titulo: 'Galería', intro: 'Ilustraciones', cantidad: 5, constructor: (_, i) => Text('Tarjeta $i')), // Cinco tarjetas de prueba
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle(); // Termina la entrada
+    expect(find.text('Tarjeta 0'), findsOneWidget); // La primera se ve
+    await tester.drag(find.byType(PageView), const Offset(-300, 0)); // Desliza hacia la izquierda
+    await tester.pumpAndSettle(); // Termina el deslizamiento
+    expect(find.text('Tarjeta 2'), findsOneWidget); // Aparecen las siguientes
+    expect(tester.takeException(), isNull); // Sin errores al girar las tarjetas
   });
 }
