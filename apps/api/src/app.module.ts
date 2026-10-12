@@ -4,6 +4,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { FirebaseAuthGuard } from './auth/firebase-auth.guard';
 import { PermissionsGuard } from './auth/permissions.guard';
 import { FirebaseService } from './auth/firebase.service';
+import { AssistantController } from './assistant/assistant.controller';
 import { BusinessesController } from './businesses/businesses.controller';
 import { CatalogController } from './catalog/catalog.controller';
 import { CommunityController } from './community/community.controller';
@@ -25,6 +26,7 @@ import { VerificationsController } from './ops/verifications.controller';
     CommunityController,
     ConversationsController,
     NotificationsController,
+    AssistantController,
   ],
   providers: [
     SupabaseService,

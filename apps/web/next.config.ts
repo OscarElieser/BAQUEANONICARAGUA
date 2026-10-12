@@ -3,6 +3,8 @@ import type { NextConfig } from 'next';
 const config: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Paquete interno en TypeScript (sin build previo)
+  transpilePackages: ['@nica/ai-core'],
   images: { formats: ['image/avif', 'image/webp'] },
   async headers() {
     return [

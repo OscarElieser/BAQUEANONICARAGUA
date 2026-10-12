@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@nica/ai-core": "workspace:*",
     "@supabase/supabase-js": "^2.45.0",
     "firebase": "^11.0.0",
     "maplibre-gl": "^4.7.0",
