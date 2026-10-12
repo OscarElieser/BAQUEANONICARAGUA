@@ -381,5 +381,17 @@
   "explorer.map": "지도에서 보기",
   "explorer.see": "{name} 보기",
   "explorer.of": "/",
-  "explorer.note": "실제 윤곽을 그린 일러스트입니다. 사진은 확인 후 게시됩니다."
+  "explorer.note": "실제 윤곽을 그린 일러스트입니다. 사진은 확인 후 게시됩니다.",
+  "plans.title": "사업자 요금제",
+  "plans.intro": "더 많은 여행자에게 발견되고 직접 연락받고 싶은 숙소, 식당, 가이드, 소상공인을 위한 요금제입니다.",
+  "plans.pending_banner": "요금제를 준비 중입니다. 이름, 가격, 혜택은 아직 정해지지 않았으며 현재 비용은 청구되지 않습니다.",
+  "plans.name_pending": "요금제 미정",
+  "plans.summary_pending": "설명 미정.",
+  "plans.price_pending": "미정",
+  "plans.per_month": "/ 월",
+  "plans.unavailable": "아직 이용할 수 없습니다",
+  "plans.contact": "문의하기",
+  "plans.benefits_pending": "혜택 확인 중",
+  "plans.currencies_note": "가격은 코르도바(C$)와 미국 달러(US$)로 각각 따로 정합니다.",
+  "plans.featured": "추천"
 }

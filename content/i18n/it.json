@@ -381,5 +381,17 @@
   "explorer.map": "Vedi sulla mappa",
   "explorer.see": "Vedi {name}",
   "explorer.of": "di",
-  "explorer.note": "Illustrazione della sua sagoma reale; le foto arriveranno quando saranno verificate."
+  "explorer.note": "Illustrazione della sua sagoma reale; le foto arriveranno quando saranno verificate.",
+  "plans.title": "Piani per le attività",
+  "plans.intro": "Per alloggi, ristoranti, guide e piccole imprese che vogliono farsi trovare da più viaggiatori e ricevere messaggi diretti.",
+  "plans.pending_banner": "I piani sono in preparazione: nomi, prezzi e vantaggi sono ancora da definire. Per ora non si paga nulla.",
+  "plans.name_pending": "Piano da definire",
+  "plans.summary_pending": "Descrizione da definire.",
+  "plans.price_pending": "Da definire",
+  "plans.per_month": "/ mese",
+  "plans.unavailable": "Non ancora disponibile",
+  "plans.contact": "Scrivici",
+  "plans.benefits_pending": "Vantaggi da confermare",
+  "plans.currencies_note": "Prezzi in córdoba (C$) e in dollari USA (US$), fissati separatamente.",
+  "plans.featured": "In evidenza"
 }

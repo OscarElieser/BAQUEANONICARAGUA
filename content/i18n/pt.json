@@ -381,5 +381,17 @@
   "explorer.map": "Ver no mapa",
   "explorer.see": "Ver {name}",
   "explorer.of": "de",
-  "explorer.note": "Ilustração do seu contorno real; as fotos virão quando forem verificadas."
+  "explorer.note": "Ilustração do seu contorno real; as fotos virão quando forem verificadas.",
+  "plans.title": "Planos para negócios",
+  "plans.intro": "Para hospedagens, restaurantes, guias e empreendimentos que querem ser encontrados por mais viajantes e receber mensagens diretas.",
+  "plans.pending_banner": "Os planos estão em preparação: nomes, preços e benefícios ainda serão definidos. Nada é cobrado por enquanto.",
+  "plans.name_pending": "Plano a definir",
+  "plans.summary_pending": "Descrição a definir.",
+  "plans.price_pending": "A definir",
+  "plans.per_month": "/ mês",
+  "plans.unavailable": "Ainda não disponível",
+  "plans.contact": "Fale conosco",
+  "plans.benefits_pending": "Benefícios a confirmar",
+  "plans.currencies_note": "Preços em córdobas (C$) e em dólares (US$), definidos separadamente.",
+  "plans.featured": "Destaque"
 }

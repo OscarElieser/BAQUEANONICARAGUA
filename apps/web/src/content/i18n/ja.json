@@ -381,5 +381,17 @@
   "explorer.map": "地図で見る",
   "explorer.see": "{name}を見る",
   "explorer.of": "/",
-  "explorer.note": "実際の輪郭のイラストです。写真は確認後に掲載します。"
+  "explorer.note": "実際の輪郭のイラストです。写真は確認後に掲載します。",
+  "plans.title": "事業者向けプラン",
+  "plans.intro": "宿泊施設、レストラン、ガイド、小規模事業者が、より多くの旅行者に見つけてもらい、直接連絡を受けるためのプランです。",
+  "plans.pending_banner": "プランは準備中です。名称・料金・特典は未定で、現在は料金は発生しません。",
+  "plans.name_pending": "プラン未定",
+  "plans.summary_pending": "説明は未定です。",
+  "plans.price_pending": "未定",
+  "plans.per_month": "/ 月",
+  "plans.unavailable": "まだ利用できません",
+  "plans.contact": "お問い合わせ",
+  "plans.benefits_pending": "特典は確認中",
+  "plans.currencies_note": "料金はコルドバ（C$）と米ドル（US$）でそれぞれ個別に設定します。",
+  "plans.featured": "おすすめ"
 }

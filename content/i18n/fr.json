@@ -381,5 +381,17 @@
   "explorer.map": "Voir sur la carte",
   "explorer.see": "Voir {name}",
   "explorer.of": "sur",
-  "explorer.note": "Illustration de sa silhouette réelle ; les photos arriveront une fois vérifiées."
+  "explorer.note": "Illustration de sa silhouette réelle ; les photos arriveront une fois vérifiées.",
+  "plans.title": "Offres pour les entreprises",
+  "plans.intro": "Pour les hébergements, restaurants, guides et entrepreneurs qui veulent que plus de voyageurs les trouvent et leur écrivent directement.",
+  "plans.pending_banner": "Les offres sont en préparation : noms, prix et avantages restent à définir. Rien n'est facturé pour l'instant.",
+  "plans.name_pending": "Offre à définir",
+  "plans.summary_pending": "Description à définir.",
+  "plans.price_pending": "À définir",
+  "plans.per_month": "/ mois",
+  "plans.unavailable": "Pas encore disponible",
+  "plans.contact": "Écrivez-nous",
+  "plans.benefits_pending": "Avantages à confirmer",
+  "plans.currencies_note": "Prix en córdobas (C$) et en dollars US (US$), fixés séparément.",
+  "plans.featured": "En vedette"
 }

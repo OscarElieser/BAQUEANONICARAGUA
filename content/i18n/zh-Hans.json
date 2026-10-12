@@ -381,5 +381,17 @@
   "explorer.map": "在地图上查看",
   "explorer.see": "查看{name}",
   "explorer.of": "/",
-  "explorer.note": "根据真实轮廓绘制的插画；照片核实后再上线。"
+  "explorer.note": "根据真实轮廓绘制的插画；照片核实后再上线。",
+  "plans.title": "商家套餐",
+  "plans.intro": "适合希望被更多旅行者发现并直接联系的住宿、餐厅、导游和小微企业。",
+  "plans.pending_banner": "套餐正在准备中：名称、价格和权益尚未确定，目前不收取任何费用。",
+  "plans.name_pending": "套餐待定",
+  "plans.summary_pending": "说明待定。",
+  "plans.price_pending": "待定",
+  "plans.per_month": "/ 月",
+  "plans.unavailable": "暂不可用",
+  "plans.contact": "联系我们",
+  "plans.benefits_pending": "权益待确认",
+  "plans.currencies_note": "价格分别以科多巴（C$）和美元（US$）单独设定。",
+  "plans.featured": "精选"
 }

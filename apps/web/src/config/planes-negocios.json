@@ -1,0 +1,9 @@
+{
+  "_nota": "Planes de suscripción para negocios. Los define el dueño: nombre, precio en córdobas (NIO) y en dólares (USD), y beneficios reales de la plataforma. Mientras un dato sea null, la página muestra 'Por definir' y el botón queda como 'No disponible todavía'. No convertir monedas automáticamente: cada precio se escribe a mano. No prometer mejor posición en búsquedas (la búsqueda no tiene patrocinados).",
+  "confirmado": false,
+  "planes": [
+    { "id": "plan-1", "nombre": null, "resumen": null, "precio_nio": null, "precio_usd": null, "periodo": "mes", "beneficios": [], "destacado": false, "contacto": false },
+    { "id": "plan-2", "nombre": null, "resumen": null, "precio_nio": null, "precio_usd": null, "periodo": "mes", "beneficios": [], "destacado": true, "contacto": false },
+    { "id": "plan-3", "nombre": null, "resumen": null, "precio_nio": null, "precio_usd": null, "periodo": "mes", "beneficios": [], "destacado": false, "contacto": true }
+  ]
+}

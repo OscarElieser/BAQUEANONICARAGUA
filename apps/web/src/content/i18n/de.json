@@ -381,5 +381,17 @@
   "explorer.map": "Auf der Karte ansehen",
   "explorer.see": "{name} ansehen",
   "explorer.of": "von",
-  "explorer.note": "Illustration der echten Umrisse; Fotos folgen, sobald sie geprüft sind."
+  "explorer.note": "Illustration der echten Umrisse; Fotos folgen, sobald sie geprüft sind.",
+  "plans.title": "Pläne für Unternehmen",
+  "plans.intro": "Für Unterkünfte, Restaurants, Guides und Kleinunternehmen, die von mehr Reisenden gefunden und direkt kontaktiert werden möchten.",
+  "plans.pending_banner": "Die Pläne sind in Vorbereitung: Namen, Preise und Leistungen stehen noch nicht fest. Es wird noch nichts berechnet.",
+  "plans.name_pending": "Plan noch offen",
+  "plans.summary_pending": "Beschreibung noch offen.",
+  "plans.price_pending": "Noch offen",
+  "plans.per_month": "/ Monat",
+  "plans.unavailable": "Noch nicht verfügbar",
+  "plans.contact": "Schreib uns",
+  "plans.benefits_pending": "Leistungen noch zu bestätigen",
+  "plans.currencies_note": "Preise in Córdoba (C$) und US-Dollar (US$), jeweils separat festgelegt.",
+  "plans.featured": "Hervorgehoben"
 }
