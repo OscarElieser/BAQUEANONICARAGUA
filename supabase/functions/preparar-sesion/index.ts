@@ -11,11 +11,11 @@ import { createHandler } from './handler.ts'; // Lógica que atiende cada petici
 
 const handler = createHandler({
   config: {
-    firebaseProjectId: Deno.env.get('FIREBASE_PROJECT_ID'), // Proyecto de Firebase
+    firebaseProjectId: Deno.env.get('FIREBASE_PROJECT_ID') || 'baqueanonicaragua-95755', // Proyecto de Firebase (público; el secreto lo puede cambiar)
     serviceAccountJson: Deno.env.get('FIREBASE_SERVICE_ACCOUNT'), // Cuenta de servicio de Firebase (JSON)
     supabaseUrl: Deno.env.get('SUPABASE_URL'), // Dirección del proyecto de Supabase
     serviceRoleKey: Deno.env.get('SUPABASE_SERVICE_ROLE_KEY'), // Clave de servicio de Supabase
-    allowedOrigins: (Deno.env.get('ALLOWED_ORIGINS') ?? '') // Orígenes web permitidos
+    allowedOrigins: (Deno.env.get('ALLOWED_ORIGINS') || 'http://localhost:3000') // Orígenes web permitidos (sin dominio aún: solo la web local)
       .split(',') // Separa por comas
       .map((o) => o.trim()) // Quita espacios
       .filter(Boolean), // Descarta vacíos
