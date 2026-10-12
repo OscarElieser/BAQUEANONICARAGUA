@@ -54,7 +54,7 @@ export function ResourceManager({ resource, locale }: { resource: Resource; loca
           <nav aria-label={section?.label} className="mb-4 flex flex-wrap gap-1 rounded-pill bg-ground-raised p-1">
             {siblings.map((s) => (
               <Link key={s.key} href={`/${locale}/ops/r/${s.key}`} aria-current={s.key === resource.key ? 'page' : undefined}
-                className={`rounded-pill px-4 py-2 font-bold no-underline ${s.key === resource.key ? 'bg-[#0D5448] text-[#F2EFE5]' : 'text-ink'}`}>
+                className={`rounded-pill px-4 py-2 font-bold no-underline ${s.key === resource.key ? 'bg-ink text-ground' : 'text-ink'}`}>
                 {s.label}
               </Link>
             ))}

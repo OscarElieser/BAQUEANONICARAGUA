@@ -292,3 +292,56 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
 .boton-contorno { display: inline-flex; align-items: center; min-height: 52px; padding: 0 26px; border-radius: var(--radius-pill); border: 2px solid var(--marca-turquesa); color: var(--marca-turquesa); font-weight: 700; text-decoration: none; } /* Botón secundario: contorno turquesa */
 .marca-cabecera { font: 800 22px/1.1 system-ui, sans-serif; letter-spacing: 0.14em; } /* Marca BAQUEANO en la cabecera: espaciada, como un sello */
 .marca-cabecera::after { content: ""; display: inline-block; width: 8px; height: 8px; margin-left: 6px; border-radius: 2px; background: var(--marca-naranja); vertical-align: 0.15em; } /* Punto naranja de marca */
+
+/* ===== Ops Center: tema nocturno propio (herramienta interna, siempre oscura) ===== */
+.ops-noche {
+  --ground: var(--marca-nocturno); /* Fondo general: azul nocturno */
+  --ground-raised: var(--marca-profundo); /* Paneles: azul profundo */
+  --ink: var(--band-marfil); /* Texto principal: marfil (15:1) */
+  --ink-muted: #C9D8D0; /* Texto secundario (11.8:1 sobre nocturno) */
+  --line: color-mix(in oklab, var(--band-marfil) 14%, var(--marca-nocturno)); /* Divisores tenues */
+  --accent: var(--marca-turquesa); /* Enlaces */
+  --marca-turquesa: #7FC4D2; /* Turquesa claro: el fondo siempre es oscuro aquí */
+  --focus: var(--marca-naranja); /* Foco visible en naranja */
+  --control-border: #7DB0A4; /* Borde de controles legible sobre oscuro */
+  --status-verified: #9FD9C2; /* Verde de verificado para fondo oscuro */
+  --status-alert: #F5B49A; /* Alerta para fondo oscuro */
+  --oro-text: #E9BB74; /* Pendiente para fondo oscuro */
+  color-scheme: dark; /* Controles nativos oscuros */
+  background: var(--ground); color: var(--ink); /* Pinta el área completa */
+}
+.ops-lateral { background: color-mix(in oklab, var(--marca-profundo) 55%, var(--marca-nocturno)); border-right: 1px solid var(--line); } /* Barra lateral un tono más clara */
+.ops-grupo { margin: 10px 10px 6px; font-size: 12px; font-weight: 700; color: var(--ink-muted); } /* Título de grupo, discreto */
+.ops-item { display: flex; min-height: 40px; align-items: center; justify-content: space-between; gap: 8px; padding: 0 12px; border-radius: 12px; font-size: 15px; color: var(--ink); text-decoration: none; transition: background-color 160ms ease-out; } /* Fila de sección */
+.ops-item:hover { background: color-mix(in oklab, var(--band-marfil) 7%, transparent); } /* Se aclara al pasar el cursor */
+.ops-item[aria-current="page"] { background: color-mix(in oklab, var(--band-marfil) 11%, transparent); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--band-marfil) 16%, transparent); font-weight: 700; } /* Sección actual: cristal con borde fino */
+.ops-item { position: relative; } .ops-item[aria-current="page"]::before { content: ""; position: absolute; left: 0; top: 11px; width: 4px; height: 18px; border-radius: 2px; background: var(--marca-naranja); } /* Marca naranja de la sección actual */
+.ops-item-futuro { color: var(--ink-muted); } /* Secciones aún no construidas */
+.ops-insignia { padding: 1px 8px; border-radius: var(--radius-pill); border: 1px solid var(--line); font-size: 11px; } /* "Próximamente" */
+.ops-barra { border-bottom: 1px solid var(--line); } /* Barra superior */
+.ops-usuario { padding: 6px 14px; border-radius: var(--radius-pill); background: color-mix(in oklab, var(--band-marfil) 8%, transparent); font-size: 14px; } /* Cuenta con sesión */
+.ops-aviso { padding: 20px; border-radius: var(--radius-m); background: var(--ground-raised); font-weight: 700; } /* Avisos de acceso */
+.ops-titulo { margin: 4px 0 0; font: 700 40px/1.05 var(--font-atkinson), system-ui, sans-serif; letter-spacing: -0.02em; } /* Título grande de sección */
+
+.ops-tarjeta {
+  position: relative; overflow: hidden; padding: 20px; border-radius: 20px; /* Tarjeta de cristal */
+  background: linear-gradient(160deg, color-mix(in oklab, var(--band-marfil) 7%, var(--marca-profundo)), var(--marca-profundo) 60%); /* Brillo arriba, fondo profundo abajo */
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--band-marfil) 12%, transparent), 0 18px 40px -24px color-mix(in oklab, var(--marca-nocturno) 90%, transparent); /* Borde fino y sombra suave */
+}
+.ops-tarjeta::after { content: ""; position: absolute; right: -60px; bottom: -80px; width: 260px; height: 260px; border-radius: 50%; pointer-events: none; opacity: 0.5; background: repeating-radial-gradient(circle, transparent 0 14px, color-mix(in oklab, var(--tono, var(--band-marfil)) 22%, transparent) 14px 15px); } /* Curvas de nivel decorativas (no son un gráfico) */
+.ops-tono-turquesa { --tono: var(--marca-turquesa); } /* Contenido */
+.ops-tono-naranja { --tono: var(--marca-naranja); } /* Moderación */
+.ops-tono-verde { --tono: var(--musgo); } /* Comunidad */
+.ops-tarjeta > * { position: relative; } /* El contenido va encima de las curvas */
+.ops-cifra { margin: 18px 0 4px; font: 700 56px/1 var(--font-atkinson), system-ui, sans-serif; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; } /* Cifra principal, grande */
+.ops-destacada { background: radial-gradient(120% 90% at 100% 0%, color-mix(in oklab, var(--marca-naranja) 26%, var(--marca-profundo)), var(--marca-profundo) 62%); } /* Panel de pendientes con resplandor naranja */
+.ops-pendiente { display: flex; min-height: 48px; align-items: center; justify-content: space-between; padding: 0 16px; border-radius: 14px; background: color-mix(in oklab, var(--band-marfil) 9%, transparent); color: var(--ink); font-weight: 700; text-decoration: none; transition: background-color 160ms ease-out; } /* Fila que lleva a la sección */
+.ops-pendiente:hover { background: color-mix(in oklab, var(--band-marfil) 15%, transparent); } /* Se aclara al pasar el cursor */
+.ops-mini { padding: 16px 18px; border-radius: 16px; } /* Indicador pequeño */
+.ops-mini::after { display: none; } /* Sin decoración en los pequeños */
+@media (max-width: 639px) {
+  .ops-lateral { flex-direction: row; align-items: center; overflow-x: auto; padding: 10px 12px; border-right: 0; border-bottom: 1px solid var(--line); } /* En el teléfono, las secciones son una fila que se desliza */
+  .ops-lateral > div { display: flex; flex: none; align-items: center; margin: 0; padding: 0 8px 0 0; } /* Cada grupo, en línea */
+  .ops-lateral .ops-grupo, .ops-lateral .ops-item-futuro { display: none; } /* Sin títulos ni secciones futuras: más espacio */
+  .ops-lateral .ops-item { white-space: nowrap; } /* Nombres en una línea */
+}

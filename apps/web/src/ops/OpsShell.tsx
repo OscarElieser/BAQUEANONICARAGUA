@@ -1,61 +1,81 @@
-'use client';
+'use client'; // Necesita saber la sesión y la ruta actual del navegador
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import type { ReactNode } from 'react';
-import { SECTIONS } from './resources';
-import { useOpsAuth } from './useOps';
+import Link from 'next/link'; // Enlaces internos sin recargar
+import { usePathname } from 'next/navigation'; // Ruta actual, para marcar la sección activa
+import type { ReactNode } from 'react'; // Tipo del contenido de cada página
+import { SECTIONS } from './resources'; // Secciones del Ops Center (verificadas contra la base en CI)
+import { useOpsAuth } from './useOps'; // Estado de la sesión del equipo
+
+/** Grupos de la barra lateral: ordenan las secciones por tipo de trabajo (solo presentación). */
+const GRUPOS: Array<{ titulo: string; claves: string[] }> = [
+  { titulo: 'General', claves: ['panel'] }, // Vista de conjunto
+  { titulo: 'Contenido', claves: ['territorios', 'destinos', 'negocios', 'cultura', 'fuentes'] }, // Lo que se publica
+  { titulo: 'Personas', claves: ['usuarios', 'comunidad', 'denuncias', 'ia'] }, // Cuentas, moderación y revisiones
+  { titulo: 'Control', claves: ['auditoria', 'navegacion', 'configuracion'] }, // Registro, medición y ajustes
+  { titulo: 'Próximamente', claves: ['notificaciones', 'traducciones', 'seo'] }, // Aún sin construir (lo dice)
+];
 
 export function OpsShell({ locale, children }: { locale: string; children: ReactNode }) {
-  const auth = useOpsAuth();
-  const pathname = usePathname() ?? '';
-  const base = `/${locale}/ops`;
-  const rest = pathname.slice(base.length);
+  const auth = useOpsAuth(); // Sesión del miembro del equipo
+  const pathname = usePathname() ?? ''; // Ruta actual
+  const base = `/${locale}/ops`; // Raíz del Ops Center en este idioma
+  const rest = pathname.slice(base.length); // Parte de la ruta dentro del Ops Center
 
   const isActive = (path: string | null, resources?: string[]) => {
-    if (path === null) return false;
-    if (path === '') return rest === '' || rest === '/';
-    if (resources?.some((r) => rest.startsWith(`/r/${r}`))) return true;
-    return rest.startsWith(path);
+    if (path === null) return false; // Las secciones futuras nunca están activas
+    if (path === '') return rest === '' || rest === '/'; // El panel solo en la raíz
+    if (resources?.some((r) => rest.startsWith(`/r/${r}`))) return true; // Editor genérico de uno de sus recursos
+    return rest.startsWith(path); // Página propia de la sección
   };
 
-  let body: ReactNode = children;
+  let body: ReactNode = children; // Contenido de la página
   if (auth.kind === 'not_configured') {
-    body = <p className="rounded-m bg-ground-raised p-5 font-bold">El Ops Center se activa al conectar el inicio de sesión (Firebase). No disponible todavía.</p>;
+    body = <p className="ops-aviso">El Ops Center se activa al conectar el inicio de sesión (Firebase). No disponible todavía.</p>; // Sin Firebase configurado
   } else if (auth.kind === 'loading') {
-    body = <p className="text-ink-muted">Cargando…</p>;
+    body = <p className="text-ink-muted">Cargando…</p>; // Comprobando la sesión
   } else if (auth.kind === 'signed_out') {
-    body = <p>Inicia sesión con una cuenta del equipo para entrar. <Link href={`/${locale}/cuenta`}>Iniciar sesión</Link></p>;
+    body = <p className="ops-aviso">Inicia sesión con una cuenta del equipo para entrar. <Link href={`/${locale}/cuenta`}>Iniciar sesión</Link></p>; // Sin sesión
   }
 
+  const usuario = auth.kind === 'ready' ? auth.user.displayName || auth.user.email || 'Cuenta del equipo' : null; // Quién tiene la sesión abierta
+
   return (
-    <div className="flex flex-wrap bg-ground text-ink">
-      <nav aria-label="Ops Center" className="flex w-full flex-col gap-1 bg-[#0D5448] px-3.5 py-5 text-[#F2EFE5] sm:w-[260px] sm:min-h-[calc(100vh-80px)]">
-        <div className="px-2.5 pb-4">
-          <div className="font-display text-[22px]">[Marca]</div>
-          <div className="text-sm text-[#C9D8D0]">Ops Center</div>
+    <div className="ops-noche flex flex-wrap">
+      <nav aria-label="Ops Center" className="ops-lateral flex w-full flex-col gap-1 px-3.5 py-5 sm:w-[264px] sm:min-h-[calc(100vh-80px)]">
+        <div className="px-2.5 pb-5">
+          <div className="marca-cabecera">BAQUEANO</div> {/* Marca */}
+          <div className="mt-1 text-sm text-ink-muted">Ops Center</div> {/* Nombre de la herramienta */}
         </div>
-        {SECTIONS.map((s) =>
-          s.path === null ? (
-            <span key={s.key} className="flex min-h-10 items-center justify-between rounded-[12px] px-3 text-[15px] text-[#9FBFB6]">
-              {s.label}
-              <span className="rounded-pill border border-[#5E9488] px-2 text-xs">Próximamente</span>
-            </span>
-          ) : (
-            <Link
-              key={s.key}
-              href={`${base}${s.path}`}
-              aria-current={isActive(s.path, s.resources) ? 'page' : undefined}
-              className={`flex min-h-10 items-center rounded-[12px] px-3 text-[15px] no-underline ${
-                isActive(s.path, s.resources) ? 'bg-[#F2EFE5] font-bold text-[#0D5448]' : 'text-[#F2EFE5]'
-              }`}
-            >
-              {s.label}
-            </Link>
-          ),
-        )}
+        {GRUPOS.map((g) => (
+          <div key={g.titulo} className="mb-2">
+            <p className="ops-grupo">{g.titulo}</p> {/* Título del grupo */}
+            {g.claves.map((k) => SECTIONS.find((s) => s.key === k)).filter((s) => s !== undefined).map((s) =>
+              s.path === null ? (
+                <span key={s.key} className="ops-item ops-item-futuro">
+                  {s.label} {/* Sección aún no construida */}
+                  <span className="ops-insignia">Próximamente</span> {/* Lo dice en texto */}
+                </span>
+              ) : (
+                <Link
+                  key={s.key} // Sección
+                  href={`${base}${s.path}`} // Su página
+                  aria-current={isActive(s.path, s.resources) ? 'page' : undefined} // Marca la sección actual para lectores de pantalla
+                  className="ops-item" // Estilo de fila (la activa se resalta por aria-current)
+                >
+                  {s.label} {/* Nombre de la sección */}
+                </Link>
+              ),
+            )}
+          </div>
+        ))}
       </nav>
-      <main className="min-w-0 flex-[999_1_560px] p-5 sm:p-8">{body}</main>
+      <div className="min-w-0 flex-[999_1_560px]">
+        <header className="ops-barra flex flex-wrap items-center justify-between gap-3 px-5 py-4 sm:px-8">
+          <p className="m-0 text-sm text-ink-muted">Centro de operaciones: solo datos reales de la base</p> {/* Recordatorio del principio: sin cifras estimadas */}
+          {usuario && <p className="ops-usuario m-0">{usuario}</p>} {/* Cuenta con la sesión abierta */}
+        </header>
+        <main className="p-5 sm:p-8">{body}</main> {/* Contenido de la sección */}
+      </div>
     </div>
   );
 }

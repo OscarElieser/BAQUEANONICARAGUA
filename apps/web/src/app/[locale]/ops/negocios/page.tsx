@@ -33,7 +33,7 @@ export default function Negocios({ params }: { params: Promise<{ locale: string 
         <nav aria-label="Vistas de negocios" className="flex gap-1 rounded-pill bg-ground-raised p-1">
           {(['verificacion', 'reclamaciones'] as const).map((t) => (
             <button key={t} type="button" onClick={() => setTab(t)} aria-current={tab === t ? 'page' : undefined}
-              className={`rounded-pill px-4 py-2 font-bold ${tab === t ? 'bg-[#0D5448] text-[#F2EFE5]' : 'text-ink'}`}>
+              className={`rounded-pill px-4 py-2 font-bold ${tab === t ? 'bg-ink text-ground' : 'text-ink'}`}>
               {t === 'verificacion' ? 'Verificación' : 'Reclamaciones'}
             </button>
           ))}
