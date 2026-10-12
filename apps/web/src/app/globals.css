@@ -443,3 +443,11 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
 .plan-destacado .plan-boton { background: var(--marca-naranja); color: var(--marca-nocturno); } /* El central, naranja (5.4:1) */
 .plan-boton:disabled { cursor: not-allowed; opacity: 0.75; } /* Aún no disponible */
 .plan-beneficios { display: grid; gap: 10px; margin: 22px 0 0; padding: 18px 0 0; border-top: 1px solid var(--line); list-style: none; font-size: 15px; } /* Lista de beneficios */
+.explorador.en-transicion .exp-fondo, .explorador.en-transicion .exp-cartas li { transition: none; } /* Durante la transición de vista no hay fundidos propios */
+::view-transition-group(exp-crece) { animation-duration: 760ms; animation-timing-function: cubic-bezier(.2,.75,.15,1); } /* La tarjeta crece hasta ser el fondo */
+::view-transition-old(exp-crece), ::view-transition-new(exp-crece) { height: 100%; object-fit: cover; } /* Sin deformarse al crecer */
+@media (prefers-reduced-motion: reduce) { ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; } } /* Sin animación si así se pidió */
+::view-transition-image-pair(exp-crece) { overflow: hidden; border-radius: 20px; } /* La imagen que crece no se sale de su marco */
+.explorador.en-transicion .exp-velo { view-transition-name: exp-velo; } /* La sombra queda sobre el fondo que crece… */
+.explorador.en-transicion .exp-textos { view-transition-name: exp-textos; } /* …y el texto por encima de todo */
+.explorador.en-transicion .exp-flechas { view-transition-name: exp-flechas; } /* Y las flechas */
