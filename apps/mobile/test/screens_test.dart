@@ -86,7 +86,7 @@ void main() {
     expect(find.text('Esto es lo que entendí'), findsOneWidget); // Muestra lo entendido
     expect(find.text('4'), findsOneWidget); // Cuatro viajeros
     expect(find.text('5'), findsOneWidget); // Cinco días
-    await tester.scrollUntilVisible(find.textContaining('¿En qué fechas viajan?'), 200); // Baja hasta las preguntas
+    await tester.scrollUntilVisible(find.textContaining('¿En qué fechas viajan?'), 200, scrollable: find.byType(Scrollable).first); // Baja la lista principal (el campo de texto tiene su propio desplazamiento)
     expect(find.textContaining('¿En qué fechas viajan?'), findsOneWidget); // Pregunta por las fechas
   });
 
