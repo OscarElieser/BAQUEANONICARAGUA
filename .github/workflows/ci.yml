@@ -27,6 +27,8 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - run: node --test packages/ai-core/test/*.test.ts
+      - name: Ops Center alineado con la base de datos
+        run: node --test scripts/ops-resources.test.ts
 
   node:
     name: Web + API (tipos, pruebas, build)

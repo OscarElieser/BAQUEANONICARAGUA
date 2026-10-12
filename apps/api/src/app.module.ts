@@ -16,6 +16,7 @@ import { NotificationsController } from './notifications/notifications.controlle
 import { SupabaseService } from './common/supabase.service';
 import { HealthController } from './health/health.controller';
 import { MeController } from './me/me.controller';
+import { OpsController } from './ops/ops.controller';
 import { VerificationsController } from './ops/verifications.controller';
 
 @Module({
@@ -33,6 +34,7 @@ import { VerificationsController } from './ops/verifications.controller';
     IncidentsController,
     CultureController,
     WeatherController,
+    OpsController,
   ],
   providers: [
     SupabaseService,

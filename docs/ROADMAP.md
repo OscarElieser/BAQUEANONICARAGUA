@@ -66,3 +66,12 @@ Regla: un módulo solo pasa a `probado` cuando cumple los criterios de la secci�
 
 ## MVP recomendado
 Fases 0–4 solo en web, con 2–3 territorios piloto completamente verificados, antes de abrir Android, IA y red social al público.
+
+## Ops Center (2026-10-12)
+
+| Módulo | Estado | Evidencia |
+|---|---|---|
+| Inventario y diseño | probado | `docs/OPS_CENTER.md` y lienzo "Ops Center — mapa y pantallas": cada botón con su función real, permiso y estado. |
+| Funciones de administración (BD) | probado | Migración 0014: editor genérico con lista blanca, publicar/ocultar/archivar, borrar solo borradores nunca publicados, suspender/reactivar/eliminar (anonimizar) cuentas, roles con protección del último superadmin, reclamaciones, reportes, propuestas de IA, ajustes, métricas. 105/105 pruebas. |
+| API del Ops Center | en desarrollo | `/v1/ops/*` con segundo factor obligatorio. |
+| Interfaz del Ops Center | en desarrollo | `/ops`: panel, editor generado para 11 recursos, usuarios, negocios, comunidad, denuncias, IA, auditoría con exportación CSV, configuración. Se activa con Firebase. La definición de recursos se verifica contra la BD en CI. |

@@ -610,6 +610,217 @@ select set_config('request.jwt.claims', '{}', true);
 insert into results select 'anónimo no ve artistas en borrador', count(*) = 0 from public.artists;
 reset role;
 
+-- ===========================================================================
+-- Ops Center · administración
+-- ===========================================================================
+insert into public.profiles (id, firebase_uid, display_name) values
+  ('00000000-0000-0000-0000-0000000000f5', 'fb_super', 'Superadmin'),
+  ('00000000-0000-0000-0000-0000000000d1', 'fb_editor', 'Editora');
+insert into public.user_roles (profile_id, role_key) values
+  ('00000000-0000-0000-0000-0000000000f5', 'superadmin'),
+  ('00000000-0000-0000-0000-0000000000d1', 'editor');
+
+-- 36. Editor genérico: crear, campo no permitido, publicar exige fuente, archivar
+select pg_temp.act_as('fb_editor');
+insert into ctx values ('dest', public.admin_save_content('destinations', null,
+  '{"slug":"mirador-prueba","name":"Mirador de prueba","department_id":6,"summary":"Vista al lago"}'::jsonb));
+reset role;
+insert into results select 'editor crea destino en borrador',
+  (select editorial = 'draft' from public.destinations where id = (select v from ctx where k = 'dest'));
+insert into results select 'creación deja revisión e historial',
+  exists (select 1 from public.content_revisions where entity_id = (select v from ctx where k = 'dest'))
+  and exists (select 1 from audit.logs where action = 'destinations.create');
+
+select pg_temp.act_as('fb_editor');
+do $$
+begin
+  begin
+    perform public.admin_save_content('destinations', (select v from ctx where k = 'dest'), '{"editorial":"published"}'::jsonb);
+    insert into results values ('editor no puede saltarse la lista blanca', false);
+  exception when invalid_parameter_value then
+    insert into results values ('editor no puede saltarse la lista blanca', true);
+  end;
+  begin
+    perform public.admin_set_editorial('destinations', (select v from ctx where k = 'dest'), 'published');
+    insert into results values ('editor sin content.publish no publica', false);
+  exception when insufficient_privilege then
+    insert into results values ('editor sin content.publish no publica', true);
+  end;
+end $$;
+select public.admin_save_content('destinations', (select v from ctx where k = 'dest'), '{"summary":"Vista al lago y al volcán"}'::jsonb, true, 'Listo para revisar');
+reset role;
+insert into results select 'editar y enviar a revisión',
+  (select editorial = 'in_review' and summary = 'Vista al lago y al volcán' from public.destinations where id = (select v from ctx where k = 'dest'));
+
+select pg_temp.act_as('fb_admin');
+do $$
+begin
+  begin
+    perform public.admin_set_editorial('destinations', (select v from ctx where k = 'dest'), 'published');
+    insert into results values ('publicar sin fuente se rechaza', false);
+  exception when check_violation then
+    insert into results values ('publicar sin fuente se rechaza', true);
+  end;
+end $$;
+reset role;
+select pg_temp.act_as('fb_editor');
+select public.admin_save_content('destinations', (select v from ctx where k = 'dest'), '{"source_id":"00000000-0000-0000-0000-0000000005c0"}'::jsonb);
+reset role;
+select pg_temp.act_as('fb_admin');
+select public.admin_set_editorial('destinations', (select v from ctx where k = 'dest'), 'published');
+reset role;
+insert into results select 'admin publica con fuente y aparece en la vista pública',
+  exists (select 1 from public.public_destinations where id = (select v from ctx where k = 'dest'));
+
+-- 37. Eliminar: publicado no se borra (se archiva); borrador nuevo sí
+select pg_temp.act_as('fb_admin');
+do $$
+begin
+  begin
+    perform public.admin_set_editorial('destinations', (select v from ctx where k = 'dest'), 'draft');
+    perform public.admin_delete_draft('destinations', (select v from ctx where k = 'dest'));
+    insert into results values ('lo que estuvo publicado no se puede borrar', false);
+  exception when object_not_in_prerequisite_state then
+    insert into results values ('lo que estuvo publicado no se puede borrar', true);
+  end;
+end $$;
+select public.admin_set_editorial('destinations', (select v from ctx where k = 'dest'), 'archived', 'Cerrado por la reserva');
+insert into ctx values ('dest2', public.admin_save_content('destinations', null, '{"slug":"borrador-x","name":"Borrador X","department_id":6}'::jsonb));
+select public.admin_delete_draft('destinations', (select v from ctx where k = 'dest2'));
+reset role;
+insert into results select 'archivar marca archived_at y sale de lo público',
+  (select archived_at is not null from public.destinations where id = (select v from ctx where k = 'dest'))
+  and not exists (select 1 from public.public_destinations where id = (select v from ctx where k = 'dest'));
+insert into results select 'borrador nunca publicado se elimina',
+  not exists (select 1 from public.destinations where id = (select v from ctx where k = 'dest2'));
+
+-- 38. Suspender negocio (ocultar) exige businesses.review y motivo
+select pg_temp.act_as('fb_admin');
+select public.admin_set_editorial('businesses', '00000000-0000-0000-0000-0000000000b1', 'hidden', 'Quejas verificadas de clientes');
+reset role;
+insert into results select 'negocio suspendido sale de la vista pública',
+  not exists (select 1 from public.public_businesses where id = '00000000-0000-0000-0000-0000000000b1');
+
+-- 39. Usuarios: suspender, no a sí mismo, superadmin protegido, anonimizar
+select pg_temp.act_as('fb_admin');
+select public.admin_set_user_status('00000000-0000-0000-0000-00000000000b', 'suspended', 'Spam reiterado en comentarios');
+do $$
+begin
+  begin
+    perform public.admin_set_user_status('00000000-0000-0000-0000-0000000000c2', 'suspended', 'Prueba propia');
+    insert into results values ('nadie se suspende a sí mismo', false);
+  exception when insufficient_privilege then
+    insert into results values ('nadie se suspende a sí mismo', true);
+  end;
+  begin
+    perform public.admin_set_user_status('00000000-0000-0000-0000-0000000000f5', 'suspended', 'Intento de admin');
+    insert into results values ('admin no puede suspender al superadmin', false);
+  exception when insufficient_privilege then
+    insert into results values ('admin no puede suspender al superadmin', true);
+  end;
+end $$;
+reset role;
+insert into results select 'usuario suspendido pierde identidad en RLS',
+  (select status = 'suspended' from public.profiles where id = '00000000-0000-0000-0000-00000000000b');
+select pg_temp.act_as('fb_user_b');
+insert into results select 'cuenta suspendida no obtiene perfil', app.current_profile_id() is null;
+reset role;
+
+select pg_temp.act_as('fb_admin');
+select public.admin_set_user_status('00000000-0000-0000-0000-00000000000a', 'deleted', 'Solicitud de eliminación del titular');
+reset role;
+insert into results select 'eliminar cuenta anonimiza datos personales',
+  (select status = 'deleted' and display_name is null and firebase_uid like 'deleted:%' from public.profiles where id = '00000000-0000-0000-0000-00000000000a');
+insert into results select 'la auditoría de la cuenta eliminada se conserva',
+  exists (select 1 from audit.logs where target_id = '00000000-0000-0000-0000-00000000000a' and action = 'user.deleted');
+
+-- 40. Roles: el auditor no gestiona; solo superadmin otorga superadmin; no se quita el último
+select pg_temp.act_as('fb_auditor');
+do $$
+begin
+  begin
+    perform public.admin_grant_role('00000000-0000-0000-0000-0000000000d1', 'moderator');
+    insert into results values ('auditor no puede asignar roles', false);
+  exception when insufficient_privilege then
+    insert into results values ('auditor no puede asignar roles', true);
+  end;
+end $$;
+reset role;
+select pg_temp.act_as('fb_super');
+select public.admin_grant_role('00000000-0000-0000-0000-0000000000d1', 'moderator');
+do $$
+begin
+  begin
+    perform public.admin_revoke_role('00000000-0000-0000-0000-0000000000f5', 'superadmin');
+    insert into results values ('no se quita el último superadmin', false);
+  exception when object_not_in_prerequisite_state then
+    insert into results values ('no se quita el último superadmin', true);
+  end;
+end $$;
+select public.admin_revoke_role('00000000-0000-0000-0000-0000000000d1', 'moderator');
+reset role;
+insert into results select 'asignar y quitar rol quedan auditados',
+  (select count(*) = 2 from audit.logs where action in ('role.grant','role.revoke') and target_id = '00000000-0000-0000-0000-0000000000d1');
+
+-- 41. Reclamación de ficha comunitaria
+insert into public.businesses (id, slug, name, department_id, editorial) values
+  ('00000000-0000-0000-0000-0000000000b2', 'ficha-comunitaria', 'Ficha comunitaria', 6, 'published');
+insert into public.business_claims (id, business_id, claimant_id) values
+  ('00000000-0000-0000-0000-00000000c1a1', '00000000-0000-0000-0000-0000000000b2', '00000000-0000-0000-0000-0000000000d1');
+select pg_temp.act_as('fb_admin');
+select public.admin_review_claim('00000000-0000-0000-0000-00000000c1a1', 'approve', 'Documentos de propiedad comprobados');
+reset role;
+insert into results select 'reclamación aprobada asigna dueña y pasa a reclamado',
+  (select listing_tier = 'claimed' and organization_id is not null from public.businesses where id = '00000000-0000-0000-0000-0000000000b2')
+  and exists (select 1 from public.organization_memberships m join public.businesses b on b.organization_id = m.organization_id
+              where b.id = '00000000-0000-0000-0000-0000000000b2' and m.profile_id = '00000000-0000-0000-0000-0000000000d1' and m.role = 'owner');
+
+-- 42. Propuesta de IA aprobada se aplica con revisión de origen IA; campo no editable se rechaza
+insert into public.ai_correction_proposals (id, entity_table, entity_id, field, proposed_value, rationale, origin) values
+  ('00000000-0000-0000-0000-00000000a1a1', 'businesses', '00000000-0000-0000-0000-0000000000b2', 'summary', '"Abre de martes a domingo"', 'Según la dueña', 'ai'),
+  ('00000000-0000-0000-0000-00000000a1a2', 'businesses', '00000000-0000-0000-0000-0000000000b2', 'listing_tier', '"verified"', 'intento', 'ai');
+select pg_temp.act_as('fb_admin');
+select public.admin_review_ai_correction('00000000-0000-0000-0000-00000000a1a1', 'approve', 'Confirmado por teléfono');
+do $$
+begin
+  begin
+    perform public.admin_review_ai_correction('00000000-0000-0000-0000-00000000a1a2', 'approve', 'Intento de subir nivel');
+    insert into results values ('IA no puede cambiar campos protegidos', false);
+  exception when invalid_parameter_value then
+    insert into results values ('IA no puede cambiar campos protegidos', true);
+  end;
+end $$;
+reset role;
+insert into results select 'corrección aprobada se aplica y queda versionada',
+  (select summary = 'Abre de martes a domingo' from public.businesses where id = '00000000-0000-0000-0000-0000000000b2')
+  and exists (select 1 from public.content_revisions where entity_id = '00000000-0000-0000-0000-0000000000b2' and origin = 'ai_proposal_approved');
+
+-- 43. Ajustes con lista blanca y métricas del panel solo para el equipo
+select pg_temp.act_as('fb_super');
+select public.admin_set_setting('support_email', 'soporte@ejemplo.ni');
+do $$
+begin
+  begin
+    perform public.admin_set_setting('service_role_key', 'x');
+    insert into results values ('ajuste fuera de lista blanca se rechaza', false);
+  exception when invalid_parameter_value then
+    insert into results values ('ajuste fuera de lista blanca se rechaza', true);
+  end;
+end $$;
+insert into results select 'panel devuelve métricas reales', (public.ops_dashboard_metrics()->>'destinations_published') is not null;
+reset role;
+select pg_temp.act_as('fb_owner');
+do $$
+begin
+  begin
+    perform public.ops_dashboard_metrics();
+    insert into results values ('emprendedora no ve el panel del equipo', false);
+  exception when insufficient_privilege then
+    insert into results values ('emprendedora no ve el panel del equipo', true);
+  end;
+end $$;
+reset role;
+
 select case when ok then 'PASS' else 'FAIL' end as status, name from results order by ok, name;
 select count(*) filter (where not ok) as failures, count(*) as total from results;
 
