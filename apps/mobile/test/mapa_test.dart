@@ -5,6 +5,7 @@ import 'package:flutter/material.dart'; // Componentes de Flutter
 import 'package:flutter_test/flutter_test.dart'; // Herramientas de pruebas de widgets
 import 'package:nica_app/core/theme.dart'; // Tema del sistema de diseño
 import 'package:nica_app/core/widgets/mapa_territorios.dart'; // Widget a probar
+import 'package:nica_app/core/widgets/portada_territorio.dart'; // Portadas y tarjetas
 
 void main() {
   final mapa = DatosMapa.fromJson(jsonDecode(File('assets/mapa/mapa.json').readAsStringSync()) as Map<String, dynamic>); // Mismo archivo que usa la app
@@ -53,5 +54,47 @@ void main() {
     await tester.pump(); // Redibuja
     expect(opened, ['boaco']); // Pide abrir su ficha
     expect(tester.takeException(), isNull); // Sin errores al dibujar
+  });
+
+  testWidgets('las 17 portadas se dibujan sin errores y cada territorio tiene su zona', (tester) async {
+    for (final f in mapa.territories) {
+      expect(['pacifico', 'norte', 'caribe'], contains(f.zone), reason: '${f.name} necesita zona'); // Zona válida
+    }
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildTheme(Brightness.dark, webFonts: false), // Tema sin red
+        home: Scaffold(
+          body: GridView.count(
+            crossAxisCount: 4, // Cuatro por fila
+            children: [for (final f in mapa.territories) PortadaTerritorio(mapa: mapa, slug: f.id)], // Las 17
+          ),
+        ),
+      ),
+    );
+    await tester.pump(); // Dibuja
+    expect(tester.takeException(), isNull); // Ninguna falló
+  });
+
+  testWidgets('la tarjeta de un territorio publicado se abre; la pendiente no', (tester) async {
+    var abiertas = 0; // Veces que se pidió abrir
+    final rivas = mapa.territories.firstWhere((t) => t.id == 'rivas'); // Territorio de prueba
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildTheme(Brightness.dark, webFonts: false), // Tema sin red
+        home: Scaffold(
+          body: Row(
+            children: [
+              SizedBox(width: 168, child: TarjetaTerritorio(key: const Key('pub'), mapa: mapa, forma: rivas, published: true, onOpen: () => abiertas++)), // Publicada
+              SizedBox(width: 168, child: TarjetaTerritorio(key: const Key('pen'), mapa: mapa, forma: rivas, published: false, onOpen: () => abiertas++)), // Pendiente
+            ],
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.byKey(const Key('pen'))); // Toca la pendiente
+    expect(abiertas, 0); // No abre
+    await tester.tap(find.byKey(const Key('pub'))); // Toca la publicada
+    expect(abiertas, 1); // Abre su ficha
+    expect(find.bySemanticsLabel(RegExp('^Rivas\\.')), findsNWidgets(2)); // Ambas dicen su nombre a los lectores de pantalla
   });
 }

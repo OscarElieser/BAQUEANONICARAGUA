@@ -37,7 +37,7 @@ class CommunityScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
               children: [
-                Text(context.t('community.title'), style: text.displayMedium), // Título
+                Text(context.t('community.title'), style: Theme.of(context).extension<LetrasMundo>()?.comunidad.copyWith(fontSize: (text.displayMedium?.fontSize ?? 34) + 4) ?? text.displayMedium), // Título con la letra de Comunidad
                 const SizedBox(height: TvSpace.s3), // Espacio
                 Text(context.t('community.intro'), style: text.bodyLarge?.copyWith(color: tv.inkMuted)), // Qué es la Vitrina
                 const SizedBox(height: TvSpace.s6), // Espacio

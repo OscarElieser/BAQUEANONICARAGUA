@@ -105,6 +105,23 @@ class TvSpace {
 const territorio700 = Color(0xFF0D5448);
 const oro400 = TvColors.oro;
 
+/// Letra de titulares propia de cada sección ("mundos"), igual que en la web.
+class LetrasMundo extends ThemeExtension<LetrasMundo> {
+  const LetrasMundo({required this.comunidad, required this.aventura, required this.cultura}); // Constructor
+  final TextStyle comunidad; // Bricolage Grotesque
+  final TextStyle aventura; // Anybody (en maíz, sobre añil)
+  final TextStyle cultura; // Caprasimo
+
+  @override
+  LetrasMundo copyWith({TextStyle? comunidad, TextStyle? aventura, TextStyle? cultura}) =>
+      LetrasMundo(comunidad: comunidad ?? this.comunidad, aventura: aventura ?? this.aventura, cultura: cultura ?? this.cultura); // Copia con cambios
+
+  @override
+  LetrasMundo lerp(LetrasMundo? other, double t) => other == null
+      ? this
+      : LetrasMundo(comunidad: TextStyle.lerp(comunidad, other.comunidad, t)!, aventura: TextStyle.lerp(aventura, other.aventura, t)!, cultura: TextStyle.lerp(cultura, other.cultura, t)!); // Transición entre temas
+}
+
 /// [webFonts] = false en pruebas (sin red): usa las fuentes del sistema con los mismos tamaños.
 ThemeData buildTheme(Brightness brightness, {bool webFonts = true}) {
   final dark = brightness == Brightness.dark;
@@ -139,7 +156,14 @@ ThemeData buildTheme(Brightness brightness, {bool webFonts = true}) {
     brightness: brightness,
     colorScheme: scheme,
     scaffoldBackgroundColor: c.ground,
-    extensions: [c],
+    extensions: [
+      c, // Colores del sistema de diseño
+      LetrasMundo(
+        comunidad: webFonts ? GoogleFonts.getFont('Bricolage Grotesque', fontWeight: FontWeight.w800, color: c.ink, height: 0.98) : TextStyle(fontWeight: FontWeight.w800, color: c.ink, height: 0.98), // Comunidad: grotesca cálida
+        aventura: webFonts ? GoogleFonts.getFont('Anybody', fontWeight: FontWeight.w800, color: TvColors.bandMaiz, height: 0.98) : const TextStyle(fontWeight: FontWeight.w800, color: TvColors.bandMaiz, height: 0.98), // Mi aventura: rótulo de bus
+        cultura: webFonts ? GoogleFonts.getFont('Caprasimo', color: c.ink, height: 1) : TextStyle(fontFamily: 'serif', color: c.ink, height: 1), // Cultura: cartel popular
+      ),
+    ],
     textTheme: text.copyWith(
       displayLarge: display(44, 0.98),
       displayMedium: display(34, 1.06),

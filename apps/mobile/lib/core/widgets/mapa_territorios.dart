@@ -9,8 +9,9 @@ import '../theme.dart'; // Colores del sistema de diseño
 
 /// Una forma del mapa (territorio o lago) ya convertida en trazo de Flutter.
 class FormaMapa {
-  const FormaMapa({required this.id, required this.name, required this.path, required this.label}); // Constructor
+  const FormaMapa({required this.id, required this.name, required this.path, required this.label, this.zone = ''}); // Constructor
   final String id; // Slug del territorio o id del lago
+  final String zone; // Zona de paisaje: pacifico, norte o caribe (vacía en los lagos)
   final String name; // Nombre para mostrar
   final Path path; // Contorno en coordenadas del mapa
   final Offset label; // Punto donde va el nombre (dentro de la forma, lejos del borde)
@@ -32,6 +33,7 @@ class DatosMapa {
         id: j[idKey] as String, // Identificador
         name: j['name'] as String, // Nombre
         path: parseSvgPath(j['d'] as String), // Contorno
+        zone: (j['zone'] as String?) ?? '', // Zona (solo territorios)
         label: Offset(l[0].toDouble(), l[1].toDouble()), // Etiqueta
       );
     }

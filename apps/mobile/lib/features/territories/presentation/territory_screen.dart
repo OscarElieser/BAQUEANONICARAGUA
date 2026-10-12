@@ -9,6 +9,8 @@ import '../../../core/theme.dart'; // Colores y espaciados
 import '../../../core/widgets/curvas_de_nivel.dart'; // Motivo de relieve
 import '../../../core/widgets/estado_verificacion.dart'; // "Qué está comprobado"
 import '../../../core/widgets/estados.dart'; // Cargando, error y vacío
+import '../../../core/widgets/mapa_territorios.dart'; // Formas del mapa
+import '../../../core/widgets/portada_territorio.dart'; // Portada de su zona
 import '../../catalog/search_screen.dart'; // Destinos y negocios del territorio
 
 const _sectionOrder = ['overview', 'geography', 'history', 'culture', 'gastronomy', 'peoples', 'nature', 'heritage', 'festivities', 'climate', 'transport', 'routes', 'community']; // Mismo orden que la web
@@ -45,11 +47,7 @@ class TerritoryScreen extends ConsumerWidget {
           return ListView(
             padding: const EdgeInsets.fromLTRB(TvSpace.s6, TvSpace.s4, TvSpace.s6, TvSpace.s12), // Márgenes
             children: [
-              SizedBox(height: 140, child: CurvasDeNivel(semanticLabel: context.t('territory.contours', {'name': territory.shortName}))), // Motivo de relieve
-              const SizedBox(height: TvSpace.s4), // Espacio
-              Text(territory.name, style: text.displayMedium), // Nombre oficial
-              if (territory.capitalName != null)
-                Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text(context.t('territory.capital', {'name': territory.capitalName!}), style: TextStyle(color: tv.inkMuted))), // Cabecera
+              _Heroe(slug: slug, name: territory.name, capital: territory.capitalName), // Portada del territorio con el color de su zona
               const SizedBox(height: TvSpace.s6), // Espacio
               EstadoVerificacion(
                 rows: [
@@ -79,6 +77,58 @@ class TerritoryScreen extends ConsumerWidget {
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+/// Portada del territorio: fondo de su zona, su silueta con curvas y el nombre en marfil.
+/// Si el mapa aún no cargó (o el territorio no está en él), muestra las curvas genéricas.
+class _Heroe extends ConsumerWidget {
+  const _Heroe({required this.slug, required this.name, required this.capital}); // Constructor
+  final String slug; // Territorio
+  final String name; // Nombre oficial
+  final String? capital; // Cabecera
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final text = Theme.of(context).textTheme; // Estilos
+    final mapa = ref.watch(datosMapaProvider).valueOrNull; // Formas (o null mientras carga)
+    final forma = mapa?.territories.where((t) => t.id == slug).firstOrNull; // Este territorio en el mapa
+    if (mapa == null || forma == null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
+        children: [
+          SizedBox(height: 140, child: CurvasDeNivel(semanticLabel: context.t('territory.contours', {'name': name}))), // Motivo de relieve
+          const SizedBox(height: TvSpace.s4), // Espacio
+          Text(name, style: text.displayMedium), // Nombre oficial
+          if (capital != null) Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text(context.t('territory.capital', {'name': capital!}), style: TextStyle(color: context.tv.inkMuted))), // Cabecera
+        ],
+      ); // Versión sin mapa
+    }
+    const marfil = TvColors.bandMarfil; // Texto sobre el fondo oscuro de la zona (en los dos temas)
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(TvSpace.radiusM), // Esquinas redondeadas
+      child: ColoredBox(
+        color: PaletaZona.de(forma.zone).fondo, // Fondo de la zona
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
+          children: [
+            AspectRatio(aspectRatio: 16 / 10, child: PortadaTerritorio(mapa: mapa, slug: slug)), // Silueta con curvas de nivel
+            Padding(
+              padding: const EdgeInsets.fromLTRB(TvSpace.s4 + 4, TvSpace.s2, TvSpace.s4 + 4, TvSpace.s6), // Márgenes
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
+                children: [
+                  Text(context.t(zonaTexto(forma.zone)), style: const TextStyle(color: marfil, fontSize: 15, fontWeight: FontWeight.w700)), // Zona de paisaje
+                  const SizedBox(height: TvSpace.s1), // Espacio
+                  Semantics(header: true, child: Text(name, style: text.displayMedium?.copyWith(color: marfil))), // Nombre oficial
+                  if (capital != null) Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text(context.t('territory.capital', {'name': capital!}), style: const TextStyle(color: marfil))), // Cabecera
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

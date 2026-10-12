@@ -7,6 +7,7 @@ import '../../../core/i18n/t.dart'; // Textos traducidos
 import '../../../core/theme.dart'; // Colores y espaciados
 import '../../../core/widgets/estados.dart'; // Cargando, error y vacío
 import '../../../core/widgets/mapa_territorios.dart'; // Mapa ilustrado de los 17 territorios
+import '../../../core/widgets/portada_territorio.dart'; // Portadas y tarjetas de cada territorio
 import '../../../core/widgets/relieve_3d.dart'; // Relieve 3D interactivo
 import '../../catalog/search_screen.dart'; // Resultados de búsqueda
 import 'territory_screen.dart'; // Ficha de territorio
@@ -81,10 +82,33 @@ class _MapaConDatos extends ConsumerWidget {
     final mapa = ref.watch(datosMapaProvider).valueOrNull; // Formas del mapa (o null mientras carga)
     if (mapa == null) return const SizedBox.shrink(); // Sin mapa todavía: no se muestra nada
     final bySlug = {for (final t in territories) t.slug: t}; // Territorios publicados por slug
-    return MapaTerritorios(
-      mapa: mapa, // Formas
-      published: bySlug.keys.toSet(), // Cuáles se pueden abrir
-      onOpen: (f) => Navigator.of(context).push(MaterialPageRoute(builder: (_) => TerritoryScreen(slug: f.id, name: bySlug[f.id]?.shortName ?? f.name))), // Abre la ficha
+    void abrir(FormaMapa f) => Navigator.of(context).push(MaterialPageRoute(builder: (_) => TerritoryScreen(slug: f.id, name: bySlug[f.id]?.shortName ?? f.name))); // Abre la ficha
+    final text = Theme.of(context).textTheme; // Estilos
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
+      children: [
+        MapaTerritorios(mapa: mapa, published: bySlug.keys.toSet(), onOpen: abrir), // Mapa (los publicados se abren)
+        const SizedBox(height: TvSpace.s8), // Espacio
+        Semantics(header: true, child: Text(context.t('gallery.title'), style: text.headlineMedium)), // Título de la galería
+        const SizedBox(height: TvSpace.s2), // Espacio
+        Text(context.t('gallery.intro'), style: text.bodyMedium?.copyWith(color: context.tv.inkMuted)), // Aclara que son ilustraciones
+        const SizedBox(height: TvSpace.s4), // Espacio
+        SizedBox(
+          height: 300, // Alto de la fila de portadas
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal, // Se desliza de lado con el dedo
+            itemCount: mapa.territories.length, // Los 17
+            separatorBuilder: (_, __) => const SizedBox(width: TvSpace.s4), // Espacio entre tarjetas
+            itemBuilder: (_, i) {
+              final f = mapa.territories[i]; // Territorio
+              return SizedBox(
+                width: 168, // Ancho de cada tarjeta
+                child: TarjetaTerritorio(mapa: mapa, forma: f, published: bySlug.containsKey(f.id), onOpen: () => abrir(f)), // Tarjeta
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

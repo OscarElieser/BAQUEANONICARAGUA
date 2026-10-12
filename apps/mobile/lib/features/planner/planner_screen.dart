@@ -45,7 +45,24 @@ class _PlannerScreenState extends State<PlannerScreen> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(TvSpace.s6, TvSpace.s6, TvSpace.s6, TvSpace.s12), // Márgenes
       children: [
-        Text(context.t('nav.adventure'), style: text.displayMedium), // Título
+        ClipRRect(
+          borderRadius: BorderRadius.circular(TvSpace.radiusM), // Esquinas redondeadas
+          child: ColoredBox(
+            color: TvColors.bandAnil, // Añil de los buses pintados
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(TvSpace.s4 + 4, TvSpace.s6, TvSpace.s4 + 4, TvSpace.s4), // Márgenes
+                  child: Text(context.t('nav.adventure'), style: Theme.of(context).extension<LetrasMundo>()?.aventura.copyWith(fontSize: (text.displayMedium?.fontSize ?? 34) + 6) ?? text.displayMedium), // Rótulo en maíz
+                ),
+                const SizedBox(height: 6, width: double.infinity, child: ColoredBox(color: TvColors.bandMaiz)), // Franja de maíz
+                const SizedBox(height: 6, width: double.infinity, child: ColoredBox(color: TvColors.bandAchiote)), // Franja de achiote
+                const SizedBox(height: 6, width: double.infinity, child: ColoredBox(color: TvColors.bandMarfil)), // Franja de marfil
+              ],
+            ),
+          ),
+        ), // Rótulo de bus pintado
         const SizedBox(height: TvSpace.s2), // Espacio
         Text(context.t('planner.hint'), style: TextStyle(color: tv.inkMuted)), // Instrucción
         if (!understoodLanguage)
