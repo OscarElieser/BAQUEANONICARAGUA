@@ -16,7 +16,7 @@ jobs:
     name: Sistema de diseño alineado (web + Android)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: python3 scripts/check_tokens.py
       - name: Textos legales iguales en web y Android # Sobre nosotros, privacidad, cookies, términos…
         run: python3 scripts/sync_legal.py --check
@@ -25,7 +25,7 @@ jobs:
     name: Lógica sin dependencias (asistente, Ops Center, funciones)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - run: node --test packages/ai-core/test/*.test.ts
@@ -44,7 +44,7 @@ jobs:
     name: Web + API (tipos, pruebas, build)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
@@ -82,7 +82,7 @@ jobs:
     env:
       FIREBASE_PROJECT_ID: nica-ci
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: supabase/setup-cli@v1
         with: { version: latest }
       - name: Levantar Supabase local y aplicar migraciones
@@ -104,7 +104,7 @@ jobs:
     runs-on: ubuntu-24.04
     defaults: { run: { working-directory: apps/mobile } }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2
         with: { channel: stable }
       - run: flutter pub get
@@ -148,7 +148,7 @@ jobs:
     name: Imágenes Docker (web y API)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Construir imagen de la API # Comprueba que la receta funciona (no se publica)
         run: docker build -f apps/api/Dockerfile -t nica-api:ci .
       - name: Construir imagen de la web # Sin configuración: la web arranca con avisos de "no disponible todavía"

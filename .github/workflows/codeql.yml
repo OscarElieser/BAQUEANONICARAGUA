@@ -17,7 +17,7 @@ jobs:
     name: Análisis de seguridad (CodeQL)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4 # Descarga el código
+      - uses: actions/checkout@v7 # Descarga el código
       - uses: github/codeql-action/init@v3 # Prepara el análisis
         with:
           languages: javascript-typescript # Web, API, funciones y paquetes
