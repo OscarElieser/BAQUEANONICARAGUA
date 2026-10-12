@@ -1,0 +1,171 @@
+# Publicación en staging o producción. Solo se ejecuta a mano (Actions → Publicar → Run workflow).
+# Garantías:
+#   1. Solo publica un commit que ya está en main y cuyo CI y CodeQL están en verde.
+#   2. Producción espera la aprobación de una persona (environment "production" con revisores obligatorios).
+#   3. Si la nueva versión no queda sana en el servidor, vuelve sola a la anterior.
+# Secretos y variables por entorno: docs/DESPLIEGUE.md.
+name: Publicar
+
+on:
+  workflow_dispatch:
+    inputs:
+      entorno:
+        description: Dónde publicar # Texto del selector
+        type: choice # Lista cerrada
+        options: [staging, production] # Entornos posibles
+        default: staging # Por defecto el de pruebas
+
+permissions:
+  contents: read # Leer el código
+  packages: write # Publicar las imágenes en GitHub Container Registry
+  actions: read # Consultar el resultado de CI del commit
+
+concurrency:
+  group: publicar-${{ inputs.entorno }} # Un solo despliegue a la vez por entorno
+  cancel-in-progress: false # Nunca cortar un despliegue a la mitad
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Igual que en CI
+
+jobs:
+  verificar:
+    name: Verificar que el commit está aprobado por CI
+    runs-on: ubuntu-24.04
+    environment: ${{ inputs.entorno }} # Lee las variables del entorno elegido
+    steps:
+      - name: Commit en main y con CI y CodeQL en verde # Nada sin pruebas pasa a un servidor
+        env:
+          GH_TOKEN: ${{ github.token }} # Token temporal de esta ejecución
+        run: |
+          main_sha="$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)" # Último commit de main
+          if [ "$GITHUB_SHA" != "$main_sha" ]; then echo "::error::Solo se publica el último commit de main ($main_sha)."; exit 1; fi # Rechaza otras ramas o commits viejos
+          for wf in CI CodeQL; do # Revisa los dos flujos obligatorios
+            ok="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$GITHUB_SHA&status=success" --jq "[.workflow_runs[] | select(.name==\"$wf\")] | length")" # Ejecuciones exitosas
+            if [ "$ok" -lt 1 ]; then echo "::error::$wf no está en verde para $GITHUB_SHA."; exit 1; fi # Sin verde no se publica
+          done
+      - name: Configuración completa del entorno # Avisa exactamente qué falta antes de tocar nada
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          SSH_USER: ${{ secrets.SSH_USER }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          WEB_DOMAIN: ${{ vars.WEB_DOMAIN }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          API_DOMAIN: ${{ vars.API_DOMAIN }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          CLOUDFLARE_ZONE_ID: ${{ vars.CLOUDFLARE_ZONE_ID }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          DEPLOY_DIR: ${{ vars.DEPLOY_DIR }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ vars.NEXT_PUBLIC_FIREBASE_API_KEY }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ vars.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+          NEXT_PUBLIC_FIREBASE_APP_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_APP_ID }}  # Obligatorio (ver docs/DESPLIEGUE.md)
+        run: |
+          missing="" # Lista de lo que falta
+          for name in SSH_HOST SSH_USER SSH_PRIVATE_KEY SSH_KNOWN_HOSTS SUPABASE_ACCESS_TOKEN SUPABASE_DB_PASSWORD FIREBASE_SERVICE_ACCOUNT CLOUDFLARE_API_TOKEN SUPABASE_PROJECT_REF FIREBASE_PROJECT_ID WEB_DOMAIN API_DOMAIN CLOUDFLARE_ZONE_ID DEPLOY_DIR NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY NEXT_PUBLIC_FIREBASE_API_KEY NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN NEXT_PUBLIC_FIREBASE_APP_ID; do # Todo lo obligatorio
+            if [ -z "${!name}" ]; then missing="$missing $name"; fi # Anota cada valor vacío
+          done
+          if [ -n "$missing" ]; then echo "::error::Faltan en el entorno ${{ inputs.entorno }}:$missing (ver docs/DESPLIEGUE.md)"; exit 1; fi # Error claro, nada se publica
+
+  imagenes:
+    name: Construir y publicar imágenes
+    needs: verificar # Solo si el commit está aprobado
+    runs-on: ubuntu-24.04
+    environment: ${{ inputs.entorno }} # Variables del entorno (las NEXT_PUBLIC_* quedan dentro de la web)
+    steps:
+      - uses: actions/checkout@v4 # Descarga el código del commit aprobado
+      - name: Entrar a GitHub Container Registry # Donde se guardan las imágenes
+        run: echo "${{ github.token }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+      - name: Construir y subir la API # La API no lleva secretos dentro: se pasan al ejecutar
+        run: |
+          owner="${GITHUB_REPOSITORY_OWNER,,}" # GHCR exige minúsculas
+          docker build -f apps/api/Dockerfile -t "ghcr.io/$owner/nica-api:$GITHUB_SHA" . # Construye
+          docker push "ghcr.io/$owner/nica-api:$GITHUB_SHA" # Sube con el commit como etiqueta
+      - name: Construir y subir la web # Solo valores públicos dentro de la imagen
+        run: |
+          owner="${GITHUB_REPOSITORY_OWNER,,}" # GHCR exige minúsculas
+          docker build -f apps/web/Dockerfile -t "ghcr.io/$owner/nica-web:$GITHUB_SHA" \
+            --build-arg NEXT_PUBLIC_SUPABASE_URL="${{ vars.NEXT_PUBLIC_SUPABASE_URL }}" \
+            --build-arg NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="${{ vars.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}" \
+            --build-arg NEXT_PUBLIC_API_URL="https://${{ vars.API_DOMAIN }}" \
+            --build-arg NEXT_PUBLIC_MAP_STYLE_URL="${{ vars.NEXT_PUBLIC_MAP_STYLE_URL }}" \
+            --build-arg NEXT_PUBLIC_FIREBASE_API_KEY="${{ vars.NEXT_PUBLIC_FIREBASE_API_KEY }}" \
+            --build-arg NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="${{ vars.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}" \
+            --build-arg NEXT_PUBLIC_FIREBASE_PROJECT_ID="${{ vars.FIREBASE_PROJECT_ID }}" \
+            --build-arg NEXT_PUBLIC_FIREBASE_APP_ID="${{ vars.NEXT_PUBLIC_FIREBASE_APP_ID }}" \
+            --build-arg CSP_EXTRA_CONNECT="${{ vars.CSP_EXTRA_CONNECT }}" \
+            . # Construye con la configuración pública del entorno
+          docker push "ghcr.io/$owner/nica-web:$GITHUB_SHA" # Sube con el commit como etiqueta
+
+  base_de_datos:
+    name: Migraciones y función de Supabase
+    needs: imagenes # Después de tener las imágenes listas
+    runs-on: ubuntu-24.04
+    environment: ${{ inputs.entorno }} # Aquí se pide la aprobación en producción
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }} # Permiso de la CLI sobre el proyecto
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }} # Contraseña de la base para aplicar migraciones
+      FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }} # Lo usa config.toml (Third-Party Auth)
+    steps:
+      - uses: actions/checkout@v4 # Descarga el código del commit aprobado
+      - uses: supabase/setup-cli@v1 # Instala la CLI de Supabase
+        with: { version: latest }
+      - name: Vincular el proyecto # Elige el proyecto de este entorno
+        run: supabase link --project-ref "${{ vars.SUPABASE_PROJECT_REF }}" -p "$SUPABASE_DB_PASSWORD"
+      - name: Aplicar migraciones pendientes # Solo agrega lo nuevo; las migraciones deben ser compatibles con la versión anterior
+        run: supabase db push -p "$SUPABASE_DB_PASSWORD"
+      - name: Secretos de la función preparar-sesion # Nunca quedan en el repositorio ni en el registro
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          ALLOWED_ORIGINS: https://${{ vars.WEB_DOMAIN }}
+        run: supabase secrets set FIREBASE_PROJECT_ID="$FIREBASE_PROJECT_ID" FIREBASE_SERVICE_ACCOUNT="$FIREBASE_SERVICE_ACCOUNT" ALLOWED_ORIGINS="$ALLOWED_ORIGINS"
+      - name: Desplegar la función # Verifica tokens de Firebase y prepara perfiles
+        run: supabase functions deploy preparar-sesion
+
+  servidor:
+    name: Desplegar en el servidor
+    needs: base_de_datos # Después de la base de datos
+    runs-on: ubuntu-24.04
+    environment: ${{ inputs.entorno }}
+    steps:
+      - uses: actions/checkout@v4 # Para copiar los archivos de deploy/servidor
+      - name: Preparar SSH # Clave privada y huella conocida del servidor (evita suplantaciones)
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh # Carpeta de SSH
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_deploy && chmod 600 ~/.ssh/id_deploy # Clave del usuario de despliegue
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts # Huella del servidor
+      - name: Copiar configuración y desplegar # Descarga imágenes, arranca y comprueba salud (vuelve atrás si falla)
+        env:
+          TARGET: ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
+          DIR: ${{ vars.DEPLOY_DIR }}
+        run: |
+          owner="${GITHUB_REPOSITORY_OWNER,,}" # GHCR exige minúsculas
+          scp -i ~/.ssh/id_deploy deploy/servidor/docker-compose.prod.yml deploy/servidor/Caddyfile deploy/servidor/desplegar.sh "$TARGET:$DIR/" # Archivos versionados
+          echo "${{ github.token }}" | ssh -i ~/.ssh/id_deploy "$TARGET" "docker login ghcr.io -u '${{ github.actor }}' --password-stdin" # Acceso temporal a las imágenes
+          ssh -i ~/.ssh/id_deploy "$TARGET" "cd '$DIR' && GHCR_OWNER='$owner' ./desplegar.sh '$GITHUB_SHA' '$DIR'; status=\$?; docker logout ghcr.io; exit \$status" # Despliega y cierra el acceso
+
+  cdn_y_comprobacion:
+    name: Limpiar caché de Cloudflare y comprobar
+    needs: servidor # Después del despliegue
+    runs-on: ubuntu-24.04
+    environment: ${{ inputs.entorno }}
+    steps:
+      - name: Vaciar la caché # Que nadie reciba páginas de la versión anterior
+        run: |
+          curl -fsS -X POST "https://api.cloudflare.com/client/v4/zones/${{ vars.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}' > /dev/null # Limpia toda la zona
+      - name: La web y la API responden con sus cabeceras de seguridad # Prueba real desde fuera
+        run: |
+          curl -fsS -D web.txt -o /dev/null "https://${{ vars.WEB_DOMAIN }}/es" # Portada
+          grep -qi "content-security-policy" web.txt # Política de seguridad presente
+          grep -qi "strict-transport-security" web.txt # HSTS presente
+          curl -fsS -o /dev/null "https://${{ vars.API_DOMAIN }}/health" # API sana
+          echo "Publicado ${GITHUB_SHA} en ${{ inputs.entorno }}." # Resultado

@@ -18,6 +18,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/check_tokens.py
+      - name: Flujos de GitHub Actions bien escritos (actionlint) # Detecta errores en ci.yml, codeql.yml y deploy.yml antes de usarlos
+        run: |
+          bash <(curl -fsSL https://raw.githubusercontent.com/rhysd/actionlint/v1.7.7/scripts/download-actionlint.bash) 1.7.7 # Descarga una versión fija
+          ./actionlint -color # Revisa todos los flujos
+      - name: Script de despliegue sin errores (shellcheck) # deploy/servidor/desplegar.sh
+        run: shellcheck deploy/servidor/desplegar.sh
       - name: Textos legales iguales en web y Android # Sobre nosotros, privacidad, cookies, términos…
         run: python3 scripts/sync_legal.py --check
       - name: Interfaz en 10 idiomas (mismas claves y variables, web y Android alineados) # Textos de content/i18n
@@ -173,6 +179,4 @@ jobs:
           npx playwright install --with-deps chromium # Navegador para la revisión
           BASE_URL=http://127.0.0.1:3000 node check.mjs # Revisa las páginas principales
 
-# Despliegue a staging y producción: workflow separado (deploy.yml) con environment
-# "production" protegido por aprobación manual. Se añade en Fase 2 cuando existan
-# el servidor de Hostinger y los secrets.
+# Despliegue a staging y producción: workflow separado (deploy.yml), manual y con aprobación en producción. Ver docs/DESPLIEGUE.md.

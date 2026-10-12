@@ -1,0 +1,58 @@
+# Producción y staging en el servidor de Hostinger (VPS con Docker).
+# Las imágenes se construyen en GitHub Actions y se publican en GitHub Container Registry (ghcr.io);
+# aquí solo se descargan y se ejecutan. La versión exacta llega en la variable TAG (commit probado en CI).
+# Variables en el archivo .env del servidor (nunca en el repositorio): ver docs/DESPLIEGUE.md.
+
+services:
+  web:
+    # Web Next.js
+    image: ghcr.io/${GHCR_OWNER}/nica-web:${TAG} # Imagen exacta del commit aprobado
+    environment:
+      NODE_ENV: production # Modo producción
+    read_only: true # Disco de solo lectura
+    tmpfs:
+      - /tmp # Temporal en memoria
+      - /app/apps/web/.next/cache # Caché de imágenes en memoria
+    security_opt:
+      - no-new-privileges:true # El proceso no puede ganar privilegios
+    restart: unless-stopped # Se reinicia si falla
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/es"] # La portada responde
+      interval: 30s # Cada 30 segundos
+      timeout: 5s # Máximo 5 segundos por intento
+      retries: 3 # Tres fallos seguidos = sin salud
+
+  api:
+    # API NestJS
+    image: ghcr.io/${GHCR_OWNER}/nica-api:${TAG} # Imagen exacta del commit aprobado
+    env_file: .env.api # Secretos de la API (solo en el servidor)
+    environment:
+      API_PORT: 4000 # Puerto interno
+      TRUST_PROXY_HOPS: 2 # Cloudflare y Caddy van delante: para leer la IP real en el límite de peticiones
+    read_only: true # Disco de solo lectura
+    tmpfs:
+      - /tmp # Temporal en memoria
+    security_opt:
+      - no-new-privileges:true # El proceso no puede ganar privilegios
+    restart: unless-stopped # Se reinicia si falla
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:4000/health"] # La API responde
+      interval: 30s # Cada 30 segundos
+      timeout: 5s # Máximo 5 segundos por intento
+      retries: 3 # Tres fallos seguidos = sin salud
+
+  caddy:
+    # Puerta de entrada HTTPS: recibe el tráfico de Cloudflare y lo reparte entre web y API
+    image: caddy:2.8-alpine # Servidor web con TLS
+    ports:
+      - "443:443" # Solo HTTPS (Cloudflare se conecta aquí)
+    environment:
+      WEB_DOMAIN: ${WEB_DOMAIN} # Dominio de la web
+      API_DOMAIN: ${API_DOMAIN} # Dominio de la API
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro # Configuración de rutas (solo lectura)
+      - ./certs:/certs:ro # Certificado de origen de Cloudflare (solo lectura)
+    depends_on:
+      - web # Necesita la web
+      - api # Y la API
+    restart: unless-stopped # Se reinicia si falla
