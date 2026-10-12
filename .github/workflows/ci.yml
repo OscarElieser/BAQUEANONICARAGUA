@@ -83,7 +83,7 @@ jobs:
       FIREBASE_PROJECT_ID: nica-ci
     steps:
       - uses: actions/checkout@v4
-      - uses: supabase/setup-cli@v1
+      - uses: supabase/setup-cli@v3
         with: { version: latest }
       - name: Levantar Supabase local y aplicar migraciones
         run: |
