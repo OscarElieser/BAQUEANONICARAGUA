@@ -12,6 +12,10 @@ Regla: un módulo solo pasa a `probado` cuando cumple los criterios de la secci�
 | Esquema territorio | en desarrollo | Migración 0002 + seed de 17 territorios en `draft`. Municipios: **bloqueado** hasta tener fuente oficial citada. |
 | Esquema turismo / Vitrina | en desarrollo | Migración 0003; protección contra autoverificación probada. |
 | Auditoría | en desarrollo | Migración 0004; inmutabilidad probada. |
+| Esquema viajes / itinerarios / favoritos | en desarrollo | Migración 0005; costos "verificados" exigen observación con fuente y los tiempos de traslado exigen origen (probado). |
+| Esquema comunidad y mensajería | en desarrollo | Migración 0006; mensaje turista→prestador visible desde otra sesión, bloqueos, no edición de mensajes, sin acceso de moderadores a chats, sin autorreseñas (probado). |
+| Esquema denuncias e IA | en desarrollo | Migración 0007; denuncias visibles solo para denunciante y `reports.manage`; remisión "transmitida" exige acuse; correcciones de IA exigen revisor humano (probado). |
+| Pruebas RLS | en desarrollo | 34/34 PASS en PostgreSQL 16 local (PostGIS y pgvector simulados). Falta correr en Supabase real. |
 | API NestJS (auth, /me, /health) | en desarrollo | Código escrito, **aún no compilado** (el entorno donde se generó no tenía acceso al registro npm). Primer paso al clonar: `pnpm install && pnpm typecheck`. **Bloqueado**: proyecto Firebase. |
 | Web Next.js | en desarrollo | Esqueleto i18n (10 idiomas) + lectura pública de territorios. Sin diseño. **Aún no compilado** (mismo motivo). |
 | Android Flutter | en desarrollo | Esqueleto Riverpod + lectura de territorios. No compilado (sin SDK en este entorno). |

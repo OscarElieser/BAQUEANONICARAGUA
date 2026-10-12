@@ -122,6 +122,170 @@ begin
   end;
 end $$;
 
+-- ===========================================================================
+-- Fase 0.2 · viajes, comunidad, mensajería, denuncias, IA
+-- ===========================================================================
+insert into public.profiles (id, firebase_uid, display_name) values
+  ('00000000-0000-0000-0000-0000000000c1', 'fb_moderator', 'Moderador'),
+  ('00000000-0000-0000-0000-0000000000c2', 'fb_admin',     'Admin');
+insert into public.user_roles (profile_id, role_key) values
+  ('00000000-0000-0000-0000-0000000000c1', 'moderator'),
+  ('00000000-0000-0000-0000-0000000000c2', 'admin');
+
+-- Datos como lo haría la API (service role / owner)
+insert into public.trips (id, owner_id, title) values
+  ('00000000-0000-0000-0000-0000000007a1', '00000000-0000-0000-0000-00000000000a', 'Viaje de A');
+insert into public.conversations (id, business_id, created_by) values
+  ('00000000-0000-0000-0000-0000000000cc', '00000000-0000-0000-0000-0000000000b1', '00000000-0000-0000-0000-00000000000a');
+insert into public.conversation_members (conversation_id, profile_id) values
+  ('00000000-0000-0000-0000-0000000000cc', '00000000-0000-0000-0000-00000000000a'),
+  ('00000000-0000-0000-0000-0000000000cc', '00000000-0000-0000-0000-0000000000e1');
+
+-- 9. Favoritos: A guarda, B no ve (escenario PWA ↔ Android usa la misma tabla)
+select pg_temp.act_as('fb_user_a');
+insert into public.favorites (profile_id, business_id)
+  values ('00000000-0000-0000-0000-00000000000a', '00000000-0000-0000-0000-0000000000b1');
+insert into results select 'A guarda y ve su favorito', count(*) = 1 from public.favorites;
+insert into results select 'A ve su viaje', count(*) = 1 from public.trips;
+reset role;
+select pg_temp.act_as('fb_user_b');
+insert into results select 'B no ve favoritos de A', count(*) = 0 from public.favorites;
+insert into results select 'B no ve viaje privado de A', count(*) = 0 from public.trips;
+reset role;
+
+-- 10. Mensajería: turista → prestador, recibido desde otra sesión
+select pg_temp.act_as('fb_user_a');
+insert into public.messages (conversation_id, sender_id, body) values
+  ('00000000-0000-0000-0000-0000000000cc', '00000000-0000-0000-0000-00000000000a', '¿Tienen sopa de queso el domingo?');
+reset role;
+select pg_temp.act_as('fb_owner');
+insert into results select 'prestador recibe el mensaje', count(*) = 1 from public.messages;
+reset role;
+select pg_temp.act_as('fb_user_b');
+insert into results select 'B no lee conversación ajena', count(*) = 0 from public.messages;
+reset role;
+select pg_temp.act_as('fb_moderator');
+insert into results select 'moderador no lee conversaciones privadas', count(*) = 0 from public.messages;
+reset role;
+
+-- 11. Mensajes no se reescriben
+select pg_temp.act_as('fb_user_a');
+do $$
+begin
+  begin
+    update public.messages set body = 'otro texto' where sender_id = '00000000-0000-0000-0000-00000000000a';
+    insert into results values ('mensaje no se puede reescribir', false);
+  exception when insufficient_privilege then
+    insert into results values ('mensaje no se puede reescribir', true);
+  end;
+end $$;
+reset role;
+
+-- 12. Con bloqueo no se puede enviar
+insert into public.user_blocks (blocker_id, blocked_id)
+  values ('00000000-0000-0000-0000-0000000000e1', '00000000-0000-0000-0000-00000000000a');
+select pg_temp.act_as('fb_user_a');
+do $$
+begin
+  begin
+    insert into public.messages (conversation_id, sender_id, body) values
+      ('00000000-0000-0000-0000-0000000000cc', '00000000-0000-0000-0000-00000000000a', 'insisto');
+    insert into results values ('usuario bloqueado no puede escribir', false);
+  exception when insufficient_privilege then
+    insert into results values ('usuario bloqueado no puede escribir', true);
+  end;
+end $$;
+reset role;
+delete from public.user_blocks;
+
+-- 13. Autorreseña bloqueada
+select pg_temp.act_as('fb_owner');
+do $$
+begin
+  begin
+    insert into public.reviews (author_id, business_id, rating)
+    values ('00000000-0000-0000-0000-0000000000e1', '00000000-0000-0000-0000-0000000000b1', 5);
+    insert into results values ('propietaria no puede reseñar su negocio', false);
+  exception when insufficient_privilege then
+    insert into results values ('propietaria no puede reseñar su negocio', true);
+  end;
+end $$;
+reset role;
+
+-- 14. Denuncia confidencial
+select pg_temp.act_as('fb_user_a');
+insert into public.incident_reports (reporter_id, category, description)
+values ('00000000-0000-0000-0000-00000000000a', 'pollution', 'Basura acumulada en el sendero del mirador');
+insert into results select 'denunciante ve su denuncia', count(*) = 1 from public.incident_reports;
+reset role;
+select pg_temp.act_as('fb_user_b');
+insert into results select 'B no ve denuncias ajenas', count(*) = 0 from public.incident_reports;
+reset role;
+select pg_temp.act_as('fb_moderator');
+insert into results select 'moderador comunitario no ve denuncias', count(*) = 0 from public.incident_reports;
+reset role;
+select pg_temp.act_as('fb_admin');
+insert into results select 'admin con reports.manage ve denuncias', count(*) = 1 from public.incident_reports;
+reset role;
+
+-- 15. No se puede marcar una remisión como transmitida sin acuse real
+do $$
+begin
+  begin
+    insert into public.incident_referrals (incident_id, institution, channel, channel_doc_ref, consent_at, status, created_by)
+    select id, 'MARENA', 'correo', 'doc-pendiente', now(), 'transmitted', '00000000-0000-0000-0000-0000000000c2'
+    from public.incident_reports limit 1;
+    insert into results values ('remisión transmitida exige acuse', false);
+  exception when check_violation then
+    insert into results values ('remisión transmitida exige acuse', true);
+  end;
+end $$;
+
+-- 16. Un "precio verificado" exige observación con fuente; un tiempo de traslado exige origen
+insert into public.itineraries (id, trip_id) values
+  ('00000000-0000-0000-0000-0000000007b1', '00000000-0000-0000-0000-0000000007a1');
+do $$
+begin
+  begin
+    insert into public.itinerary_costs (itinerary_id, label, amount, currency, basis)
+    values ('00000000-0000-0000-0000-0000000007b1', 'Entrada', 10, 'USD', 'verified_price');
+    insert into results values ('precio verificado exige observación', false);
+  exception when check_violation then
+    insert into results values ('precio verificado exige observación', true);
+  end;
+end $$;
+insert into public.itinerary_days (id, itinerary_id, day_number) values
+  ('00000000-0000-0000-0000-0000000007d1', '00000000-0000-0000-0000-0000000007b1', 1);
+do $$
+begin
+  begin
+    insert into public.itinerary_stops (day_id, position, custom_label, travel_minutes)
+    values ('00000000-0000-0000-0000-0000000007d1', 1, 'Mirador', 45);
+    insert into results values ('tiempo de traslado exige origen', false);
+  exception when check_violation then
+    insert into results values ('tiempo de traslado exige origen', true);
+  end;
+end $$;
+
+-- 17. Propuestas de corrección de la IA: solo personal con ai.review
+insert into public.ai_correction_proposals (entity_table, entity_id, field, proposed_value, rationale, origin)
+values ('businesses', '00000000-0000-0000-0000-0000000000b1', 'summary', '"x"', 'prueba', 'ai');
+select pg_temp.act_as('fb_user_a');
+insert into results select 'usuario no ve propuestas de la IA', count(*) = 0 from public.ai_correction_proposals;
+reset role;
+select pg_temp.act_as('fb_admin');
+insert into results select 'admin con ai.review ve propuestas', count(*) = 1 from public.ai_correction_proposals;
+reset role;
+do $$
+begin
+  begin
+    update public.ai_correction_proposals set state = 'approved';
+    insert into results values ('aprobar propuesta exige revisor', false);
+  exception when check_violation then
+    insert into results values ('aprobar propuesta exige revisor', true);
+  end;
+end $$;
+
 select case when ok then 'PASS' else 'FAIL' end as status, name from results order by ok, name;
 select count(*) filter (where not ok) as failures, count(*) as total from results;
 
