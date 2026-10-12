@@ -304,6 +304,13 @@ $$;
 revoke execute on function public.moderate_content(text, uuid, text, text, uuid) from public, anon;
 grant execute on function public.moderate_content(text, uuid, text, text, uuid) to authenticated;
 
+-- Id de perfil del usuario actual (para que los clientes rellenen author_id / sender_id;
+-- RLS sigue comprobando que coincida).
+create or replace function public.my_profile_id()
+returns uuid language sql stable as $$ select app.current_profile_id() $$;
+revoke execute on function public.my_profile_id() from public, anon;
+grant execute on function public.my_profile_id() to authenticated;
+
 -- Realtime para notificaciones (solo existe la publicación en Supabase)
 do $$
 begin

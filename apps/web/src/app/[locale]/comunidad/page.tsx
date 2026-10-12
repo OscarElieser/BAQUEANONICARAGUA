@@ -1,8 +1,18 @@
 import Link from 'next/link';
 import { FranjaTejida } from '@/components/FranjaTejida';
+import { publicDb } from '@/lib/territories';
+
+export const revalidate = 120;
+
+type FeedPost = {
+  id: string; title: string | null; body_md: string; created_at: string;
+  author_name: string | null; is_promotional: boolean; reactions: number; comments: number;
+};
 
 export default async function Comunidad({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+  const { data } = await publicDb().rpc('public_feed', { p_limit: 20 });
+  const feed = (data ?? []) as FeedPost[];
   return (
     <main>
       <FranjaTejida height={22} />
@@ -22,7 +32,27 @@ export default async function Comunidad({ params }: { params: Promise<{ locale: 
             Publicar mi negocio
           </Link>
         </div>
-        <p className="mt-10 text-ink-muted">Publicaciones, historias y mensajería llegan en la Fase 4.</p>
+        <section aria-labelledby="relatos" className="mt-14 max-w-[var(--measure)]">
+          <h2 id="relatos" className="font-display text-[28px] font-normal">Relatos recientes</h2>
+          <p className="text-sm text-ink-muted">En orden cronológico. No ordenamos por interacción ni vendemos posiciones.</p>
+          {feed.length === 0 ? (
+            <p className="text-ink-muted">Todavía no hay relatos publicados. Comparte el primero desde tu perfil.</p>
+          ) : (
+            <ol className="m-0 list-none p-0">
+              {feed.map((p) => (
+                <li key={p.id} className="border-b border-line py-5">
+                  <p className="m-0 text-sm text-ink-muted">
+                    {p.author_name ?? 'Viajero'} — {new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }).format(new Date(p.created_at))}
+                    {p.is_promotional && <span className="ml-2 font-bold text-oro-text">Promocional</span>}
+                  </p>
+                  {p.title && <h3 className="mb-1 mt-2 text-[20px] font-bold">{p.title}</h3>}
+                  <p className="m-0 mt-1 line-clamp-4 whitespace-pre-line">{p.body_md}</p>
+                  <p className="m-0 mt-2 text-sm text-ink-muted">{p.reactions} reacciones, {p.comments} comentarios</p>
+                </li>
+              ))}
+            </ol>
+          )}
+        </section>
       </div>
     </main>
   );

@@ -453,6 +453,12 @@ insert into results select 'autora recibe notificación del comentario',
   exists (select 1 from public.notifications where kind = 'post_comment');
 reset role;
 
+-- 27b. my_profile_id devuelve la identidad propia (y nada para anónimos)
+select pg_temp.act_as('fb_user_a');
+insert into results select 'my_profile_id devuelve el perfil propio',
+  public.my_profile_id() = '00000000-0000-0000-0000-00000000000a';
+reset role;
+
 -- 28. Moderación auditada
 select pg_temp.act_as('fb_moderator');
 select public.moderate_content('post', '00000000-0000-0000-0000-0000000005a1', 'hide', 'Prueba de moderación');

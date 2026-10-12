@@ -15,7 +15,11 @@ Regla: un módulo solo pasa a `probado` cuando cumple los criterios de la secci�
 | Esquema viajes / itinerarios / favoritos | en desarrollo | Migración 0005; costos "verificados" exigen observación con fuente y los tiempos de traslado exigen origen (probado). |
 | Esquema comunidad y mensajería | en desarrollo | Migración 0006; mensaje turista→prestador visible desde otra sesión, bloqueos, no edición de mensajes, sin acceso de moderadores a chats, sin autorreseñas (probado). |
 | Esquema denuncias e IA | en desarrollo | Migración 0007; denuncias visibles solo para denunciante y `reports.manage`; remisión "transmitida" exige acuse; correcciones de IA exigen revisor humano (probado). |
-| Pruebas RLS | en desarrollo | 47/47 PASS en PostgreSQL 16 local (PostGIS y pgvector simulados). Falta correr en Supabase real. |
+| Pruebas RLS | en desarrollo | 63/63 PASS en PostgreSQL 16 local (PostGIS y pgvector simulados). Falta correr en Supabase real. |
+| Comunidad y mensajería (BD) | probado (local) | Migración 0011: consultas a negocios (reanuda conversación, bloqueos, 10 nuevas/día), no leídos, notificaciones con estado real por canal, feed cronológico, moderación auditada, límites anti-spam. Escenario Mensajería de la sección 30 probado. |
+| API comunidad / mensajería / notificaciones | en desarrollo | Endpoints de feed, publicaciones, comentarios, reacciones, reportes, bloqueos, moderación, conversaciones, tokens push y preferencias. Sin compilar. |
+| Web comunidad / mensajes | en desarrollo | Feed en Comunidad, botón "Escribir por la plataforma" en fichas, bandeja con tiempo real (Supabase Realtime). Desactivados con aviso hasta tener Firebase. Sin compilar. |
+| Envío push/correo (worker) | no iniciado | Requiere Firebase Cloud Messaging y proveedor de correo; el registro de pendientes ya existe. |
 | Municipios | en desarrollo | 153 en borrador (migración 0009) con fuente citada y contrastada con una segunda referencia. Antes de publicar: confirmar con INIDE/INETER. |
 | Búsqueda y alta de negocios (BD) | probado (local) | `search_catalog` (sin acentos, rotación diaria, sin patrocinados), `register_business`, `review_business_verification` con auditoría; escenario Emprendedor de la sección 30 probado. `nearby_catalog` y `map_points` requieren PostGIS: se prueban en CI con Supabase local. |
 | API catálogo / negocios / Ops verificaciones | en desarrollo | Endpoints y contrato OpenAPI escritos; validación zod; acciones ejecutadas con el token del usuario. Sin compilar. |

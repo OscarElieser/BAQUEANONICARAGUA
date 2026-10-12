@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { EscribirNegocio } from '@/components/EscribirNegocio';
 import { EstadoVerificacion } from '@/components/EstadoVerificacion';
 import { FranjaNivel, FranjaTejida } from '@/components/FranjaTejida';
 import { contactHref, getBusiness, reportedByLabel } from '@/lib/catalog';
@@ -53,6 +54,11 @@ export default async function NegocioPage({ params }: { params: Promise<{ locale
           </div>
         ) : (
           <p className="mt-6 text-ink-muted">Este negocio aún no publicó medios de contacto.</p>
+        )}
+        {b.listing_tier !== 'community_info' && (
+          <div className="mt-4">
+            <EscribirNegocio businessId={b.id} businessName={b.name} locale={locale} />
+          </div>
         )}
 
         <div className="mt-10 flex flex-wrap gap-10">
