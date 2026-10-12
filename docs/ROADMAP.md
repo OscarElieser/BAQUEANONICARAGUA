@@ -15,7 +15,11 @@ Regla: un módulo solo pasa a `probado` cuando cumple los criterios de la secci�
 | Esquema viajes / itinerarios / favoritos | en desarrollo | Migración 0005; costos "verificados" exigen observación con fuente y los tiempos de traslado exigen origen (probado). |
 | Esquema comunidad y mensajería | en desarrollo | Migración 0006; mensaje turista→prestador visible desde otra sesión, bloqueos, no edición de mensajes, sin acceso de moderadores a chats, sin autorreseñas (probado). |
 | Esquema denuncias e IA | en desarrollo | Migración 0007; denuncias visibles solo para denunciante y `reports.manage`; remisión "transmitida" exige acuse; correcciones de IA exigen revisor humano (probado). |
-| Pruebas RLS | en desarrollo | 34/34 PASS en PostgreSQL 16 local (PostGIS y pgvector simulados). Falta correr en Supabase real. |
+| Pruebas RLS | en desarrollo | 47/47 PASS en PostgreSQL 16 local (PostGIS y pgvector simulados). Falta correr en Supabase real. |
+| Municipios | en desarrollo | 153 en borrador (migración 0009) con fuente citada y contrastada con una segunda referencia. Antes de publicar: confirmar con INIDE/INETER. |
+| Búsqueda y alta de negocios (BD) | probado (local) | `search_catalog` (sin acentos, rotación diaria, sin patrocinados), `register_business`, `review_business_verification` con auditoría; escenario Emprendedor de la sección 30 probado. `nearby_catalog` y `map_points` requieren PostGIS: se prueban en CI con Supabase local. |
+| API catálogo / negocios / Ops verificaciones | en desarrollo | Endpoints y contrato OpenAPI escritos; validación zod; acciones ejecutadas con el token del usuario. Sin compilar. |
+| Web Fase 3 | en desarrollo | Fichas de destino y negocio, búsqueda + mapa MapLibre (desactivado con aviso si no hay proveedor), registro de negocio (desactivado con aviso hasta tener Firebase). Sin compilar. |
 | API NestJS (auth, /me, /health) | en desarrollo | Código escrito, **aún no compilado** (el entorno donde se generó no tenía acceso al registro npm). Primer paso al clonar: `pnpm install && pnpm typecheck`. **Bloqueado**: proyecto Firebase. |
 | Web Next.js | en desarrollo | Esqueleto i18n (10 idiomas) + lectura pública de territorios. Sin diseño. **Aún no compilado** (mismo motivo). |
 | Android Flutter | en desarrollo | Esqueleto Riverpod + lectura de territorios. No compilado (sin SDK en este entorno). |

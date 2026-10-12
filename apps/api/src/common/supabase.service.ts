@@ -16,6 +16,24 @@ export class SupabaseService {
     this.admin = createClient(url, key, { auth: { persistSession: false } });
   }
 
+  /** Cliente público (sin clave secreta): lecturas sujetas a RLS como visitante. */
+  readonly anon: SupabaseClient = createClient(
+    process.env.SUPABASE_URL ?? '',
+    process.env.SUPABASE_PUBLISHABLE_KEY ?? '',
+    { auth: { persistSession: false } },
+  );
+
+  /**
+   * Cliente que actúa COMO el usuario: reenvía su ID token de Firebase, así RLS y las
+   * funciones (register_business, review_business_verification) ven su identidad real.
+   */
+  asUser(idToken: string): SupabaseClient {
+    return createClient(process.env.SUPABASE_URL ?? '', process.env.SUPABASE_PUBLISHABLE_KEY ?? '', {
+      auth: { persistSession: false },
+      accessToken: async () => idToken,
+    });
+  }
+
   async permissionsFor(firebaseUid: string): Promise<Set<string>> {
     const { data, error } = await this.admin
       .from('profiles')

@@ -3,14 +3,17 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { FirebaseAuthGuard } from './auth/firebase-auth.guard';
 import { PermissionsGuard } from './auth/permissions.guard';
+import { FirebaseService } from './auth/firebase.service';
+import { BusinessesController } from './businesses/businesses.controller';
+import { CatalogController } from './catalog/catalog.controller';
+import { SupabaseService } from './common/supabase.service';
 import { HealthController } from './health/health.controller';
 import { MeController } from './me/me.controller';
-import { SupabaseService } from './common/supabase.service';
-import { FirebaseService } from './auth/firebase.service';
+import { VerificationsController } from './ops/verifications.controller';
 
 @Module({
   imports: [ThrottlerModule.forRoot([{ ttl: 60_000, limit: 120 }])],
-  controllers: [HealthController, MeController],
+  controllers: [HealthController, MeController, CatalogController, BusinessesController, VerificationsController],
   providers: [
     SupabaseService,
     FirebaseService,

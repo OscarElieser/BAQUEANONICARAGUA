@@ -68,6 +68,98 @@ paths:
           content:
             application/json: { schema: { $ref: '#/components/schemas/Profile' } }
         '401': { $ref: '#/components/responses/Unauthorized' }
+  /catalog/search:
+    get:
+      summary: Búsqueda pública (relevancia; a igual relevancia, rotación diaria; sin patrocinados)
+      security: []
+      parameters:
+        - { name: q, in: query, schema: { type: string, maxLength: 80 } }
+        - { name: department, in: query, schema: { type: integer, minimum: 1, maximum: 17 } }
+        - { name: category, in: query, schema: { type: string } }
+        - { name: kind, in: query, schema: { type: string, enum: [destination, business] } }
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 50, default: 24 } }
+        - { name: offset, in: query, schema: { type: integer, minimum: 0, default: 0 } }
+      responses:
+        '200': { description: Resultados }
+        '400': { description: Parámetros inválidos }
+  /catalog/nearby:
+    get:
+      summary: Cercanía usando la ubicación pública (respeta ubicaciones protegidas)
+      security: []
+      parameters:
+        - { name: lat, in: query, required: true, schema: { type: number } }
+        - { name: lng, in: query, required: true, schema: { type: number } }
+        - { name: radius_km, in: query, schema: { type: number, default: 10, maximum: 100 } }
+      responses:
+        '200': { description: Resultados ordenados por distancia }
+  /territories:
+    get:
+      summary: Territorios publicados
+      security: []
+      responses: { '200': { description: Lista } }
+  /territories/{slug}:
+    get:
+      summary: Territorio con municipios publicados y secciones editoriales
+      security: []
+      parameters: [{ name: slug, in: path, required: true, schema: { type: string } }]
+      responses: { '200': { description: Territorio }, '404': { description: No encontrado o no publicado } }
+  /destinations/{slug}:
+    get:
+      summary: Ficha pública de destino con horarios y tarifas fechadas
+      security: []
+      parameters: [{ name: slug, in: path, required: true, schema: { type: string } }]
+      responses: { '200': { description: Destino }, '404': { description: No encontrado } }
+  /businesses/{slug}:
+    get:
+      summary: Ficha pública de negocio con contactos autorizados
+      security: []
+      parameters: [{ name: slug, in: path, required: true, schema: { type: string } }]
+      responses: { '200': { description: Negocio }, '404': { description: No encontrado } }
+  /businesses:
+    post:
+      summary: Registrar mi negocio (queda en revisión)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, department_id, categories]
+              properties:
+                name: { type: string, minLength: 2, maxLength: 160 }
+                department_id: { type: integer, minimum: 1, maximum: 17 }
+                municipality_id: { type: string, format: uuid }
+                categories: { type: array, items: { type: string }, minItems: 1, maxItems: 5 }
+                summary: { type: string, maxLength: 500 }
+      responses:
+        '201': { description: Recibido, en revisión }
+        '400': { description: Datos inválidos }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '409': { description: Demasiados negocios en revisión }
+  /businesses/mine:
+    get:
+      summary: Negocios que administro
+      responses: { '200': { description: Lista }, '401': { $ref: '#/components/responses/Unauthorized' } }
+  /ops/verifications:
+    get:
+      summary: Solicitudes pendientes (verifications.review + segundo factor)
+      responses: { '200': { description: Lista }, '403': { description: Sin permiso o sin segundo factor } }
+  /ops/verifications/{id}:
+    post:
+      summary: Resolver una verificación (auditada; no se puede resolver la propia)
+      parameters: [{ name: id, in: path, required: true, schema: { type: string, format: uuid } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [decision, reason]
+              properties:
+                decision: { type: string, enum: [approve, reject, needs_info] }
+                reason: { type: string, minLength: 5 }
+                verified_scope: { type: array, items: { type: string, enum: [identity, location, operating_permit, tourism_license] } }
+      responses: { '204': { description: Resuelta }, '403': { description: Sin permiso }, '409': { description: Ya resuelta } }
   /me:
     get:
       summary: Perfil y roles del usuario autenticado
