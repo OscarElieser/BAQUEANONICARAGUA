@@ -371,5 +371,8 @@
   "hero.scenes_aria": "表紙の風景を選ぶ",
   "hero.cta_explore": "ニカラグアを探検",
   "hero.cta_trip": "旅を計画する",
-  "auth.or_continue": "または次で続行"
+  "auth.or_continue": "または次で続行",
+  "gallery.prev": "前へ",
+  "gallery.next": "次へ",
+  "gallery.arc_label": "17地域の表紙ギャラリー。スワイプするか矢印を使ってください。"
 }

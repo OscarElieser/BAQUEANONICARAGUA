@@ -371,5 +371,8 @@
   "hero.scenes_aria": "Elegir la escena de la portada",
   "hero.cta_explore": "Explorar Nicaragua",
   "hero.cta_trip": "Crear mi viaje",
-  "auth.or_continue": "o continúa con"
+  "auth.or_continue": "o continúa con",
+  "gallery.prev": "Anterior",
+  "gallery.next": "Siguiente",
+  "gallery.arc_label": "Galería de portadas de los 17 territorios. Desliza o usa las flechas."
 }

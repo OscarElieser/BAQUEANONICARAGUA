@@ -371,5 +371,8 @@
   "hero.scenes_aria": "Scegli la scena di copertina",
   "hero.cta_explore": "Esplora il Nicaragua",
   "hero.cta_trip": "Crea il mio viaggio",
-  "auth.or_continue": "o continua con"
+  "auth.or_continue": "o continua con",
+  "gallery.prev": "Precedente",
+  "gallery.next": "Successivo",
+  "gallery.arc_label": "Galleria delle copertine dei 17 territori. Scorri o usa le frecce."
 }

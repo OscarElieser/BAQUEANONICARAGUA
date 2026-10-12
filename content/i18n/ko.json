@@ -371,5 +371,8 @@
   "hero.scenes_aria": "표지 장면 선택",
   "hero.cta_explore": "니카라과 탐험하기",
   "hero.cta_trip": "내 여행 만들기",
-  "auth.or_continue": "또는 다음으로 계속"
+  "auth.or_continue": "또는 다음으로 계속",
+  "gallery.prev": "이전",
+  "gallery.next": "다음",
+  "gallery.arc_label": "17개 지역 표지 갤러리. 밀어서 넘기거나 화살표를 사용하세요."
 }

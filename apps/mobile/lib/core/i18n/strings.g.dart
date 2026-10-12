@@ -386,6 +386,9 @@ const i18nStrings = <String, Map<String, String>>{
     'hero.cta_explore': 'Explorar Nicaragua',
     'hero.cta_trip': 'Crear mi viaje',
     'auth.or_continue': 'o continúa con',
+    'gallery.prev': 'Anterior',
+    'gallery.next': 'Siguiente',
+    'gallery.arc_label': 'Galería de portadas de los 17 territorios. Desliza o usa las flechas.',
   },
   'en': {
     'meta.title_default': 'BAQUEANO: discover what\'s not on the map',
@@ -756,6 +759,9 @@ const i18nStrings = <String, Map<String, String>>{
     'hero.cta_explore': 'Explore Nicaragua',
     'hero.cta_trip': 'Plan my trip',
     'auth.or_continue': 'or continue with',
+    'gallery.prev': 'Previous',
+    'gallery.next': 'Next',
+    'gallery.arc_label': 'Gallery of the 17 territory covers. Swipe or use the arrows.',
   },
   'zh-Hans': {
     'meta.title_default': 'BAQUEANO：发现地图上找不到的地方',
@@ -1126,6 +1132,9 @@ const i18nStrings = <String, Map<String, String>>{
     'hero.cta_explore': '探索尼加拉瓜',
     'hero.cta_trip': '规划我的旅行',
     'auth.or_continue': '或使用以下方式继续',
+    'gallery.prev': '上一个',
+    'gallery.next': '下一个',
+    'gallery.arc_label': '17个地区的封面画廊。滑动或使用箭头。',
   },
   'ko': {
     'meta.title_default': 'BAQUEANO: 지도에 없는 곳을 발견하세요',
@@ -1496,6 +1505,9 @@ const i18nStrings = <String, Map<String, String>>{
     'hero.cta_explore': '니카라과 탐험하기',
     'hero.cta_trip': '내 여행 만들기',
     'auth.or_continue': '또는 다음으로 계속',
+    'gallery.prev': '이전',
+    'gallery.next': '다음',
+    'gallery.arc_label': '17개 지역 표지 갤러리. 밀어서 넘기거나 화살표를 사용하세요.',
   },
   'it': {
     'meta.title_default': 'BAQUEANO: scopri ciò che non è sulla mappa',
@@ -1866,6 +1878,9 @@ const i18nStrings = <String, Map<String, String>>{
     'hero.cta_explore': 'Esplora il Nicaragua',
     'hero.cta_trip': 'Crea il mio viaggio',
     'auth.or_continue': 'o continua con',
+    'gallery.prev': 'Precedente',
+    'gallery.next': 'Successivo',
+    'gallery.arc_label': 'Galleria delle copertine dei 17 territori. Scorri o usa le frecce.',
   },
   'fr': {
     'meta.title_default': 'BAQUEANO : découvre ce qui n\'est pas sur la carte',
@@ -2236,6 +2251,9 @@ const i18nStrings = <String, Map<String, String>>{
     'hero.cta_explore': 'Explorer le Nicaragua',
     'hero.cta_trip': 'Créer mon voyage',
     'auth.or_continue': 'ou continuer avec',
+    'gallery.prev': 'Précédent',
+    'gallery.next': 'Suivant',
+    'gallery.arc_label': 'Galerie des couvertures des 17 territoires. Faites glisser ou utilisez les flèches.',
   },
   'pt': {
     'meta.title_default': 'BAQUEANO: descubra o que não aparece no mapa',
@@ -2606,6 +2624,9 @@ const i18nStrings = <String, Map<String, String>>{
     'hero.cta_explore': 'Explorar a Nicarágua',
     'hero.cta_trip': 'Criar minha viagem',
     'auth.or_continue': 'ou continue com',
+    'gallery.prev': 'Anterior',
+    'gallery.next': 'Próximo',
+    'gallery.arc_label': 'Galeria das capas dos 17 territórios. Deslize ou use as setas.',
   },
   'de': {
     'meta.title_default': 'BAQUEANO: Entdecke, was auf keiner Karte steht',
@@ -2976,6 +2997,9 @@ const i18nStrings = <String, Map<String, String>>{
     'hero.cta_explore': 'Nicaragua entdecken',
     'hero.cta_trip': 'Meine Reise planen',
     'auth.or_continue': 'oder weiter mit',
+    'gallery.prev': 'Zurück',
+    'gallery.next': 'Weiter',
+    'gallery.arc_label': 'Galerie der Titelbilder der 17 Gebiete. Wischen oder Pfeile benutzen.',
   },
   'ru': {
     'meta.title_default': 'BAQUEANO: открой то, чего нет на карте',
@@ -3346,6 +3370,9 @@ const i18nStrings = <String, Map<String, String>>{
     'hero.cta_explore': 'Исследовать Никарагуа',
     'hero.cta_trip': 'Спланировать поездку',
     'auth.or_continue': 'или продолжить через',
+    'gallery.prev': 'Назад',
+    'gallery.next': 'Вперёд',
+    'gallery.arc_label': 'Галерея обложек 17 территорий. Листайте или используйте стрелки.',
   },
   'ja': {
     'meta.title_default': 'BAQUEANO：地図に載っていないものを見つけよう',
@@ -3716,5 +3743,8 @@ const i18nStrings = <String, Map<String, String>>{
     'hero.cta_explore': 'ニカラグアを探検',
     'hero.cta_trip': '旅を計画する',
     'auth.or_continue': 'または次で続行',
+    'gallery.prev': '前へ',
+    'gallery.next': '次へ',
+    'gallery.arc_label': '17地域の表紙ギャラリー。スワイプするか矢印を使ってください。',
   },
 };

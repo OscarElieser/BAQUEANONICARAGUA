@@ -371,5 +371,8 @@
   "hero.scenes_aria": "选择封面场景",
   "hero.cta_explore": "探索尼加拉瓜",
   "hero.cta_trip": "规划我的旅行",
-  "auth.or_continue": "或使用以下方式继续"
+  "auth.or_continue": "或使用以下方式继续",
+  "gallery.prev": "上一个",
+  "gallery.next": "下一个",
+  "gallery.arc_label": "17个地区的封面画廊。滑动或使用箭头。"
 }

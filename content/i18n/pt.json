@@ -371,5 +371,8 @@
   "hero.scenes_aria": "Escolher a cena da capa",
   "hero.cta_explore": "Explorar a Nicarágua",
   "hero.cta_trip": "Criar minha viagem",
-  "auth.or_continue": "ou continue com"
+  "auth.or_continue": "ou continue com",
+  "gallery.prev": "Anterior",
+  "gallery.next": "Próximo",
+  "gallery.arc_label": "Galeria das capas dos 17 territórios. Deslize ou use as setas."
 }

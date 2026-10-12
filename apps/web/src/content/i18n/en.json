@@ -371,5 +371,8 @@
   "hero.scenes_aria": "Choose the cover scene",
   "hero.cta_explore": "Explore Nicaragua",
   "hero.cta_trip": "Plan my trip",
-  "auth.or_continue": "or continue with"
+  "auth.or_continue": "or continue with",
+  "gallery.prev": "Previous",
+  "gallery.next": "Next",
+  "gallery.arc_label": "Gallery of the 17 territory covers. Swipe or use the arrows."
 }

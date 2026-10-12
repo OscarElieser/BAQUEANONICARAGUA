@@ -176,14 +176,7 @@ a.tarjeta-3d:focus-visible { outline: none; } /* El foco se dibuja en la lámina
 a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); outline-offset: 3px; } /* Foco de teclado visible */
 
 /* Desfile de portadas: avanza despacio y sin fin; se detiene con el cursor, el teclado o el botón */
-.desfile { overflow: hidden; mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent); padding-block: 12px; } /* Bordes que se desvanecen */
-.desfile-carril { display: flex; width: max-content; animation: desfile 110s linear infinite; } /* Las dos copias, una tras otra */
-.desfile-lista { display: flex; gap: 24px; margin: 0; padding: 0 12px; list-style: none; } /* Fila de tarjetas */
-.desfile:hover .desfile-carril, .desfile:focus-within .desfile-carril, .desfile[data-pausa="true"] .desfile-carril { animation-play-state: paused; } /* Pausa */
-@keyframes desfile { from { transform: translateX(0); } to { transform: translateX(-50%); } } /* Avanza exactamente una copia y vuelve a empezar sin salto */
 @media (prefers-reduced-motion: reduce) {
-  .desfile { overflow-x: auto; mask-image: none; } /* Sin movimiento: se desliza a mano */
-  .desfile-eco, .desfile-control { display: none; } /* Ni copia ni botón de pausa */
   .tarjeta-lamina { transform: none; } /* Sin inclinación */
 }
 
@@ -225,7 +218,6 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
   .franja-tejiendo { clip-path: none; } /* Franja completa */
   .ruta-parada { opacity: 1; } /* Paradas visibles */
 }
-.desfile:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: var(--radius-m); } /* Foco visible del desfile */
 .puerta-cultura { transition: transform 260ms cubic-bezier(.2,.7,.2,1); } /* La puerta se eleva un poco al apuntarla */
 .puerta-cultura:hover { transform: translateY(-3px); } /* Elevación */
 .puerta-cultura:focus-visible { outline: 3px solid var(--oro); outline-offset: 4px; } /* Foco visible en ambos temas */
@@ -372,3 +364,21 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
 .login-separador::before, .login-separador::after { content: ""; flex: 1; height: 1px; background: var(--line); } /* Líneas a los lados */
 .login-social { display: flex; width: 100%; min-height: 50px; align-items: center; justify-content: center; gap: 10px; border-radius: 12px; border: 1px solid color-mix(in oklab, var(--band-marfil) 18%, transparent); background: color-mix(in oklab, var(--band-marfil) 7%, transparent); color: var(--ink); font-weight: 700; cursor: pointer; } /* Botón de Google */
 .login-aviso { margin: 0; padding: 16px; border-radius: 14px; background: color-mix(in oklab, var(--band-marfil) 8%, transparent); font-weight: 700; } /* Avisos dentro de la tarjeta */
+
+/* ===== Galería en arco 3D (catálogos de territorios y destinos) ===== */
+.arco-escena { --ink: var(--band-marfil); --ink-muted: #C9D8D0; --focus: var(--marca-naranja); --oro-text: #E9BB74; --status-verified: #9FD9C2; --accent: #E9BB74; --line: color-mix(in oklab, var(--band-marfil) 14%, var(--marca-nocturno)); margin: 40px 0; padding: 48px 0 28px; border-radius: 28px; color: var(--ink); background: radial-gradient(120% 80% at 50% 0%, color-mix(in oklab, var(--marca-turquesa) 22%, var(--marca-profundo)), var(--marca-nocturno) 70%); } /* Sala oscura: las portadas brillan */
+.arco-titulo { margin: 0; font-family: var(--font-young-serif), Georgia, serif; font-weight: 400; font-size: clamp(30px, 4vw, 48px); line-height: 1.05; } /* Título editorial centrado */
+.arco { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 28px 0 16px; -webkit-mask: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); mask: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); } /* Fila deslizable con bordes que se desvanecen */
+.arco::-webkit-scrollbar { display: none; } /* Sin barra visible (se desliza con el dedo, la rueda, el teclado o las flechas) */
+.arco:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; } /* Foco visible */
+.arco-lista { display: flex; gap: 24px; width: max-content; margin: 0; padding: 0 calc(50vw - 120px); list-style: none; } /* Margen para que la primera y la última puedan quedar al centro */
+.arco-item { width: 220px; flex: none; scroll-snap-align: center; backface-visibility: hidden; } /* Cada tarjeta se detiene al centro */
+@supports (animation-timeline: view()) {
+  @keyframes arco-giro { 0% { transform: perspective(900px) rotateY(46deg) scale(0.84); opacity: 0.8; } 50% { transform: perspective(900px) rotateY(0deg) scale(1); opacity: 1; } 100% { transform: perspective(900px) rotateY(-46deg) scale(0.84); opacity: 0.8; } } /* De derecha a izquierda: entra girada, queda de frente al centro y sale girada */
+  .arco-item { animation: arco-giro linear both; animation-timeline: view(inline); } /* El giro sigue al desplazamiento */
+}
+@keyframes arco-entrada { from { opacity: 0; transform: translateY(46px) rotateX(18deg); } } /* Las tarjetas suben al aparecer */
+.arco-carta { animation: arco-entrada 800ms cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(min(var(--i, 0), 8) * 70ms); } /* Una tras otra, una sola vez */
+.arco-flecha { display: inline-flex; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid color-mix(in oklab, var(--band-marfil) 24%, transparent); background: color-mix(in oklab, var(--band-marfil) 8%, transparent); color: var(--ink); cursor: pointer; transition: background-color 160ms ease-out; } /* Botón redondo de vidrio */
+.arco-flecha:hover { background: color-mix(in oklab, var(--band-marfil) 16%, transparent); } /* Se aclara al pasar el cursor */
+@media (prefers-reduced-motion: reduce) { .arco-item, .arco-carta { animation: none; } } /* Sin giro ni entrada: fila plana */
