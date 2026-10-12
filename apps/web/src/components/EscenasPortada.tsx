@@ -6,6 +6,17 @@ import type { CSSProperties } from 'react'; // Tipo de los estilos en línea
 const mez = (a: string, pct: number, b: string) => `color-mix(in oklab, var(--${a}) ${pct}%, ${b.startsWith('#') || b === 'white' ? b : `var(--${b})`})`; // Mezcla dos colores del sistema
 const f = (fill: string, extra: CSSProperties = {}): CSSProperties => ({ fill, ...extra }); // Relleno como estilo (las variables CSS no funcionan como atributo)
 
+/** Palabra gigante entre capas del paisaje: los volcanes, cayos o cerros de adelante la tapan en parte y da profundidad. */
+function Palabra({ texto, y, color }: { texto: string; y: number; color: string }) {
+  return (
+    <g className="capa-palabra">
+      <text x="600" y={y} textAnchor="middle" textLength={texto.length > 7 ? 1080 : undefined} lengthAdjust="spacingAndGlyphs" style={{ fill: color, fontFamily: 'var(--font-archivo), system-ui, sans-serif', fontWeight: 900, fontStretch: '75%', fontSize: 230, letterSpacing: '-0.01em' }}>
+        {texto} {/* Nombre de la zona, enorme */}
+      </text>
+    </g>
+  );
+}
+
 /** Bandada de aves: unas pocas "V" en el cielo, como gaviotas o garzas a lo lejos. */
 function Aves({ x, y, color }: { x: number; y: number; color: string }) {
   return (
@@ -18,7 +29,7 @@ function Aves({ x, y, color }: { x: number; y: number; color: string }) {
 }
 
 /** Pacífico volcánico: un lago con dos volcanes que se reflejan, sol de tarde y orilla de arena. */
-export function EscenaPacifico() {
+export function EscenaPacifico({ palabra }: { palabra: string }) {
   return (
     <g>
       <defs>
@@ -37,6 +48,7 @@ export function EscenaPacifico() {
         <circle cx="905" cy="215" r="54" style={f('var(--marca-naranja)')} /> {/* Sol de la tarde */}
         <path d="M0 350 Q140 300 260 330 T520 320 T820 330 T1200 312 V380 H0Z" style={f(mez('marca-turquesa', 35, 'white'))} /> {/* Cordillera lejana */}
       </g>
+      <Palabra texto={palabra} y={330} color="white" /> {/* Detrás de los volcanes */}
       <g className="capa-media">
         <path d="M300 372 C380 300 430 170 478 122 C492 110 506 112 518 124 C566 176 612 300 690 372Z" style={f(mez('marca-profundo', 85, 'marca-verde'))} /> {/* Volcán de cono alto */}
         <path d="M466 128 C474 104 500 96 512 112 C530 90 560 96 552 120" style={{ fill: 'none', stroke: mez('band-marfil', 85, 'white'), strokeWidth: 10, strokeLinecap: 'round', opacity: 0.85 }} /> {/* Penacho de nubes en la cima */}
@@ -63,7 +75,7 @@ export function EscenaPacifico() {
 }
 
 /** Centro-norte de montaña: cerros en capas, neblina entre ellos y pinos al frente. */
-export function EscenaNorte() {
+export function EscenaNorte({ palabra }: { palabra: string }) {
   const pino = (x: number, base: number, h: number) => `M${x} ${base - h}L${x - h * 0.28} ${base - h * 0.45}H${x - h * 0.14}L${x - h * 0.36} ${base}H${x + h * 0.36}L${x + h * 0.14} ${base - h * 0.45}H${x + h * 0.28}Z`; // Pino de dos pisos
   return (
     <g>
@@ -83,6 +95,7 @@ export function EscenaNorte() {
         <path d="M0 300 Q120 220 260 260 T520 230 T800 250 T1200 220 V560 H0Z" style={f(mez('musgo', 55, 'white'))} /> {/* Cerros más lejanos */}
         <rect y="230" width="1200" height="90" style={f('url(#pb-neblina)')} /> {/* Neblina */}
       </g>
+      <Palabra texto={palabra} y={345} color="white" /> {/* Entre los cerros lejanos y los medios */}
       <g className="capa-media">
         <path d="M0 360 Q160 280 330 330 T700 300 T1000 320 T1200 290 V560 H0Z" style={f('var(--musgo)')} /> {/* Cerros medios */}
         <rect y="300" width="1200" height="110" style={f('url(#pb-neblina)')} /> {/* Segunda neblina */}
@@ -100,7 +113,7 @@ export function EscenaNorte() {
 }
 
 /** Caribe: mar turquesa, cayos con palmeras, nubes y una panga a lo lejos. */
-export function EscenaCaribe() {
+export function EscenaCaribe({ palabra }: { palabra: string }) {
   const palmera = (x: number, y: number, s: number) => (
     <g key={x} style={{ stroke: 'var(--marca-profundo)', fill: 'none', strokeLinecap: 'round' }}>
       <path d={`M${x} ${y} q${8 * s} ${-40 * s} ${-6 * s} ${-90 * s}`} style={{ strokeWidth: 6 * s }} /> {/* Tronco curvo */}
@@ -132,6 +145,7 @@ export function EscenaCaribe() {
           <path key={y} d={`M${100 + i * 140} ${y} h${80 + i * 20} M${700 - i * 60} ${y + 14} h${60 + i * 25}`} /> // Brillos del agua
         ))}
       </g>
+      <Palabra texto={palabra} y={330} color="white" /> {/* Sobre el horizonte, detrás de los cayos */}
       <g className="capa-media">
         <ellipse cx="840" cy="318" rx="120" ry="14" style={f(mez('band-maiz', 40, 'band-marfil'))} /> {/* Cayo lejano */}
         {palmera(810, 314, 0.7)} {/* Palmera del cayo lejano */}

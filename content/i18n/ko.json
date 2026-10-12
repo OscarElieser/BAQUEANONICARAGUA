@@ -393,5 +393,8 @@
   "plans.contact": "문의하기",
   "plans.benefits_pending": "혜택 확인 중",
   "plans.currencies_note": "가격은 코르도바(C$)와 미국 달러(US$)로 각각 따로 정합니다.",
-  "plans.featured": "추천"
+  "plans.featured": "추천",
+  "hero.word_pacifico": "태평양",
+  "hero.word_norte": "산지",
+  "hero.word_caribe": "카리브"
 }

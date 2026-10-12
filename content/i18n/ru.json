@@ -393,5 +393,8 @@
   "plans.contact": "Напишите нам",
   "plans.benefits_pending": "Преимущества уточняются",
   "plans.currencies_note": "Цены в кордобах (C$) и долларах США (US$), каждая задаётся отдельно.",
-  "plans.featured": "Рекомендуемый"
+  "plans.featured": "Рекомендуемый",
+  "hero.word_pacifico": "ТИХИЙ",
+  "hero.word_norte": "ГОРЫ",
+  "hero.word_caribe": "КАРИБЫ"
 }

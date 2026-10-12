@@ -251,6 +251,7 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
 .portada-baqueano .escena { opacity: 0; transition: opacity 700ms ease-out; } /* Las escenas ocultas esperan transparentes… */
 .portada-baqueano[data-escena="pacifico"] .escena[data-id="pacifico"], .portada-baqueano[data-escena="norte"] .escena[data-id="norte"], .portada-baqueano[data-escena="caribe"] .escena[data-id="caribe"] { opacity: 1; } /* …y la elegida aparece con un fundido */
 .portada-baqueano .capa-lejos, .portada-baqueano .capa-media, .portada-baqueano .capa-cerca { transition: transform 600ms cubic-bezier(.2,.7,.2,1); } /* Las capas siguen al cursor con suavidad */
+.portada-baqueano .capa-palabra { transition: transform 600ms cubic-bezier(.2,.7,.2,1); transform: translate(calc(var(--px, 0) * -8px), calc(var(--py, 0) * -4px)); } /* La palabra, entre lo lejano y lo medio */
 .portada-baqueano .capa-lejos { transform: translate(calc(var(--px, 0) * -5px), calc(var(--py, 0) * -3px)); } /* Lo lejano casi no se mueve */
 .portada-baqueano .capa-media { transform: translate(calc(var(--px, 0) * -11px), calc(var(--py, 0) * -5px)); } /* Lo medio, un poco más */
 .portada-baqueano .capa-cerca { transform: translate(calc(var(--px, 0) * -20px), calc(var(--py, 0) * -8px)); } /* Lo cercano, más: da profundidad */

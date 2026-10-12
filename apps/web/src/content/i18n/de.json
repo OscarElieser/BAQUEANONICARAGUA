@@ -393,5 +393,8 @@
   "plans.contact": "Schreib uns",
   "plans.benefits_pending": "Leistungen noch zu bestätigen",
   "plans.currencies_note": "Preise in Córdoba (C$) und US-Dollar (US$), jeweils separat festgelegt.",
-  "plans.featured": "Hervorgehoben"
+  "plans.featured": "Hervorgehoben",
+  "hero.word_pacifico": "PAZIFIK",
+  "hero.word_norte": "BERGLAND",
+  "hero.word_caribe": "KARIBIK"
 }

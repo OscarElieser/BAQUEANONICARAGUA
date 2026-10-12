@@ -28,9 +28,9 @@ export function PortadaBaqueano({ locale }: { locale: string }) {
             </mask>
           </defs>
           <g mask="url(#pb-ventana)">
-            <g className="escena" data-id="pacifico"><EscenaPacifico /></g> {/* Pacífico volcánico */}
-            <g className="escena" data-id="norte"><EscenaNorte /></g> {/* Centro-norte */}
-            <g className="escena" data-id="caribe"><EscenaCaribe /></g> {/* Caribe */}
+            <g className="escena" data-id="pacifico"><EscenaPacifico palabra={t(locale, 'hero.word_pacifico')} /></g> {/* Pacífico volcánico */}
+            <g className="escena" data-id="norte"><EscenaNorte palabra={t(locale, 'hero.word_norte')} /></g> {/* Centro-norte */}
+            <g className="escena" data-id="caribe"><EscenaCaribe palabra={t(locale, 'hero.word_caribe')} /></g> {/* Caribe */}
           </g>
         </svg>
 

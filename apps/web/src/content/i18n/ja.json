@@ -393,5 +393,8 @@
   "plans.contact": "お問い合わせ",
   "plans.benefits_pending": "特典は確認中",
   "plans.currencies_note": "料金はコルドバ（C$）と米ドル（US$）でそれぞれ個別に設定します。",
-  "plans.featured": "おすすめ"
+  "plans.featured": "おすすめ",
+  "hero.word_pacifico": "太平洋",
+  "hero.word_norte": "山地",
+  "hero.word_caribe": "カリブ"
 }

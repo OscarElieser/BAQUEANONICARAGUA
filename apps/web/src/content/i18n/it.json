@@ -393,5 +393,8 @@
   "plans.contact": "Scrivici",
   "plans.benefits_pending": "Vantaggi da confermare",
   "plans.currencies_note": "Prezzi in córdoba (C$) e in dollari USA (US$), fissati separatamente.",
-  "plans.featured": "In evidenza"
+  "plans.featured": "In evidenza",
+  "hero.word_pacifico": "PACIFICO",
+  "hero.word_norte": "MONTAGNA",
+  "hero.word_caribe": "CARAIBI"
 }

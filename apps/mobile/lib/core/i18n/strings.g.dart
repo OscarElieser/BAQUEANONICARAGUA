@@ -408,6 +408,9 @@ const i18nStrings = <String, Map<String, String>>{
     'plans.benefits_pending': 'Beneficios por confirmar',
     'plans.currencies_note': 'Precios en córdobas (C\$) y en dólares (US\$), cada uno fijado por separado.',
     'plans.featured': 'Destacado',
+    'hero.word_pacifico': 'PACÍFICO',
+    'hero.word_norte': 'MONTAÑA',
+    'hero.word_caribe': 'CARIBE',
   },
   'en': {
     'meta.title_default': 'BAQUEANO: discover what\'s not on the map',
@@ -800,6 +803,9 @@ const i18nStrings = <String, Map<String, String>>{
     'plans.benefits_pending': 'Benefits to be confirmed',
     'plans.currencies_note': 'Prices in córdobas (C\$) and US dollars (US\$), each set separately.',
     'plans.featured': 'Featured',
+    'hero.word_pacifico': 'PACIFIC',
+    'hero.word_norte': 'HIGHLANDS',
+    'hero.word_caribe': 'CARIBBEAN',
   },
   'zh-Hans': {
     'meta.title_default': 'BAQUEANO：发现地图上找不到的地方',
@@ -1192,6 +1198,9 @@ const i18nStrings = <String, Map<String, String>>{
     'plans.benefits_pending': '权益待确认',
     'plans.currencies_note': '价格分别以科多巴（C\$）和美元（US\$）单独设定。',
     'plans.featured': '精选',
+    'hero.word_pacifico': '太平洋',
+    'hero.word_norte': '山地',
+    'hero.word_caribe': '加勒比',
   },
   'ko': {
     'meta.title_default': 'BAQUEANO: 지도에 없는 곳을 발견하세요',
@@ -1584,6 +1593,9 @@ const i18nStrings = <String, Map<String, String>>{
     'plans.benefits_pending': '혜택 확인 중',
     'plans.currencies_note': '가격은 코르도바(C\$)와 미국 달러(US\$)로 각각 따로 정합니다.',
     'plans.featured': '추천',
+    'hero.word_pacifico': '태평양',
+    'hero.word_norte': '산지',
+    'hero.word_caribe': '카리브',
   },
   'it': {
     'meta.title_default': 'BAQUEANO: scopri ciò che non è sulla mappa',
@@ -1976,6 +1988,9 @@ const i18nStrings = <String, Map<String, String>>{
     'plans.benefits_pending': 'Vantaggi da confermare',
     'plans.currencies_note': 'Prezzi in córdoba (C\$) e in dollari USA (US\$), fissati separatamente.',
     'plans.featured': 'In evidenza',
+    'hero.word_pacifico': 'PACIFICO',
+    'hero.word_norte': 'MONTAGNA',
+    'hero.word_caribe': 'CARAIBI',
   },
   'fr': {
     'meta.title_default': 'BAQUEANO : découvre ce qui n\'est pas sur la carte',
@@ -2368,6 +2383,9 @@ const i18nStrings = <String, Map<String, String>>{
     'plans.benefits_pending': 'Avantages à confirmer',
     'plans.currencies_note': 'Prix en córdobas (C\$) et en dollars US (US\$), fixés séparément.',
     'plans.featured': 'En vedette',
+    'hero.word_pacifico': 'PACIFIQUE',
+    'hero.word_norte': 'MONTAGNE',
+    'hero.word_caribe': 'CARAÏBES',
   },
   'pt': {
     'meta.title_default': 'BAQUEANO: descubra o que não aparece no mapa',
@@ -2760,6 +2778,9 @@ const i18nStrings = <String, Map<String, String>>{
     'plans.benefits_pending': 'Benefícios a confirmar',
     'plans.currencies_note': 'Preços em córdobas (C\$) e em dólares (US\$), definidos separadamente.',
     'plans.featured': 'Destaque',
+    'hero.word_pacifico': 'PACÍFICO',
+    'hero.word_norte': 'MONTANHA',
+    'hero.word_caribe': 'CARIBE',
   },
   'de': {
     'meta.title_default': 'BAQUEANO: Entdecke, was auf keiner Karte steht',
@@ -3152,6 +3173,9 @@ const i18nStrings = <String, Map<String, String>>{
     'plans.benefits_pending': 'Leistungen noch zu bestätigen',
     'plans.currencies_note': 'Preise in Córdoba (C\$) und US-Dollar (US\$), jeweils separat festgelegt.',
     'plans.featured': 'Hervorgehoben',
+    'hero.word_pacifico': 'PAZIFIK',
+    'hero.word_norte': 'BERGLAND',
+    'hero.word_caribe': 'KARIBIK',
   },
   'ru': {
     'meta.title_default': 'BAQUEANO: открой то, чего нет на карте',
@@ -3544,6 +3568,9 @@ const i18nStrings = <String, Map<String, String>>{
     'plans.benefits_pending': 'Преимущества уточняются',
     'plans.currencies_note': 'Цены в кордобах (C\$) и долларах США (US\$), каждая задаётся отдельно.',
     'plans.featured': 'Рекомендуемый',
+    'hero.word_pacifico': 'ТИХИЙ',
+    'hero.word_norte': 'ГОРЫ',
+    'hero.word_caribe': 'КАРИБЫ',
   },
   'ja': {
     'meta.title_default': 'BAQUEANO：地図に載っていないものを見つけよう',
@@ -3936,5 +3963,8 @@ const i18nStrings = <String, Map<String, String>>{
     'plans.benefits_pending': '特典は確認中',
     'plans.currencies_note': '料金はコルドバ（C\$）と米ドル（US\$）でそれぞれ個別に設定します。',
     'plans.featured': 'おすすめ',
+    'hero.word_pacifico': '太平洋',
+    'hero.word_norte': '山地',
+    'hero.word_caribe': 'カリブ',
   },
 };

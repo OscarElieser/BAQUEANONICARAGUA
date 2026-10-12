@@ -393,5 +393,8 @@
   "plans.contact": "Write to us",
   "plans.benefits_pending": "Benefits to be confirmed",
   "plans.currencies_note": "Prices in córdobas (C$) and US dollars (US$), each set separately.",
-  "plans.featured": "Featured"
+  "plans.featured": "Featured",
+  "hero.word_pacifico": "PACIFIC",
+  "hero.word_norte": "HIGHLANDS",
+  "hero.word_caribe": "CARIBBEAN"
 }

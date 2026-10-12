@@ -393,5 +393,8 @@
   "plans.contact": "联系我们",
   "plans.benefits_pending": "权益待确认",
   "plans.currencies_note": "价格分别以科多巴（C$）和美元（US$）单独设定。",
-  "plans.featured": "精选"
+  "plans.featured": "精选",
+  "hero.word_pacifico": "太平洋",
+  "hero.word_norte": "山地",
+  "hero.word_caribe": "加勒比"
 }

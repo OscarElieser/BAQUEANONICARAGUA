@@ -393,5 +393,8 @@
   "plans.contact": "Écrivez-nous",
   "plans.benefits_pending": "Avantages à confirmer",
   "plans.currencies_note": "Prix en córdobas (C$) et en dollars US (US$), fixés séparément.",
-  "plans.featured": "En vedette"
+  "plans.featured": "En vedette",
+  "hero.word_pacifico": "PACIFIQUE",
+  "hero.word_norte": "MONTAGNE",
+  "hero.word_caribe": "CARAÏBES"
 }
