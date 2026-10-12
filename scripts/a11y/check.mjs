@@ -4,7 +4,7 @@ import AxeBuilder from '@axe-core/playwright'; // Motor de revisión de accesibi
 import { chromium } from 'playwright'; // Navegador automático
 
 const BASE = process.env.BASE_URL ?? 'http://127.0.0.1:3000'; // Dirección de la web en ejecución
-const PAGES = ['/es', '/es/mapa', '/es/comunidad', '/es/cultura', '/es/cuenta', '/es/denunciar', '/es/mi-aventura', '/es/privacidad', '/es/cookies', '/es/terminos', '/es/sobre-nosotros', '/es/accesibilidad', '/es/contacto']; // Páginas revisadas
+const PAGES = ['/es', '/es/mapa', '/es/comunidad', '/es/cultura', '/es/cuenta', '/es/denunciar', '/es/mi-aventura', '/es/privacidad', '/es/cookies', '/es/terminos', '/es/sobre-nosotros', '/es/accesibilidad', '/es/contacto', '/en/mi-aventura', '/ja', '/ru/privacidad', '/zh-Hans/comunidad']; // Páginas revisadas (también en otros idiomas y escrituras)
 
 const browser = await chromium.launch(); // Abre el navegador sin ventana
 let failures = 0; // Cantidad de problemas graves
