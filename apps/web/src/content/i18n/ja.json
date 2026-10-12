@@ -353,5 +353,6 @@
   "relief.territory_aria": "実際の形から作った{name}の3D立体地図。ドラッグで回せます。",
   "relief.territory_static": "実際の形から作った{name}のイラストカバー",
   "relief.territory_note": "形は実際のもの。高さはイメージで、地形データではありません。",
-  "culture.door": "国の年表と遺産。すべての情報に出典があります。"
+  "culture.door": "国の年表と遺産。すべての情報に出典があります。",
+  "ficha.territory_unknown": "地域は未確認です。"
 }

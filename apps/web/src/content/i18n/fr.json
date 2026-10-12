@@ -353,5 +353,6 @@
   "relief.territory_aria": "{name} en relief 3D, construit à partir de sa forme réelle. Faites glisser pour le tourner.",
   "relief.territory_static": "Couverture illustrée de {name}, construite à partir de sa forme réelle",
   "relief.territory_note": "Forme réelle ; hauteurs illustratives, ce n’est pas de la topographie.",
-  "culture.door": "La chronologie et le patrimoine du pays, chaque fait avec sa source."
+  "culture.door": "La chronologie et le patrimoine du pays, chaque fait avec sa source.",
+  "ficha.territory_unknown": "Territoire non confirmé."
 }

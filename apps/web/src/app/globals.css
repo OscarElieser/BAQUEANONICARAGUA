@@ -209,3 +209,18 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
 .puerta-cultura { transition: transform 260ms cubic-bezier(.2,.7,.2,1); } /* La puerta se eleva un poco al apuntarla */
 .puerta-cultura:hover { transform: translateY(-3px); } /* Elevación */
 .puerta-cultura:focus-visible { outline: 3px solid var(--oro); outline-offset: 4px; } /* Foco visible en ambos temas */
+
+/* Destinos: boleto de viaje con talón perforado */
+.boleto { background: var(--ground-raised); border-radius: var(--radius-m); } /* Papel del boleto */
+@media (min-width: 640px) {
+  .boleto { -webkit-mask: radial-gradient(circle 14px at calc(100% - 240px) 0, transparent 13.5px, black 14px) top / 100% 51% no-repeat, radial-gradient(circle 14px at calc(100% - 240px) 100%, transparent 13.5px, black 14px) bottom / 100% 51% no-repeat; mask: radial-gradient(circle 14px at calc(100% - 240px) 0, transparent 13.5px, black 14px) top / 100% 51% no-repeat, radial-gradient(circle 14px at calc(100% - 240px) 100%, transparent 13.5px, black 14px) bottom / 100% 51% no-repeat; } /* Muescas arriba y abajo donde se corta el talón */
+  .boleto-talon { border-left: 2px dashed var(--control-border); } /* Línea perforada */
+}
+@media (max-width: 639px) { .boleto-talon { border-top: 2px dashed var(--control-border); } } /* En el teléfono el talón va abajo */
+.boleto-talon { animation: despegar .9s cubic-bezier(.2,.8,.2,1) .3s both; transform-origin: left center; } /* El talón se asoma al llegar */
+@keyframes despegar { from { opacity: 0; transform: rotate(-2.5deg) translateX(-10px); } to { opacity: 1; transform: none; } } /* Como si se despegara */
+.talon-tarifa { background: var(--ground-raised); border-radius: var(--radius-s); border-left: 6px dotted var(--oro); margin-bottom: 10px; } /* Cada tarifa, un talón con borde perforado */
+
+/* Negocios: pizarra de pulpería (oscura en los dos temas) */
+.pizarra { --ink: #F2EFE5; --ink-muted: #C9D8D0; background: #071C1B; color: var(--ink); box-shadow: inset 0 0 0 6px #0A4339; } /* Pizarra con marco */
+.pizarra-puntos { border-bottom: 2px dotted #7DB0A4; transform: translateY(-5px); } /* Puntos guía hasta el precio */

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { CurvasDeNivel } from '@/components/CurvasDeNivel';
+import { Boleto, TalonTarifa } from '@/components/Boleto'; // Cabecera en forma de boleto y tarifas como talones
 import { EstadoVerificacion } from '@/components/EstadoVerificacion';
 import { getDestination, reportedByKey } from '@/lib/catalog'; // Datos de la ficha y quién informó cada tarifa
 import { t } from '@/i18n/t'; // Textos traducidos
@@ -22,7 +22,7 @@ export default async function DestinoPage({ params }: { params: Promise<{ locale
   const { locale, slug } = await params;
   const data = await getDestination(slug);
   if (!data) notFound();
-  const { destination: d, prices, rows, sourceHref } = data;
+  const { destination: d, prices, rows, sourceHref, territory } = data; // Ficha, tarifas, verificación, fuente y territorio
   const money = (n: number, c: string) => new Intl.NumberFormat(locale, { style: 'currency', currency: c }).format(n);
   const date = (iso: string) => new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(new Date(iso));
 
@@ -40,13 +40,10 @@ export default async function DestinoPage({ params }: { params: Promise<{ locale
       <nav aria-label={t(locale, 'nav.breadcrumb')} className="pt-6 text-sm">
         <Link href={`/${locale}`}>{t(locale, 'nav.discover')}</Link>
       </nav>
-      <header className="flex flex-wrap items-end gap-6 pt-4">
-        <div className="min-w-0 flex-[1_1_420px]">
-          <h1 className="m-0 font-display text-[40px] font-normal leading-[1.02] sm:text-[48px]">{d.name}</h1>
-          {d.summary && <p className="mt-3 max-w-[var(--measure)] text-[19px] leading-[30px] text-ink-muted">{d.summary}</p>}
-        </div>
-        <CurvasDeNivel className="h-auto w-full max-w-[320px] flex-[0_1_320px]" />
-      </header>
+      <Boleto locale={locale} territory={territory}>
+        <h1 className="m-0 font-display text-[40px] font-normal leading-[1.02] sm:text-[60px]">{d.name}</h1> {/* Nombre del destino */}
+        {d.summary && <p className="mb-0 mt-4 max-w-[var(--measure)] text-[19px] leading-[30px] text-ink-muted">{d.summary}</p>} {/* Resumen */}
+      </Boleto>
 
       <div className="mt-8 flex flex-wrap gap-10">
         <div className="min-w-0 max-w-[var(--measure)] flex-[999_1_560px]">
@@ -54,30 +51,29 @@ export default async function DestinoPage({ params }: { params: Promise<{ locale
 
           {d.access_notes && (
             <section className="mt-8">
-              <h2 className="font-display text-[26px] font-normal">{t(locale, 'destination.access')}</h2>
+              <h2 className="mb-3 mt-0 font-display text-[26px] font-normal">{t(locale, 'destination.access')}</h2>
               <p className="whitespace-pre-line">{d.access_notes}</p>
             </section>
           )}
           {d.environmental_notes && (
             <section className="mt-8">
-              <h2 className="font-display text-[26px] font-normal">{t(locale, 'destination.care')}</h2>
+              <h2 className="mb-3 mt-0 font-display text-[26px] font-normal">{t(locale, 'destination.care')}</h2>
               <p className="whitespace-pre-line">{d.environmental_notes}</p>
             </section>
           )}
           <section className="mt-8">
-            <h2 className="font-display text-[26px] font-normal">{t(locale, 'field.prices')}</h2>
+            <h2 className="mb-3 mt-0 font-display text-[26px] font-normal">{t(locale, 'field.prices')}</h2>
             {prices.length === 0 ? (
               <p className="text-ink-muted">{t(locale, 'prices.none')}</p>
             ) : (
               <ul className="m-0 list-none p-0">
                 {prices.map((p) => (
-                  <li key={p.label} className="border-b border-line py-3">
-                    <div className="flex justify-between gap-4 font-bold">
-                      <span>{p.label}</span>
-                      <span>{money(p.amount, p.currency)}{p.unit ? ` ${p.unit}` : ''}</span>
-                    </div>
-                    <p className="m-0 text-sm text-ink-muted">{t(locale, 'prices.observed', { date: date(p.observed_at), who: t(locale, reportedByKey[p.reported_by]) })}</p>
-                  </li>
+                  <TalonTarifa
+                    key={p.label} // Una tarifa
+                    label={p.label} // Concepto
+                    amount={`${money(p.amount, p.currency)}${p.unit ? ` ${p.unit}` : ''}`} // Monto y unidad
+                    note={t(locale, 'prices.observed', { date: date(p.observed_at), who: t(locale, reportedByKey[p.reported_by]) })} // Fecha y fuente
+                  />
                 ))}
               </ul>
             )}

@@ -7,6 +7,8 @@ import { contactHref, getBusiness, reportedByKey } from '@/lib/catalog'; // Dato
 import { t, type MessageKey } from '@/i18n/t'; // Textos traducidos
 import type { Metadata } from 'next'; // Tipo de los metadatos
 import { absolute, jsonLd, pageMetadata } from '@/lib/seo'; // Canónica, idiomas, vista previa y datos estructurados
+import { letraComunidad } from '@/app/fuentes'; // Letra de Nuestra gente (Bricolage Grotesque)
+import { Pizarra } from '@/components/Pizarra'; // Ofertas como pizarra de pulpería
 
 export const revalidate = 600;
 
@@ -26,7 +28,7 @@ export default async function NegocioPage({ params }: { params: Promise<{ locale
   const { locale, slug } = await params;
   const data = await getBusiness(slug);
   if (!data) notFound();
-  const { business: b, contacts, prices, rows } = data;
+  const { business: b, contacts, prices, rows, territory } = data; // Ficha, contactos, tarifas, verificación y territorio
   const money = (n: number, c: string) => new Intl.NumberFormat(locale, { style: 'currency', currency: c }).format(n);
   const date = (iso: string) => new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(new Date(iso));
   const links = contacts.map((c) => ({ ...c, href: contactHref(c) })).filter((c) => c.href);
@@ -42,16 +44,18 @@ export default async function NegocioPage({ params }: { params: Promise<{ locale
     address: { '@type': 'PostalAddress', addressCountry: 'NI' }, // País (la dirección exacta no se inventa)
   }; // Datos estructurados (sin precios, horarios ni reseñas que no estén comprobados)
   return (
-    <main>
+    <main className={`${letraComunidad.variable} mundo-comunidad`}>
+      {/* Mundo de Nuestra gente: franja de hamaca, letra cálida y pizarra de pulpería */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structured) }} /> {/* Datos para buscadores */}
-      <FranjaTejida height={22} />
+      <FranjaTejida height={28} className="franja-tejiendo" /> {/* La franja se teje al llegar */}
       <div className="mx-auto max-w-[1280px] px-4 pb-16 sm:px-12">
         <nav aria-label={t(locale, 'nav.breadcrumb')} className="pt-6 text-sm">
           <Link href={`/${locale}/comunidad`}>{t(locale, 'nav.community')}</Link>
         </nav>
         <header className="pt-4">
           {b.is_sponsored && <p className="m-0 mb-2 text-sm font-bold text-oro-text">{t(locale, 'business.sponsored')}</p>}
-          <h1 className="m-0 font-display text-[40px] font-normal leading-[1.02] sm:text-[48px]">{b.name}</h1>
+          <h1 className="m-0 font-mundo text-[44px] font-extrabold leading-[0.98] tracking-[-0.02em] sm:text-[68px]">{b.name}</h1> {/* Nombre del negocio */}
+          {territory && <p className="m-0 mt-2"><Link href={`/${locale}/territorios/${territory.slug}`}>{t(locale, 'territory.in', { name: territory.name })}</Link></p>} {/* Territorio, con enlace */}
           <div className="mt-3">
             <FranjaNivel tier={b.listing_tier} locale={locale} />
           </div>
@@ -85,24 +89,11 @@ export default async function NegocioPage({ params }: { params: Promise<{ locale
         <div className="mt-10 flex flex-wrap gap-10">
           <div className="min-w-0 max-w-[var(--measure)] flex-[999_1_560px]">
             {b.description_md && <div className="whitespace-pre-line text-[17px] leading-[28px]">{b.description_md}</div>}
-            <section className="mt-8">
-              <h2 className="font-display text-[26px] font-normal">{t(locale, 'business.offers')}</h2>
-              {prices.length === 0 ? (
-                <p className="text-ink-muted">{t(locale, 'business.no_prices')}</p>
-              ) : (
-                <ul className="m-0 list-none p-0">
-                  {prices.map((p) => (
-                    <li key={p.label} className="border-b border-line py-3">
-                      <div className="flex justify-between gap-4 font-bold">
-                        <span>{p.label}</span>
-                        <span>{money(p.amount, p.currency)}{p.unit ? ` ${p.unit}` : ''}</span>
-                      </div>
-                      <p className="m-0 text-sm text-ink-muted">{t(locale, 'prices.observed', { date: date(p.observed_at), who: t(locale, reportedByKey[p.reported_by]) })}</p>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </section>
+            <Pizarra
+              title={t(locale, 'business.offers')} // Qué ofrece
+              empty={t(locale, 'business.no_prices')} // Sin tarifas: por cotizar
+              lines={prices.map((p) => ({ label: p.label, amount: `${money(p.amount, p.currency)}${p.unit ? ` ${p.unit}` : ''}`, note: t(locale, 'prices.observed', { date: date(p.observed_at), who: t(locale, reportedByKey[p.reported_by]) }) }))} // Cada oferta con su precio y su fuente
+            />
           </div>
           <aside className="min-w-0 flex-[1_1_300px]">
             <EstadoVerificacion rows={rows} locale={locale} />

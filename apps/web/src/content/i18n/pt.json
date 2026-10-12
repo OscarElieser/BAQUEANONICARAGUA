@@ -353,5 +353,6 @@
   "relief.territory_aria": "{name} em relevo 3D, feito com sua forma real. Arraste para girar.",
   "relief.territory_static": "Capa ilustrada de {name}, feita com sua forma real",
   "relief.territory_note": "Forma real; alturas ilustrativas, não é topografia.",
-  "culture.door": "Linha do tempo e patrimônio do país, cada dado com sua fonte."
+  "culture.door": "Linha do tempo e patrimônio do país, cada dado com sua fonte.",
+  "ficha.territory_unknown": "Território não confirmado."
 }

@@ -353,5 +353,6 @@
   "relief.territory_aria": "{name} als 3D-Relief, aus der echten Form erstellt. Zum Drehen ziehen.",
   "relief.territory_static": "Illustriertes Titelbild von {name}, aus der echten Form erstellt",
   "relief.territory_note": "Echte Form; Höhen nur zur Veranschaulichung, keine Topografie.",
-  "culture.door": "Zeitleiste und Kulturerbe des Landes, jede Angabe mit Quelle."
+  "culture.door": "Zeitleiste und Kulturerbe des Landes, jede Angabe mit Quelle.",
+  "ficha.territory_unknown": "Gebiet nicht bestätigt."
 }

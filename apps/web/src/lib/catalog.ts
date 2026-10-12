@@ -8,6 +8,13 @@ type Price = { label: string; amount: number; currency: 'NIO' | 'USD'; unit: str
 
 const latest = (dates: string[]) => dates.sort().at(-1);
 
+/** Territorio (slug y nombre) al que pertenece un destino o negocio, para su portada y su enlace. */
+async function territoryOf(departmentId: number | null | undefined): Promise<{ slug: string; name: string } | null> {
+  if (!departmentId) return null; // Sin territorio asignado
+  const { data } = await publicDb().from('departments').select('slug, name').eq('id', departmentId).maybeSingle(); // Solo si está publicado (RLS)
+  return (data as { slug: string; name: string } | null) ?? null; // Territorio o nada
+}
+
 export function locationState(precision: 'exact' | 'approximate' | 'restricted'): FieldState {
   if (precision === 'exact') return { kind: 'pending' };
   if (precision === 'approximate') return { kind: 'approximate' };
@@ -28,10 +35,11 @@ export async function getDestination(slug: string) {
   const db = publicDb();
   const { data: d } = await db.from('public_destinations').select('*').eq('slug', slug).maybeSingle();
   if (!d) return null;
-  const [{ data: hours }, { data: prices }, { data: src }] = await Promise.all([
+  const [{ data: hours }, { data: prices }, { data: src }, territory] = await Promise.all([
     db.from('opening_hours').select('weekday, opens_at, closes_at, closed, verified_at').eq('destination_id', d.id),
     db.from('price_observations').select('label, amount, currency, unit, observed_at, reported_by').eq('destination_id', d.id),
     d.source_id ? db.from('data_sources').select('url').eq('id', d.source_id).maybeSingle() : Promise.resolve({ data: null }),
+    territoryOf(d.department_id), // Territorio del destino
   ]);
   const rows: VerificationRow[] = [
     { field: 'field.location', state: locationState(d.location_precision) }, // Ubicación
@@ -39,7 +47,7 @@ export async function getDestination(slug: string) {
     { field: 'field.prices', state: pricesState((prices ?? []) as Price[]) }, // Tarifas
   ];
   if (d.safety_notes) rows.push({ field: 'field.safety', state: { kind: 'restricted', note: d.safety_notes } });
-  return { destination: d, prices: (prices ?? []) as Price[], rows, sourceHref: (src as { url?: string } | null)?.url };
+  return { destination: d, prices: (prices ?? []) as Price[], rows, sourceHref: (src as { url?: string } | null)?.url, territory };
 }
 
 export type Contact = { kind: string; value: string };
@@ -61,10 +69,11 @@ export async function getBusiness(slug: string) {
   const db = publicDb();
   const { data: b } = await db.from('public_businesses').select('*').eq('slug', slug).maybeSingle();
   if (!b) return null;
-  const [{ data: contacts }, { data: hours }, { data: prices }] = await Promise.all([
+  const [{ data: contacts }, { data: hours }, { data: prices }, territory] = await Promise.all([
     db.from('contacts').select('kind, value').eq('business_id', b.id),
     db.from('opening_hours').select('weekday, opens_at, closes_at, closed, verified_at').eq('business_id', b.id),
     db.from('price_observations').select('label, amount, currency, unit, observed_at, reported_by').eq('business_id', b.id),
+    territoryOf(b.department_id), // Territorio del negocio
   ]);
   const rows: VerificationRow[] = [
     { field: 'field.identity', state: (b.verified_scope ?? []).includes('identity') && b.verified_at ? { kind: 'verified', date: b.verified_at } : { kind: 'pending' } },
@@ -77,6 +86,7 @@ export async function getBusiness(slug: string) {
     contacts: (contacts ?? []) as Contact[],
     prices: (prices ?? []) as Price[],
     rows,
+    territory, // Territorio (o null)
   };
 }
 

@@ -368,6 +368,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_static': 'Portada ilustrada de {name}, hecha con su forma real',
     'relief.territory_note': 'Forma real; alturas ilustrativas, no es topografía.',
     'culture.door': 'Línea de tiempo y patrimonio del país, cada dato con su fuente.',
+    'ficha.territory_unknown': 'Territorio sin confirmar.',
   },
   'en': {
     'meta.title_default': 'Nicaragua, contour by contour',
@@ -720,6 +721,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_static': 'Illustrated cover of {name}, built from its real shape',
     'relief.territory_note': 'Real shape; heights are illustrative, not topography.',
     'culture.door': 'The country\'s timeline and heritage, every fact with its source.',
+    'ficha.territory_unknown': 'Territory not confirmed.',
   },
   'zh-Hans': {
     'meta.title_default': '尼加拉瓜，一线一景',
@@ -1072,6 +1074,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_static': '{name} 的插画封面，依据真实轮廓制作',
     'relief.territory_note': '轮廓真实；高度仅为示意，并非地形数据。',
     'culture.door': '国家的历史年表与遗产，每条信息都注明来源。',
+    'ficha.territory_unknown': '所属地区待确认。',
   },
   'ko': {
     'meta.title_default': '니카라과, 등고선 따라 한 굽이씩',
@@ -1424,6 +1427,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_static': '실제 모양으로 만든 {name}의 일러스트 표지',
     'relief.territory_note': '실제 모양이며, 높이는 설명용으로 지형 자료가 아닙니다.',
     'culture.door': '나라의 연표와 유산, 모든 내용에 출처를 밝힙니다.',
+    'ficha.territory_unknown': '지역 미확인.',
   },
   'it': {
     'meta.title_default': 'Nicaragua, curva dopo curva',
@@ -1776,6 +1780,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_static': 'Copertina illustrata di {name}, costruita dalla sua forma reale',
     'relief.territory_note': 'Forma reale; altezze illustrative, non è topografia.',
     'culture.door': 'Cronologia e patrimonio del paese, ogni dato con la sua fonte.',
+    'ficha.territory_unknown': 'Territorio non confermato.',
   },
   'fr': {
     'meta.title_default': 'Nicaragua, courbe après courbe',
@@ -2128,6 +2133,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_static': 'Couverture illustrée de {name}, construite à partir de sa forme réelle',
     'relief.territory_note': 'Forme réelle ; hauteurs illustratives, ce n’est pas de la topographie.',
     'culture.door': 'La chronologie et le patrimoine du pays, chaque fait avec sa source.',
+    'ficha.territory_unknown': 'Territoire non confirmé.',
   },
   'pt': {
     'meta.title_default': 'Nicarágua, curva a curva',
@@ -2480,6 +2486,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_static': 'Capa ilustrada de {name}, feita com sua forma real',
     'relief.territory_note': 'Forma real; alturas ilustrativas, não é topografia.',
     'culture.door': 'Linha do tempo e patrimônio do país, cada dado com sua fonte.',
+    'ficha.territory_unknown': 'Território não confirmado.',
   },
   'de': {
     'meta.title_default': 'Nicaragua, Höhenlinie für Höhenlinie',
@@ -2832,6 +2839,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_static': 'Illustriertes Titelbild von {name}, aus der echten Form erstellt',
     'relief.territory_note': 'Echte Form; Höhen nur zur Veranschaulichung, keine Topografie.',
     'culture.door': 'Zeitleiste und Kulturerbe des Landes, jede Angabe mit Quelle.',
+    'ficha.territory_unknown': 'Gebiet nicht bestätigt.',
   },
   'ru': {
     'meta.title_default': 'Никарагуа, изгиб за изгибом',
@@ -3184,6 +3192,7 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_static': 'Иллюстрированная обложка: {name}, по реальной форме',
     'relief.territory_note': 'Форма реальная; высоты условные, это не топография.',
     'culture.door': 'Хронология и наследие страны, у каждого факта есть источник.',
+    'ficha.territory_unknown': 'Территория не подтверждена.',
   },
   'ja': {
     'meta.title_default': 'ニカラグア、等高線をたどって',
@@ -3536,5 +3545,6 @@ const i18nStrings = <String, Map<String, String>>{
     'relief.territory_static': '実際の形から作った{name}のイラストカバー',
     'relief.territory_note': '形は実際のもの。高さはイメージで、地形データではありません。',
     'culture.door': '国の年表と遺産。すべての情報に出典があります。',
+    'ficha.territory_unknown': '地域は未確認です。',
   },
 };

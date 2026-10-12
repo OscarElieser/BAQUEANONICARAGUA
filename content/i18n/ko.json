@@ -353,5 +353,6 @@
   "relief.territory_aria": "실제 모양으로 만든 {name}의 3D 입체 지형. 끌어서 돌려 보세요.",
   "relief.territory_static": "실제 모양으로 만든 {name}의 일러스트 표지",
   "relief.territory_note": "실제 모양이며, 높이는 설명용으로 지형 자료가 아닙니다.",
-  "culture.door": "나라의 연표와 유산, 모든 내용에 출처를 밝힙니다."
+  "culture.door": "나라의 연표와 유산, 모든 내용에 출처를 밝힙니다.",
+  "ficha.territory_unknown": "지역 미확인."
 }

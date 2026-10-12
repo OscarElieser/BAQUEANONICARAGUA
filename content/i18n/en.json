@@ -353,5 +353,6 @@
   "relief.territory_aria": "{name} in 3D relief, built from its real shape. Drag to turn it.",
   "relief.territory_static": "Illustrated cover of {name}, built from its real shape",
   "relief.territory_note": "Real shape; heights are illustrative, not topography.",
-  "culture.door": "The country's timeline and heritage, every fact with its source."
+  "culture.door": "The country's timeline and heritage, every fact with its source.",
+  "ficha.territory_unknown": "Territory not confirmed."
 }

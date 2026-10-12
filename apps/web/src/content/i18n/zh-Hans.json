@@ -353,5 +353,6 @@
   "relief.territory_aria": "{name} 的 3D 浮雕，依据真实轮廓制作。拖动可旋转。",
   "relief.territory_static": "{name} 的插画封面，依据真实轮廓制作",
   "relief.territory_note": "轮廓真实；高度仅为示意，并非地形数据。",
-  "culture.door": "国家的历史年表与遗产，每条信息都注明来源。"
+  "culture.door": "国家的历史年表与遗产，每条信息都注明来源。",
+  "ficha.territory_unknown": "所属地区待确认。"
 }
