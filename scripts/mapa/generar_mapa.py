@@ -41,6 +41,15 @@ def simplify(points, tol):
     return simplify(points[: idx + 1], tol)[:-1] + simplify(points[idx:], tol)  # Divide y repite
 
 
+def simplify_ring(ring, tol):
+    """Simplifica un anillo cerrado: lo parte en el punto más lejano del inicio (si no, la recta inicio-fin no existe)."""
+    if len(ring) < 5:  # Anillos mínimos: se dejan
+        return ring  # Sin cambios
+    x0, y0 = ring[0]  # Punto de inicio (igual al final)
+    far = max(range(len(ring)), key=lambda i: (ring[i][0] - x0) ** 2 + (ring[i][1] - y0) ** 2)  # Punto más alejado del inicio
+    return simplify(ring[: far + 1], tol)[:-1] + simplify(ring[far:], tol)  # Simplifica las dos mitades y las une
+
+
 def main():
     admin1 = json.load(open(sys.argv[1], encoding="utf-8"))  # Límites de primer nivel del mundo
     lakes_src = json.load(open(sys.argv[2], encoding="utf-8"))  # Lagos del mundo
@@ -65,7 +74,7 @@ def main():
         """Camino SVG simplificado de una geometría."""
         parts = []  # Trozos del camino
         for ring in rings(geom):  # Cada anillo
-            simple = simplify(ring, TOLERANCE)  # Simplifica
+            simple = simplify_ring(ring, TOLERANCE)  # Simplifica
             if len(simple) < 4:  # Islas diminutas: se omiten
                 continue  # Siguiente anillo
             proj = [xy(p) for p in simple]  # Proyecta
