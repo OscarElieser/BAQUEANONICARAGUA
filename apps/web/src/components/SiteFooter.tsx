@@ -8,6 +8,7 @@ import { openConsentPanel } from '@/lib/consent'; // Abre el panel de cookies
 const LINKS: Array<{ slug: string; label: MessageKey }> = [
   { slug: 'sobre-nosotros', label: 'footer.about' }, // Quiénes somos
   { slug: 'contacto', label: 'footer.contact' }, // Canales
+  { slug: 'ayuda', label: 'footer.help' }, // Centro de ayuda
   { slug: 'privacidad', label: 'footer.privacy' }, // Aviso de privacidad
   { slug: 'cookies', label: 'footer.cookies' }, // Cookies y almacenamiento
   { slug: 'terminos', label: 'footer.terms' }, // Reglas de uso
