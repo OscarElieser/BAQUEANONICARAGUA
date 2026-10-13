@@ -452,5 +452,22 @@
   "muni.pages": "Pages des municipalités",
   "muni.showing": "Affichage {from}–{to} sur {total}",
   "muni.back": "Retour à {name}",
-  "muni.count": "{n} confirmées"
+  "muni.count": "{n} confirmées",
+  "chron.title": "Chroniques",
+  "chron.subtitle": "Des histoires vraies qui donnent envie de voyager",
+  "chron.intro": "Récits de voyageurs, d’entrepreneurs et d’habitants qui montrent le Nicaragua de près. Chaque chronique est publiée par son auteur et suivie par la communauté.",
+  "chron.publish": "Publier ma chronique",
+  "chron.stamp": "Des gens, des histoires, des lieux. Le vrai Nicaragua.",
+  "chron.filter": "Filtrer les chroniques par territoire",
+  "chron.all": "Toutes",
+  "chron.from": "Chroniques de {name}",
+  "chron.latest": "Chroniques récentes",
+  "chron.empty_title": "Il n’y a pas encore de chroniques ici.",
+  "chron.empty": "Les premières arriveront quand la communauté commencera à publier. Aucune chronique de cette page n’est un exemple.",
+  "chron.no_territory": "Sans territoire",
+  "nav.territories": "Territoires",
+  "nav.chronicles": "Chroniques",
+  "legal.print_title": "Enregistrez-le ou imprimez-le",
+  "legal.print_text": "Depuis la boîte d’impression, vous pouvez aussi l’enregistrer en PDF.",
+  "legal.print": "Imprimer ou enregistrer en PDF"
 }

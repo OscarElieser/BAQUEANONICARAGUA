@@ -452,5 +452,22 @@
   "muni.pages": "Pagine dei comuni",
   "muni.showing": "Mostrati {from}–{to} di {total}",
   "muni.back": "Torna a {name}",
-  "muni.count": "{n} confermati"
+  "muni.count": "{n} confermati",
+  "chron.title": "Cronache",
+  "chron.subtitle": "Storie vere che ispirano a viaggiare",
+  "chron.intro": "Racconti di viaggiatori, imprenditori e gente del posto che mostrano il Nicaragua da vicino. Ogni cronaca la pubblica il suo autore e la comunità se ne prende cura.",
+  "chron.publish": "Pubblica la mia cronaca",
+  "chron.stamp": "Persone, storie, luoghi. Il Nicaragua vero.",
+  "chron.filter": "Filtra le cronache per territorio",
+  "chron.all": "Tutte",
+  "chron.from": "Cronache da {name}",
+  "chron.latest": "Cronache recenti",
+  "chron.empty_title": "Qui non ci sono ancora cronache.",
+  "chron.empty": "Le prime arriveranno quando la comunità inizierà a pubblicare. Nessuna cronaca di questa pagina è d’esempio.",
+  "chron.no_territory": "Senza territorio",
+  "nav.territories": "Territori",
+  "nav.chronicles": "Cronache",
+  "legal.print_title": "Salvalo o stampalo",
+  "legal.print_text": "Dalla finestra di stampa puoi anche salvarlo come PDF.",
+  "legal.print": "Stampa o salva PDF"
 }

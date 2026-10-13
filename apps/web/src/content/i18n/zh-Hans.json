@@ -452,5 +452,22 @@
   "muni.pages": "市镇分页",
   "muni.showing": "显示 {from}–{to}，共 {total} 个",
   "muni.back": "返回{name}",
-  "muni.count": "已核实 {n} 个"
+  "muni.count": "已核实 {n} 个",
+  "chron.title": "纪事",
+  "chron.subtitle": "激发旅行灵感的真实故事",
+  "chron.intro": "来自旅行者、创业者和当地人的故事，近距离呈现尼加拉瓜。每篇纪事由作者发布，社区共同维护。",
+  "chron.publish": "发布我的纪事",
+  "chron.stamp": "人、故事、地方。真实的尼加拉瓜。",
+  "chron.filter": "按地区筛选纪事",
+  "chron.all": "全部",
+  "chron.from": "{name}的纪事",
+  "chron.latest": "最新纪事",
+  "chron.empty_title": "这里还没有纪事。",
+  "chron.empty": "社区开始发布后，第一批纪事就会出现。本页没有示例纪事。",
+  "chron.no_territory": "未指定地区",
+  "nav.territories": "地区",
+  "nav.chronicles": "纪事",
+  "legal.print_title": "保存或打印",
+  "legal.print_text": "在打印对话框中也可以另存为 PDF。",
+  "legal.print": "打印或保存 PDF"
 }

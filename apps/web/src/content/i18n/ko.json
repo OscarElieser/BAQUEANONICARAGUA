@@ -452,5 +452,22 @@
   "muni.pages": "시 페이지",
   "muni.showing": "{total}개 중 {from}–{to}",
   "muni.back": "{name}(으)로 돌아가기",
-  "muni.count": "확인됨 {n}"
+  "muni.count": "확인됨 {n}",
+  "chron.title": "크로니클",
+  "chron.subtitle": "여행을 떠나고 싶게 하는 진짜 이야기",
+  "chron.intro": "여행자, 창업가, 주민들이 니카라과를 가까이에서 보여주는 이야기입니다. 각 크로니클은 작성자가 올리고 커뮤니티가 함께 지킵니다.",
+  "chron.publish": "내 크로니클 올리기",
+  "chron.stamp": "사람, 이야기, 장소. 진짜 니카라과.",
+  "chron.filter": "지역별 크로니클 보기",
+  "chron.all": "전체",
+  "chron.from": "{name}의 크로니클",
+  "chron.latest": "최근 크로니클",
+  "chron.empty_title": "아직 이곳에는 크로니클이 없습니다.",
+  "chron.empty": "커뮤니티가 글을 올리기 시작하면 첫 이야기가 도착합니다. 이 페이지에 예시 글은 없습니다.",
+  "chron.no_territory": "지역 없음",
+  "nav.territories": "지역",
+  "nav.chronicles": "크로니클",
+  "legal.print_title": "저장하거나 인쇄하기",
+  "legal.print_text": "인쇄 창에서 PDF로 저장할 수도 있습니다.",
+  "legal.print": "인쇄 또는 PDF 저장"
 }

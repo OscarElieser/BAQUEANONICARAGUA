@@ -452,5 +452,22 @@
   "muni.pages": "Páginas de municípios",
   "muni.showing": "Mostrando {from}–{to} de {total}",
   "muni.back": "Voltar a {name}",
-  "muni.count": "{n} confirmados"
+  "muni.count": "{n} confirmados",
+  "chron.title": "Crônicas",
+  "chron.subtitle": "Histórias reais que inspiram a viajar",
+  "chron.intro": "Relatos de viajantes, empreendedores e gente local que mostram a Nicarágua de perto. Cada crônica é publicada por seu autor e cuidada pela comunidade.",
+  "chron.publish": "Publicar minha crônica",
+  "chron.stamp": "Gente, histórias, lugares. Nicarágua real.",
+  "chron.filter": "Filtrar crônicas por território",
+  "chron.all": "Todas",
+  "chron.from": "Crônicas de {name}",
+  "chron.latest": "Crônicas recentes",
+  "chron.empty_title": "Ainda não há crônicas aqui.",
+  "chron.empty": "As primeiras chegarão quando a comunidade começar a publicar. Nenhuma crônica desta página é de exemplo.",
+  "chron.no_territory": "Sem território",
+  "nav.territories": "Territórios",
+  "nav.chronicles": "Crônicas",
+  "legal.print_title": "Salve ou imprima",
+  "legal.print_text": "Na janela de impressão você também pode salvá-lo como PDF.",
+  "legal.print": "Imprimir ou salvar PDF"
 }

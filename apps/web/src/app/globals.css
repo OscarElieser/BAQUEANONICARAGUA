@@ -590,3 +590,29 @@ a.terr-accion:focus-visible { outline: 3px solid var(--marca-naranja); outline-o
 .paginas span { color: var(--ink-muted); } /* Flecha sin destino */
 .paginas a[aria-current="page"] { background: var(--marca-naranja); color: var(--marca-nocturno); box-shadow: none; } /* Página actual */
 .paginas a:focus-visible { outline: 3px solid var(--marca-turquesa); outline-offset: 2px; } /* Foco visible */
+
+/* ===== Crónicas ===== */
+.cron-portada { min-height: 420px; } /* Encabezado algo más bajo que el de territorios */
+.cron-sello { position: absolute; right: 5%; top: 14%; max-width: 9ch; margin: 0; font-family: var(--font-kaushan), cursive; font-size: clamp(24px, 3.2vw, 44px); line-height: 1.05; color: var(--band-marfil); transform: rotate(-9deg); text-shadow: 0 2px 18px var(--marca-nocturno); display: none; } /* Sello escrito a mano, solo en pantallas grandes */
+.cron-sello::after { content: ""; display: block; width: 70%; height: 6px; margin-top: 10px; border-radius: 6px; background: var(--marca-naranja); transform: rotate(-3deg); } /* Brochazo naranja bajo el sello */
+@media (min-width: 1000px) { .cron-sello { display: block; } } /* Hay espacio para el sello */
+.cron-filtro { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 10px; scrollbar-width: thin; } /* Fila deslizable de territorios */
+.cron-chip { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 92px; padding: 10px 6px; border-radius: 16px; background: var(--ground-raised); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); font-size: 13px; line-height: 16px; text-align: center; text-decoration: none; } /* Cada territorio del filtro */
+.cron-chip img, .cron-chip-todos { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; } /* Foto redonda */
+.cron-chip-todos { display: grid; place-items: center; background: var(--marca-profundo); color: var(--band-marfil); font-weight: 800; } /* Círculo de "Todos" */
+.cron-chip[aria-current="page"] { background: var(--marca-naranja); color: var(--marca-nocturno); box-shadow: none; font-weight: 700; } /* Filtro elegido */
+.cron-chip:focus-visible { outline: 3px solid var(--marca-turquesa); outline-offset: 2px; } /* Foco visible */
+.cron-rejilla { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); } /* Tarjetas de crónica */
+.cron-tarjeta { display: flex; flex-direction: column; padding: 18px 20px; border-radius: 20px; background: var(--ground-raised); box-shadow: inset 0 0 0 1px var(--line); border-top: 4px solid var(--zt, var(--marca-turquesa)); } /* Crónica con el color de su zona arriba */
+.cron-silueta { width: 22px; height: 22px; fill: var(--zt, var(--ink-muted)); } /* Silueta pequeña del territorio */
+.cron-titulo { font-family: var(--font-archivo), var(--font-display); font-size: 21px; font-weight: 800; line-height: 1.15; } /* Título de la crónica */
+.cron-vacio { padding: 24px; border-radius: 20px; background: var(--ground-raised); box-shadow: inset 0 0 0 1px var(--line); } /* Aviso cuando aún no hay crónicas */
+.nav-neu { max-width: 100%; overflow-x: auto; scrollbar-width: none; } .nav-neu::-webkit-scrollbar { display: none; } /* Con cinco opciones, en el teléfono la píldora se desliza */
+
+/* ===== Páginas legales ===== */
+.legal-portada { min-height: 380px; } /* Encabezado con foto, algo más bajo */
+.indice-legal a { display: block; padding: 8px 12px; border-radius: 12px; color: var(--ink-muted); text-decoration: none; } /* Cada sección del índice */
+.indice-legal a:hover { background: color-mix(in oklab, var(--marca-naranja) 12%, transparent); color: var(--ink); } /* Resalta al apuntar */
+.indice-legal a:focus-visible { outline: 3px solid var(--marca-naranja); outline-offset: 0; } /* Foco visible */
+.legal-tarjeta { padding: 20px; border-radius: 20px; background: var(--ground-raised); box-shadow: inset 0 0 0 1px var(--line); } /* Tarjeta de imprimir */
+@media print { header:has(.nav-neu), .nav-neu, .legal-tarjeta, .legal-portada img, footer { display: none !important; } .legal-portada { min-height: 0; color: #000; background: none; } } /* Al imprimir, solo el texto */

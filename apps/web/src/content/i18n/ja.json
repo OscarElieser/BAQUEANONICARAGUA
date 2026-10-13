@@ -452,5 +452,22 @@
   "muni.pages": "市町村のページ",
   "muni.showing": "{total}件中 {from}–{to}件を表示",
   "muni.back": "{name}に戻る",
-  "muni.count": "確認済み {n}"
+  "muni.count": "確認済み {n}",
+  "chron.title": "クロニクル",
+  "chron.subtitle": "旅に出たくなる本当の物語",
+  "chron.intro": "旅行者、起業家、地元の人々がニカラグアを間近に伝える記録です。各クロニクルは著者が公開し、コミュニティが見守ります。",
+  "chron.publish": "クロニクルを投稿",
+  "chron.stamp": "人、物語、場所。本当のニカラグア。",
+  "chron.filter": "地域でクロニクルを絞り込む",
+  "chron.all": "すべて",
+  "chron.from": "{name}のクロニクル",
+  "chron.latest": "最新のクロニクル",
+  "chron.empty_title": "ここにはまだクロニクルがありません。",
+  "chron.empty": "コミュニティが投稿を始めると最初の記事が届きます。このページに見本の記事はありません。",
+  "chron.no_territory": "地域なし",
+  "nav.territories": "地域",
+  "nav.chronicles": "クロニクル",
+  "legal.print_title": "保存または印刷",
+  "legal.print_text": "印刷ダイアログからPDFとして保存することもできます。",
+  "legal.print": "印刷・PDF保存"
 }

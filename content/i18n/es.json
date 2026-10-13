@@ -452,5 +452,22 @@
   "muni.pages": "Páginas de municipios",
   "muni.showing": "Mostrando {from}–{to} de {total}",
   "muni.back": "Volver a {name}",
-  "muni.count": "{n} confirmados"
+  "muni.count": "{n} confirmados",
+  "chron.title": "Crónicas",
+  "chron.subtitle": "Historias reales que inspiran a viajar",
+  "chron.intro": "Relatos de viajeros, emprendedores y gente local que muestran la Nicaragua de cerca. Cada crónica la publica su autor y la comunidad la cuida.",
+  "chron.publish": "Publicar mi crónica",
+  "chron.stamp": "Gente, historias, lugares. Nicaragua real.",
+  "chron.filter": "Filtrar crónicas por territorio",
+  "chron.all": "Todas",
+  "chron.from": "Crónicas de {name}",
+  "chron.latest": "Crónicas recientes",
+  "chron.empty_title": "Todavía no hay crónicas aquí.",
+  "chron.empty": "Las primeras llegarán cuando la comunidad empiece a publicar. Ninguna crónica de esta página es de ejemplo.",
+  "chron.no_territory": "Sin territorio",
+  "nav.territories": "Territorios",
+  "nav.chronicles": "Crónicas",
+  "legal.print_title": "Guárdalo o imprímelo",
+  "legal.print_text": "Desde el diálogo de impresión también puedes guardarlo como PDF.",
+  "legal.print": "Imprimir o guardar PDF"
 }

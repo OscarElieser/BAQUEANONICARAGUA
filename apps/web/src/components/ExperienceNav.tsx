@@ -8,7 +8,9 @@ import { t, type MessageKey } from '@/i18n/t'; // Textos traducidos
 const experiences: Array<{ href: string; label: MessageKey }> = [
   { href: '', label: 'nav.discover' }, // Descubrir
   { href: '/mi-aventura', label: 'nav.adventure' }, // Mi aventura
+  { href: '/territorios', label: 'nav.territories' }, // Departamentos y regiones
   { href: '/comunidad', label: 'nav.community' }, // Comunidad
+  { href: '/cronicas', label: 'nav.chronicles' }, // Crónicas de la comunidad
 ]; // Las tres experiencias con la clave de su texto
 
 /**

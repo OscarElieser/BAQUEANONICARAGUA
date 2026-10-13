@@ -21,6 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/mapa', priority: 0.8, changeFrequency: 'daily' }, // Mapa y búsqueda
     { path: '/territorios', priority: 0.9, changeFrequency: 'weekly' }, // Catálogo de los 17 territorios
     { path: '/comunidad', priority: 0.8, changeFrequency: 'daily' }, // Comunidad
+    { path: '/cronicas', priority: 0.8, changeFrequency: 'daily' }, // Crónicas
     { path: '/cultura', priority: 0.7, changeFrequency: 'weekly' }, // Cultura
     { path: '/creditos', priority: 0.2, changeFrequency: 'monthly' }, // Créditos de las fotos
     { path: '/mi-aventura', priority: 0.6, changeFrequency: 'monthly' }, // Planificador

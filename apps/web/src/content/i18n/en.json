@@ -452,5 +452,22 @@
   "muni.pages": "Municipality pages",
   "muni.showing": "Showing {from}–{to} of {total}",
   "muni.back": "Back to {name}",
-  "muni.count": "{n} confirmed"
+  "muni.count": "{n} confirmed",
+  "chron.title": "Chronicles",
+  "chron.subtitle": "Real stories that make you want to travel",
+  "chron.intro": "Stories from travelers, entrepreneurs and local people that show Nicaragua up close. Each chronicle is published by its author and looked after by the community.",
+  "chron.publish": "Publish my chronicle",
+  "chron.stamp": "People, stories, places. Real Nicaragua.",
+  "chron.filter": "Filter chronicles by territory",
+  "chron.all": "All",
+  "chron.from": "Chronicles from {name}",
+  "chron.latest": "Recent chronicles",
+  "chron.empty_title": "There are no chronicles here yet.",
+  "chron.empty": "The first ones will arrive when the community starts publishing. None of the chronicles on this page are samples.",
+  "chron.no_territory": "No territory",
+  "nav.territories": "Territories",
+  "nav.chronicles": "Chronicles",
+  "legal.print_title": "Save or print it",
+  "legal.print_text": "From the print dialog you can also save it as a PDF.",
+  "legal.print": "Print or save PDF"
 }

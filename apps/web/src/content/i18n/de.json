@@ -452,5 +452,22 @@
   "muni.pages": "Seiten der Gemeinden",
   "muni.showing": "{from}–{to} von {total}",
   "muni.back": "Zurück zu {name}",
-  "muni.count": "{n} bestätigt"
+  "muni.count": "{n} bestätigt",
+  "chron.title": "Chroniken",
+  "chron.subtitle": "Echte Geschichten, die Lust aufs Reisen machen",
+  "chron.intro": "Berichte von Reisenden, Unternehmern und Einheimischen, die Nicaragua aus der Nähe zeigen. Jede Chronik veröffentlicht ihr Autor, die Gemeinschaft achtet darauf.",
+  "chron.publish": "Meine Chronik veröffentlichen",
+  "chron.stamp": "Menschen, Geschichten, Orte. Das echte Nicaragua.",
+  "chron.filter": "Chroniken nach Gebiet filtern",
+  "chron.all": "Alle",
+  "chron.from": "Chroniken aus {name}",
+  "chron.latest": "Neue Chroniken",
+  "chron.empty_title": "Hier gibt es noch keine Chroniken.",
+  "chron.empty": "Die ersten kommen, sobald die Gemeinschaft veröffentlicht. Keine Chronik auf dieser Seite ist ein Beispiel.",
+  "chron.no_territory": "Ohne Gebiet",
+  "nav.territories": "Gebiete",
+  "nav.chronicles": "Chroniken",
+  "legal.print_title": "Speichern oder drucken",
+  "legal.print_text": "Im Druckdialog kannst du es auch als PDF speichern.",
+  "legal.print": "Drucken oder als PDF speichern"
 }
