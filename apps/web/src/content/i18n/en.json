@@ -443,5 +443,14 @@
   "terr.pending_facts": "Population, area and elevation",
   "terr.sections": "Page sections",
   "terr.search": "Search a department or region",
-  "terr.search_empty": "No territory matches that search."
+  "terr.search_empty": "No territory matches that search.",
+  "muni.title": "Municipalities of {name}",
+  "muni.short": "Municipalities",
+  "muni.intro": "Each municipality appears here once the team confirms its name against the official source (INIDE or INETER).",
+  "muni.none": "No municipalities have been confirmed in this territory yet. The official list is under review.",
+  "muni.kind": "Municipality",
+  "muni.pages": "Municipality pages",
+  "muni.showing": "Showing {from}–{to} of {total}",
+  "muni.back": "Back to {name}",
+  "muni.count": "{n} confirmed"
 }

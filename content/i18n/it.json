@@ -443,5 +443,14 @@
   "terr.pending_facts": "Popolazione, superficie e altitudine",
   "terr.sections": "Sezioni della scheda",
   "terr.search": "Cerca un dipartimento o una regione",
-  "terr.search_empty": "Nessun territorio corrisponde a questa ricerca."
+  "terr.search_empty": "Nessun territorio corrisponde a questa ricerca.",
+  "muni.title": "Comuni di {name}",
+  "muni.short": "Comuni",
+  "muni.intro": "Ogni comune compare qui quando il team ne conferma il nome con la fonte ufficiale (INIDE o INETER).",
+  "muni.none": "In questo territorio non ci sono ancora comuni confermati. L’elenco ufficiale è in revisione.",
+  "muni.kind": "Comune",
+  "muni.pages": "Pagine dei comuni",
+  "muni.showing": "Mostrati {from}–{to} di {total}",
+  "muni.back": "Torna a {name}",
+  "muni.count": "{n} confermati"
 }

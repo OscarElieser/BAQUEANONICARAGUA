@@ -583,3 +583,10 @@ a.terr-accion:focus-visible { outline: 3px solid var(--marca-naranja); outline-o
 .buscador-terr { display: flex; align-items: center; gap: 10px; max-width: 520px; min-height: 54px; padding: 0 8px 0 18px; border-radius: var(--radius-pill); background: var(--ground-raised); box-shadow: inset 0 0 0 1px var(--line), 0 10px 30px -22px var(--marca-nocturno); color: var(--ink-muted); } /* Campo de búsqueda en píldora */
 .buscador-terr:focus-within { box-shadow: inset 0 0 0 2px var(--marca-turquesa); } /* Borde de la marca al escribir */
 .buscador-terr input { flex: 1; min-width: 0; height: 52px; border: 0; background: none; color: var(--ink); font: inherit; font-size: 16px; outline: none; } /* Texto buscado */
+
+/* ===== Paginación ===== */
+.paginas { display: flex; flex-wrap: wrap; gap: 6px; } /* Fila de páginas */
+.paginas a, .paginas span { display: inline-grid; place-items: center; min-width: 44px; height: 44px; padding: 0 10px; border-radius: 12px; background: var(--ground-raised); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); font-weight: 700; text-decoration: none; } /* Cada página */
+.paginas span { color: var(--ink-muted); } /* Flecha sin destino */
+.paginas a[aria-current="page"] { background: var(--marca-naranja); color: var(--marca-nocturno); box-shadow: none; } /* Página actual */
+.paginas a:focus-visible { outline: 3px solid var(--marca-turquesa); outline-offset: 2px; } /* Foco visible */

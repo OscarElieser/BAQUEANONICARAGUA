@@ -56,3 +56,20 @@ export async function getTerritory(slug: string, locale: string) {
 export type Section = {
   section: string; title: string; body_md: string; machine_translated: boolean; verified_at: string | null;
 };
+
+export type Municipio = { slug: string; name: string }; // Municipio publicado (nombre y dirección corta)
+
+/**
+ * Municipios publicados de un territorio, por páginas (6 por página).
+ * RLS solo deja ver los que el equipo ya confirmó (editorial = published); los borradores no salen.
+ */
+export async function listMunicipalities(departmentId: number, page: number, size = 6) {
+  const desde = (page - 1) * size; // Primer registro de la página
+  const { data, error, count } = await publicDb()
+    .from('municipalities') // Tabla de municipios
+    .select('slug, name', { count: 'exact' }) // Nombre y total publicado
+    .eq('department_id', departmentId) // Solo de este territorio
+    .order('name') // Orden alfabético
+    .range(desde, desde + size - 1); // Solo la página pedida
+  return { data: (data ?? []) as Municipio[], total: count ?? 0, error }; // Lista, total y error (si lo hubo)
+}

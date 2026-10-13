@@ -443,5 +443,14 @@
   "terr.pending_facts": "인구, 면적, 고도",
   "terr.sections": "페이지 항목",
   "terr.search": "주 또는 지역 검색",
-  "terr.search_empty": "검색과 일치하는 지역이 없습니다."
+  "terr.search_empty": "검색과 일치하는 지역이 없습니다.",
+  "muni.title": "{name}의 시",
+  "muni.short": "시",
+  "muni.intro": "각 시는 팀이 공식 출처(INIDE 또는 INETER)로 이름을 확인한 후 여기에 표시됩니다.",
+  "muni.none": "이 지역에는 아직 확인된 시가 없습니다. 공식 목록을 검토 중입니다.",
+  "muni.kind": "시",
+  "muni.pages": "시 페이지",
+  "muni.showing": "{total}개 중 {from}–{to}",
+  "muni.back": "{name}(으)로 돌아가기",
+  "muni.count": "확인됨 {n}"
 }

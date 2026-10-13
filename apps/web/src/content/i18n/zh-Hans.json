@@ -443,5 +443,14 @@
   "terr.pending_facts": "人口、面积和海拔",
   "terr.sections": "页面栏目",
   "terr.search": "搜索省或自治区",
-  "terr.search_empty": "没有符合该搜索的地区。"
+  "terr.search_empty": "没有符合该搜索的地区。",
+  "muni.title": "{name}的市镇",
+  "muni.short": "市镇",
+  "muni.intro": "团队依据官方来源（INIDE 或 INETER）核实名称后，市镇才会显示在这里。",
+  "muni.none": "该地区尚无已核实的市镇，官方名单正在审核中。",
+  "muni.kind": "市镇",
+  "muni.pages": "市镇分页",
+  "muni.showing": "显示 {from}–{to}，共 {total} 个",
+  "muni.back": "返回{name}",
+  "muni.count": "已核实 {n} 个"
 }

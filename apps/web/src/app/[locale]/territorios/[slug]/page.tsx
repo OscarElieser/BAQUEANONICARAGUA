@@ -6,7 +6,7 @@ import { CurvasDeNivel } from '@/components/CurvasDeNivel'; // Curvas genéricas
 import { RelieveTerritorio3D } from '@/components/RelieveTerritorio3D'; // Relieve 3D de su silueta real
 import { ZONA_TEXTO, territorio } from '@/lib/portadas'; // Forma y zona de cada territorio
 import { EstadoVerificacion } from '@/components/EstadoVerificacion';
-import { getTerritory } from '@/lib/territories';
+import { getTerritory, listMunicipalities } from '@/lib/territories'; // Ficha y municipios publicados
 import { t } from '@/i18n/t'; // Textos traducidos
 import { letraMarca } from '@/app/fuentes'; // Letra de la marca para el titular
 import type { Metadata } from 'next'; // Tipo de los metadatos
@@ -33,6 +33,7 @@ export default async function TerritoryPage({ params }: { params: Promise<{ loca
   if (!territory) notFound();
 
   const forma = territorio(slug); // Silueta y zona en el mapa ilustrado (si existe)
+  const { total: municipios } = await listMunicipalities(territory.id, 1, 1); // Cuántos municipios ya están confirmados
   const sorted = [...sections].sort((a, b) => sectionOrder.indexOf(a.section) - sectionOrder.indexOf(b.section));
   const source = (territory as { data_sources?: { url?: string } | null }).data_sources?.url;
 
@@ -84,6 +85,7 @@ export default async function TerritoryPage({ params }: { params: Promise<{ loca
               <div><dt>{t(locale, 'terr.type_label')}</dt><dd>{t(locale, slug.startsWith('costa-caribe') ? 'index.region' : 'index.department')}</dd></div> {/* Departamento o región autónoma */}
               <div><dt>{t(locale, 'terr.capital_label')}</dt><dd>{territory.capital_name ?? t(locale, 'ficha.unconfirmed')}</dd></div> {/* Cabecera, del catálogo oficial */}
               <div><dt>{t(locale, 'terr.zone_label')}</dt><dd>{t(locale, ZONA_TEXTO[forma.zone])}</dd></div> {/* Zona de paisaje (agrupación de BAQUEANO) */}
+              <div><dt>{t(locale, 'muni.short')}</dt><dd>{municipios > 0 ? <Link href={`/${locale}/territorios/${slug}/municipios`}>{t(locale, 'muni.count', { n: String(municipios) })}</Link> : <span className="text-oro-text">{t(locale, 'ficha.unconfirmed')}</span>}</dd></div> {/* Municipios confirmados, con enlace a la lista */}
               <div><dt>{t(locale, 'terr.pending_facts')}</dt><dd className="text-oro-text">{t(locale, 'ficha.unconfirmed')}</dd></div> {/* Aún sin fuente comprobada */}
             </dl>
           </div>
@@ -103,14 +105,13 @@ export default async function TerritoryPage({ params }: { params: Promise<{ loca
         </header>
       )}
 
-      {sorted.length > 1 && (
-        <nav aria-label={t(locale, 'terr.sections')} className="pestanas-ficha mt-8">
-          {/* Atajos a cada sección publicada de la ficha */}
-          {sorted.map((sec) => (
-            <a key={sec.section} href={`#sec-${sec.section}`}>{sec.title}</a> // Salta a la sección
-          ))}
-        </nav>
-      )}
+      <nav aria-label={t(locale, 'terr.sections')} className="pestanas-ficha mt-8">
+        {/* Atajos a cada sección publicada de la ficha y a la lista de municipios */}
+        {sorted.map((sec) => (
+          <a key={sec.section} href={`#sec-${sec.section}`}>{sec.title}</a> // Salta a la sección
+        ))}
+        <Link href={`/${locale}/territorios/${slug}/municipios`}>{t(locale, 'muni.short')}</Link> {/* Lista paginada de municipios */}
+      </nav>
 
       <div className="mt-8 flex flex-wrap gap-10">
         <div className="min-w-0 max-w-[var(--measure)] flex-[999_1_560px]">

@@ -443,5 +443,14 @@
   "terr.pending_facts": "População, área e altitude",
   "terr.sections": "Seções da ficha",
   "terr.search": "Buscar departamento ou região",
-  "terr.search_empty": "Nenhum território corresponde a essa busca."
+  "terr.search_empty": "Nenhum território corresponde a essa busca.",
+  "muni.title": "Municípios de {name}",
+  "muni.short": "Municípios",
+  "muni.intro": "Cada município aparece aqui quando a equipe confirma seu nome com a fonte oficial (INIDE ou INETER).",
+  "muni.none": "Ainda não há municípios confirmados neste território. A lista oficial está em revisão.",
+  "muni.kind": "Município",
+  "muni.pages": "Páginas de municípios",
+  "muni.showing": "Mostrando {from}–{to} de {total}",
+  "muni.back": "Voltar a {name}",
+  "muni.count": "{n} confirmados"
 }

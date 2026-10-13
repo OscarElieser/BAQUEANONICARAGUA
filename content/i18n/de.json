@@ -443,5 +443,14 @@
   "terr.pending_facts": "Einwohner, Fläche und Höhe",
   "terr.sections": "Abschnitte der Seite",
   "terr.search": "Departamento oder Region suchen",
-  "terr.search_empty": "Kein Gebiet passt zu dieser Suche."
+  "terr.search_empty": "Kein Gebiet passt zu dieser Suche.",
+  "muni.title": "Gemeinden von {name}",
+  "muni.short": "Gemeinden",
+  "muni.intro": "Jede Gemeinde erscheint hier, sobald das Team ihren Namen mit der amtlichen Quelle (INIDE oder INETER) bestätigt hat.",
+  "muni.none": "In diesem Gebiet sind noch keine Gemeinden bestätigt. Die amtliche Liste wird geprüft.",
+  "muni.kind": "Gemeinde",
+  "muni.pages": "Seiten der Gemeinden",
+  "muni.showing": "{from}–{to} von {total}",
+  "muni.back": "Zurück zu {name}",
+  "muni.count": "{n} bestätigt"
 }

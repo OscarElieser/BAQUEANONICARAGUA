@@ -443,5 +443,14 @@
   "terr.pending_facts": "人口・面積・標高",
   "terr.sections": "ページの項目",
   "terr.search": "県または地域を検索",
-  "terr.search_empty": "該当する地域はありません。"
+  "terr.search_empty": "該当する地域はありません。",
+  "muni.title": "{name}の市町村",
+  "muni.short": "市町村",
+  "muni.intro": "市町村は、チームが公式情報源（INIDEまたはINETER）で名称を確認した後にここに表示されます。",
+  "muni.none": "この地域で確認済みの市町村はまだありません。公式リストを確認中です。",
+  "muni.kind": "市町村",
+  "muni.pages": "市町村のページ",
+  "muni.showing": "{total}件中 {from}–{to}件を表示",
+  "muni.back": "{name}に戻る",
+  "muni.count": "確認済み {n}"
 }
