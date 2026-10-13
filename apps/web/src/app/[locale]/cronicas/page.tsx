@@ -11,14 +11,12 @@ import { territorios, cajaDe } from '@/lib/portadas'; // Los 17 y el encuadre de
 import { fotoDe, srcsetDe } from '@/lib/fotos'; // Fotos reales con licencia libre
 import { pageMetadata } from '@/lib/seo'; // Canónica y versiones por idioma
 import { t } from '@/i18n/t'; // Textos traducidos
+import { ID_TERRITORIO, SLUG_DE_ID } from '@/lib/idsTerritorio'; // Número de cada territorio en la base de datos
 
 export const revalidate = 120; // Se renueva cada dos minutos
 
 const POR_PAGINA = 12; // Crónicas por página
 
-// Número de cada territorio en la tabla departments (fijado en la migración 0009, ISO 3166-2:NI); es estructura, no un dato turístico
-const ID_TERRITORIO: Record<string, number> = { boaco: 1, carazo: 2, chinandega: 3, chontales: 4, esteli: 5, granada: 6, jinotega: 7, leon: 8, madriz: 9, managua: 10, masaya: 11, matagalpa: 12, 'nueva-segovia': 13, 'rio-san-juan': 14, rivas: 15, 'costa-caribe-norte': 16, 'costa-caribe-sur': 17 };
-const SLUG_DE_ID = Object.fromEntries(Object.entries(ID_TERRITORIO).map(([s, id]) => [id, s])); // Al revés: número → slug
 
 type Cronica = { id: string; title: string | null; body_md: string; created_at: string; author_name: string | null; department_id: number | null; is_promotional: boolean; reactions: number; comments: number }; // Lo que devuelve public_feed
 type Props = { params: Promise<{ locale: string }>; searchParams: Promise<{ territorio?: string; antes?: string }> }; // Parámetros de la ruta

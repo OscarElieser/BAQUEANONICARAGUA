@@ -473,5 +473,9 @@
   "cookies.panel_title": "あなたの設定",
   "cookies.needed_name": "必須",
   "cookies.needed_desc": "言語、テーマ、この選択、ログイン時のセッションを記憶します。常に有効です。",
-  "cookies.saved": "選択を保存しました。"
+  "cookies.saved": "選択を保存しました。",
+  "mapx.title": "地図",
+  "mapx.intro": "公開済みの目的地と店舗を出典付きで表示します。名前で検索するか、地域を選んでください。",
+  "mapx.stamp": "出典のある本当の場所。",
+  "mapx.by_territory": "地域で絞り込む"
 }

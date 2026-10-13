@@ -473,5 +473,9 @@
   "cookies.panel_title": "Deine Einstellungen",
   "cookies.needed_name": "Notwendig",
   "cookies.needed_desc": "Sie merken sich Sprache, Design, diese Auswahl und deine Sitzung, wenn du dich anmeldest. Immer aktiv.",
-  "cookies.saved": "Auswahl gespeichert."
+  "cookies.saved": "Auswahl gespeichert.",
+  "mapx.title": "Karte",
+  "mapx.intro": "Veröffentlichte Ziele und Unternehmen mit Quelle. Suche nach Namen oder wähle ein Gebiet.",
+  "mapx.stamp": "Echte Orte, mit Quelle.",
+  "mapx.by_territory": "Nach Gebiet filtern"
 }

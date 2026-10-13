@@ -473,5 +473,9 @@
   "cookies.panel_title": "내 설정",
   "cookies.needed_name": "필수",
   "cookies.needed_desc": "언어, 테마, 이 선택, 로그인 시 세션을 기억합니다. 항상 켜져 있습니다.",
-  "cookies.saved": "선택이 저장되었습니다."
+  "cookies.saved": "선택이 저장되었습니다.",
+  "mapx.title": "지도",
+  "mapx.intro": "출처와 함께 공개된 여행지와 사업장입니다. 이름으로 검색하거나 지역을 고르세요.",
+  "mapx.stamp": "출처가 있는 진짜 장소.",
+  "mapx.by_territory": "지역별 보기"
 }

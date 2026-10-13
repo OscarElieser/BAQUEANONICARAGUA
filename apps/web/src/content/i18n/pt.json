@@ -473,5 +473,9 @@
   "cookies.panel_title": "Suas preferências",
   "cookies.needed_name": "Necessários",
   "cookies.needed_desc": "Lembram seu idioma, seu tema, esta escolha e sua sessão se você entrar com sua conta. Sempre ativos.",
-  "cookies.saved": "Escolha salva."
+  "cookies.saved": "Escolha salva.",
+  "mapx.title": "Mapa",
+  "mapx.intro": "Destinos e negócios publicados, com sua fonte. Busque pelo nome ou escolha um território.",
+  "mapx.stamp": "Lugares reais, com fonte.",
+  "mapx.by_territory": "Filtrar por território"
 }

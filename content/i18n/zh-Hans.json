@@ -473,5 +473,9 @@
   "cookies.panel_title": "你的偏好",
   "cookies.needed_name": "必要",
   "cookies.needed_desc": "记住你的语言、主题、此项选择，以及登录后的会话。始终开启。",
-  "cookies.saved": "已保存选择。"
+  "cookies.saved": "已保存选择。",
+  "mapx.title": "地图",
+  "mapx.intro": "已发布的目的地和商家，并注明来源。按名称搜索或选择地区。",
+  "mapx.stamp": "真实的地方，注明来源。",
+  "mapx.by_territory": "按地区筛选"
 }

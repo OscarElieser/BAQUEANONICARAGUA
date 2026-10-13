@@ -618,3 +618,21 @@ a.terr-accion:focus-visible { outline: 3px solid var(--marca-naranja); outline-o
 @media print { header:has(.nav-neu), .nav-neu, .legal-tarjeta, .legal-portada img, footer { display: none !important; } .legal-portada { min-height: 0; color: #000; background: none; } } /* Al imprimir, solo el texto */
 .legal-aviso { margin-top: 14px; padding: 16px 18px; border-radius: 16px; background: color-mix(in oklab, var(--marca-naranja) 10%, var(--ground-raised)); box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--marca-naranja) 55%, transparent); font-size: 17px; line-height: 27px; font-weight: 700; } /* Aviso destacado dentro de una sección legal */
 .legal-portada .terr-titulo { font-size: clamp(32px, 5.4vw, 66px); overflow-wrap: break-word; hyphens: auto; } /* Títulos legales largos: algo más pequeños y cortados con guion si hace falta */
+
+/* ===== Mapa: encabezado con foto y territorios al costado ===== */
+.mapa-portada { min-height: 380px; } /* Encabezado del mapa */
+.mapa-portada .buscador-terr { background: color-mix(in oklab, var(--marca-nocturno) 55%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: var(--band-marfil); } /* Buscador de vidrio sobre la foto */
+.mapa-portada .buscador-terr input { color: var(--band-marfil); } /* Texto claro */
+.mapa-portada .buscador-terr input::placeholder { color: color-mix(in oklab, var(--band-marfil) 75%, transparent); } /* Pista legible */
+.mapa-cuerpo { display: grid; gap: 28px; } /* Territorios, resultados y mapa */
+@media (min-width: 1100px) { .mapa-cuerpo { grid-template-columns: 220px minmax(0, 1fr); } } /* Territorios a la izquierda */
+.mapa-territorios ul { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; } /* En el teléfono, fila deslizable */
+@media (min-width: 1100px) { .mapa-territorios ul { flex-direction: column; overflow: visible; } .mapa-territorios { position: sticky; top: 16px; align-self: start; } } /* En escritorio, columna fija */
+.mapa-territorios a { display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 12px; background: var(--ground-raised); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); font-size: 14px; white-space: nowrap; text-decoration: none; } /* Cada territorio */
+.mapa-territorios a[aria-current="page"] { background: var(--marca-naranja); color: var(--marca-nocturno); box-shadow: none; font-weight: 700; } /* Territorio elegido */
+.mapa-territorios a:focus-visible { outline: 3px solid var(--marca-turquesa); outline-offset: 2px; } /* Foco visible */
+.aventura-con-foto { position: relative; overflow: hidden; isolation: isolate; } /* Encabezado de Mi aventura con foto */
+.aventura-foto { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; } /* Foto real de fondo */
+.aventura-con-foto::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, color-mix(in oklab, var(--band-anil) 94%, transparent) 0%, color-mix(in oklab, var(--band-anil) 78%, transparent) 55%, color-mix(in oklab, var(--band-anil) 55%, transparent)); } /* Añil encima para que el texto siga leyéndose */
+.aventura-con-foto .credito-foto { color: var(--ink); } /* Crédito claro sobre el añil */
+@media (min-width: 1100px) { .mapa-territorios ul { gap: 2px; } .mapa-territorios a { min-height: 34px; box-shadow: none; background: none; } .mapa-territorios a:hover { background: var(--ground-raised); } } /* En escritorio, lista compacta */
