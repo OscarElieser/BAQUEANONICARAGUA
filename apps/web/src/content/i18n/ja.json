@@ -435,5 +435,13 @@
   "terr.see_map": "地図で見る",
   "terr.open": "ページを見る",
   "terr.soon": "ページ準備中",
-  "index.see_all": "17地域を一覧で見る"
+  "index.see_all": "17地域を一覧で見る",
+  "terr.general": "基本情報",
+  "terr.type_label": "種類",
+  "terr.capital_label": "県都",
+  "terr.zone_label": "ゾーン",
+  "terr.pending_facts": "人口・面積・標高",
+  "terr.sections": "ページの項目",
+  "terr.search": "県または地域を検索",
+  "terr.search_empty": "該当する地域はありません。"
 }

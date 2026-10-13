@@ -435,5 +435,13 @@
   "terr.see_map": "Voir sur la carte",
   "terr.open": "Voir la fiche",
   "terr.soon": "Fiche en préparation",
-  "index.see_all": "Voir les 17 sur une page"
+  "index.see_all": "Voir les 17 sur une page",
+  "terr.general": "Informations générales",
+  "terr.type_label": "Type",
+  "terr.capital_label": "Chef-lieu",
+  "terr.zone_label": "Zone",
+  "terr.pending_facts": "Population, superficie et altitude",
+  "terr.sections": "Sections de la fiche",
+  "terr.search": "Chercher un département ou une région",
+  "terr.search_empty": "Aucun territoire ne correspond à cette recherche."
 }

@@ -435,5 +435,13 @@
   "terr.see_map": "See on the map",
   "terr.open": "See page",
   "terr.soon": "Page in preparation",
-  "index.see_all": "See all 17 on one page"
+  "index.see_all": "See all 17 on one page",
+  "terr.general": "General information",
+  "terr.type_label": "Type",
+  "terr.capital_label": "Capital",
+  "terr.zone_label": "Zone",
+  "terr.pending_facts": "Population, area and elevation",
+  "terr.sections": "Page sections",
+  "terr.search": "Search a department or region",
+  "terr.search_empty": "No territory matches that search."
 }

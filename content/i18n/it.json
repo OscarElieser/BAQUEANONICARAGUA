@@ -435,5 +435,13 @@
   "terr.see_map": "Vedi sulla mappa",
   "terr.open": "Vedi scheda",
   "terr.soon": "Scheda in preparazione",
-  "index.see_all": "Vedi tutti i 17 in una pagina"
+  "index.see_all": "Vedi tutti i 17 in una pagina",
+  "terr.general": "Informazioni generali",
+  "terr.type_label": "Tipo",
+  "terr.capital_label": "Capoluogo",
+  "terr.zone_label": "Zona",
+  "terr.pending_facts": "Popolazione, superficie e altitudine",
+  "terr.sections": "Sezioni della scheda",
+  "terr.search": "Cerca un dipartimento o una regione",
+  "terr.search_empty": "Nessun territorio corrisponde a questa ricerca."
 }

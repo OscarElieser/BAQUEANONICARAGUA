@@ -435,5 +435,13 @@
   "terr.see_map": "Auf der Karte ansehen",
   "terr.open": "Seite ansehen",
   "terr.soon": "Seite in Vorbereitung",
-  "index.see_all": "Alle 17 auf einer Seite"
+  "index.see_all": "Alle 17 auf einer Seite",
+  "terr.general": "Allgemeine Angaben",
+  "terr.type_label": "Art",
+  "terr.capital_label": "Hauptort",
+  "terr.zone_label": "Zone",
+  "terr.pending_facts": "Einwohner, Fläche und Höhe",
+  "terr.sections": "Abschnitte der Seite",
+  "terr.search": "Departamento oder Region suchen",
+  "terr.search_empty": "Kein Gebiet passt zu dieser Suche."
 }

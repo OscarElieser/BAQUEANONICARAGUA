@@ -566,3 +566,20 @@ a.terr-accion { background: color-mix(in oklab, var(--zt) 18%, var(--ground-rais
 a.terr-accion:focus-visible { outline: 3px solid var(--marca-naranja); outline-offset: 2px; } /* Foco visible */
 .terr-cuerpo[data-sola] { padding-bottom: 16px; } /* Sin botón: cierra con margen */
 @media (min-width: 700px) { .terr-titulo { font-stretch: 112%; } } /* Más ancha cuando hay espacio */
+
+/* ===== Ficha de territorio: migas, titular sobre la foto, datos generales y atajos ===== */
+.miga li + li::before { content: "›"; margin-right: 8px; color: var(--ink-muted); } /* Separador entre niveles */
+.miga [aria-current="page"] { color: var(--ink-muted); } /* Nivel actual, sin enlace */
+.terr-ficha-titulo { font-family: var(--font-archivo), var(--font-display); font-size: clamp(40px, 8vw, 92px); font-weight: 800; line-height: 0.95; overflow-wrap: anywhere; } /* Nombre grande sobre la foto */
+.datos-generales { display: grid; gap: 14px 24px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); } /* Datos en rejilla */
+.datos-generales dt { font-size: 13px; color: var(--ink-muted); } /* Nombre del dato */
+.datos-generales dd { margin: 2px 0 0; font-size: 17px; font-weight: 700; } /* Valor del dato */
+.pestanas-ficha { position: sticky; top: 8px; z-index: 5; display: flex; gap: 6px; overflow-x: auto; padding: 6px; border-radius: var(--radius-pill); background: color-mix(in oklab, var(--ground-raised) 92%, transparent); box-shadow: inset 0 0 0 1px var(--line); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); scrollbar-width: none; } /* Atajos a las secciones, siempre a mano */
+.pestanas-ficha a { flex: none; display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: var(--radius-pill); color: var(--ink); font-size: 14px; font-weight: 700; text-decoration: none; } /* Cada atajo */
+.pestanas-ficha a:hover { background: color-mix(in oklab, var(--marca-turquesa) 14%, transparent); } /* Resalta al apuntar */
+.pestanas-ficha a:focus-visible { outline: 3px solid var(--marca-naranja); outline-offset: -3px; } /* Foco visible */
+.terr-portada { margin-top: 12px; } /* Más cerca de las migas */
+.terr-pin { display: inline-block; margin-right: 4px; vertical-align: -2px; fill: var(--zt); } /* Marcador del nombre */
+.buscador-terr { display: flex; align-items: center; gap: 10px; max-width: 520px; min-height: 54px; padding: 0 8px 0 18px; border-radius: var(--radius-pill); background: var(--ground-raised); box-shadow: inset 0 0 0 1px var(--line), 0 10px 30px -22px var(--marca-nocturno); color: var(--ink-muted); } /* Campo de búsqueda en píldora */
+.buscador-terr:focus-within { box-shadow: inset 0 0 0 2px var(--marca-turquesa); } /* Borde de la marca al escribir */
+.buscador-terr input { flex: 1; min-width: 0; height: 52px; border: 0; background: none; color: var(--ink); font: inherit; font-size: 16px; outline: none; } /* Texto buscado */

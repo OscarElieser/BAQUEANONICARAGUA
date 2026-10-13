@@ -435,5 +435,13 @@
   "terr.see_map": "지도에서 보기",
   "terr.open": "페이지 보기",
   "terr.soon": "페이지 준비 중",
-  "index.see_all": "17개 지역 한눈에 보기"
+  "index.see_all": "17개 지역 한눈에 보기",
+  "terr.general": "기본 정보",
+  "terr.type_label": "유형",
+  "terr.capital_label": "주도",
+  "terr.zone_label": "구역",
+  "terr.pending_facts": "인구, 면적, 고도",
+  "terr.sections": "페이지 항목",
+  "terr.search": "주 또는 지역 검색",
+  "terr.search_empty": "검색과 일치하는 지역이 없습니다."
 }

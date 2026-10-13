@@ -8,6 +8,7 @@ import { ZONA_TEXTO, territorio } from '@/lib/portadas'; // Forma y zona de cada
 import { EstadoVerificacion } from '@/components/EstadoVerificacion';
 import { getTerritory } from '@/lib/territories';
 import { t } from '@/i18n/t'; // Textos traducidos
+import { letraMarca } from '@/app/fuentes'; // Letra de la marca para el titular
 import type { Metadata } from 'next'; // Tipo de los metadatos
 import { absolute, jsonLd, pageMetadata } from '@/lib/seo'; // Canónica, idiomas, vista previa y datos estructurados
 
@@ -43,18 +44,26 @@ export default async function TerritoryPage({ params }: { params: Promise<{ loca
     containedInPlace: { '@type': 'Country', name: 'Nicaragua' }, // País
   }; // Datos estructurados del territorio (solo datos reales)
   return (
-    <main className="mx-auto max-w-[1280px] px-4 pb-16 sm:px-12">
+    <main className={`${letraMarca.variable} mx-auto max-w-[1280px] px-4 pb-16 sm:px-12`}>
       <SpriteMapa /> {/* Formas del mapa para la portada */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structured) }} /> {/* Datos para buscadores */}
       <nav aria-label={t(locale, 'nav.breadcrumb')} className="pt-6 text-sm">
-        <Link href={`/${locale}`}>{t(locale, 'nav.discover')}</Link>
+        <ol className="miga m-0 flex list-none flex-wrap gap-x-2 p-0">
+          <li><Link href={`/${locale}`}>{t(locale, 'nav.discover')}</Link></li> {/* Portada */}
+          <li><Link href={`/${locale}/territorios`}>{t(locale, 'terr.title')}</Link></li> {/* Catálogo de los 17 */}
+          <li aria-current="page">{territory.name}</li> {/* Página actual */}
+        </ol>
       </nav>
 
       {fotoDe(slug) && (
         <figure className="relative m-0 mt-4 overflow-hidden rounded-[var(--radius-m)]">
-          <img src={fotoDe(slug)!.imagen} srcSet={srcsetDe(fotoDe(slug)!)} sizes="(min-width: 1280px) 1180px, 100vw" alt={fotoDe(slug)!.lugar} width={1600} height={fotoDe(slug)!.alto} fetchPriority="high" decoding="async" className="block aspect-[21/9] h-auto w-full object-cover" /> {/* Foto real del territorio */}
-          <figcaption className="foto-pie absolute inset-x-0 bottom-0 flex flex-wrap items-end justify-between gap-2 px-5 pb-3 pt-10">
-            <span className="text-[15px] font-bold">{fotoDe(slug)!.lugar}</span> {/* Lugar de la foto */}
+          <img src={fotoDe(slug)!.imagen} srcSet={srcsetDe(fotoDe(slug)!)} sizes="(min-width: 1280px) 1180px, 100vw" alt={fotoDe(slug)!.lugar} width={1600} height={fotoDe(slug)!.alto} fetchPriority="high" decoding="async" className="block aspect-[4/3] h-auto w-full object-cover sm:aspect-[21/9]" /> {/* Foto real del territorio */}
+          <figcaption className="foto-pie absolute inset-x-0 bottom-0 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 px-5 pb-4 pt-24 sm:px-10 sm:pb-6">
+            <span className="min-w-0">
+              {forma && <span className="block text-[15px] font-bold opacity-90">{t(locale, ZONA_TEXTO[forma.zone])}</span>} {/* Zona de paisaje */}
+              <h1 className="terr-ficha-titulo m-0">{territory.name}</h1> {/* Nombre, titular único de la página */}
+              <span className="mt-1 block text-[14px] opacity-90">{fotoDe(slug)!.lugar}</span> {/* Lugar de la foto */}
+            </span>
             <a href={fotoDe(slug)!.pagina} target="_blank" rel="noopener noreferrer" className="text-[12px] underline">{t(locale, 'photo.credit', { author: fotoDe(slug)!.autor, license: fotoDe(slug)!.licencia })}</a> {/* Crédito */}
           </figcaption>
         </figure>
@@ -64,9 +73,19 @@ export default async function TerritoryPage({ params }: { params: Promise<{ loca
         <header className={`heroe-territorio zona-${forma.zone} mt-4 grid items-center gap-6 rounded-[var(--radius-m)] p-6 sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]`}>
           {/* Portada del territorio con el color de su zona: el nombre a un lado, su relieve al otro */}
           <div className="min-w-0">
-            <p className="m-0 text-[15px] font-bold text-ink-muted">{t(locale, ZONA_TEXTO[forma.zone])}</p> {/* Zona de paisaje */}
-            <h1 className="m-0 mt-2 font-display text-[44px] font-normal leading-[0.98] sm:text-[76px]">{territory.name}</h1> {/* Nombre, titular único de la página */}
-            {territory.capital_name && <p className="m-0 mt-4 text-[19px] leading-[30px] text-ink-muted">{t(locale, 'territory.capital', { name: territory.capital_name })}</p>} {/* Cabecera */}
+            {!fotoDe(slug) && (
+              <>
+                <p className="m-0 text-[15px] font-bold text-ink-muted">{t(locale, ZONA_TEXTO[forma.zone])}</p> {/* Zona de paisaje */}
+                <h1 className="m-0 mt-2 mb-6 font-display text-[44px] font-normal leading-[0.98] sm:text-[76px]">{territory.name}</h1> {/* Nombre (sin foto, el titular va aquí) */}
+              </>
+            )}
+            <h2 className="m-0 font-display text-[26px] font-normal">{t(locale, 'terr.general')}</h2> {/* "Información general" */}
+            <dl className="datos-generales m-0 mt-4">
+              <div><dt>{t(locale, 'terr.type_label')}</dt><dd>{t(locale, slug.startsWith('costa-caribe') ? 'index.region' : 'index.department')}</dd></div> {/* Departamento o región autónoma */}
+              <div><dt>{t(locale, 'terr.capital_label')}</dt><dd>{territory.capital_name ?? t(locale, 'ficha.unconfirmed')}</dd></div> {/* Cabecera, del catálogo oficial */}
+              <div><dt>{t(locale, 'terr.zone_label')}</dt><dd>{t(locale, ZONA_TEXTO[forma.zone])}</dd></div> {/* Zona de paisaje (agrupación de BAQUEANO) */}
+              <div><dt>{t(locale, 'terr.pending_facts')}</dt><dd className="text-oro-text">{t(locale, 'ficha.unconfirmed')}</dd></div> {/* Aún sin fuente comprobada */}
+            </dl>
           </div>
           <figure className="m-0 min-w-0">
             <RelieveTerritorio3D slug={slug} name={territory.name} locale={locale} /> {/* Relieve que crece al llegar y se gira con el dedo */}
@@ -77,11 +96,20 @@ export default async function TerritoryPage({ params }: { params: Promise<{ loca
         <header className="flex flex-wrap items-end gap-6 pt-4">
           {/* Territorio sin forma en el mapa: encabezado sencillo */}
           <div className="min-w-0 flex-[1_1_420px]">
-            <h1 className="m-0 font-display text-[40px] font-normal leading-[1.02] sm:text-[48px]">{territory.name}</h1> {/* Nombre */}
+            {!fotoDe(slug) && <h1 className="m-0 font-display text-[40px] font-normal leading-[1.02] sm:text-[48px]">{territory.name}</h1>} {/* Nombre (si hay foto, ya va sobre ella) */}
             {territory.capital_name && <p className="mt-2 text-ink-muted">{t(locale, 'territory.capital', { name: territory.capital_name })}</p>} {/* Cabecera */}
           </div>
           <CurvasDeNivel className="h-auto w-full max-w-[360px] flex-[0_1_360px]" /> {/* Curvas decorativas */}
         </header>
+      )}
+
+      {sorted.length > 1 && (
+        <nav aria-label={t(locale, 'terr.sections')} className="pestanas-ficha mt-8">
+          {/* Atajos a cada sección publicada de la ficha */}
+          {sorted.map((sec) => (
+            <a key={sec.section} href={`#sec-${sec.section}`}>{sec.title}</a> // Salta a la sección
+          ))}
+        </nav>
       )}
 
       <div className="mt-8 flex flex-wrap gap-10">
@@ -92,7 +120,7 @@ export default async function TerritoryPage({ params }: { params: Promise<{ loca
             </p>
           ) : (
             sorted.map((s) => (
-              <section key={s.section} className="mb-10">
+              <section key={s.section} id={`sec-${s.section}`} className="mb-10 scroll-mt-24">
                 <h2 className="mb-3 font-display text-[28px] font-normal">{s.title}</h2>
                 {s.machine_translated && <p className="text-sm text-oro-text">{t(locale, 'territory.machine')}</p>}
                 {/* body_md se renderiza con un parser Markdown sanitizado (pendiente de elegir en Fase 3) */}

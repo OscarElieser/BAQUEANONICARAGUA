@@ -435,5 +435,13 @@
   "terr.see_map": "Смотреть на карте",
   "terr.open": "Открыть страницу",
   "terr.soon": "Страница готовится",
-  "index.see_all": "Все 17 на одной странице"
+  "index.see_all": "Все 17 на одной странице",
+  "terr.general": "Общие сведения",
+  "terr.type_label": "Тип",
+  "terr.capital_label": "Административный центр",
+  "terr.zone_label": "Зона",
+  "terr.pending_facts": "Население, площадь и высота",
+  "terr.sections": "Разделы страницы",
+  "terr.search": "Найти департамент или регион",
+  "terr.search_empty": "Нет территорий по этому запросу."
 }

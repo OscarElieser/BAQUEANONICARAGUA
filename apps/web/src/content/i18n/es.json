@@ -435,5 +435,13 @@
   "terr.see_map": "Ver en el mapa",
   "terr.open": "Ver ficha",
   "terr.soon": "Ficha en preparación",
-  "index.see_all": "Ver los 17 en una página"
+  "index.see_all": "Ver los 17 en una página",
+  "terr.general": "Información general",
+  "terr.type_label": "Tipo",
+  "terr.capital_label": "Cabecera",
+  "terr.zone_label": "Zona",
+  "terr.pending_facts": "Población, extensión y altitud",
+  "terr.sections": "Secciones de la ficha",
+  "terr.search": "Buscar departamento o región",
+  "terr.search_empty": "Ningún territorio coincide con esa búsqueda."
 }

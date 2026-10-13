@@ -435,5 +435,13 @@
   "terr.see_map": "在地图上查看",
   "terr.open": "查看页面",
   "terr.soon": "页面准备中",
-  "index.see_all": "在一页中查看全部 17 个"
+  "index.see_all": "在一页中查看全部 17 个",
+  "terr.general": "基本信息",
+  "terr.type_label": "类型",
+  "terr.capital_label": "首府",
+  "terr.zone_label": "区域",
+  "terr.pending_facts": "人口、面积和海拔",
+  "terr.sections": "页面栏目",
+  "terr.search": "搜索省或自治区",
+  "terr.search_empty": "没有符合该搜索的地区。"
 }
