@@ -142,6 +142,8 @@ Las migraciones que se aplicaron con la herramienta de Supabase quedaron registr
 
 Regla para lo que venga: si una migración se aplica con la herramienta de Supabase, el archivo del repositorio se renombra con la versión que quedó registrada (`list_migrations`).
 
+**Integración de Supabase con GitHub (comprobado el 13 de octubre de 2026):** cuando `main` avanza, Supabase aplica las migraciones nuevas de `supabase/migrations` con la versión del nombre del archivo y despliega las funciones de `supabase/functions` (con su `verify_jwt` de `config.toml`). Así se aplicó `20261013061500_metricas_viajeros.sql`. Por eso `main` solo avanza con CI y CodeQL en verde y con respaldo previo en `supabase/respaldos/`; ya no hace falta aplicar migraciones a mano.
+
 ## Superadministrador inicial
 
 - La primera vez que la cuenta del dueño inicia sesión (web o Android) con su correo ya verificado, la función `preparar-sesion` llama a `session_bootstrap_superadmin` y la base le da el rol `superadmin`. Queda en `audit.logs` como `role.bootstrap`.

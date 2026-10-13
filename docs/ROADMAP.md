@@ -7,6 +7,16 @@ Regla: un módulo solo pasa a `probado` cuando cumple los criterios de la secci�
 > Donde la tabla de abajo dice "sin compilar", ya no es cierto: CI compila y prueba web, API, Android, funciones y migraciones en cada cambio.
 > Ningún módulo está validado en producción todavía.
 
+## Avance del 13 de octubre de 2026
+
+| Módulo | Estado | Evidencia |
+|---|---|---|
+| Superadministrador inicial | probado (CI) | Migración `superadmin_inicial`: la cuenta del dueño recibe `superadmin` una sola vez al entrar con el correo verificado, con registro en `audit.logs`. En el repositorio solo está la huella SHA-256 del correo. 12 pruebas RLS y 3 de la función. Falta el primer inicio de sesión del dueño. |
+| App Android (compilación) | probado (CI) | CI compila un APK de depuración en cada cambio (Gradle 8.14.3, plugin de Android 8.11.1, Kotlin 2.3.20, Java 17). Firma de publicación lista para `key.properties`. Falta el `google-services.json` real y las huellas SHA en Firebase. |
+| Avisos push (web + Android) | probado (CI) | Migración `avisos_push` (registro con sesión, reserva y resultado honesto, `pg_cron` solo en producción), función `enviar-avisos` (FCM API v1) con 7 pruebas, 21 pruebas RLS, tarjetas en Cuenta y Perfil con sus 4 estados. Falta probarlo en vivo con una cuenta y un teléfono reales. |
+| Verificación en dos pasos | probado (CI) | Activarla en Cuenta y código al entrar en web y Android; el Ops Center avisa si falta. Falta encender TOTP en Firebase (Identity Platform + comando de DESPLIEGUE). |
+| Ops Center: avisos | probado (CI) | El panel cuenta navegadores y teléfonos con avisos, y avisos entregados o fallidos en 24 h (solo cifras). |
+
 ## Avance del 12 de octubre de 2026 (noche)
 
 | Módulo | Estado | Evidencia |
@@ -17,7 +27,7 @@ Regla: un módulo solo pasa a `probado` cuando cumple los criterios de la secci�
 | Viajes y favoritos (web + Android) | probado (CI) | Mismas tablas (`trips`, `favorites`) con RLS; guardar desde Mi aventura, lista "Mis viajes y lugares guardados", botón Guardar en fichas. Falta probar con una cuenta real en vivo. |
 | Crónicas (web + Android) | probado (CI) | Publicar con la cuenta (`posts`, tipo `chronicle`), límite de 10 por hora, publicidad identificada, moderación existente. |
 | BAQÜI (Gemini) | desplegado sin clave | Función `baqui` en Supabase (versión 1) y migración 0018 en producción: sesión y límite de 40 mensajes/día en la base de datos, datos publicados delimitados, cifras sin fuente reemplazadas por "por cotizar", respuestas guardadas solo por el servidor. Responde 503 hasta que se cargue `GEMINI_API_KEY`. Web `/baqui` y Android desde Mi aventura. |
-| Ops Center: indicadores de viajeros | probado (CI) | Migración `20261013061500_metricas_viajeros` (aún no aplicada en producción: va con el flujo Publicar): viajes, favoritos, crónicas y uso de BAQÜI, solo cifras. |
+| Ops Center: indicadores de viajeros | publicado | Migración `20261013061500_metricas_viajeros`, aplicada por la integración de Supabase con GitHub al avanzar `main`: viajes, favoritos, crónicas y uso de BAQÜI, solo cifras. |
 
 ## Estado al 2026-10-11
 
