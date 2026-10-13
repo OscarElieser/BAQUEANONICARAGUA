@@ -469,5 +469,9 @@
   "nav.chronicles": "Chroniken",
   "legal.print_title": "Speichern oder drucken",
   "legal.print_text": "Im Druckdialog kannst du es auch als PDF speichern.",
-  "legal.print": "Drucken oder als PDF speichern"
+  "legal.print": "Drucken oder als PDF speichern",
+  "cookies.panel_title": "Deine Einstellungen",
+  "cookies.needed_name": "Notwendig",
+  "cookies.needed_desc": "Sie merken sich Sprache, Design, diese Auswahl und deine Sitzung, wenn du dich anmeldest. Immer aktiv.",
+  "cookies.saved": "Auswahl gespeichert."
 }

@@ -469,5 +469,9 @@
   "nav.chronicles": "纪事",
   "legal.print_title": "保存或打印",
   "legal.print_text": "在打印对话框中也可以另存为 PDF。",
-  "legal.print": "打印或保存 PDF"
+  "legal.print": "打印或保存 PDF",
+  "cookies.panel_title": "你的偏好",
+  "cookies.needed_name": "必要",
+  "cookies.needed_desc": "记住你的语言、主题、此项选择，以及登录后的会话。始终开启。",
+  "cookies.saved": "已保存选择。"
 }

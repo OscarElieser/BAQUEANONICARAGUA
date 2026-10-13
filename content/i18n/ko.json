@@ -469,5 +469,9 @@
   "nav.chronicles": "크로니클",
   "legal.print_title": "저장하거나 인쇄하기",
   "legal.print_text": "인쇄 창에서 PDF로 저장할 수도 있습니다.",
-  "legal.print": "인쇄 또는 PDF 저장"
+  "legal.print": "인쇄 또는 PDF 저장",
+  "cookies.panel_title": "내 설정",
+  "cookies.needed_name": "필수",
+  "cookies.needed_desc": "언어, 테마, 이 선택, 로그인 시 세션을 기억합니다. 항상 켜져 있습니다.",
+  "cookies.saved": "선택이 저장되었습니다."
 }

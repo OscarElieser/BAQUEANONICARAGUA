@@ -78,6 +78,13 @@ class LegalPageScreen extends StatelessWidget {
                     Text(s.heading, style: text.headlineSmall), // Título de la sección
                     for (final p in s.body)
                       Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: _TextoLegal(text: p)), // Párrafo
+                    if (s.aviso != null)
+                      Container(
+                        margin: const EdgeInsets.only(top: TvSpace.s3), // Separación del párrafo
+                        padding: const EdgeInsets.all(TvSpace.s4), // Relleno
+                        decoration: BoxDecoration(color: TvColors.marcaNaranja.withValues(alpha: 0.10), borderRadius: BorderRadius.circular(16), border: Border.all(color: TvColors.marcaNaranja.withValues(alpha: 0.55))), // Recuadro naranja suave
+                        child: _TextoLegal(text: s.aviso!), // Aviso destacado
+                      ),
                     for (final it in s.items)
                       Padding(
                         padding: const EdgeInsets.only(top: TvSpace.s2), // Espacio entre puntos

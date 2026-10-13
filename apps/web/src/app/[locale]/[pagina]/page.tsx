@@ -7,6 +7,7 @@ import { legalFor, legalSlugs } from '@/lib/legal'; // Textos legales
 import { t } from '@/i18n/t'; // Textos de la interfaz
 import { pageMetadata } from '@/lib/seo'; // Canónica, idiomas y vista previa
 import { BotonImprimir } from '@/components/BotonImprimir'; // Imprimir o guardar como PDF
+import { PanelCookies } from '@/components/PanelCookies'; // Preferencias reales de cookies
 import { CreditoFoto } from '@/components/CreditoFoto'; // Crédito de la foto del encabezado
 import { fotoDe, srcsetDe } from '@/lib/fotos'; // Fotos reales con licencia libre
 import { letraFirma, letraMarca } from '@/app/fuentes'; // Letras de la marca y de la firma
@@ -59,7 +60,7 @@ export default async function PaginaLegal({ params }: { params: Promise<{ locale
         <p aria-hidden="true" className="cron-sello">{t(locale, 'brand.slogan_1')} {t(locale, 'brand.slogan_2')}</p> {/* Lema escrito a mano (decoración) */}
       </header>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[240px_minmax(0,64ch)] xl:grid-cols-[240px_minmax(0,64ch)_260px]">
+      <div className="mt-10 grid gap-10 lg:grid-cols-[240px_minmax(0,64ch)] xl:grid-cols-[220px_minmax(0,64ch)_280px]">
         <nav aria-label={t(locale, 'legal.on_this_page')} className="lg:sticky lg:top-6 lg:self-start">
           <details open className="group">
             <summary className="cursor-pointer list-none font-bold">{t(locale, 'legal.on_this_page')}</summary> {/* Índice plegable en el teléfono */}
@@ -85,6 +86,11 @@ export default async function PaginaLegal({ params }: { params: Promise<{ locale
                   <TextoLegal text={p} /> {/* Párrafo */}
                 </p>
               ))}
+              {s.aviso && (
+                <p className="legal-aviso">
+                  <TextoLegal text={s.aviso} /> {/* Aviso destacado de la sección */}
+                </p>
+              )}
               {s.items && (
                 <ul className="mt-3 space-y-2 pl-5 text-[17px] leading-[28px]">
                   {s.items.map((it) => (
@@ -98,10 +104,13 @@ export default async function PaginaLegal({ params }: { params: Promise<{ locale
           ))}
         </ol>
 
-        <aside className="legal-tarjeta self-start xl:sticky xl:top-6">
-          <p className="m-0 font-bold">{t(locale, 'legal.print_title')}</p> {/* "Guárdalo o imprímelo" */}
-          <p className="m-0 mt-1 mb-4 text-[14px] text-ink-muted">{t(locale, 'legal.print_text')}</p> {/* Cómo guardarlo como PDF */}
-          <BotonImprimir texto={t(locale, 'legal.print')} /> {/* Abre el diálogo de impresión */}
+        <aside className="grid gap-4 self-start xl:sticky xl:top-6">
+          {pagina === 'cookies' && <PanelCookies locale={locale} />} {/* En la página de cookies, las preferencias reales */}
+          <div className="legal-tarjeta">
+            <p className="m-0 font-bold">{t(locale, 'legal.print_title')}</p> {/* "Guárdalo o imprímelo" */}
+            <p className="m-0 mt-1 mb-4 text-[14px] text-ink-muted">{t(locale, 'legal.print_text')}</p> {/* Cómo guardarlo como PDF */}
+            <BotonImprimir texto={t(locale, 'legal.print')} /> {/* Abre el diálogo de impresión */}
+          </div>
         </aside>
       </div>
 

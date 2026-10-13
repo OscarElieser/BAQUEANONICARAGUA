@@ -469,5 +469,9 @@
   "nav.chronicles": "Crónicas",
   "legal.print_title": "Guárdalo o imprímelo",
   "legal.print_text": "Desde el diálogo de impresión también puedes guardarlo como PDF.",
-  "legal.print": "Imprimir o guardar PDF"
+  "legal.print": "Imprimir o guardar PDF",
+  "cookies.panel_title": "Tus preferencias",
+  "cookies.needed_name": "Necesarias",
+  "cookies.needed_desc": "Recuerdan tu idioma, tu tema, esta elección y tu sesión si entras con tu cuenta. Siempre activas.",
+  "cookies.saved": "Elección guardada."
 }

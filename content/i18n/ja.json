@@ -469,5 +469,9 @@
   "nav.chronicles": "クロニクル",
   "legal.print_title": "保存または印刷",
   "legal.print_text": "印刷ダイアログからPDFとして保存することもできます。",
-  "legal.print": "印刷・PDF保存"
+  "legal.print": "印刷・PDF保存",
+  "cookies.panel_title": "あなたの設定",
+  "cookies.needed_name": "必須",
+  "cookies.needed_desc": "言語、テーマ、この選択、ログイン時のセッションを記憶します。常に有効です。",
+  "cookies.saved": "選択を保存しました。"
 }

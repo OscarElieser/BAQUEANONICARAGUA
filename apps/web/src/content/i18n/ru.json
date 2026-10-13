@@ -469,5 +469,9 @@
   "nav.chronicles": "Хроники",
   "legal.print_title": "Сохраните или распечатайте",
   "legal.print_text": "В окне печати можно также сохранить документ в PDF.",
-  "legal.print": "Печать или PDF"
+  "legal.print": "Печать или PDF",
+  "cookies.panel_title": "Ваши настройки",
+  "cookies.needed_name": "Необходимые",
+  "cookies.needed_desc": "Запоминают язык, тему, этот выбор и вашу сессию при входе. Всегда включены.",
+  "cookies.saved": "Выбор сохранён."
 }

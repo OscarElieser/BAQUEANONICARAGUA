@@ -469,5 +469,9 @@
   "nav.chronicles": "Chronicles",
   "legal.print_title": "Save or print it",
   "legal.print_text": "From the print dialog you can also save it as a PDF.",
-  "legal.print": "Print or save PDF"
+  "legal.print": "Print or save PDF",
+  "cookies.panel_title": "Your preferences",
+  "cookies.needed_name": "Necessary",
+  "cookies.needed_desc": "They remember your language, theme, this choice and your session if you sign in. Always on.",
+  "cookies.saved": "Choice saved."
 }

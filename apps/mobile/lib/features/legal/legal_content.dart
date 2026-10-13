@@ -5,16 +5,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'; // Proveedores de River
 
 /// Una sección de una página legal: título y párrafos o puntos.
 class LegalSection {
-  const LegalSection({required this.heading, this.body = const [], this.items = const []}); // Constructor
+  const LegalSection({required this.heading, this.body = const [], this.items = const [], this.aviso}); // Constructor
   final String heading; // Título de la sección
   final List<String> body; // Párrafos
   final List<String> items; // Lista de puntos
+  final String? aviso; // Aviso destacado (opcional)
 
   /// Crea la sección a partir del JSON.
   factory LegalSection.fromJson(Map<String, dynamic> j) => LegalSection(
         heading: j['heading'] as String, // Título
         body: (j['body'] as List?)?.cast<String>() ?? const [], // Párrafos (o ninguno)
         items: (j['items'] as List?)?.cast<String>() ?? const [], // Puntos (o ninguno)
+        aviso: j['aviso'] as String?, // Aviso destacado (si lo hay)
       );
 }
 

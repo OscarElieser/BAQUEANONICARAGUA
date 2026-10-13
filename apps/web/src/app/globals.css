@@ -616,3 +616,5 @@ a.terr-accion:focus-visible { outline: 3px solid var(--marca-naranja); outline-o
 .indice-legal a:focus-visible { outline: 3px solid var(--marca-naranja); outline-offset: 0; } /* Foco visible */
 .legal-tarjeta { padding: 20px; border-radius: 20px; background: var(--ground-raised); box-shadow: inset 0 0 0 1px var(--line); } /* Tarjeta de imprimir */
 @media print { header:has(.nav-neu), .nav-neu, .legal-tarjeta, .legal-portada img, footer { display: none !important; } .legal-portada { min-height: 0; color: #000; background: none; } } /* Al imprimir, solo el texto */
+.legal-aviso { margin-top: 14px; padding: 16px 18px; border-radius: 16px; background: color-mix(in oklab, var(--marca-naranja) 10%, var(--ground-raised)); box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--marca-naranja) 55%, transparent); font-size: 17px; line-height: 27px; font-weight: 700; } /* Aviso destacado dentro de una sección legal */
+.legal-portada .terr-titulo { font-size: clamp(32px, 5.4vw, 66px); overflow-wrap: break-word; hyphens: auto; } /* Títulos legales largos: algo más pequeños y cortados con guion si hace falta */

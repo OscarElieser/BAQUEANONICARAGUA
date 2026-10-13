@@ -181,6 +181,8 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
     - Maqueta "Crónicas": nueva página `/cronicas` con relatos reales de `public_feed` (Supabase), filtro por territorio con fotos redondas (`?territorio=slug`), tarjetas con la silueta del territorio, autor, fecha y reacciones reales, y paginación por fecha. "Publicar mi crónica" dice "No disponible todavía" porque la web aún no tiene formulario de publicación. Sin crónicas de ejemplo, vistas ni "crónica del mes".
     - El menú principal ahora tiene cinco opciones (Descubrir, Mi aventura, Territorios, Comunidad, Crónicas); en el teléfono la píldora se desliza.
     - Maqueta de páginas legales (Nosotros, Términos, Privacidad, Cookies): encabezado con foto real y lema escrito a mano, índice lateral y tarjeta "Imprimir o guardar PDF" (usa la impresión del navegador). Los textos siguen saliendo solo de `content/legal/`; no se agregaron las cifras ni los avisos de la maqueta.
+    - Paquete "Nosotros, Términos, Privacidad, Cookies" (prototipo HTML del dueño): se adoptó el aviso destacado de reservas (campo opcional `aviso` en las secciones de `content/legal/`, validado por `sync_legal.py` y mostrado en web y Android) y un panel real de preferencias de cookies en `/cookies`, que guarda el mismo consentimiento que el aviso. No se tomaron sus textos de privacidad (el propio prototipo dice que son ilustrativos), ni las cifras, ni su centro de cookies con categorías que no usamos (personalización, marketing).
+    - Pendiente de confirmar con el dueño: el correo baqueanonicaragua@gmail.com aparece en el prototipo; no se puso en los textos legales hasta que el dueño confirme que es el contacto oficial.
 
 ## 4b. Estado del proyecto oficial (revisado el 2026-10-12)
 

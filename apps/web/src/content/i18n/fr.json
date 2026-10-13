@@ -469,5 +469,9 @@
   "nav.chronicles": "Chroniques",
   "legal.print_title": "Enregistrez-le ou imprimez-le",
   "legal.print_text": "Depuis la boîte d’impression, vous pouvez aussi l’enregistrer en PDF.",
-  "legal.print": "Imprimer ou enregistrer en PDF"
+  "legal.print": "Imprimer ou enregistrer en PDF",
+  "cookies.panel_title": "Vos préférences",
+  "cookies.needed_name": "Nécessaires",
+  "cookies.needed_desc": "Ils retiennent votre langue, votre thème, ce choix et votre session si vous vous connectez. Toujours actifs.",
+  "cookies.saved": "Choix enregistré."
 }

@@ -469,5 +469,9 @@
   "nav.chronicles": "Cronache",
   "legal.print_title": "Salvalo o stampalo",
   "legal.print_text": "Dalla finestra di stampa puoi anche salvarlo come PDF.",
-  "legal.print": "Stampa o salva PDF"
+  "legal.print": "Stampa o salva PDF",
+  "cookies.panel_title": "Le tue preferenze",
+  "cookies.needed_name": "Necessari",
+  "cookies.needed_desc": "Ricordano lingua, tema, questa scelta e la tua sessione se accedi. Sempre attivi.",
+  "cookies.saved": "Scelta salvata."
 }

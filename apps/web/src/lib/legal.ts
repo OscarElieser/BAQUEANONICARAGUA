@@ -8,6 +8,7 @@ export interface LegalSection {
   heading: string; // Título de la sección
   body?: string[]; // Párrafos
   items?: string[]; // Lista de puntos
+  aviso?: string; // Aviso destacado (opcional)
 }
 
 /** Una página legal completa. */

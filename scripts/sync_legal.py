@@ -27,6 +27,8 @@ def validate(path: pathlib.Path) -> None:
         for section in page["sections"]:  # Revisa cada sección
             if not section.get("heading") or not (section.get("body") or section.get("items")):  # Debe tener título y texto
                 sys.exit(f"{path.name}: sección incompleta en {page['slug']}")  # Error claro
+            if "aviso" in section and not isinstance(section["aviso"], str):  # El aviso destacado, si lo hay, es un solo texto
+                sys.exit(f"{path.name}: el aviso de {page['slug']} debe ser texto")  # Error claro
 
 
 def main() -> None:
