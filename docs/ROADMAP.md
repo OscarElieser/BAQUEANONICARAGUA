@@ -7,6 +7,18 @@ Regla: un módulo solo pasa a `probado` cuando cumple los criterios de la secci�
 > Donde la tabla de abajo dice "sin compilar", ya no es cierto: CI compila y prueba web, API, Android, funciones y migraciones en cada cambio.
 > Ningún módulo está validado en producción todavía.
 
+## Avance del 12 de octubre de 2026 (noche)
+
+| Módulo | Estado | Evidencia |
+|---|---|---|
+| Inicio de sesión (Firebase) | probado (sonda) | Sonda de solo lectura en Actions (`refs/datos/sonda`): correo y contraseña activados, Google activado, `preparar-sesion` desplegada y rechaza sin token. Falta agregar el dominio `baqueanonicaragua.com` en los dominios autorizados de Firebase. |
+| 17 territorios | publicado | Migración 0017 aplicada en producción con respaldo (`supabase/respaldos/`) y 17 registros en `audit.logs`: nombre e ISO 3166-2:NI, cabecera o sede según la Ley 59 (La Gaceta, 6 de octubre de 1989). Sin textos ni cifras inventadas. |
+| PWA | probado (CI) | Manifiesto BAQUEANO con icono enmascarable y atajos; trabajador sin conexión que nunca guarda cuenta, mensajes, Ops Center ni denuncias; página sin conexión en 10 idiomas. |
+| Viajes y favoritos (web + Android) | probado (CI) | Mismas tablas (`trips`, `favorites`) con RLS; guardar desde Mi aventura, lista "Mis viajes y lugares guardados", botón Guardar en fichas. Falta probar con una cuenta real en vivo. |
+| Crónicas (web + Android) | probado (CI) | Publicar con la cuenta (`posts`, tipo `chronicle`), límite de 10 por hora, publicidad identificada, moderación existente. |
+| BAQÜI (Gemini) | desplegado sin clave | Función `baqui` en Supabase (versión 1) y migración 0018 en producción: sesión y límite de 40 mensajes/día en la base de datos, datos publicados delimitados, cifras sin fuente reemplazadas por "por cotizar", respuestas guardadas solo por el servidor. Responde 503 hasta que se cargue `GEMINI_API_KEY`. Web `/baqui` y Android desde Mi aventura. |
+| Ops Center: indicadores de viajeros | probado (CI) | Migración 0019 (aún no aplicada en producción: va con el flujo Publicar): viajes, favoritos, crónicas y uso de BAQÜI, solo cifras. |
+
 ## Estado al 2026-10-11
 
 | Módulo | Estado | Evidencia / bloqueo |

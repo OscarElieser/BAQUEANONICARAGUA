@@ -188,6 +188,12 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
     - Paquete "Aviso legal, Ayuda, Favoritos, Contactos, Perfil": se hizo el Centro de ayuda (`/ayuda`) con guías a páginas reales y 9 preguntas frecuentes con respuestas verdaderas (en `<details>`, sin JavaScript), enlazado en el pie y en el mapa del sitio. No se tomaron el aviso legal (borrador sin revisión jurídica; los textos legales solo salen de `content/legal/`), ni los favoritos, consultas y perfil de muestra.
     - El correo de soporte de la página de Contacto es `baqueanonicaragua@gmail.com` (dato del dueño en el prompt maestro). Los correos de privacidad, derechos de autor, accesibilidad y prensa siguen como marcador hasta que el dueño diga si son el mismo o uno distinto.
     - El dueño pidió tomar `baqueanonicaragua.com` como referencia; no se pudo leer desde aquí porque el sitio no permite lectores automáticos (robots.txt).
+21. **"Finalizar en modo ultra premium, nada a medias ni falso" (12 de octubre de 2026, noche):**
+    - Decisiones del dueño: publicar los 17 territorios con datos oficiales; Firebase con correo y Google activados (la sonda lo confirmó); BAQÜI con Google Gemini; publicar en un VPS de Hostinger; la superadministradora será **otra cuenta** (falta que diga cuál).
+    - Hecho y en producción: migración 0017 (17 territorios con cabecera o sede de la Ley 59 y fuente ISO 3166-2:NI, respaldo en `supabase/respaldos/`, auditoría), migración 0018 y función `baqui` (sin clave todavía: responde 503).
+    - Hecho en el código (CI verde): PWA con modo sin conexión; viajes y favoritos en web y Android con las mismas tablas; publicar crónicas en web y Android; BAQÜI en web (`/baqui`) y Android; indicadores de viajeros en el Ops Center (migración 0019, sin aplicar en producción); sonda de servicios en Actions.
+    - El intento de alinear el historial de migraciones en producción quedó cancelado; hay que aprobarlo (ver `docs/DESPLIEGUE.md`).
+    - Falta del dueño: `GEMINI_API_KEY`, el `google-services.json` de la app Android, el correo de la cuenta superadministradora, los secretos del environment `production` en GitHub (VPS, Cloudflare, Supabase) y agregar `baqueanonicaragua.com` a los dominios autorizados de Firebase.
 
 ## 4b. Estado del proyecto oficial (revisado el 2026-10-12)
 

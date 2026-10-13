@@ -128,3 +128,19 @@ Lo que hay que hacer al publicar (necesita el dominio):
 3. Bing Webmaster Tools: importar el sitio desde Search Console. Bing también alimenta a DuckDuckGo, Yahoo y Ecosia.
 4. Yandex Webmaster y Naver Search Advisor (opcional): útiles para el público de Rusia y de Corea. Se verifican con una etiqueta o un registro TXT, que se agrega cuando existan las cuentas.
 5. Baidu: requiere registro con datos de empresa en China. No se hace por ahora.
+
+
+## BAQÜI (Google Gemini)
+
+- La función `baqui` de Supabase llama a Gemini con el secreto `GEMINI_API_KEY`. Se carga en Supabase → Edge Functions → Secrets, o en GitHub como secreto `GEMINI_API_KEY` del environment (el flujo Publicar lo copia a Supabase). Nunca va en la web ni en Android.
+- `GEMINI_MODEL` es opcional (por defecto `gemini-2.5-flash`).
+- Sin la clave, BAQÜI responde 503 y la web y la app dicen "No disponible todavía".
+
+## Historial de migraciones en producción (pendiente de aprobación)
+
+Las migraciones 0017 y 0018 se aplicaron con la herramienta de Supabase y quedaron con otro número de versión (`20261013035526` y `20261013042928`), además de un duplicado viejo de `search_path` (`20261012192731`). Antes del primer `supabase db push` hay que alinear el historial, sin tocar datos:
+
+```
+supabase migration repair --status reverted 20261012192731 20261013035526 20261013042928
+supabase migration repair --status applied 20261012000017 20261012000018
+```

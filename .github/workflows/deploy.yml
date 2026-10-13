@@ -126,6 +126,12 @@ jobs:
         run: supabase secrets set FIREBASE_PROJECT_ID="$FIREBASE_PROJECT_ID" FIREBASE_SERVICE_ACCOUNT="$FIREBASE_SERVICE_ACCOUNT" ALLOWED_ORIGINS="$ALLOWED_ORIGINS"
       - name: Desplegar la función # Verifica tokens de Firebase y prepara perfiles
         run: supabase functions deploy preparar-sesion
+      - name: Clave de Gemini para BAQÜI # Opcional: si falta, BAQÜI responde "no disponible todavía"
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: if [ -n "$GEMINI_API_KEY" ]; then supabase secrets set GEMINI_API_KEY="$GEMINI_API_KEY"; else echo "Sin GEMINI_API_KEY en GitHub; se conserva la que esté en Supabase."; fi
+      - name: Desplegar BAQÜI # Asistente con Gemini (verify_jwt = false en config.toml: la sesión la valida baqui_start)
+        run: supabase functions deploy baqui
 
   servidor:
     name: Desplegar en el servidor
