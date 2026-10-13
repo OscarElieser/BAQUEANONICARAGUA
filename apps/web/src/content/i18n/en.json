@@ -427,5 +427,13 @@
   "index.count": "17 territories",
   "index.count_detail": "15 departments and 2 autonomous regions",
   "index.department": "Department",
-  "index.region": "Autonomous region"
+  "index.region": "Autonomous region",
+  "terr.title": "Departments and regions",
+  "terr.intro": "Each territory has its own landscape, history and people. Pages are published once their facts are checked and sourced.",
+  "terr.departments": "Departments",
+  "terr.regions": "Autonomous regions",
+  "terr.see_map": "See on the map",
+  "terr.open": "See page",
+  "terr.soon": "Page in preparation",
+  "index.see_all": "See all 17 on one page"
 }

@@ -427,5 +427,13 @@
   "index.count": "17 territorios",
   "index.count_detail": "15 departamentos y 2 regiones autónomas",
   "index.department": "Departamento",
-  "index.region": "Región autónoma"
+  "index.region": "Región autónoma",
+  "terr.title": "Departamentos y regiones",
+  "terr.intro": "Cada territorio tiene su paisaje, su historia y su gente. Las fichas se publican cuando sus datos están comprobados y con fuente.",
+  "terr.departments": "Departamentos",
+  "terr.regions": "Regiones autónomas",
+  "terr.see_map": "Ver en el mapa",
+  "terr.open": "Ver ficha",
+  "terr.soon": "Ficha en preparación",
+  "index.see_all": "Ver los 17 en una página"
 }

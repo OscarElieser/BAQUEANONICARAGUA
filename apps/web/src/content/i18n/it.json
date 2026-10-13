@@ -427,5 +427,13 @@
   "index.count": "17 territori",
   "index.count_detail": "15 dipartimenti e 2 regioni autonome",
   "index.department": "Dipartimento",
-  "index.region": "Regione autonoma"
+  "index.region": "Regione autonoma",
+  "terr.title": "Dipartimenti e regioni",
+  "terr.intro": "Ogni territorio ha il suo paesaggio, la sua storia e la sua gente. Le schede si pubblicano quando i dati sono verificati e con fonte.",
+  "terr.departments": "Dipartimenti",
+  "terr.regions": "Regioni autonome",
+  "terr.see_map": "Vedi sulla mappa",
+  "terr.open": "Vedi scheda",
+  "terr.soon": "Scheda in preparazione",
+  "index.see_all": "Vedi tutti i 17 in una pagina"
 }

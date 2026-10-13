@@ -427,5 +427,13 @@
   "index.count": "17の地域",
   "index.count_detail": "15の県と2つの自治地域",
   "index.department": "県",
-  "index.region": "自治地域"
+  "index.region": "自治地域",
+  "terr.title": "県と自治地域",
+  "terr.intro": "どの地域にも独自の風景、歴史、人々がいます。ページは情報が確認され、出典がそろってから公開します。",
+  "terr.departments": "県",
+  "terr.regions": "自治地域",
+  "terr.see_map": "地図で見る",
+  "terr.open": "ページを見る",
+  "terr.soon": "ページ準備中",
+  "index.see_all": "17地域を一覧で見る"
 }

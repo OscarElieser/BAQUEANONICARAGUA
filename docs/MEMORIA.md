@@ -175,6 +175,7 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
       - fila de fotos redondas de los 17 dentro del explorador (web): al tocar una, ese territorio pasa al frente.
     - Pendiente hasta tener datos reales: conteos por tipo ("42 playas"), valoraciones con estrellas, precios "desde C$", eventos con fechas, testimonios, personas con nombre, cifras como "+260 destinos" o "25K viajeros". Las maquetas los inventan; aquí no se muestran.
     - Gastronomía, música e historia como mundos propios: se harán cuando haya contenido verificado (platos, artistas, hechos con fuente).
+    - Maqueta "Departamentos" (catálogo y ficha de Managua): nueva página `/territorios` con los 15 departamentos y las 2 regiones autónomas, foto real, silueta real en el color de su zona y estado de la ficha (solo las publicadas tienen botón). Sin conteos de municipios, destinos, población ni altitud hasta tenerlos comprobados y con fuente. En Android ya está el índice de los 17 en Descubrir.
 
 ## 4b. Estado del proyecto oficial (revisado el 2026-10-12)
 

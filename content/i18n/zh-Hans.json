@@ -427,5 +427,13 @@
   "index.count": "17 个地区",
   "index.count_detail": "15 个省和 2 个自治区",
   "index.department": "省",
-  "index.region": "自治区"
+  "index.region": "自治区",
+  "terr.title": "省与自治区",
+  "terr.intro": "每个地区都有自己的风景、历史和人们。页面会在资料经过核实并注明来源后发布。",
+  "terr.departments": "省",
+  "terr.regions": "自治区",
+  "terr.see_map": "在地图上查看",
+  "terr.open": "查看页面",
+  "terr.soon": "页面准备中",
+  "index.see_all": "在一页中查看全部 17 个"
 }

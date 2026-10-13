@@ -427,5 +427,13 @@
   "index.count": "17 territoires",
   "index.count_detail": "15 départements et 2 régions autonomes",
   "index.department": "Département",
-  "index.region": "Région autonome"
+  "index.region": "Région autonome",
+  "terr.title": "Départements et régions",
+  "terr.intro": "Chaque territoire a son paysage, son histoire et ses habitants. Les fiches sont publiées quand leurs données sont vérifiées et sourcées.",
+  "terr.departments": "Départements",
+  "terr.regions": "Régions autonomes",
+  "terr.see_map": "Voir sur la carte",
+  "terr.open": "Voir la fiche",
+  "terr.soon": "Fiche en préparation",
+  "index.see_all": "Voir les 17 sur une page"
 }

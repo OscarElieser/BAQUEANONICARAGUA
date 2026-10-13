@@ -427,5 +427,13 @@
   "index.count": "17개 지역",
   "index.count_detail": "15개 주와 2개 자치 지역",
   "index.department": "주",
-  "index.region": "자치 지역"
+  "index.region": "자치 지역",
+  "terr.title": "주와 자치 지역",
+  "terr.intro": "모든 지역에는 저마다의 풍경, 역사, 사람들이 있습니다. 페이지는 정보가 확인되고 출처가 갖춰지면 공개됩니다.",
+  "terr.departments": "주",
+  "terr.regions": "자치 지역",
+  "terr.see_map": "지도에서 보기",
+  "terr.open": "페이지 보기",
+  "terr.soon": "페이지 준비 중",
+  "index.see_all": "17개 지역 한눈에 보기"
 }

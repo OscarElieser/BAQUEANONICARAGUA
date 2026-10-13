@@ -427,5 +427,13 @@
   "index.count": "17 Gebiete",
   "index.count_detail": "15 Departamentos und 2 autonome Regionen",
   "index.department": "Departamento",
-  "index.region": "Autonome Region"
+  "index.region": "Autonome Region",
+  "terr.title": "Departamentos und Regionen",
+  "terr.intro": "Jedes Gebiet hat seine Landschaft, seine Geschichte und seine Menschen. Seiten werden veröffentlicht, sobald ihre Angaben geprüft und belegt sind.",
+  "terr.departments": "Departamentos",
+  "terr.regions": "Autonome Regionen",
+  "terr.see_map": "Auf der Karte ansehen",
+  "terr.open": "Seite ansehen",
+  "terr.soon": "Seite in Vorbereitung",
+  "index.see_all": "Alle 17 auf einer Seite"
 }

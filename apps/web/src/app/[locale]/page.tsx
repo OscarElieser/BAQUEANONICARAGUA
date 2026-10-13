@@ -87,7 +87,10 @@ export default async function Descubrir({ params }: { params: Promise<{ locale: 
             viewBox={VIEWBOX_MAPA} // Lienzo
           />
           <div>
-            <h3 className="indice-titulo m-0">{t(locale, 'index.title')}</h3> {/* "Índice de territorios" */}
+            <div className="mb-2.5 flex flex-wrap items-baseline justify-between gap-2">
+              <h3 className="indice-titulo m-0">{t(locale, 'index.title')}</h3> {/* "Índice de territorios" */}
+              <a href={`/${locale}/territorios`} className="text-[14px] font-bold text-accent">{t(locale, 'index.see_all')}</a> {/* Catálogo completo */}
+            </div>
             <IndiceTerritorios locale={locale} items={formas.map(({ slug, name }) => ({ slug, name }))} published={(territories ?? []).map((ter) => ter.slug)} /> {/* Los 17 con foto y estado real */}
           </div>
         </div>
