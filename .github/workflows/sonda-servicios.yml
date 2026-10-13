@@ -19,7 +19,7 @@ jobs:
     name: Comprobar Firebase y Supabase
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4 # Descarga la sonda
+      - uses: actions/checkout@v7 # Descarga la sonda
       - name: Preguntar a los servicios # Usa solo claves públicas que ya están en la web
         run: mkdir -p salida && python3 scripts/sonda/sondear.py | tee salida/sonda.md | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Guardar en refs/datos/sonda # Commit aparte que se reemplaza en cada ejecución
