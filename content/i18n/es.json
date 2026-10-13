@@ -631,5 +631,7 @@
   "dospasos.err.expired": "Pasó demasiado tiempo. Vuelve a iniciar sesión.",
   "dospasos.err.recent_login": "Por seguridad, cierra sesión, vuelve a entrar y repite este paso.",
   "dospasos.err.verify_email": "Primero verifica tu correo; después podrás activar la verificación en dos pasos.",
-  "dospasos.err.already": "La verificación en dos pasos ya estaba activada."
+  "dospasos.err.already": "La verificación en dos pasos ya estaba activada.",
+  "intro.skip": "Saltar",
+  "intro.logo": "Logotipo de BAQUEANO"
 }

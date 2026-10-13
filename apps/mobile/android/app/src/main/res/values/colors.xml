@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Colores del arranque de Android, tomados del sistema de diseño (design/sistema/tokens.json) -->
+<resources>
+    <!-- marca-nocturno: el mismo azul del fondo de la revelación del logotipo, así no hay destello al abrir -->
+    <color name="nocturno">#0D1B2A</color>
+</resources>

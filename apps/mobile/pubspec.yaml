@@ -22,6 +22,7 @@ dependencies:
   google_sign_in: ^6.2.1
   http: ^1.2.2
   url_launcher: ^6.3.0 # Abrir WhatsApp, llamadas, correos y la fuente de cada dato
+  video_player: ^2.9.0 # Revelación del logotipo al abrir la app (video del dueño, sin sonido)
   intl: any
 
 dev_dependencies:
@@ -35,4 +36,5 @@ flutter:
     - assets/legal/ # Textos legales (copiados desde content/legal por scripts/sync_legal.py)
     - assets/mapa/ # Mapa ilustrado de los 17 territorios (copiado por scripts/sync_mapa.py)
     - assets/fotos/ # Fotos reales con licencia libre y su crédito (copiadas por scripts/sync_fotos.py)
+    - assets/intro/revelacion.mp4 # Revelación del logotipo: 3 segundos, 720p, sin sonido (recortada del video del dueño)
   # generate: true  → activar al añadir l10n.yaml y los ARB de los 10 idiomas (Fase 9)

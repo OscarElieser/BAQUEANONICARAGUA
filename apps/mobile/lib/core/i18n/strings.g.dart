@@ -646,6 +646,8 @@ const i18nStrings = <String, Map<String, String>>{
     'dospasos.err.recent_login': 'Por seguridad, cierra sesión, vuelve a entrar y repite este paso.',
     'dospasos.err.verify_email': 'Primero verifica tu correo; después podrás activar la verificación en dos pasos.',
     'dospasos.err.already': 'La verificación en dos pasos ya estaba activada.',
+    'intro.skip': 'Saltar',
+    'intro.logo': 'Logotipo de BAQUEANO',
   },
   'en': {
     'meta.title_default': 'BAQUEANO: discover what\'s not on the map',
@@ -1276,6 +1278,8 @@ const i18nStrings = <String, Map<String, String>>{
     'dospasos.err.recent_login': 'For security, sign out, sign in again and repeat this step.',
     'dospasos.err.verify_email': 'Verify your email first; then you can turn on two-step verification.',
     'dospasos.err.already': 'Two-step verification was already on.',
+    'intro.skip': 'Skip',
+    'intro.logo': 'BAQUEANO logo',
   },
   'zh-Hans': {
     'meta.title_default': 'BAQUEANO：发现地图上找不到的地方',
@@ -1906,6 +1910,8 @@ const i18nStrings = <String, Map<String, String>>{
     'dospasos.err.recent_login': '为了安全，请退出后重新登录，再重复此步骤。',
     'dospasos.err.verify_email': '请先验证你的邮箱，然后才能开启两步验证。',
     'dospasos.err.already': '两步验证此前已开启。',
+    'intro.skip': '跳过',
+    'intro.logo': 'BAQUEANO 标志',
   },
   'ko': {
     'meta.title_default': 'BAQUEANO: 지도에 없는 곳을 발견하세요',
@@ -2536,6 +2542,8 @@ const i18nStrings = <String, Map<String, String>>{
     'dospasos.err.recent_login': '보안을 위해 로그아웃한 뒤 다시 로그인하고 이 단계를 반복하세요.',
     'dospasos.err.verify_email': '먼저 이메일을 인증하세요. 그다음 2단계 인증을 켤 수 있어요.',
     'dospasos.err.already': '2단계 인증이 이미 켜져 있었어요.',
+    'intro.skip': '건너뛰기',
+    'intro.logo': 'BAQUEANO 로고',
   },
   'it': {
     'meta.title_default': 'BAQUEANO: scopri ciò che non è sulla mappa',
@@ -3166,6 +3174,8 @@ const i18nStrings = <String, Map<String, String>>{
     'dospasos.err.recent_login': 'Per sicurezza, esci, accedi di nuovo e ripeti questo passaggio.',
     'dospasos.err.verify_email': 'Prima verifica la tua email; poi potrai attivare la verifica in due passaggi.',
     'dospasos.err.already': 'La verifica in due passaggi era già attiva.',
+    'intro.skip': 'Salta',
+    'intro.logo': 'Logo di BAQUEANO',
   },
   'fr': {
     'meta.title_default': 'BAQUEANO : découvre ce qui n\'est pas sur la carte',
@@ -3796,6 +3806,8 @@ const i18nStrings = <String, Map<String, String>>{
     'dospasos.err.recent_login': 'Par sécurité, déconnecte-toi, reconnecte-toi et recommence cette étape.',
     'dospasos.err.verify_email': 'Vérifie d\'abord ton e-mail ; ensuite tu pourras activer la validation en deux étapes.',
     'dospasos.err.already': 'La validation en deux étapes était déjà activée.',
+    'intro.skip': 'Passer',
+    'intro.logo': 'Logo de BAQUEANO',
   },
   'pt': {
     'meta.title_default': 'BAQUEANO: descubra o que não aparece no mapa',
@@ -4426,6 +4438,8 @@ const i18nStrings = <String, Map<String, String>>{
     'dospasos.err.recent_login': 'Por segurança, saia, entre de novo e repita esta etapa.',
     'dospasos.err.verify_email': 'Primeiro verifique seu e-mail; depois você poderá ativar a verificação em duas etapas.',
     'dospasos.err.already': 'A verificação em duas etapas já estava ativada.',
+    'intro.skip': 'Pular',
+    'intro.logo': 'Logotipo do BAQUEANO',
   },
   'de': {
     'meta.title_default': 'BAQUEANO: Entdecke, was auf keiner Karte steht',
@@ -5056,6 +5070,8 @@ const i18nStrings = <String, Map<String, String>>{
     'dospasos.err.recent_login': 'Melde dich aus Sicherheitsgründen ab, wieder an und wiederhole diesen Schritt.',
     'dospasos.err.verify_email': 'Bestätige zuerst deine E-Mail-Adresse; danach kannst du die Bestätigung in zwei Schritten aktivieren.',
     'dospasos.err.already': 'Die Bestätigung in zwei Schritten war bereits aktiviert.',
+    'intro.skip': 'Überspringen',
+    'intro.logo': 'BAQUEANO-Logo',
   },
   'ru': {
     'meta.title_default': 'BAQUEANO: открой то, чего нет на карте',
@@ -5686,6 +5702,8 @@ const i18nStrings = <String, Map<String, String>>{
     'dospasos.err.recent_login': 'В целях безопасности выйдите, войдите снова и повторите этот шаг.',
     'dospasos.err.verify_email': 'Сначала подтвердите электронную почту, затем вы сможете включить двухэтапную проверку.',
     'dospasos.err.already': 'Двухэтапная проверка уже была включена.',
+    'intro.skip': 'Пропустить',
+    'intro.logo': 'Логотип BAQUEANO',
   },
   'ja': {
     'meta.title_default': 'BAQUEANO：地図に載っていないものを見つけよう',
@@ -6316,5 +6334,7 @@ const i18nStrings = <String, Map<String, String>>{
     'dospasos.err.recent_login': '安全のため、ログアウトして再ログインし、この手順をやり直してください。',
     'dospasos.err.verify_email': '先にメールアドレスを確認してください。その後2段階認証を有効にできます。',
     'dospasos.err.already': '2段階認証はすでに有効でした。',
+    'intro.skip': 'スキップ',
+    'intro.logo': 'BAQUEANOのロゴ',
   },
 };

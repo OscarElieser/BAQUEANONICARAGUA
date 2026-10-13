@@ -631,5 +631,7 @@
   "dospasos.err.expired": "Passou tempo demais. Entre de novo.",
   "dospasos.err.recent_login": "Por segurança, saia, entre de novo e repita esta etapa.",
   "dospasos.err.verify_email": "Primeiro verifique seu e-mail; depois você poderá ativar a verificação em duas etapas.",
-  "dospasos.err.already": "A verificação em duas etapas já estava ativada."
+  "dospasos.err.already": "A verificação em duas etapas já estava ativada.",
+  "intro.skip": "Pular",
+  "intro.logo": "Logotipo do BAQUEANO"
 }

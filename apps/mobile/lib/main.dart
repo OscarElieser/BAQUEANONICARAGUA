@@ -1,16 +1,17 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Sesión de Firebase (token para Supabase)
+import 'package:firebase_core/firebase_core.dart'; // Arranque de Firebase
+import 'package:flutter/material.dart'; // Componentes visuales de Flutter
+import 'package:flutter_localizations/flutter_localizations.dart'; // Textos del sistema en cada idioma
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // Proveedores de Riverpod
+import 'package:intl/date_symbol_data_local.dart'; // Formatos de fecha por idioma
+import 'package:supabase_flutter/supabase_flutter.dart'; // Cliente de Supabase
 
 import 'core/data/fotos.dart'; // Fotos reales con licencia libre
 import 'core/env.dart'; // Variables de configuración de entorno
 import 'core/firebase_options.dart'; // Opciones de configuración de Firebase
 import 'core/theme.dart'; // Estilos y tema del sistema de diseño
 import 'features/home/home_shell.dart'; // Estructura visual de inicio
+import 'features/intro/intro_revelacion.dart'; // Revelación del logotipo al abrir la app
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Garantiza la inicialización de los enlaces del framework
@@ -34,28 +35,29 @@ Future<void> main() async {
     );
   }
 
-  runApp(const ProviderScope(child: NicaApp()));
+  runApp(const ProviderScope(child: NicaApp())); // Arranca la app con Riverpod
 }
 
 class NicaApp extends StatelessWidget {
-  const NicaApp({super.key});
+  const NicaApp({super.key}); // Constructor
 
-  // Idiomas iniciales (sección 18); textos traducidos llegan en la Fase 9.
+  // Los 10 idiomas de la interfaz (los mismos de la web)
   static const supported = [
-    Locale('es'), Locale('en'), Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
-    Locale('ko'), Locale('it'), Locale('fr'), Locale('pt'), Locale('de'), Locale('ru'), Locale('ja'),
+    Locale('es'), Locale('en'), Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'), // Español, inglés y chino simplificado
+    Locale('ko'), Locale('it'), Locale('fr'), Locale('pt'), Locale('de'), Locale('ru'), Locale('ja'), // Coreano, italiano, francés, portugués, alemán, ruso y japonés
   ];
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Nicaragua',
-      theme: buildTheme(Brightness.light),
-      darkTheme: buildTheme(Brightness.dark),
-      themeMode: ThemeMode.system,
-      supportedLocales: supported,
-      localizationsDelegates: GlobalMaterialLocalizations.delegates,
-      home: const HomeShell(),
+      title: 'BAQUEANO', // Nombre de la app en la lista de apps recientes
+      theme: buildTheme(Brightness.light), // Tema claro
+      darkTheme: buildTheme(Brightness.dark), // Tema oscuro
+      themeMode: ThemeMode.system, // Sigue el modo del teléfono
+      supportedLocales: supported, // Idiomas disponibles
+      localizationsDelegates: GlobalMaterialLocalizations.delegates, // Textos del sistema en cada idioma
+      builder: (context, child) => IntroRevelacion(child: child ?? const SizedBox.shrink()), // Revelación del logotipo encima mientras la app carga
+      home: const HomeShell(), // Pantalla principal con sus pestañas
     );
   }
 }

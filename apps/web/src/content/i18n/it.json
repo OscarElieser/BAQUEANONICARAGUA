@@ -631,5 +631,7 @@
   "dospasos.err.expired": "È passato troppo tempo. Accedi di nuovo.",
   "dospasos.err.recent_login": "Per sicurezza, esci, accedi di nuovo e ripeti questo passaggio.",
   "dospasos.err.verify_email": "Prima verifica la tua email; poi potrai attivare la verifica in due passaggi.",
-  "dospasos.err.already": "La verifica in due passaggi era già attiva."
+  "dospasos.err.already": "La verifica in due passaggi era già attiva.",
+  "intro.skip": "Salta",
+  "intro.logo": "Logo di BAQUEANO"
 }

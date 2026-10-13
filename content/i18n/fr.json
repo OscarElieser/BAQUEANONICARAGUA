@@ -631,5 +631,7 @@
   "dospasos.err.expired": "Trop de temps s'est écoulé. Reconnecte-toi.",
   "dospasos.err.recent_login": "Par sécurité, déconnecte-toi, reconnecte-toi et recommence cette étape.",
   "dospasos.err.verify_email": "Vérifie d'abord ton e-mail ; ensuite tu pourras activer la validation en deux étapes.",
-  "dospasos.err.already": "La validation en deux étapes était déjà activée."
+  "dospasos.err.already": "La validation en deux étapes était déjà activée.",
+  "intro.skip": "Passer",
+  "intro.logo": "Logo de BAQUEANO"
 }

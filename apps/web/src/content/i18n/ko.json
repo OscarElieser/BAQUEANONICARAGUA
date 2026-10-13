@@ -631,5 +631,7 @@
   "dospasos.err.expired": "시간이 너무 지났어요. 다시 로그인하세요.",
   "dospasos.err.recent_login": "보안을 위해 로그아웃한 뒤 다시 로그인하고 이 단계를 반복하세요.",
   "dospasos.err.verify_email": "먼저 이메일을 인증하세요. 그다음 2단계 인증을 켤 수 있어요.",
-  "dospasos.err.already": "2단계 인증이 이미 켜져 있었어요."
+  "dospasos.err.already": "2단계 인증이 이미 켜져 있었어요.",
+  "intro.skip": "건너뛰기",
+  "intro.logo": "BAQUEANO 로고"
 }

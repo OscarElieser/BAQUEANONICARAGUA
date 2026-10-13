@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ícono transparente para el arranque de Android 12+: solo se ve el azul y luego la revelación del logotipo (sin mostrar un logo encendido que después se apague) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Trazo invisible (Android exige al menos uno) -->
+    <path android:fillColor="#00000000" android:pathData="M0,0h1v1h-1z" />
+</vector>

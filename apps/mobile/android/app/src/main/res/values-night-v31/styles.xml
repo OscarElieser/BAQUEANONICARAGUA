@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Arranque en Android 12 o más nuevo: el sistema dibuja su propia pantalla de inicio con estos valores -->
+<resources>
+    <!-- Mientras Android abre la app -->
+    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <!-- Fondo de respaldo (igual al de versiones anteriores) -->
+        <item name="android:windowBackground">@drawable/launch_background</item>
+        <!-- Fondo de la pantalla de inicio del sistema: azul nocturno -->
+        <item name="android:windowSplashScreenBackground">@color/nocturno</item>
+        <!-- Sin ícono: la revelación del logotipo se encarga de mostrarlo -->
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_vacio</item>
+    </style>
+    <!-- Detrás de la app ya abierta -->
+    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <!-- Color normal del tema (la revelación del logotipo se dibuja encima desde el primer cuadro) -->
+        <item name="android:windowBackground">?android:colorBackground</item>
+    </style>
+</resources>

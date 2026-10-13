@@ -631,5 +631,7 @@
   "dospasos.err.expired": "Too much time passed. Sign in again.",
   "dospasos.err.recent_login": "For security, sign out, sign in again and repeat this step.",
   "dospasos.err.verify_email": "Verify your email first; then you can turn on two-step verification.",
-  "dospasos.err.already": "Two-step verification was already on."
+  "dospasos.err.already": "Two-step verification was already on.",
+  "intro.skip": "Skip",
+  "intro.logo": "BAQUEANO logo"
 }

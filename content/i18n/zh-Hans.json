@@ -631,5 +631,7 @@
   "dospasos.err.expired": "时间过长。请重新登录。",
   "dospasos.err.recent_login": "为了安全，请退出后重新登录，再重复此步骤。",
   "dospasos.err.verify_email": "请先验证你的邮箱，然后才能开启两步验证。",
-  "dospasos.err.already": "两步验证此前已开启。"
+  "dospasos.err.already": "两步验证此前已开启。",
+  "intro.skip": "跳过",
+  "intro.logo": "BAQUEANO 标志"
 }

@@ -631,5 +631,7 @@
   "dospasos.err.expired": "Es ist zu viel Zeit vergangen. Melde dich erneut an.",
   "dospasos.err.recent_login": "Melde dich aus Sicherheitsgründen ab, wieder an und wiederhole diesen Schritt.",
   "dospasos.err.verify_email": "Bestätige zuerst deine E-Mail-Adresse; danach kannst du die Bestätigung in zwei Schritten aktivieren.",
-  "dospasos.err.already": "Die Bestätigung in zwei Schritten war bereits aktiviert."
+  "dospasos.err.already": "Die Bestätigung in zwei Schritten war bereits aktiviert.",
+  "intro.skip": "Überspringen",
+  "intro.logo": "BAQUEANO-Logo"
 }

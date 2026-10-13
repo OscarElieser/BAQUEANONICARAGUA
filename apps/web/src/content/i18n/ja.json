@@ -631,5 +631,7 @@
   "dospasos.err.expired": "時間が経ちすぎました。もう一度ログインしてください。",
   "dospasos.err.recent_login": "安全のため、ログアウトして再ログインし、この手順をやり直してください。",
   "dospasos.err.verify_email": "先にメールアドレスを確認してください。その後2段階認証を有効にできます。",
-  "dospasos.err.already": "2段階認証はすでに有効でした。"
+  "dospasos.err.already": "2段階認証はすでに有効でした。",
+  "intro.skip": "スキップ",
+  "intro.logo": "BAQUEANOのロゴ"
 }
