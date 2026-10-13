@@ -1,3 +1,5 @@
+import 'dart:math' as math; // Mínimo entre dos medidas
+
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Proveedores de Riverpod
 import 'package:supabase_flutter/supabase_flutter.dart'; // Cliente de Supabase (funciones)
@@ -66,6 +68,9 @@ class _BaquiScreenState extends ConsumerState<BaquiScreen> {
     super.dispose(); // Libera el resto
   }
 
+  /// Ancho de BAQÜI en persona: 320 puntos o menos en pantallas bajas, para que lo que dice quepa debajo.
+  double _anchoEscenario(BuildContext context) => math.min(320.0, MediaQuery.sizeOf(context).height * 0.4); // Hasta el 40 % del alto
+
   /// Después de dibujar, lleva la conversación a lo último (sin animación si así se pidió en Android).
   /// Con una respuesta nueva la muestra desde su comienzo y, si BAQÜI sigue a la vista, él la señala.
   void _mostrarUltimo({bool respuesta = false}) {
@@ -81,7 +86,7 @@ class _BaquiScreenState extends ConsumerState<BaquiScreen> {
       } else { // Con animaciones
         await _scroll.animateTo(_scroll.position.maxScrollExtent, duration: duracion, curve: Curves.easeOut); // Hasta abajo: su mensaje y BAQÜI pensando
       }
-      if (respuesta && mounted && _scroll.hasClients && _scroll.offset < 160) setState(() => _senaladas++); // BAQÜI aún se ve: señala la respuesta
+      if (respuesta && mounted && _scroll.hasClients && _scroll.offset < _anchoEscenario(context) / 2) setState(() => _senaladas++); // Se ve al menos media figura de BAQÜI: señala la respuesta
     });
   }
 
@@ -137,7 +142,7 @@ class _BaquiScreenState extends ConsumerState<BaquiScreen> {
           ? ListView(
               padding: const EdgeInsets.all(TvSpace.s4), // Márgenes
               children: [
-                Center(child: SizedBox(width: 320, child: EscenarioBaqui(key: _escenario))), // BAQÜI se presenta aunque no haya sesión
+                Center(child: SizedBox(width: _anchoEscenario(context), child: EscenarioBaqui(key: _escenario))), // BAQÜI se presenta aunque no haya sesión
                 const SizedBox(height: TvSpace.s4), // Espacio
                 fila(false, context.t('baqui.hello')), // Saludo fijo
                 fila(false, context.t('baqui.sign_in_app')), // Sin sesión: dónde entrar
@@ -150,7 +155,7 @@ class _BaquiScreenState extends ConsumerState<BaquiScreen> {
                     controller: _scroll, // Para bajar a lo último
                     padding: const EdgeInsets.all(TvSpace.s4), // Márgenes
                     children: [
-                      Center(child: SizedBox(width: 320, child: EscenarioBaqui(key: _escenario, respuestas: _senaladas))), // BAQÜI en persona (señala las respuestas que llegan con él a la vista)
+                      Center(child: SizedBox(width: _anchoEscenario(context), child: EscenarioBaqui(key: _escenario, respuestas: _senaladas))), // BAQÜI en persona (señala las respuestas que llegan con él a la vista)
                       const SizedBox(height: TvSpace.s4), // Espacio
                       fila(false, context.t('baqui.hello')), // Saludo fijo (no lo genera el modelo)
                       for (final (i, l) in _lineas.indexed) fila(l.$1, l.$2, hablando: !l.$1 && i == ultimaDeBaqui, clave: l.$3), // Conversación (la respuesta más nueva "habla")

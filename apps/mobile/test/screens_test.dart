@@ -215,6 +215,8 @@ void main() {
   testWidgets('BAQÜI sin sesión explica dónde entrar y no llama al asistente', (tester) async {
     await tester.pumpWidget(app(const BaquiScreen())); // Abre BAQÜI sin sesión
     await tester.pumpAndSettle(); // Espera
+    expect(find.text('Conoce a BAQÜI'), findsOneWidget); // BAQÜI se presenta arriba
+    await tester.scrollUntilVisible(find.text('Inicia sesión en Perfil para hablar con BAQÜI.'), 200); // Baja si hace falta (pantalla de prueba baja)
     expect(find.text('Inicia sesión en Perfil para hablar con BAQÜI.'), findsOneWidget); // Lo explica
     expect(find.byType(TextField), findsNothing); // Sin campo para escribir
   });
