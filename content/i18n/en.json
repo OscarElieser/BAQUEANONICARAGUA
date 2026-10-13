@@ -582,5 +582,7 @@
   "baqui.s1": "What can I do for 3 days in Granada?",
   "baqui.s2": "I want nature in the north",
   "baqui.s3": "Which territories are on the Caribbean?",
-  "nav.baqui": "BAQÜI"
+  "nav.baqui": "BAQÜI",
+  "baqui.sign_in_app": "Sign in from Profile to talk with BAQÜI.",
+  "baqui.open": "Talk with BAQÜI"
 }

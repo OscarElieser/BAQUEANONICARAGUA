@@ -597,6 +597,8 @@ const i18nStrings = <String, Map<String, String>>{
     'baqui.s2': 'Quiero naturaleza en el norte',
     'baqui.s3': '¿Qué territorios tiene el Caribe?',
     'nav.baqui': 'BAQÜI',
+    'baqui.sign_in_app': 'Inicia sesión en Perfil para hablar con BAQÜI.',
+    'baqui.open': 'Hablar con BAQÜI',
   },
   'en': {
     'meta.title_default': 'BAQUEANO: discover what\'s not on the map',
@@ -1178,6 +1180,8 @@ const i18nStrings = <String, Map<String, String>>{
     'baqui.s2': 'I want nature in the north',
     'baqui.s3': 'Which territories are on the Caribbean?',
     'nav.baqui': 'BAQÜI',
+    'baqui.sign_in_app': 'Sign in from Profile to talk with BAQÜI.',
+    'baqui.open': 'Talk with BAQÜI',
   },
   'zh-Hans': {
     'meta.title_default': 'BAQUEANO：发现地图上找不到的地方',
@@ -1759,6 +1763,8 @@ const i18nStrings = <String, Map<String, String>>{
     'baqui.s2': '我想去北部看自然风光',
     'baqui.s3': '加勒比地区有哪些？',
     'nav.baqui': 'BAQÜI',
+    'baqui.sign_in_app': '在“个人资料”中登录后即可与 BAQÜI 对话。',
+    'baqui.open': '与 BAQÜI 对话',
   },
   'ko': {
     'meta.title_default': 'BAQUEANO: 지도에 없는 곳을 발견하세요',
@@ -2340,6 +2346,8 @@ const i18nStrings = <String, Map<String, String>>{
     'baqui.s2': '북부에서 자연을 즐기고 싶어',
     'baqui.s3': '카리브 쪽 지역은 어디야?',
     'nav.baqui': 'BAQÜI',
+    'baqui.sign_in_app': '프로필에서 로그인하고 BAQÜI와 대화하세요.',
+    'baqui.open': 'BAQÜI와 대화하기',
   },
   'it': {
     'meta.title_default': 'BAQUEANO: scopri ciò che non è sulla mappa',
@@ -2921,6 +2929,8 @@ const i18nStrings = <String, Map<String, String>>{
     'baqui.s2': 'Voglio natura nel nord',
     'baqui.s3': 'Quali territori sono sui Caraibi?',
     'nav.baqui': 'BAQÜI',
+    'baqui.sign_in_app': 'Accedi da Profilo per parlare con BAQÜI.',
+    'baqui.open': 'Parla con BAQÜI',
   },
   'fr': {
     'meta.title_default': 'BAQUEANO : découvre ce qui n\'est pas sur la carte',
@@ -3502,6 +3512,8 @@ const i18nStrings = <String, Map<String, String>>{
     'baqui.s2': 'Je veux de la nature dans le nord',
     'baqui.s3': 'Quels territoires sont sur la Caraïbe ?',
     'nav.baqui': 'BAQÜI',
+    'baqui.sign_in_app': 'Connecte-toi dans Profil pour parler avec BAQÜI.',
+    'baqui.open': 'Parler avec BAQÜI',
   },
   'pt': {
     'meta.title_default': 'BAQUEANO: descubra o que não aparece no mapa',
@@ -4083,6 +4095,8 @@ const i18nStrings = <String, Map<String, String>>{
     'baqui.s2': 'Quero natureza no norte',
     'baqui.s3': 'Quais territórios ficam no Caribe?',
     'nav.baqui': 'BAQÜI',
+    'baqui.sign_in_app': 'Entre em Perfil para falar com o BAQÜI.',
+    'baqui.open': 'Falar com o BAQÜI',
   },
   'de': {
     'meta.title_default': 'BAQUEANO: Entdecke, was auf keiner Karte steht',
@@ -4664,6 +4678,8 @@ const i18nStrings = <String, Map<String, String>>{
     'baqui.s2': 'Ich möchte Natur im Norden',
     'baqui.s3': 'Welche Gebiete liegen in der Karibik?',
     'nav.baqui': 'BAQÜI',
+    'baqui.sign_in_app': 'Melde dich im Profil an, um mit BAQÜI zu sprechen.',
+    'baqui.open': 'Mit BAQÜI sprechen',
   },
   'ru': {
     'meta.title_default': 'BAQUEANO: открой то, чего нет на карте',
@@ -5245,6 +5261,8 @@ const i18nStrings = <String, Map<String, String>>{
     'baqui.s2': 'Хочу природу на севере',
     'baqui.s3': 'Какие территории на Карибском побережье?',
     'nav.baqui': 'BAQÜI',
+    'baqui.sign_in_app': 'Войдите в «Профиле», чтобы поговорить с BAQÜI.',
+    'baqui.open': 'Поговорить с BAQÜI',
   },
   'ja': {
     'meta.title_default': 'BAQUEANO：地図に載っていないものを見つけよう',
@@ -5826,5 +5844,7 @@ const i18nStrings = <String, Map<String, String>>{
     'baqui.s2': '北部で自然を楽しみたい',
     'baqui.s3': 'カリブ海側の地域は？',
     'nav.baqui': 'BAQÜI',
+    'baqui.sign_in_app': 'プロフィールからログインしてBAQÜIと話しましょう。',
+    'baqui.open': 'BAQÜIと話す',
   },
 };

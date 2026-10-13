@@ -3,6 +3,7 @@ import 'package:intl/intl.dart'; // Formato de dinero
 
 import '../../core/i18n/t.dart'; // Textos traducidos
 import '../../core/theme.dart'; // Colores y espaciados
+import '../baqui/baqui_screen.dart'; // Conversación con BAQÜI
 import 'mis_viajes.dart'; // Guardar y ver viajes
 import 'trip_intent.dart'; // Interpretación del viaje (igual que la web)
 
@@ -132,6 +133,12 @@ class _PlannerScreenState extends State<PlannerScreen> {
               ),
             ),
           ),
+        const SizedBox(height: TvSpace.s6), // Espacio
+        OutlinedButton.icon(
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const BaquiScreen())), // Abre la conversación con BAQÜI
+          icon: const Icon(Icons.auto_awesome), // Icono del asistente
+          label: Text(context.t('baqui.open')), // "Hablar con BAQÜI"
+        ),
         const SizedBox(height: TvSpace.s8), // Espacio
         const MisViajes(), // Viajes y lugares guardados con la cuenta (los mismos de la web)
       ],

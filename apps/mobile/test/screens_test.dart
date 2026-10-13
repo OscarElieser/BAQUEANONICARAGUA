@@ -8,6 +8,7 @@ import 'package:nica_app/core/data/models.dart'; // Datos
 import 'package:nica_app/core/data/repositories.dart'; // Interfaces a reemplazar
 import 'package:nica_app/core/theme.dart'; // Tema
 import 'package:nica_app/features/auth/auth_repository.dart'; // Sesión
+import 'package:nica_app/features/baqui/baqui_screen.dart'; // BAQÜI
 import 'package:nica_app/features/catalog/business_screen.dart'; // Ficha de negocio
 import 'package:nica_app/features/community/community_screen.dart'; // Comunidad
 import 'package:nica_app/features/community/publicar_cronica_screen.dart'; // Publicar crónica
@@ -126,6 +127,13 @@ void main() {
     await tester.pumpAndSettle(); // Espera
     expect(find.text('Inicia sesión en Perfil para publicar tu crónica.'), findsOneWidget); // Lo explica
     expect(find.byType(TextFormField), findsNothing); // Y no muestra campos que no se podrían enviar
+  });
+
+  testWidgets('BAQÜI sin sesión explica dónde entrar y no llama al asistente', (tester) async {
+    await tester.pumpWidget(app(const BaquiScreen())); // Abre BAQÜI sin sesión
+    await tester.pumpAndSettle(); // Espera
+    expect(find.text('Inicia sesión en Perfil para hablar con BAQÜI.'), findsOneWidget); // Lo explica
+    expect(find.byType(TextField), findsNothing); // Sin campo para escribir
   });
 
   testWidgets('Comunidad muestra relatos en orden y marca lo promocional', (tester) async {

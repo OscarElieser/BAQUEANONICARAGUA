@@ -582,5 +582,7 @@
   "baqui.s1": "그라나다에서 3일 동안 뭘 할까?",
   "baqui.s2": "북부에서 자연을 즐기고 싶어",
   "baqui.s3": "카리브 쪽 지역은 어디야?",
-  "nav.baqui": "BAQÜI"
+  "nav.baqui": "BAQÜI",
+  "baqui.sign_in_app": "프로필에서 로그인하고 BAQÜI와 대화하세요.",
+  "baqui.open": "BAQÜI와 대화하기"
 }
