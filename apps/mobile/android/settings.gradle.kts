@@ -19,8 +19,8 @@ pluginManagement {
 
 plugins {
     id("dev.flutter.flutter-plugin-loader") version "1.0.0" // Cargador de dependencias de plugins Flutter
-    id("com.android.application") version "8.7.0" apply false // Plugin oficial de compilación de aplicaciones Android
-    id("org.jetbrains.kotlin.android") version "1.8.22" apply false // Soporte del lenguaje Kotlin en el proyecto
+    id("com.android.application") version "8.11.1" apply false // Plugin oficial de Android (Flutter estable exige 8.11.1 o más nuevo)
+    id("org.jetbrains.kotlin.android") version "2.2.20" apply false // Kotlin (Flutter estable exige 2.2.20 o más nuevo)
     id("com.google.gms.google-services") version "4.5.0" apply false // Plugin de Google Services para Firebase
 }
 

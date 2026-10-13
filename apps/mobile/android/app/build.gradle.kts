@@ -23,12 +23,8 @@ android {
     ndkVersion = flutter.ndkVersion // Versión del NDK utilizada por Flutter
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11 // Compatibilidad de código fuente con Java 11
-        targetCompatibility = JavaVersion.VERSION_11 // Código binario compatible con Java 11
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString() // Destino de la máquina virtual de Kotlin
+        sourceCompatibility = JavaVersion.VERSION_17 // Código fuente en Java 17 (lo que usa Flutter estable)
+        targetCompatibility = JavaVersion.VERSION_17 // Código compilado para Java 17
     }
 
     defaultConfig {
@@ -54,6 +50,12 @@ android {
         release {
             signingConfig = if (hayFirmaPropia) signingConfigs.getByName("publicacion") else signingConfigs.getByName("debug") // Llave propia si existe; si no, la de pruebas (sirve para probar, no para Google Play)
         }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17 // Kotlin compila para Java 17 (la forma nueva; kotlinOptions ya no sirve en Kotlin 2.2)
     }
 }
 
