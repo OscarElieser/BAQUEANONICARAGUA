@@ -873,7 +873,8 @@ insert into results select 'funciones con search_path fijo (asesor de seguridad 
   );
 
 -- BAQÜI (migración 0018)
-select pg_temp.act_as('fb_user_a'); -- Usuaria con sesión
+insert into public.profiles (id, firebase_uid, display_name) values ('00000000-0000-0000-0000-0000000bb001', 'fb_baqui', 'Viajera BAQÜI'); -- Cuenta activa propia para estas pruebas
+select pg_temp.act_as('fb_baqui'); -- Viajera con sesión
 insert into results select 'BAQÜI abre un turno con sesión y devuelve territorios publicados', -- Turno normal
   jsonb_array_length((public.baqui_start('Quiero ir a Granada', 'es'))->'territories') >= 1;
 insert into results select 'BAQÜI guarda el mensaje de la persona', -- Queda en su historial
@@ -900,7 +901,7 @@ begin
   end;
 end $$;
 reset role;
-select pg_temp.act_as('fb_user_a'); -- Vuelve la usuaria
+select pg_temp.act_as('fb_baqui'); -- Vuelve la viajera
 do $$
 begin
   for i in 1..39 loop perform public.baqui_start('mensaje ' || i); end loop; -- Llega a 40 mensajes en el día

@@ -7,7 +7,7 @@ import { test } from 'node:test'; // Corredor de pruebas de Node
 import { createHandler, pedidoGemini, quitarCifrasSinFuente, type Config } from '../baqui/handler.ts'; // Función a probar
 
 const config: Config = { geminiApiKey: 'clave-de-prueba', geminiModel: 'gemini-prueba', supabaseUrl: 'https://sb.test', anonKey: 'anon', serviceRoleKey: 'servicio', allowedOrigins: ['https://baqueano.test'] }; // Configuración falsa
-const turno = { conversation_id: 'c1', history: [{ role: 'user', text: 'Quiero 3 días en Granada' }], territories: [{ name: 'Granada', kind: 'department', capital: 'Granada', source: 'Ley No. 59' }] }; // Lo que devolvería la base de datos
+const turno = { conversation_id: 'c1', history: [{ role: 'user' as const, text: 'Quiero 3 días en Granada' }], territories: [{ name: 'Granada', kind: 'department', capital: 'Granada' as string | null, source: 'Ley No. 59' as string | null }] }; // Lo que devolvería la base de datos
 
 /** fetch simulado que registra las llamadas y responde según la dirección. */
 function simulado(respuestas: Record<string, () => Response>) {
