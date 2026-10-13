@@ -17,7 +17,7 @@ Regla: un módulo solo pasa a `probado` cuando cumple los criterios de la secci�
 | Viajes y favoritos (web + Android) | probado (CI) | Mismas tablas (`trips`, `favorites`) con RLS; guardar desde Mi aventura, lista "Mis viajes y lugares guardados", botón Guardar en fichas. Falta probar con una cuenta real en vivo. |
 | Crónicas (web + Android) | probado (CI) | Publicar con la cuenta (`posts`, tipo `chronicle`), límite de 10 por hora, publicidad identificada, moderación existente. |
 | BAQÜI (Gemini) | desplegado sin clave | Función `baqui` en Supabase (versión 1) y migración 0018 en producción: sesión y límite de 40 mensajes/día en la base de datos, datos publicados delimitados, cifras sin fuente reemplazadas por "por cotizar", respuestas guardadas solo por el servidor. Responde 503 hasta que se cargue `GEMINI_API_KEY`. Web `/baqui` y Android desde Mi aventura. |
-| Ops Center: indicadores de viajeros | probado (CI) | Migración 0019 (aún no aplicada en producción: va con el flujo Publicar): viajes, favoritos, crónicas y uso de BAQÜI, solo cifras. |
+| Ops Center: indicadores de viajeros | probado (CI) | Migración `20261013061500_metricas_viajeros` (aún no aplicada en producción: va con el flujo Publicar): viajes, favoritos, crónicas y uso de BAQÜI, solo cifras. |
 
 ## Estado al 2026-10-11
 
