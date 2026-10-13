@@ -526,5 +526,7 @@
   "help.more_text": "Write to us through the channels on the contact page.",
   "help.more_cta": "Go to contact",
   "footer.help": "Help",
-  "help.go": "Go there"
+  "help.go": "Go there",
+  "terr.seat_label": "Administrative seat",
+  "territory.seat": "Administrative seat: {name}"
 }

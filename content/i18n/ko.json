@@ -526,5 +526,7 @@
   "help.more_text": "연락처 페이지의 채널로 문의해 주세요.",
   "help.more_cta": "연락처로 가기",
   "footer.help": "도움말",
-  "help.go": "바로 가기"
+  "help.go": "바로 가기",
+  "terr.seat_label": "행정 소재지",
+  "territory.seat": "행정 소재지: {name}"
 }

@@ -29,6 +29,7 @@ values ('00000000-0000-0000-0000-0000000000f1', 'business', 'Comedor de prueba',
 insert into public.organization_memberships (organization_id, profile_id, role)
 values ('00000000-0000-0000-0000-0000000000f1', '00000000-0000-0000-0000-0000000000e1', 'owner');
 
+update public.departments set editorial = 'draft' where id <> 6;  -- La migración 0017 publica los 17: para esta prueba se dejan en borrador todos menos Granada
 update public.departments set editorial = 'published' where id = 6;  -- solo Granada publicada
 
 insert into public.businesses (id, organization_id, slug, name, department_id, listing_tier, editorial)
@@ -870,6 +871,11 @@ insert into results select 'funciones con search_path fijo (asesor de seguridad 
     where (n.nspname, p.proname) in (('app','touch_updated_at'),('app','current_firebase_uid'),('app','public_point'),('app','slugify'),('app','risk_for_categories'),('app','incident_transition_allowed'),('audit','block_mutation'),('public','my_profile_id')) -- Las señaladas
       and not coalesce(p.proconfig::text like '%search_path=%', false) -- Sin search_path fijo
   );
+
+insert into results select 'los 17 territorios tienen cabecera y fuente (migración 0017)', -- Datos oficiales completos
+  (select count(*) from public.departments where capital_name is not null and source_id = '00000000-0000-0000-0000-00000000a018') = 17;
+insert into results select 'la publicación de territorios quedó en la auditoría', -- Un registro por territorio
+  (select count(distinct target_id) from audit.logs where action = 'territory.publish') = 17;
 
 select case when ok then 'PASS' else 'FAIL' end as status, name from results order by ok, name;
 select count(*) filter (where not ok) as failures, count(*) as total from results;

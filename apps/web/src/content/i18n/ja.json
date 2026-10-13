@@ -526,5 +526,7 @@
   "help.more_text": "お問い合わせページの窓口からご連絡ください。",
   "help.more_cta": "お問い合わせへ",
   "footer.help": "ヘルプ",
-  "help.go": "ページへ"
+  "help.go": "ページへ",
+  "terr.seat_label": "行政所在地",
+  "territory.seat": "行政所在地：{name}"
 }

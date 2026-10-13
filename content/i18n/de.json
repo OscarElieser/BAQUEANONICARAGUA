@@ -526,5 +526,7 @@
   "help.more_text": "Schreib uns über die Kanäle auf der Kontaktseite.",
   "help.more_cta": "Zum Kontakt",
   "footer.help": "Hilfe",
-  "help.go": "Dorthin"
+  "help.go": "Dorthin",
+  "terr.seat_label": "Verwaltungssitz",
+  "territory.seat": "Verwaltungssitz: {name}"
 }

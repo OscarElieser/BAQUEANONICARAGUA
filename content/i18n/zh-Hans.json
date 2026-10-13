@@ -526,5 +526,7 @@
   "help.more_text": "请通过联系页面上的渠道给我们写信。",
   "help.more_cta": "前往联系页面",
   "footer.help": "帮助",
-  "help.go": "前往"
+  "help.go": "前往",
+  "terr.seat_label": "行政驻地",
+  "territory.seat": "行政驻地：{name}"
 }

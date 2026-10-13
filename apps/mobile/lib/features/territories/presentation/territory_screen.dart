@@ -102,7 +102,7 @@ class _Heroe extends ConsumerWidget {
           SizedBox(height: 140, child: CurvasDeNivel(semanticLabel: context.t('territory.contours', {'name': name}))), // Motivo de relieve
           const SizedBox(height: TvSpace.s4), // Espacio
           Text(name, style: text.displayMedium), // Nombre oficial
-          if (capital != null) Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text(context.t('territory.capital', {'name': capital!}), style: TextStyle(color: context.tv.inkMuted))), // Cabecera
+          if (capital != null) Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text(context.t(slug.startsWith('costa-caribe') ? 'territory.seat' : 'territory.capital', {'name': capital!}), style: TextStyle(color: context.tv.inkMuted))), // Cabecera
         ],
       ); // Versión sin mapa
     }
@@ -123,7 +123,7 @@ class _Heroe extends ConsumerWidget {
                   Text(context.t(zonaTexto(forma.zone)), style: const TextStyle(color: marfil, fontSize: 15, fontWeight: FontWeight.w700)), // Zona de paisaje
                   const SizedBox(height: TvSpace.s1), // Espacio
                   Semantics(header: true, child: Text(name, style: text.displayMedium?.copyWith(color: marfil))), // Nombre oficial
-                  if (capital != null) Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text(context.t('territory.capital', {'name': capital!}), style: const TextStyle(color: marfil))), // Cabecera
+                  if (capital != null) Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text(context.t(slug.startsWith('costa-caribe') ? 'territory.seat' : 'territory.capital', {'name': capital!}), style: const TextStyle(color: marfil))), // Cabecera
                 ],
               ),
             ),

@@ -541,6 +541,8 @@ const i18nStrings = <String, Map<String, String>>{
     'help.more_cta': 'Ir a contacto',
     'footer.help': 'Ayuda',
     'help.go': 'Ir ahí',
+    'terr.seat_label': 'Sede administrativa',
+    'territory.seat': 'Sede administrativa: {name}',
   },
   'en': {
     'meta.title_default': 'BAQUEANO: discover what\'s not on the map',
@@ -1066,6 +1068,8 @@ const i18nStrings = <String, Map<String, String>>{
     'help.more_cta': 'Go to contact',
     'footer.help': 'Help',
     'help.go': 'Go there',
+    'terr.seat_label': 'Administrative seat',
+    'territory.seat': 'Administrative seat: {name}',
   },
   'zh-Hans': {
     'meta.title_default': 'BAQUEANO：发现地图上找不到的地方',
@@ -1591,6 +1595,8 @@ const i18nStrings = <String, Map<String, String>>{
     'help.more_cta': '前往联系页面',
     'footer.help': '帮助',
     'help.go': '前往',
+    'terr.seat_label': '行政驻地',
+    'territory.seat': '行政驻地：{name}',
   },
   'ko': {
     'meta.title_default': 'BAQUEANO: 지도에 없는 곳을 발견하세요',
@@ -2116,6 +2122,8 @@ const i18nStrings = <String, Map<String, String>>{
     'help.more_cta': '연락처로 가기',
     'footer.help': '도움말',
     'help.go': '바로 가기',
+    'terr.seat_label': '행정 소재지',
+    'territory.seat': '행정 소재지: {name}',
   },
   'it': {
     'meta.title_default': 'BAQUEANO: scopri ciò che non è sulla mappa',
@@ -2641,6 +2649,8 @@ const i18nStrings = <String, Map<String, String>>{
     'help.more_cta': 'Vai ai contatti',
     'footer.help': 'Aiuto',
     'help.go': 'Vai lì',
+    'terr.seat_label': 'Sede amministrativa',
+    'territory.seat': 'Sede amministrativa: {name}',
   },
   'fr': {
     'meta.title_default': 'BAQUEANO : découvre ce qui n\'est pas sur la carte',
@@ -3166,6 +3176,8 @@ const i18nStrings = <String, Map<String, String>>{
     'help.more_cta': 'Aller au contact',
     'footer.help': 'Aide',
     'help.go': 'Y aller',
+    'terr.seat_label': 'Siège administratif',
+    'territory.seat': 'Siège administratif : {name}',
   },
   'pt': {
     'meta.title_default': 'BAQUEANO: descubra o que não aparece no mapa',
@@ -3691,6 +3703,8 @@ const i18nStrings = <String, Map<String, String>>{
     'help.more_cta': 'Ir para contato',
     'footer.help': 'Ajuda',
     'help.go': 'Ir até lá',
+    'terr.seat_label': 'Sede administrativa',
+    'territory.seat': 'Sede administrativa: {name}',
   },
   'de': {
     'meta.title_default': 'BAQUEANO: Entdecke, was auf keiner Karte steht',
@@ -4216,6 +4230,8 @@ const i18nStrings = <String, Map<String, String>>{
     'help.more_cta': 'Zum Kontakt',
     'footer.help': 'Hilfe',
     'help.go': 'Dorthin',
+    'terr.seat_label': 'Verwaltungssitz',
+    'territory.seat': 'Verwaltungssitz: {name}',
   },
   'ru': {
     'meta.title_default': 'BAQUEANO: открой то, чего нет на карте',
@@ -4741,6 +4757,8 @@ const i18nStrings = <String, Map<String, String>>{
     'help.more_cta': 'К контактам',
     'footer.help': 'Помощь',
     'help.go': 'Перейти',
+    'terr.seat_label': 'Административный центр',
+    'territory.seat': 'Административный центр: {name}',
   },
   'ja': {
     'meta.title_default': 'BAQUEANO：地図に載っていないものを見つけよう',
@@ -5266,5 +5284,7 @@ const i18nStrings = <String, Map<String, String>>{
     'help.more_cta': 'お問い合わせへ',
     'footer.help': 'ヘルプ',
     'help.go': 'ページへ',
+    'terr.seat_label': '行政所在地',
+    'territory.seat': '行政所在地：{name}',
   },
 };

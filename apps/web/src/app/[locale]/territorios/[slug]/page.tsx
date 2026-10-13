@@ -83,7 +83,7 @@ export default async function TerritoryPage({ params }: { params: Promise<{ loca
             <h2 className="m-0 font-display text-[26px] font-normal">{t(locale, 'terr.general')}</h2> {/* "Información general" */}
             <dl className="datos-generales m-0 mt-4">
               <div><dt>{t(locale, 'terr.type_label')}</dt><dd>{t(locale, slug.startsWith('costa-caribe') ? 'index.region' : 'index.department')}</dd></div> {/* Departamento o región autónoma */}
-              <div><dt>{t(locale, 'terr.capital_label')}</dt><dd>{territory.capital_name ?? t(locale, 'ficha.unconfirmed')}</dd></div> {/* Cabecera, del catálogo oficial */}
+              <div><dt>{t(locale, slug.startsWith('costa-caribe') ? 'terr.seat_label' : 'terr.capital_label')}</dt><dd>{territory.capital_name ?? t(locale, 'ficha.unconfirmed')}</dd></div> {/* Cabecera, del catálogo oficial */}
               <div><dt>{t(locale, 'terr.zone_label')}</dt><dd>{t(locale, ZONA_TEXTO[forma.zone])}</dd></div> {/* Zona de paisaje (agrupación de BAQUEANO) */}
               <div><dt>{t(locale, 'muni.short')}</dt><dd>{municipios > 0 ? <Link href={`/${locale}/territorios/${slug}/municipios`}>{t(locale, 'muni.count', { n: String(municipios) })}</Link> : <span className="text-oro-text">{t(locale, 'ficha.unconfirmed')}</span>}</dd></div> {/* Municipios confirmados, con enlace a la lista */}
               <div><dt>{t(locale, 'terr.pending_facts')}</dt><dd className="text-oro-text">{t(locale, 'ficha.unconfirmed')}</dd></div> {/* Aún sin fuente comprobada */}
