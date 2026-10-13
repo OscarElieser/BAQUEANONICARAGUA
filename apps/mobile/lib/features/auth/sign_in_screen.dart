@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart' show MultiFactorResolver; // Datos para completar el segundo paso
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Acceso a los proveedores de Riverpod
 
@@ -45,6 +46,8 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     try {
       await action(); // Ejecuta la acción
       if (mounted && ok != null) setState(() => _info = ok); // Muestra la confirmación si la pantalla sigue abierta
+    } on SegundoPasoRequerido catch (e) {
+      if (mounted) await _pedirCodigo(e.resolver); // La cuenta tiene dos pasos: pide el código de la app
     } on AuthFailure catch (e) {
       if (mounted) setState(() => _error = context.t(e.key)); // Muestra el error traducido
     } catch (_) {
@@ -52,6 +55,16 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     } finally {
       if (mounted) setState(() => _busy = false); // Libera los botones
     }
+  }
+
+  /// Pide el código de 6 dígitos de la app de autenticación y termina el inicio de sesión.
+  Future<void> _pedirCodigo(MultiFactorResolver resolver) async {
+    final repo = ref.read(authRepositoryProvider); // Repositorio de autenticación
+    await showDialog<void>(
+      context: context, // Pantalla actual
+      barrierDismissible: false, // Solo se cierra con sus botones
+      builder: (_) => DialogoSegundoPaso(alVerificar: (codigo) => repo.entrarConCodigo(resolver, codigo)), // Diálogo del código
+    );
   }
 
   void _submit() {
@@ -327,4 +340,71 @@ class _ArcoDeLuz extends CustomPainter {
 
   @override
   bool shouldRepaint(_ArcoDeLuz oldDelegate) => false; // Nunca cambia
+}
+
+/// Diálogo del segundo paso: pide el código de la app de autenticación y muestra errores claros.
+class DialogoSegundoPaso extends StatefulWidget {
+  const DialogoSegundoPaso({super.key, required this.alVerificar}); // Recibe la acción que comprueba el código
+  final Future<void> Function(String codigo) alVerificar; // Termina el inicio de sesión
+
+  @override
+  State<DialogoSegundoPaso> createState() => DialogoSegundoPasoEstado(); // Crea el estado
+}
+
+class DialogoSegundoPasoEstado extends State<DialogoSegundoPaso> {
+  final _codigo = TextEditingController(); // Código escrito
+  bool _ocupado = false; // Si está comprobando
+  String? _error; // Error visible
+
+  @override
+  void dispose() {
+    _codigo.dispose(); // Libera el controlador
+    super.dispose(); // Libera el resto
+  }
+
+  Future<void> _verificar() async {
+    setState(() {
+      _ocupado = true; // Bloquea los botones
+      _error = null; // Limpia el error anterior
+    });
+    try {
+      await widget.alVerificar(_codigo.text); // Firebase comprueba el código
+      if (mounted) Navigator.of(context).pop(); // Listo: la sesión ya está abierta
+    } on AuthFailure catch (e) {
+      if (mounted) setState(() => _error = context.t(e.key)); // Error traducido
+    } catch (_) {
+      if (mounted) setState(() => _error = context.t('auth.err.generic')); // Error inesperado
+    } finally {
+      if (mounted) setState(() => _ocupado = false); // Libera los botones
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(context.t('dospasos.title')), // Título
+      content: Column(
+        mainAxisSize: MainAxisSize.min, // Solo lo necesario
+        crossAxisAlignment: CrossAxisAlignment.start, // Alineado a la izquierda
+        children: [
+          Text(context.t('dospasos.signin_text')), // Qué hacer
+          const SizedBox(height: TvSpace.s3), // Espacio
+          TextField(
+            controller: _codigo, // Código
+            autofocus: true, // Listo para escribir
+            keyboardType: TextInputType.number, // Teclado numérico
+            autofillHints: const [AutofillHints.oneTimeCode], // El sistema puede sugerir el código
+            maxLength: 7, // 6 dígitos (y un espacio opcional)
+            decoration: InputDecoration(labelText: context.t('dospasos.code'), counterText: ''), // Etiqueta visible
+            onSubmitted: (_) => _ocupado ? null : _verificar(), // Enter también verifica
+          ),
+          if (_error != null) Text(_error!, style: TextStyle(color: context.tv.statusAlert)), // Error claro
+        ],
+      ),
+      actions: [
+        TextButton(onPressed: _ocupado ? null : () => Navigator.of(context).pop(), child: Text(context.t('dospasos.cancel'))), // Cancelar
+        FilledButton(onPressed: _ocupado ? null : _verificar, child: Text(_ocupado ? context.t('auth.processing') : context.t('dospasos.verify'))), // Verificar y entrar
+      ],
+    );
+  }
 }

@@ -1,0 +1,42 @@
+{
+  "_nota": "Respaldo tomado antes de aplicar las migraciones superadmin_inicial y avisos_push en producción (13 de octubre de 2026). Para volver atrás: restaurar estas dos funciones con su definición, borrar los ajustes superadmin_inicial_sha256 y avisos_url, quitar la tarea de pg_cron 'enviar-avisos' (select cron.unschedule('enviar-avisos')) y las columnas push_attempts y push_locked_until de notifications. Todas las tablas afectadas estaban vacías.",
+  "tomado": "2026-10-13T12:46:50Z",
+  "ajustes": [
+    {
+      "key": "firebase_project_id",
+      "value": "baqueanonicaragua-95755"
+    }
+  ],
+  "conteos": {
+    "profiles": 0,
+    "user_roles": 0,
+    "notifications": 0,
+    "push_tokens": 0,
+    "audit_logs": 17
+  },
+  "extensiones": [
+    "pg_stat_statements",
+    "pg_trgm",
+    "pgcrypto",
+    "plpgsql",
+    "postgis",
+    "supabase_vault",
+    "unaccent",
+    "uuid-ossp",
+    "vector"
+  ],
+  "columnas_notifications": [
+    "id",
+    "profile_id",
+    "kind",
+    "payload",
+    "read_at",
+    "push_status",
+    "email_status",
+    "created_at"
+  ],
+  "funciones": {
+    "app.guard_notification_update": "CREATE OR REPLACE FUNCTION app.guard_notification_update()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\nbegin\n  if current_user in ('authenticated','anon') and (\n     new.kind is distinct from old.kind or new.payload is distinct from old.payload\n     or new.push_status is distinct from old.push_status or new.email_status is distinct from old.email_status\n     or new.profile_id is distinct from old.profile_id) then\n    raise exception 'Solo puedes marcar notificaciones como leídas' using errcode = '42501';\n  end if;\n  return new;\nend;\n$function$\n",
+    "public.ops_dashboard_metrics": "Igual a la definición del archivo supabase/migrations/20261013061500_metricas_viajeros.sql (aplicada en producción)."
+  }
+}

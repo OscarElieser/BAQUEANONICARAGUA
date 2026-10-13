@@ -11,8 +11,10 @@ import {
   signInWithRedirect, // Alternativa a la ventana cuando el navegador la bloquea
   signOut, // Cierra la sesión
   updateProfile, // Guarda el nombre visible en la cuenta
+  type MultiFactorResolver, // Completa el inicio de sesión con el segundo paso
   type User, // Tipo que describe al usuario con sesión
 } from 'firebase/auth';
+import { completarSegundoPaso, siPideSegundoPaso } from './dosPasos'; // Verificación en dos pasos
 import publica from '@/config/publica.json'; // Valores públicos del proyecto oficial
 import { firebaseAuth } from './firebase'; // Instancia de Firebase Auth (o null si no está configurado)
 import { t, type MessageKey } from '@/i18n/t'; // Textos traducidos
@@ -45,6 +47,13 @@ export function authErrorMessage(locale: string, error: unknown): string {
     'app/profile-failed': 'auth.err.profile_failed', // No se pudo preparar el perfil
     'app/sign-in-first': 'auth.err.sign_in_first', // Falta iniciar sesión
     'app/not-available': 'auth.err.not_available', // Firebase sin configurar
+    'app/mfa-off': 'dospasos.err.off', // El proyecto aún no tiene activada la verificación en dos pasos
+    'app/mfa-unsupported': 'dospasos.err.unsupported', // La cuenta usa otro tipo de segundo paso
+    'auth/invalid-verification-code': 'dospasos.err.bad_code', // Código incorrecto o vencido
+    'auth/invalid-multi-factor-session': 'dospasos.err.expired', // Pasó mucho tiempo desde la contraseña
+    'auth/requires-recent-login': 'dospasos.err.recent_login', // Firebase pide haber entrado hace poco
+    'auth/unverified-email': 'dospasos.err.verify_email', // Primero hay que verificar el correo
+    'auth/second-factor-already-in-use': 'dospasos.err.already', // Ya estaba activada
   }; // Código del error y su clave de traducción
   return t(locale, keys[code] ?? 'auth.err.generic'); // Mensaje traducido o genérico
 }
@@ -81,9 +90,21 @@ async function prepararSesion(user: User): Promise<void> {
 
 /** Inicia sesión con correo y contraseña. */
 export async function iniciarSesion(email: string, password: string): Promise<User> {
-  const cred = await signInWithEmailAndPassword(requireAuth(), email.trim(), password); // Comprueba correo y contraseña en Firebase
-  await prepararSesion(cred.user); // Prepara rol y perfil
-  return cred.user; // Devuelve el usuario con sesión
+  const auth = requireAuth(); // Instancia de Firebase Auth
+  try {
+    const cred = await signInWithEmailAndPassword(auth, email.trim(), password); // Comprueba correo y contraseña en Firebase
+    await prepararSesion(cred.user); // Prepara rol y perfil
+    return cred.user; // Devuelve el usuario con sesión
+  } catch (e) {
+    throw siPideSegundoPaso(auth, e) ?? e; // Si la cuenta tiene dos pasos, la pantalla pide el código
+  }
+}
+
+/** Termina el inicio de sesión con el código de la app de autenticación. */
+export async function entrarConCodigo(resolver: MultiFactorResolver, codigo: string): Promise<User> {
+  const user = await completarSegundoPaso(resolver, codigo); // Firebase comprueba el código
+  await prepararSesion(user); // Prepara rol y perfil
+  return user; // Persona con sesión
 }
 
 /** Crea una cuenta nueva, guarda el nombre y envía el correo de verificación. */
@@ -106,6 +127,8 @@ export async function iniciarConGoogle(): Promise<User | null> {
     await prepararSesion(cred.user); // Prepara rol y perfil
     return cred.user; // Devuelve el usuario con sesión
   } catch (error) {
+    const dosPasos = siPideSegundoPaso(auth, error); // ¿La cuenta pide el segundo paso?
+    if (dosPasos) throw dosPasos; // La pantalla pide el código
     if ((error as { code?: string }).code === 'auth/popup-blocked') {
       // El navegador bloqueó la ventana emergente
       await signInWithRedirect(auth, provider); // Redirige a Google y vuelve a esta página al terminar
@@ -117,9 +140,18 @@ export async function iniciarConGoogle(): Promise<User | null> {
 
 /** Al volver de la página de Google (cuando el navegador bloqueó la ventana), prepara rol y perfil. */
 export async function completarRedireccion(): Promise<void> {
-  const cred = await getRedirectResult(requireAuth()); // Resultado de la redirección (null si no se venía de Google)
-  if (cred) await prepararSesion(cred.user); // Solo si de verdad se inició sesión así
+  const auth = requireAuth(); // Instancia de Firebase Auth
+  try {
+    const cred = await getRedirectResult(auth); // Resultado de la redirección (null si no se venía de Google)
+    if (cred) await prepararSesion(cred.user); // Solo si de verdad se inició sesión así
+  } catch (e) {
+    const dosPasos = siPideSegundoPaso(auth, e); // ¿La cuenta pide el segundo paso?
+    if (dosPasos) window.dispatchEvent(new CustomEvent(EVENTO_SEGUNDO_PASO, { detail: (dosPasos as Error & { resolver: MultiFactorResolver }).resolver })); // Avisa al formulario para que pida el código
+    else throw e; // Otros errores se informan
+  }
 }
+
+export const EVENTO_SEGUNDO_PASO = 'baqueano:segundo-paso'; // Aviso interno: volvió de Google y falta el código
 
 /** Envía el correo para recuperar la contraseña. */
 export async function recuperarContrasena(email: string): Promise<void> {

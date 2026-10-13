@@ -2,7 +2,7 @@
 
 import Link from 'next/link'; // Enlaces internos sin recargar
 import { usePathname } from 'next/navigation'; // Ruta actual, para marcar la sección activa
-import type { ReactNode } from 'react'; // Tipo del contenido de cada página
+import { useEffect, useState, type ReactNode } from 'react'; // Estado, efecto y tipo del contenido de cada página
 import { SECTIONS } from './resources'; // Secciones del Ops Center (verificadas contra la base en CI)
 import { useOpsAuth } from './useOps'; // Estado de la sesión del equipo
 
@@ -17,6 +17,15 @@ const GRUPOS: Array<{ titulo: string; claves: string[] }> = [
 
 export function OpsShell({ locale, children }: { locale: string; children: ReactNode }) {
   const auth = useOpsAuth(); // Sesión del miembro del equipo
+  const [sinSegundoPaso, setSinSegundoPaso] = useState(false); // Si esta sesión entró sin la verificación en dos pasos
+
+  useEffect(() => {
+    if (auth.kind !== 'ready') return; // Solo con sesión
+    auth.user.getIdTokenResult().then((r) => {
+      const firebase = r.claims.firebase as { sign_in_second_factor?: string } | undefined; // Datos de cómo se inició la sesión
+      setSinSegundoPaso(!firebase?.sign_in_second_factor); // La API exige el segundo paso para trabajar aquí
+    }).catch(() => setSinSegundoPaso(false)); // Si no se puede leer, la API igual lo dirá
+  }, [auth]); // Cada vez que cambia la sesión
   const pathname = usePathname() ?? ''; // Ruta actual
   const base = `/${locale}/ops`; // Raíz del Ops Center en este idioma
   const rest = pathname.slice(base.length); // Parte de la ruta dentro del Ops Center
@@ -74,7 +83,15 @@ export function OpsShell({ locale, children }: { locale: string; children: React
           <p className="m-0 text-sm text-ink-muted">Centro de operaciones: solo datos reales de la base</p> {/* Recordatorio del principio: sin cifras estimadas */}
           {usuario && <p className="ops-usuario m-0">{usuario}</p>} {/* Cuenta con la sesión abierta */}
         </header>
-        <main className="p-5 sm:p-8">{body}</main> {/* Contenido de la sección */}
+        <main className="p-5 sm:p-8">
+          {sinSegundoPaso && (
+            // Aviso honesto: sin el segundo paso, la API rechaza las acciones del Ops Center
+            <p role="status" className="ops-aviso mb-5">
+              Esta sesión entró sin la verificación en dos pasos, y el Ops Center la exige. Actívala en <Link href={`/${locale}/cuenta`}>tu cuenta</Link> y vuelve a entrar con el código. {/* Qué hacer */}
+            </p>
+          )}
+          {body} {/* Contenido de la sección */}
+        </main>
       </div>
     </div>
   );

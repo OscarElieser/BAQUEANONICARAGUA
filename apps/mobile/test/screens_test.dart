@@ -9,6 +9,7 @@ import 'package:nica_app/core/data/models.dart'; // Datos
 import 'package:nica_app/core/data/repositories.dart'; // Interfaces a reemplazar
 import 'package:nica_app/core/theme.dart'; // Tema
 import 'package:nica_app/features/auth/auth_repository.dart'; // Sesión
+import 'package:nica_app/features/auth/sign_in_screen.dart'; // Diálogo del segundo paso
 import 'package:nica_app/features/baqui/baqui_screen.dart'; // BAQÜI
 import 'package:nica_app/features/catalog/business_screen.dart'; // Ficha de negocio
 import 'package:nica_app/features/community/community_screen.dart'; // Comunidad
@@ -111,6 +112,34 @@ Widget app(Widget home, {FakeMessaging? messaging, AvisosRepository? avisos, Loc
 
 void main() {
   setUpAll(() => initializeDateFormatting()); // Carga los formatos de fecha de todos los idiomas
+
+  testWidgets('segundo paso: código incorrecto muestra el error y el correcto cierra el diálogo', (tester) async {
+    final intentos = <String>[]; // Códigos recibidos
+    await tester.pumpWidget(app(Builder(
+      builder: (context) => TextButton(
+        onPressed: () => showDialog<void>(
+          context: context, // Pantalla de la prueba
+          builder: (_) => DialogoSegundoPaso(alVerificar: (codigo) async {
+            intentos.add(codigo); // Anota el intento
+            if (codigo != '123456') throw const AuthFailure('dospasos.err.bad_code'); // Solo uno es correcto
+          }),
+        ),
+        child: const Text('abrir'), // Abre el diálogo
+      ),
+    )));
+    await tester.tap(find.text('abrir')); // Abre el diálogo
+    await tester.pumpAndSettle(); // Espera
+    expect(find.text('Verificación en dos pasos'), findsOneWidget); // Título
+    await tester.enterText(find.byType(TextField), '000000'); // Código incorrecto
+    await tester.tap(find.text('Verificar y entrar')); // Verifica
+    await tester.pumpAndSettle(); // Espera
+    expect(find.text('El código no es correcto o ya cambió. Escribe el que muestra la app ahora.'), findsOneWidget); // Error claro
+    await tester.enterText(find.byType(TextField), '123456'); // Código correcto
+    await tester.tap(find.text('Verificar y entrar')); // Verifica
+    await tester.pumpAndSettle(); // Espera
+    expect(find.byType(DialogoSegundoPaso), findsNothing); // El diálogo se cerró
+    expect(intentos, ['000000', '123456']); // Recibió los dos intentos tal cual
+  });
 
   testWidgets('avisos del teléfono: activar, confirmar y apagar', (tester) async {
     final avisos = FakeAvisos(EstadoAvisos.apagado); // Empiezan apagados

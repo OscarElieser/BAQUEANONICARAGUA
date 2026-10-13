@@ -29,6 +29,12 @@ class AuthFailure implements Exception {
   String toString() => tr('es', key); // En registros se ve el mensaje en español
 }
 
+/// La cuenta tiene verificación en dos pasos: falta el código de la app de autenticación.
+class SegundoPasoRequerido implements Exception {
+  const SegundoPasoRequerido(this.resolver); // Guarda lo necesario para terminar el inicio
+  final MultiFactorResolver resolver; // Datos de Firebase para completar el inicio de sesión
+}
+
 class AuthRepository {
   AuthRepository(this._auth, this._google); // Recibe las dependencias para poder probarlas
 
@@ -55,6 +61,10 @@ class AuthRepository {
         return 'auth.err.too_many'; // Bloqueo temporal por seguridad
       case 'network-request-failed':
         return 'auth.err.network'; // Falla de red
+      case 'invalid-verification-code':
+        return 'dospasos.err.bad_code'; // Código de la app incorrecto o vencido
+      case 'invalid-multi-factor-session':
+        return 'dospasos.err.expired'; // Pasó demasiado tiempo desde la contraseña
       default:
         return 'auth.err.generic'; // Cualquier otro caso
     }
@@ -88,6 +98,8 @@ class AuthRepository {
     try {
       final cred = await _auth.signInWithEmailAndPassword(email: email.trim(), password: password); // Comprueba las credenciales
       await _prepararSesion(cred.user!); // Prepara rol y perfil
+    } on FirebaseAuthMultiFactorException catch (e) {
+      throw SegundoPasoRequerido(e.resolver); // La pantalla pide el código de la app
     } on FirebaseAuthException catch (e) {
       throw AuthFailure(messageFor(e)); // Convierte el error en la clave de su mensaje
     }
@@ -119,6 +131,23 @@ class AuthRepository {
         idToken: tokens.idToken, // Token de identidad de Google
       );
       final cred = await _auth.signInWithCredential(credential); // Inicia sesión en Firebase con esos tokens
+      await _prepararSesion(cred.user!); // Prepara rol y perfil
+    } on FirebaseAuthMultiFactorException catch (e) {
+      throw SegundoPasoRequerido(e.resolver); // La pantalla pide el código de la app
+    } on FirebaseAuthException catch (e) {
+      throw AuthFailure(messageFor(e)); // Clave del mensaje
+    }
+  }
+
+  /// Termina el inicio de sesión con el código de 6 dígitos de la app de autenticación.
+  Future<void> entrarConCodigo(MultiFactorResolver resolver, String codigo) async {
+    final limpio = codigo.replaceAll(RegExp(r'\D'), ''); // Solo los dígitos
+    if (limpio.length != 6) throw const AuthFailure('dospasos.err.bad_code'); // Siempre son 6 dígitos
+    final pistas = resolver.hints.where((h) => h.factorId == 'totp'); // Factor de app de autenticación
+    if (pistas.isEmpty) throw const AuthFailure('dospasos.err.unsupported'); // Solo se usa app de autenticación
+    try {
+      final asercion = await TotpMultiFactorGenerator.getAssertionForSignIn(pistas.first.uid, limpio); // Prueba con el código
+      final cred = await resolver.resolveSignIn(asercion); // Termina el inicio de sesión
       await _prepararSesion(cred.user!); // Prepara rol y perfil
     } on FirebaseAuthException catch (e) {
       throw AuthFailure(messageFor(e)); // Clave del mensaje

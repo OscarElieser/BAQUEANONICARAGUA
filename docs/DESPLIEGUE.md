@@ -192,3 +192,23 @@ Con ese archivo, `flutter build appbundle` firma con la llave propia; sin él, l
 - **Secreto que necesita:** el mismo `FIREBASE_SERVICE_ACCOUNT` de `preparar-sesion` (permiso solo para enviar mensajes). Sin él, la función responde 503 y no toca los avisos. `SITIO_URL` es opcional (por defecto `https://baqueanonicaragua.com`).
 - **El Ops Center** ve solo cifras: navegadores y teléfonos con avisos, y avisos entregados o fallidos en 24 h.
 - **Android:** para que FCM funcione hace falta el `google-services.json` de la app Android registrada en Firebase (con sus huellas SHA-1 y SHA-256).
+
+## Verificación en dos pasos (Ops Center)
+
+La API del Ops Center solo acepta sesiones que entraron con el segundo paso (código de una app de autenticación, TOTP). La web ya trae todo: activar o quitar la verificación en Cuenta y pedir el código al iniciar sesión (también en Android). Falta encenderla en el proyecto de Firebase, una sola vez:
+
+1. Firebase → Authentication → Configuración → **Actualizar a Firebase Authentication con Identity Platform**. No pide método de pago; en el plan sin costo el límite es de 3.000 personas activas por día.
+2. Encender TOTP (Firebase no tiene botón para esto; se hace con una llamada de administrador). En la consola de Google Cloud del proyecto, abrir **Cloud Shell** y pegar:
+
+```
+curl -X PATCH "https://identitytoolkit.googleapis.com/admin/v2/projects/baqueanonicaragua-95755/config?updateMask=mfa" \
+  -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+  -H "X-Goog-User-Project: baqueanonicaragua-95755" \
+  -H "Content-Type: application/json" \
+  -d '{"mfa":{"providerConfigs":[{"state":"ENABLED","totpProviderConfig":{"adjacentIntervals":5}}]}}'
+```
+
+3. Entrar a la web con la cuenta de superadministrador, verificar el correo si hace falta, y en **Cuenta → Verificación en dos pasos** cargar la clave en la app de autenticación y confirmar con el código.
+4. Cerrar sesión y volver a entrar con el código: desde ese momento el Ops Center acepta las acciones.
+
+Mientras TOTP no esté encendido, la web lo dice ("No disponible todavía") y no simula nada.

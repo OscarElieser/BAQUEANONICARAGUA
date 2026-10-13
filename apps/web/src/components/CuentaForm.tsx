@@ -1,10 +1,13 @@
 'use client'; // Formulario interactivo del navegador
 
-import { useState, type FormEvent, type ReactNode } from 'react'; // Estado local, tipo del evento de envío y del contenido
+import { useEffect, useState, type FormEvent, type ReactNode } from 'react'; // Estado local, efecto, tipo del evento de envío y del contenido
+import type { MultiFactorResolver } from 'firebase/auth'; // Datos para completar el segundo paso
 import {
   authErrorMessage, // Traduce los errores al idioma de la página
   cerrarSesion, // Cierra la sesión
   crearCuenta, // Crea una cuenta nueva
+  entrarConCodigo, // Termina el inicio con el código de la app de autenticación
+  EVENTO_SEGUNDO_PASO, // Aviso: volvió de Google y falta el código
   iniciarConGoogle, // Entra con Google
   iniciarSesion, // Entra con correo y contraseña
   recuperarContrasena, // Envía el correo de recuperación
@@ -12,6 +15,7 @@ import {
 } from '@/lib/auth';
 import { useSession } from '@/lib/useSession'; // Estado de la sesión
 import { AvisosNavegador } from './AvisosNavegador'; // Avisos de este navegador
+import { DosPasos } from './DosPasos'; // Verificación en dos pasos
 import { t } from '@/i18n/t'; // Textos traducidos
 
 type Mode = 'entrar' | 'crear' | 'recuperar'; // Las tres vistas del formulario
@@ -43,6 +47,13 @@ export function CuentaForm({ locale }: { locale: string }) {
   const [busy, setBusy] = useState(false); // Si hay una operación en curso
   const [error, setError] = useState<string | null>(null); // Mensaje de error visible
   const [info, setInfo] = useState<string | null>(null); // Mensaje de confirmación visible
+  const [segundoPaso, setSegundoPaso] = useState<MultiFactorResolver | null>(null); // Si la cuenta pidió el código de la app de autenticación
+
+  useEffect(() => {
+    const alVolver = (e: Event) => setSegundoPaso((e as CustomEvent<MultiFactorResolver>).detail); // Volvió de Google y falta el código
+    window.addEventListener(EVENTO_SEGUNDO_PASO, alVolver); // Escucha el aviso
+    return () => window.removeEventListener(EVENTO_SEGUNDO_PASO, alVolver); // Deja de escuchar al salir
+  }, []); // Solo una vez
 
   /** Ejecuta una acción mostrando "procesando", errores claros y confirmaciones. */
   async function run(action: () => Promise<unknown>, ok?: string) {
@@ -53,7 +64,9 @@ export function CuentaForm({ locale }: { locale: string }) {
       await action(); // Ejecuta la acción pedida
       if (ok) setInfo(ok); // Muestra la confirmación si la hay
     } catch (e) {
-      setError(authErrorMessage(locale, e)); // Mensaje traducido según el código del error
+      const pedido = e as { code?: string; resolver?: MultiFactorResolver }; // Error con posible segundo paso
+      if (pedido.code === 'app/mfa-required' && pedido.resolver) setSegundoPaso(pedido.resolver); // La cuenta tiene dos pasos: se pide el código
+      else setError(authErrorMessage(locale, e)); // Mensaje traducido según el código del error
     } finally {
       setBusy(false); // Libera los botones
     }
@@ -96,6 +109,7 @@ export function CuentaForm({ locale }: { locale: string }) {
           </div>
         )}
         <AvisosNavegador locale={locale} /> {/* Activar o apagar los avisos de este navegador */}
+        <DosPasos locale={locale} user={u} /> {/* Activar o quitar la verificación en dos pasos */}
         <button type="button" disabled={busy} onClick={() => run(cerrarSesion)}
           className="h-[52px] self-start rounded-pill border-[1.5px] border-status-alert px-6 font-bold text-status-alert disabled:opacity-45">
           {busy ? t(locale, 'session.signing_out') : t(locale, 'session.sign_out')} {/* Botón de salida */}
@@ -103,6 +117,26 @@ export function CuentaForm({ locale }: { locale: string }) {
         {info && <p role="status" className="m-0 text-status-verified">{info}</p>} {/* Confirmación */}
         {error && <p role="alert" className="m-0 text-status-alert">{error}</p>} {/* Error */}
       </section>
+    );
+  }
+
+  if (segundoPaso) {
+    // La cuenta tiene verificación en dos pasos: falta el código de la app
+    return (
+      <form className="flex flex-col gap-4" onSubmit={(e) => {
+        e.preventDefault(); // Sin recargar
+        const codigo = String(new FormData(e.currentTarget).get('codigo') ?? ''); // Código escrito
+        run(async () => { await entrarConCodigo(segundoPaso, codigo); setSegundoPaso(null); }); // Termina el inicio de sesión
+      }}>
+        <h2 className="m-0 text-[26px] font-bold leading-tight">{t(locale, 'dospasos.title')}</h2> {/* Título */}
+        <p className="m-0 text-[15px] leading-[23px] text-ink-muted">{t(locale, 'dospasos.signin_text')}</p> {/* Qué hacer */}
+        <label className="login-etiqueta">{t(locale, 'dospasos.code')}
+          <input name="codigo" required autoFocus inputMode="numeric" autoComplete="one-time-code" pattern="[0-9 ]{6,7}" maxLength={7} className={`${field} font-mono tracking-[0.3em]`} /> {/* Código de 6 dígitos */}
+        </label>
+        {error && <p role="alert" className="m-0 text-status-alert">{error}</p>} {/* Error visible */}
+        <button type="submit" disabled={busy} className="login-principal">{busy ? t(locale, 'auth.processing') : t(locale, 'dospasos.verify')}</button> {/* Entrar */}
+        <button type="button" onClick={() => { setSegundoPaso(null); setError(null); }} className="h-11 self-start font-bold text-accent underline">{t(locale, 'auth.back')}</button> {/* Volver */}
+      </form>
     );
   }
 
