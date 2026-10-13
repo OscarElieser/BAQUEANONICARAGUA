@@ -28,8 +28,8 @@ export default async function Territorios({ params }: { params: Promise<{ locale
   const publicados = new Set((data ?? []).map((ter) => ter.slug)); // Slugs con ficha
   const portada = fotoDe('portada-pacifico'); // Foto del encabezado (Concepción, Ometepe)
   const grupos = [
-    { clave: 'terr.departments', items: territorios.filter((ter) => !esRegion(ter.slug)) }, // Los 15 departamentos
-    { clave: 'terr.regions', items: territorios.filter((ter) => esRegion(ter.slug)) }, // Las 2 regiones autónomas
+    { clave: 'terr.departments' as const, items: territorios.filter((ter) => !esRegion(ter.slug)) }, // Los 15 departamentos
+    { clave: 'terr.regions' as const, items: territorios.filter((ter) => esRegion(ter.slug)) }, // Las 2 regiones autónomas
   ];
 
   return (
