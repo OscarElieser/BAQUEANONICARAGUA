@@ -1,0 +1,24 @@
+# Sonda de solo lectura de los servicios externos (Firebase y la función de Supabase).
+# No crea cuentas ni escribe nada: solo pregunta qué está activado y lo deja en el resumen del trabajo.
+name: Sonda de servicios
+
+on:
+  workflow_dispatch: # A mano
+  push:
+    branches: [desarrollo] # Cuando cambia la sonda
+    paths: ['scripts/sonda/**', '.github/workflows/sonda-servicios.yml']
+
+permissions:
+  contents: read # Solo lee el repositorio
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Igual que en CI
+
+jobs:
+  sondear:
+    name: Comprobar Firebase y Supabase
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4 # Descarga la sonda
+      - name: Preguntar a los servicios # Usa solo claves públicas que ya están en la web
+        run: python3 scripts/sonda/sondear.py | tee -a "$GITHUB_STEP_SUMMARY"
