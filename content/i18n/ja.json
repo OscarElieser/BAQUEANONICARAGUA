@@ -633,5 +633,10 @@
   "dospasos.err.verify_email": "先にメールアドレスを確認してください。その後2段階認証を有効にできます。",
   "dospasos.err.already": "2段階認証はすでに有効でした。",
   "intro.skip": "スキップ",
-  "intro.logo": "BAQUEANOのロゴ"
+  "intro.logo": "BAQUEANOのロゴ",
+  "baqui.meet": "BAQÜIを紹介します",
+  "baqui.mascot": "帽子とスカーフ、リュックとカメラを身につけた探検家の鳥BAQÜIが、手を振って会話を指し示します。",
+  "baqui.play": "BAQÜIを見る",
+  "baqui.pause": "一時停止",
+  "baqui.replay": "もう一度見る"
 }

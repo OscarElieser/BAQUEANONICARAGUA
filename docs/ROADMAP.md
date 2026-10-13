@@ -16,6 +16,8 @@ Regla: un módulo solo pasa a `probado` cuando cumple los criterios de la secci�
 | Avisos push (web + Android) | probado (CI) | Migración `avisos_push` (registro con sesión, reserva y resultado honesto, `pg_cron` solo en producción), función `enviar-avisos` (FCM API v1) con 7 pruebas, 21 pruebas RLS, tarjetas en Cuenta y Perfil con sus 4 estados. Falta probarlo en vivo con una cuenta y un teléfono reales. |
 | Verificación en dos pasos | probado (CI) | Activarla en Cuenta y código al entrar en web y Android; el Ops Center avisa si falta. Falta encender TOTP en Firebase (Identity Platform + comando de DESPLIEGUE). |
 | Ops Center: avisos | probado (CI) | El panel cuenta navegadores y teléfonos con avisos, y avisos entregados o fallidos en 24 h (solo cifras). |
+| Revelación del logotipo (Android) | probado (CI) | Video del dueño recortado a 3 s, sin sonido, encima de la app mientras carga; se salta, no aparece con las animaciones quitadas y abre directo si el video no se prepara. 4 pruebas. Falta decidir si la Q es el logo oficial. |
+| BAQÜI en persona (web + Android) | probado (CI) | Video del dueño (10 s, sin sonido): se presenta solo la primera vez que se ve, señala cada respuesta si está a la vista, botón para pausar, quieto con movimiento reducido. Su cara acompaña los mensajes (piensa y responde). 7 pruebas en Android y vista previa web. Faltan los clips de pensar y explorar, y la voz. |
 
 ## Avance del 12 de octubre de 2026 (noche)
 

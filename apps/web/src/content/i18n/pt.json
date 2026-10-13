@@ -633,5 +633,10 @@
   "dospasos.err.verify_email": "Primeiro verifique seu e-mail; depois você poderá ativar a verificação em duas etapas.",
   "dospasos.err.already": "A verificação em duas etapas já estava ativada.",
   "intro.skip": "Pular",
-  "intro.logo": "Logotipo do BAQUEANO"
+  "intro.logo": "Logotipo do BAQUEANO",
+  "baqui.meet": "Conheça o BAQÜI",
+  "baqui.mascot": "BAQÜI, um pássaro explorador de chapéu, lenço, mochila e câmera, acena e aponta para a conversa.",
+  "baqui.play": "Ver o BAQÜI",
+  "baqui.pause": "Pausar",
+  "baqui.replay": "Ver de novo"
 }

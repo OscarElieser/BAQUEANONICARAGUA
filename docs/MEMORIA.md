@@ -201,6 +201,18 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
     - **Avisos push reales (web y Android):** el dueño mandó la clave pública VAPID (va en `publica.json`, no es secreta). Registro con `push_register` (exige sesión), envío con la función `enviar-avisos` (FCM API v1, cuenta de servicio solo con permiso de mensajería), resultado honesto (`sent`, `failed` tras 3 intentos, `skipped` sin dispositivos o viejo), `pg_cron` cada minuto solo si hay pendientes y solo en producción. El Ops Center ve solo cifras. En Android el registro automático de FCM está apagado hasta que la persona activa los avisos.
     - **Verificación en dos pasos (TOTP):** activarla en Cuenta (web), y el código se pide al entrar en web y Android. El Ops Center avisa si la sesión entró sin el segundo paso. Falta encenderla en Firebase (Identity Platform + una llamada de administrador; comando en DESPLIEGUE).
     - El dueño pegó un ejemplo de Genkit con Gemini 1.5 Flash: no hace falta; BAQÜI llama a Gemini por REST desde la función `baqui` con `gemini-2.5-flash`.
+    - El dueño propuso Aceternity UI, Animmaster Lib y la biblioteca de prompts de diseño de Superdesign. Decisión: no copiar componentes de terceros (regla del proyecto, identidad propia, peso y accesibilidad). Si le gusta un efecto, se hace uno original con la identidad de BAQUEANO, en web y Android. Del método de prompts sirve la idea de una ficha de diseño con lista de "lo que no".
+23. **Revelación del logotipo al abrir la app Android (13 de octubre de 2026):**
+    - El dueño mandó un video vertical de 10 s (1080×1920, con sonido, generado con una herramienta de Google) con su logotipo: anillo naranja en forma de Q con montaña y camino turquesa sobre azul nocturno.
+    - En la app quedó recortado a 3 s (de 0,6 a 3,6 s: logo apagado, barrido de luz y logo encendido), sin sonido, 720p, 336 KB (`apps/mobile/assets/intro/revelacion.mp4`). Se quitó el primer cuadro del original, que mostraba el logo encendido antes de apagarse.
+    - Funciona como capa encima de la app mientras carga debajo. Se salta tocando o con "Saltar". No aparece si Android tiene las animaciones quitadas. Si el video no se prepara en 1,5 s, la app abre directo. El arranque nativo de Android ahora es azul nocturno y no muestra ícono en Android 12+, para que no haya destello blanco.
+    - **Pendiente de decidir con el dueño:** si este logo es el oficial. Hoy el ícono de la app Android es el de Flutter (hay que cambiarlo antes de publicar), y la web usa otra marca (curvas de nivel de Nicaragua en naranja).
+24. **BAQÜI en persona (13 de octubre de 2026):**
+    - El dueño mandó un video vertical de 10 s de la mascota (generado con una herramienta de Google): pájaro negro con alas turquesa y morado, sombrero de explorador con la Q del logo, pañuelo, mochila y cámara. Entra caminando, parpadea, saluda con el ala, abre el pico, señala hacia un lado y abre las alas. Pidió cinco movimientos: saludar, guiar, pensar, conversar con voz nicaragüense y explorar (caminar, mirar paisajes, tomar fotos).
+    - Hecho con ese video, en web y Android: sin sonido, 540×960, 1,1 MB (en web también en WebM, porque hay navegadores sin H.264). Su imagen en reposo es el último cuadro, así no salta. La presentación arranca sola la primera vez que BAQÜI se ve. Cada respuesta nueva repite desde el segundo 6 (señala la conversación), pero solo si BAQÜI está a la vista. Siempre hay botón para pausar o verlo de nuevo (dura más de 5 s: WCAG 2.2.2). Con "reducir movimiento", "ahorro de datos" o las animaciones quitadas en Android no arranca solo.
+    - Su cara (recortada del video) acompaña cada mensaje: ladea la cabeza mientras piensa y da tres saltitos al responder; con movimiento reducido queda quieta. En la web de escritorio BAQÜI va en una columna fija a la izquierda, señalando el chat; en el teléfono va arriba de la conversación.
+    - Falta para los cinco movimientos completos: clips de "pensar" (mirar hacia arriba con curiosidad) y "explorar" (mirar el paisaje, levantar la cámara), y la boca sincronizada con una voz. Cada clip: 3 a 4 s, vertical 9:16, el mismo personaje y encuadre, fondo liso azul nocturno `#0D1B2A`, sin texto ni sonido, y que empiece y termine en la misma pose de reposo para encadenarlos. La voz necesita un servicio de voz (TTS) en el servidor, apagada por defecto, con acento natural y nunca caricaturizado; la boca sincronizada pide un muñeco animable (por ejemplo Rive), no video.
+    - La descripción para lectores de pantalla no dice la especie hasta que el dueño la confirme (¿zanate clarinero?).
 
 ## 4b. Estado del proyecto oficial (revisado el 2026-10-12)
 
@@ -228,6 +240,7 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
 - Revisión legal de los textos de `content/legal` y los datos de la empresa (hoy van como `[marcador]`).
 - Revisión nativa de las 9 traducciones.
 - Elegir el nombre de la marca y el proveedor de IA para el chat.
+- BAQÜI: confirmar la especie del pájaro y si la Q es el logo oficial (para el ícono de la app). Si quiere los movimientos que faltan, generar los clips con la especificación del punto 24.
 
 ## 6. Próximos pasos propuestos
 

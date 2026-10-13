@@ -11,6 +11,7 @@ import 'package:nica_app/core/theme.dart'; // Tema
 import 'package:nica_app/features/auth/auth_repository.dart'; // Sesión
 import 'package:nica_app/features/auth/sign_in_screen.dart'; // Diálogo del segundo paso
 import 'package:nica_app/features/baqui/baqui_screen.dart'; // BAQÜI
+import 'package:nica_app/features/baqui/escenario_baqui.dart'; // Video de BAQÜI a reemplazar
 import 'package:nica_app/features/catalog/business_screen.dart'; // Ficha de negocio
 import 'package:nica_app/features/community/community_screen.dart'; // Comunidad
 import 'package:nica_app/features/community/publicar_cronica_screen.dart'; // Publicar crónica
@@ -18,6 +19,8 @@ import 'package:nica_app/features/culture/culture_screen.dart'; // Cultura
 import 'package:nica_app/features/messages/conversation_screen.dart'; // Conversación
 import 'package:nica_app/features/planner/planner_screen.dart'; // Mi aventura
 import 'package:nica_app/features/profile/avisos_telefono.dart'; // Avisos del teléfono
+
+import 'apoyo/baqui_falso.dart'; // Video de BAQÜI falso (sin reproductor)
 
 /// Catálogo falso, sin red.
 class FakeCatalog implements CatalogRepository {
@@ -99,6 +102,7 @@ Widget app(Widget home, {FakeMessaging? messaging, AvisosRepository? avisos, Loc
         catalogRepositoryProvider.overrideWithValue(FakeCatalog()), // Catálogo falso
         messagingRepositoryProvider.overrideWithValue(messaging ?? FakeMessaging()), // Mensajería falsa
         avisosRepositoryProvider.overrideWithValue(avisos ?? FakeAvisos(EstadoAvisos.noSoportado)), // Avisos falsos (sin Firebase)
+        videoBaquiProvider.overrideWithValue(() => FakeVideoBaqui()), // BAQÜI sin reproductor: queda su imagen quieta
         authStateProvider.overrideWith((ref) => Stream<User?>.value(null)), // Sin sesión
       ],
       child: MaterialApp(

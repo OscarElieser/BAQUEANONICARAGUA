@@ -633,5 +633,10 @@
   "dospasos.err.verify_email": "Verify your email first; then you can turn on two-step verification.",
   "dospasos.err.already": "Two-step verification was already on.",
   "intro.skip": "Skip",
-  "intro.logo": "BAQUEANO logo"
+  "intro.logo": "BAQUEANO logo",
+  "baqui.meet": "Meet BAQÜI",
+  "baqui.mascot": "BAQÜI, an explorer bird with a hat, scarf, backpack and camera, waves and points to the conversation.",
+  "baqui.play": "Watch BAQÜI",
+  "baqui.pause": "Pause",
+  "baqui.replay": "Watch again"
 }

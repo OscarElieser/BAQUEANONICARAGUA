@@ -633,5 +633,10 @@
   "dospasos.err.verify_email": "먼저 이메일을 인증하세요. 그다음 2단계 인증을 켤 수 있어요.",
   "dospasos.err.already": "2단계 인증이 이미 켜져 있었어요.",
   "intro.skip": "건너뛰기",
-  "intro.logo": "BAQUEANO 로고"
+  "intro.logo": "BAQUEANO 로고",
+  "baqui.meet": "BAQÜI를 소개해요",
+  "baqui.mascot": "모자와 스카프, 배낭과 카메라를 갖춘 탐험가 새 BAQÜI가 인사하고 대화를 가리켜요.",
+  "baqui.play": "BAQÜI 보기",
+  "baqui.pause": "일시 정지",
+  "baqui.replay": "다시 보기"
 }

@@ -659,3 +659,19 @@ a.terr-accion:focus-visible { outline: 3px solid var(--marca-naranja); outline-o
 .chat-burbuja { max-width: min(78ch, 88%); padding: 12px 16px; border-radius: 18px; font-size: 16px; line-height: 25px; } /* Cada mensaje */
 .chat-burbuja[data-quien="baqui"] { align-self: flex-start; background: var(--ground-raised); box-shadow: inset 0 0 0 1px var(--line); border-bottom-left-radius: 6px; } /* BAQÜI a la izquierda */
 .chat-burbuja[data-quien="yo"] { align-self: flex-end; background: color-mix(in oklab, var(--marca-turquesa) 18%, var(--ground-raised)); border-bottom-right-radius: 6px; } /* La persona a la derecha */
+.chat-fila { display: flex; align-items: flex-end; gap: 10px; } /* Fila de mensaje: cara de BAQÜI y burbuja */
+.chat-fila[data-quien="yo"] { justify-content: flex-end; } /* La persona a la derecha */
+.chat-fila .chat-burbuja { max-width: min(78ch, calc(100% - 50px)); } /* La burbuja deja sitio a la cara de BAQÜI */
+.chat-avatar { flex: none; width: 40px; height: 40px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px var(--marca-naranja); transform-origin: 50% 80%; } /* Cara de BAQÜI con aro naranja de la marca */
+.chat-avatar[data-animo="pensando"] { animation: baqui-piensa 1.6s ease-in-out infinite alternate; } /* Inclina la cabeza y mira hacia arriba mientras piensa */
+.chat-avatar[data-animo="hablando"] { animation: baqui-habla 0.32s ease-in-out 6 alternate; } /* Se mueve un momento al responder */
+@keyframes baqui-piensa { from { transform: rotate(-9deg) translateY(-2px); } to { transform: rotate(7deg) translateY(1px); } } /* Ladea la cabeza de un lado a otro */
+@keyframes baqui-habla { from { transform: translateY(0) scale(1); } to { transform: translateY(-3px) scale(1.05); } } /* Pequeños saltos, como al hablar */
+.baqui-sala { display: grid; gap: 24px; } /* BAQÜI y la conversación */
+.baqui-escenario { margin: 0; justify-self: center; width: min(100%, 300px); border-radius: 24px; overflow: hidden; background: var(--ground-deep); box-shadow: inset 0 0 0 1px var(--line); } /* Marco de BAQÜI */
+.baqui-video { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: 50% 30%; } /* En el teléfono: cabeza y cuerpo */
+.baqui-pie { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; padding: 10px 14px; } /* Nombre y botón (el botón baja si no cabe) */
+.baqui-nombre { font-weight: 700; white-space: nowrap; } /* "Conoce a BAQÜI" en una línea */
+.baqui-control { min-height: 44px; padding: 0 16px; white-space: nowrap; border-radius: var(--radius-pill); box-shadow: inset 0 0 0 1.5px var(--control-border); font-weight: 700; } /* Ver, pausar o volver a ver */
+@media (min-width: 900px) { .baqui-sala { grid-template-columns: 280px minmax(0, 1fr); align-items: start; } .baqui-escenario { position: sticky; top: 96px; width: 100%; } .baqui-video { aspect-ratio: 9 / 16; object-position: 50% 50%; } } /* En pantallas grandes: BAQÜI de cuerpo entero a la izquierda, señalando la conversación */
+@media (prefers-reduced-motion: reduce) { .chat-avatar[data-animo] { animation: none; } } /* Sin movimiento si así se pidió */

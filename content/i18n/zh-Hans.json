@@ -633,5 +633,10 @@
   "dospasos.err.verify_email": "请先验证你的邮箱，然后才能开启两步验证。",
   "dospasos.err.already": "两步验证此前已开启。",
   "intro.skip": "跳过",
-  "intro.logo": "BAQUEANO 标志"
+  "intro.logo": "BAQUEANO 标志",
+  "baqui.meet": "认识 BAQÜI",
+  "baqui.mascot": "BAQÜI 是一只戴着帽子和领巾、背着背包和相机的探险鸟，正在挥手并指向对话。",
+  "baqui.play": "观看 BAQÜI",
+  "baqui.pause": "暂停",
+  "baqui.replay": "再看一次"
 }
