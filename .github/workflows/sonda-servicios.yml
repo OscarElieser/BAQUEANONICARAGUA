@@ -9,7 +9,7 @@ on:
     paths: ['scripts/sonda/**', '.github/workflows/sonda-servicios.yml']
 
 permissions:
-  contents: read # Solo lee el repositorio
+  contents: write # Para dejar el resultado en refs/datos/sonda (no es rama)
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Igual que en CI
@@ -21,4 +21,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4 # Descarga la sonda
       - name: Preguntar a los servicios # Usa solo claves públicas que ya están en la web
-        run: python3 scripts/sonda/sondear.py | tee -a "$GITHUB_STEP_SUMMARY"
+        run: mkdir -p salida && python3 scripts/sonda/sondear.py | tee salida/sonda.md | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Guardar en refs/datos/sonda # Commit aparte que se reemplaza en cada ejecución
+        run: |
+          cd salida # Resultado
+          git init -q && git checkout -q -b datos # Repositorio temporal
+          git config user.name "github-actions[bot]" && git config user.email "41898282+github-actions[bot]@users.noreply.github.com" # Autor automático
+          git add . && git commit -q -m "Sonda de servicios en $GITHUB_SHA" # Guarda
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:refs/datos/sonda # Reemplaza el anterior
