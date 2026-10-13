@@ -23,7 +23,7 @@ const INJECTION_PATTERNS: RegExp[] = [
 ];
 
 const strip = (s: string) =>
-  s.normalize('NFD').replace(/[̀-ͯ]/g, '');
+  s.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Quita las tildes (mismo rango, escrito con escapes para que no se pierda al copiar)
 
 export interface Wrapped {
   text: string;
@@ -36,7 +36,7 @@ export function wrapUntrusted(content: string, source: string, nonce: string): W
   if (!/^[a-zA-Z0-9]{12,}$/.test(nonce)) throw new Error('nonce inválido');
   // Quita caracteres de control y cualquier intento de cerrar el delimitador
   const cleaned = content
-    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F‪-‮⁦-⁩]/g, '')
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u202A-\u202E\u2066-\u2069]/g, '') // Controles y marcas de dirección (escritas con escapes)
     .replaceAll(nonce, '[eliminado]')
     .slice(0, 12000);
   const plain = strip(cleaned);
