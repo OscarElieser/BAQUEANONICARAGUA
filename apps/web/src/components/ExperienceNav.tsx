@@ -11,6 +11,7 @@ const experiences: Array<{ href: string; label: MessageKey }> = [
   { href: '/territorios', label: 'nav.territories' }, // Departamentos y regiones
   { href: '/comunidad', label: 'nav.community' }, // Comunidad
   { href: '/cronicas', label: 'nav.chronicles' }, // Crónicas de la comunidad
+  { href: '/baqui', label: 'nav.baqui' }, // BAQÜI, el asistente
 ]; // Las tres experiencias con la clave de su texto
 
 /**

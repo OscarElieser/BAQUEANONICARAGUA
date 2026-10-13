@@ -565,5 +565,22 @@
   "chron.sent": "Published. It will show up in the list in a few minutes.",
   "chron.limit": "You have published a lot in a short time. Try again in an hour.",
   "chron.sign_in_app": "Sign in from Profile to publish your chronicle.",
-  "chron.f_body_short": "Tell a bit more: at least 40 characters."
+  "chron.f_body_short": "Tell a bit more: at least 40 characters.",
+  "baqui.title": "BAQÜI, your travel guide",
+  "baqui.subtitle": "Your travel guide to Nicaragua",
+  "baqui.intro": "Ask about the 17 territories and plan your trip. It only uses what is published on BAQUEANO and tells you what is not confirmed.",
+  "baqui.hello": "Hi, I am BAQÜI. Tell me what you would like to experience in Nicaragua: how many of you, how many days and what you enjoy.",
+  "baqui.thinking": "BAQÜI is thinking…",
+  "baqui.placeholder": "Type your question",
+  "baqui.send": "Send",
+  "baqui.note": "BAQÜI uses artificial intelligence (Google Gemini). It does not book or give unsourced prices. Always confirm with each business.",
+  "baqui.off": "BAQÜI turns on when the team sets up the AI provider. Not available yet.",
+  "baqui.limit": "You reached the limit of 40 messages per day. Come back tomorrow.",
+  "baqui.sign_in": "Your session expired. Please sign in again.",
+  "baqui.sign_in_cta": "to talk with BAQÜI.",
+  "baqui.error": "Could not get an answer. Please try again.",
+  "baqui.s1": "What can I do for 3 days in Granada?",
+  "baqui.s2": "I want nature in the north",
+  "baqui.s3": "Which territories are on the Caribbean?",
+  "nav.baqui": "BAQÜI"
 }

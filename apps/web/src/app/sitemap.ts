@@ -23,6 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/comunidad', priority: 0.8, changeFrequency: 'daily' }, // Comunidad
     { path: '/cronicas', priority: 0.8, changeFrequency: 'daily' }, // Crónicas
     { path: '/cultura', priority: 0.7, changeFrequency: 'weekly' }, // Cultura
+    { path: '/baqui', priority: 0.6, changeFrequency: 'monthly' }, // BAQÜI
     { path: '/ayuda', priority: 0.5, changeFrequency: 'monthly' }, // Centro de ayuda
     { path: '/creditos', priority: 0.2, changeFrequency: 'monthly' }, // Créditos de las fotos
     { path: '/mi-aventura', priority: 0.6, changeFrequency: 'monthly' }, // Planificador

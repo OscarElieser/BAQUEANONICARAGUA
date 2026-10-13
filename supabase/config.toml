@@ -24,3 +24,7 @@ project_id = "env(FIREBASE_PROJECT_ID)"
 # con las claves públicas de Google (firma, emisor, proyecto y vencimiento).
 [functions.preparar-sesion]
 verify_jwt = false # La verificación la hace la función, no la puerta de Supabase
+
+# BAQÜI, el asistente (Gemini). El token de Firebase lo valida la base de datos (baqui_start), no la puerta de entrada.
+[functions.baqui]
+verify_jwt = false

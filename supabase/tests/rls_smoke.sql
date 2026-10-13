@@ -872,6 +872,47 @@ insert into results select 'funciones con search_path fijo (asesor de seguridad 
       and not coalesce(p.proconfig::text like '%search_path=%', false) -- Sin search_path fijo
   );
 
+-- BAQÜI (migración 0018)
+select pg_temp.act_as('fb_user_a'); -- Usuaria con sesión
+insert into results select 'BAQÜI abre un turno con sesión y devuelve territorios publicados', -- Turno normal
+  jsonb_array_length((public.baqui_start('Quiero ir a Granada', 'es'))->'territories') >= 1;
+insert into results select 'BAQÜI guarda el mensaje de la persona', -- Queda en su historial
+  exists (select 1 from public.ai_messages where role = 'user' and content->>'text' = 'Quiero ir a Granada');
+do $$
+begin
+  begin
+    perform public.baqui_reply((select id from public.ai_conversations limit 1), 'respuesta falsa', 'x', 1, 1); -- Un cliente intenta escribir una respuesta
+    insert into results values ('un cliente no puede escribir respuestas de BAQÜI', false); -- No debió poder
+  exception when insufficient_privilege then
+    insert into results values ('un cliente no puede escribir respuestas de BAQÜI', true); -- Bloqueado
+  end;
+end $$;
+reset role;
+set local role anon; -- Sin sesión
+select set_config('request.jwt.claims', '{}', true);
+do $$
+begin
+  begin
+    perform public.baqui_start('hola'); -- Intenta usar el asistente sin sesión
+    insert into results values ('sin sesión no se puede usar BAQÜI', false); -- No debió poder
+  exception when insufficient_privilege then
+    insert into results values ('sin sesión no se puede usar BAQÜI', true); -- Bloqueado
+  end;
+end $$;
+reset role;
+select pg_temp.act_as('fb_user_a'); -- Vuelve la usuaria
+do $$
+begin
+  for i in 1..39 loop perform public.baqui_start('mensaje ' || i); end loop; -- Llega a 40 mensajes en el día
+  begin
+    perform public.baqui_start('uno más'); -- El 41
+    insert into results values ('BAQÜI limita a 40 mensajes por día', false); -- No debió pasar
+  exception when sqlstate '54000' then
+    insert into results values ('BAQÜI limita a 40 mensajes por día', true); -- Límite aplicado
+  end;
+end $$;
+reset role;
+
 insert into results select 'los 17 territorios tienen cabecera y fuente (migración 0017)', -- Datos oficiales completos
   (select count(*) from public.departments where capital_name is not null and source_id = '00000000-0000-0000-0000-00000000a018') = 17;
 insert into results select 'la publicación de territorios quedó en la auditoría', -- Un registro por territorio

@@ -565,5 +565,22 @@
   "chron.sent": "게시되었습니다. 몇 분 안에 목록에 나타납니다.",
   "chron.limit": "짧은 시간에 많이 게시했습니다. 한 시간 뒤에 다시 시도하세요.",
   "chron.sign_in_app": "프로필에서 로그인하고 크로니클을 올리세요.",
-  "chron.f_body_short": "조금 더 써 주세요. 최소 40자입니다."
+  "chron.f_body_short": "조금 더 써 주세요. 최소 40자입니다.",
+  "baqui.title": "BAQÜI, 나의 여행 가이드",
+  "baqui.subtitle": "니카라과 여행 가이드",
+  "baqui.intro": "17개 지역에 대해 묻고 여행을 계획하세요. BAQUEANO에 공개된 정보만 사용하고, 확인되지 않은 것은 그렇다고 알려 줍니다.",
+  "baqui.hello": "안녕하세요, BAQÜI예요. 니카라과에서 무엇을 하고 싶은지 알려 주세요. 인원, 일수, 좋아하는 것.",
+  "baqui.thinking": "BAQÜI가 생각 중…",
+  "baqui.placeholder": "질문을 입력하세요",
+  "baqui.send": "보내기",
+  "baqui.note": "BAQÜI는 인공지능(Google Gemini)을 사용합니다. 예약하지 않으며 출처 없는 가격은 알려 주지 않습니다. 항상 각 사업장에 확인하세요.",
+  "baqui.off": "팀이 AI 제공자를 설정하면 BAQÜI가 켜집니다. 아직 사용할 수 없습니다.",
+  "baqui.limit": "하루 40개 메시지 한도에 도달했습니다. 내일 다시 오세요.",
+  "baqui.sign_in": "세션이 만료되었습니다. 다시 로그인하세요.",
+  "baqui.sign_in_cta": "하고 BAQÜI와 대화하세요.",
+  "baqui.error": "답변을 받지 못했습니다. 다시 시도하세요.",
+  "baqui.s1": "그라나다에서 3일 동안 뭘 할까?",
+  "baqui.s2": "북부에서 자연을 즐기고 싶어",
+  "baqui.s3": "카리브 쪽 지역은 어디야?",
+  "nav.baqui": "BAQÜI"
 }

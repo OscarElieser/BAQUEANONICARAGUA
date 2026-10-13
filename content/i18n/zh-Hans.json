@@ -565,5 +565,22 @@
   "chron.sent": "已发布。几分钟后会出现在列表中。",
   "chron.limit": "你在短时间内发布太多了。请一小时后再试。",
   "chron.sign_in_app": "在“个人资料”中登录后即可发布纪事。",
-  "chron.f_body_short": "请再多写一些：至少 40 个字符。"
+  "chron.f_body_short": "请再多写一些：至少 40 个字符。",
+  "baqui.title": "BAQÜI，你的旅行向导",
+  "baqui.subtitle": "你的尼加拉瓜旅行向导",
+  "baqui.intro": "询问 17 个地区并规划行程。它只使用 BAQUEANO 上已发布的内容，未确认的信息会如实告诉你。",
+  "baqui.hello": "你好，我是 BAQÜI。告诉我你想在尼加拉瓜体验什么：几个人、几天、喜欢什么。",
+  "baqui.thinking": "BAQÜI 正在思考…",
+  "baqui.placeholder": "输入你的问题",
+  "baqui.send": "发送",
+  "baqui.note": "BAQÜI 使用人工智能（Google Gemini）。它不提供预订，也不提供没有来源的价格。请务必向商家确认。",
+  "baqui.off": "团队配置人工智能服务后即可使用 BAQÜI。目前尚不可用。",
+  "baqui.limit": "已达到每天 40 条消息的上限。请明天再来。",
+  "baqui.sign_in": "会话已过期，请重新登录。",
+  "baqui.sign_in_cta": "后即可与 BAQÜI 对话。",
+  "baqui.error": "未能获得回复，请重试。",
+  "baqui.s1": "在格拉纳达玩 3 天做什么？",
+  "baqui.s2": "我想去北部看自然风光",
+  "baqui.s3": "加勒比地区有哪些？",
+  "nav.baqui": "BAQÜI"
 }

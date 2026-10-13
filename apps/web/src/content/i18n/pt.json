@@ -565,5 +565,22 @@
   "chron.sent": "Publicada. Vai aparecer na lista em alguns minutos.",
   "chron.limit": "Você publicou muito em pouco tempo. Tente de novo em uma hora.",
   "chron.sign_in_app": "Entre em Perfil para publicar sua crônica.",
-  "chron.f_body_short": "Conte um pouco mais: pelo menos 40 letras."
+  "chron.f_body_short": "Conte um pouco mais: pelo menos 40 letras.",
+  "baqui.title": "BAQÜI, seu guia de viagem",
+  "baqui.subtitle": "Seu guia de viagem pela Nicarágua",
+  "baqui.intro": "Pergunte sobre os 17 territórios e monte sua viagem. Ele só usa o que está publicado no BAQUEANO e avisa o que não está confirmado.",
+  "baqui.hello": "Oi, eu sou o BAQÜI. Conte o que você gostaria de viver na Nicarágua: quantos são, quantos dias e do que gostam.",
+  "baqui.thinking": "BAQÜI está pensando…",
+  "baqui.placeholder": "Escreva sua pergunta",
+  "baqui.send": "Enviar",
+  "baqui.note": "O BAQÜI usa inteligência artificial (Google Gemini). Não faz reservas nem dá preços sem fonte. Confirme sempre com cada negócio.",
+  "baqui.off": "O BAQÜI será ativado quando a equipe configurar o provedor de IA. Ainda não disponível.",
+  "baqui.limit": "Você atingiu o limite de 40 mensagens por dia. Volte amanhã.",
+  "baqui.sign_in": "Sua sessão expirou. Entre de novo.",
+  "baqui.sign_in_cta": "para falar com o BAQÜI.",
+  "baqui.error": "Não foi possível obter resposta. Tente de novo.",
+  "baqui.s1": "O que fazer em 3 dias em Granada?",
+  "baqui.s2": "Quero natureza no norte",
+  "baqui.s3": "Quais territórios ficam no Caribe?",
+  "nav.baqui": "BAQÜI"
 }

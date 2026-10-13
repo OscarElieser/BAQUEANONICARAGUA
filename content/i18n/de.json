@@ -565,5 +565,22 @@
   "chron.sent": "Veröffentlicht. Sie erscheint in wenigen Minuten in der Liste.",
   "chron.limit": "Du hast in kurzer Zeit viel veröffentlicht. Versuche es in einer Stunde erneut.",
   "chron.sign_in_app": "Melde dich im Profil an, um deine Chronik zu veröffentlichen.",
-  "chron.f_body_short": "Erzähl etwas mehr: mindestens 40 Zeichen."
+  "chron.f_body_short": "Erzähl etwas mehr: mindestens 40 Zeichen.",
+  "baqui.title": "BAQÜI, dein Reiseguide",
+  "baqui.subtitle": "Dein Reiseguide für Nicaragua",
+  "baqui.intro": "Frag nach den 17 Gebieten und plane deine Reise. Er nutzt nur, was auf BAQUEANO veröffentlicht ist, und sagt dir, was nicht bestätigt ist.",
+  "baqui.hello": "Hallo, ich bin BAQÜI. Erzähl mir, was du in Nicaragua erleben möchtest: wie viele ihr seid, wie viele Tage und was euch gefällt.",
+  "baqui.thinking": "BAQÜI denkt nach…",
+  "baqui.placeholder": "Schreib deine Frage",
+  "baqui.send": "Senden",
+  "baqui.note": "BAQÜI nutzt künstliche Intelligenz (Google Gemini). Er bucht nichts und nennt keine Preise ohne Quelle. Bestätige immer beim jeweiligen Unternehmen.",
+  "baqui.off": "BAQÜI wird aktiviert, sobald das Team den KI-Anbieter eingerichtet hat. Noch nicht verfügbar.",
+  "baqui.limit": "Du hast das Limit von 40 Nachrichten pro Tag erreicht. Komm morgen wieder.",
+  "baqui.sign_in": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
+  "baqui.sign_in_cta": "um mit BAQÜI zu sprechen.",
+  "baqui.error": "Keine Antwort erhalten. Bitte versuche es erneut.",
+  "baqui.s1": "Was mache ich 3 Tage in Granada?",
+  "baqui.s2": "Ich möchte Natur im Norden",
+  "baqui.s3": "Welche Gebiete liegen in der Karibik?",
+  "nav.baqui": "BAQÜI"
 }

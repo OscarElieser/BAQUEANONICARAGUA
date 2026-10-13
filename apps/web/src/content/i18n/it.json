@@ -565,5 +565,22 @@
   "chron.sent": "Pubblicata. Comparirà nell’elenco tra pochi minuti.",
   "chron.limit": "Hai pubblicato molto in poco tempo. Riprova tra un’ora.",
   "chron.sign_in_app": "Accedi da Profilo per pubblicare la tua cronaca.",
-  "chron.f_body_short": "Racconta un po’ di più: almeno 40 caratteri."
+  "chron.f_body_short": "Racconta un po’ di più: almeno 40 caratteri.",
+  "baqui.title": "BAQÜI, la tua guida di viaggio",
+  "baqui.subtitle": "La tua guida di viaggio in Nicaragua",
+  "baqui.intro": "Chiedi dei 17 territori e organizza il viaggio. Usa solo ciò che è pubblicato su BAQUEANO e ti dice cosa non è confermato.",
+  "baqui.hello": "Ciao, sono BAQÜI. Dimmi cosa vorresti vivere in Nicaragua: quanti siete, quanti giorni e cosa vi piace.",
+  "baqui.thinking": "BAQÜI sta pensando…",
+  "baqui.placeholder": "Scrivi la tua domanda",
+  "baqui.send": "Invia",
+  "baqui.note": "BAQÜI usa l’intelligenza artificiale (Google Gemini). Non prenota e non dà prezzi senza fonte. Conferma sempre con ogni attività.",
+  "baqui.off": "BAQÜI si attiva quando il team configura il fornitore di IA. Non ancora disponibile.",
+  "baqui.limit": "Hai raggiunto il limite di 40 messaggi al giorno. Torna domani.",
+  "baqui.sign_in": "La sessione è scaduta. Accedi di nuovo.",
+  "baqui.sign_in_cta": "per parlare con BAQÜI.",
+  "baqui.error": "Impossibile ottenere una risposta. Riprova.",
+  "baqui.s1": "Cosa fare in 3 giorni a Granada?",
+  "baqui.s2": "Voglio natura nel nord",
+  "baqui.s3": "Quali territori sono sui Caraibi?",
+  "nav.baqui": "BAQÜI"
 }

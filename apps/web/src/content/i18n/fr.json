@@ -565,5 +565,22 @@
   "chron.sent": "Publiée. Elle apparaîtra dans la liste dans quelques minutes.",
   "chron.limit": "Tu as beaucoup publié en peu de temps. Réessaie dans une heure.",
   "chron.sign_in_app": "Connecte-toi dans Profil pour publier ta chronique.",
-  "chron.f_body_short": "Raconte un peu plus : au moins 40 caractères."
+  "chron.f_body_short": "Raconte un peu plus : au moins 40 caractères.",
+  "baqui.title": "BAQÜI, ton guide de voyage",
+  "baqui.subtitle": "Ton guide de voyage au Nicaragua",
+  "baqui.intro": "Pose tes questions sur les 17 territoires et prépare ton voyage. Il n’utilise que ce qui est publié sur BAQUEANO et te dit ce qui n’est pas confirmé.",
+  "baqui.hello": "Salut, je suis BAQÜI. Dis-moi ce que tu aimerais vivre au Nicaragua : combien vous êtes, combien de jours et ce que vous aimez.",
+  "baqui.thinking": "BAQÜI réfléchit…",
+  "baqui.placeholder": "Écris ta question",
+  "baqui.send": "Envoyer",
+  "baqui.note": "BAQÜI utilise l’intelligence artificielle (Google Gemini). Il ne réserve pas et ne donne pas de prix sans source. Confirme toujours avec chaque commerce.",
+  "baqui.off": "BAQÜI s’active quand l’équipe aura configuré le fournisseur d’IA. Pas encore disponible.",
+  "baqui.limit": "Tu as atteint la limite de 40 messages par jour. Reviens demain.",
+  "baqui.sign_in": "Ta session a expiré. Reconnecte-toi.",
+  "baqui.sign_in_cta": "pour parler avec BAQÜI.",
+  "baqui.error": "Impossible d’obtenir une réponse. Réessaie.",
+  "baqui.s1": "Que faire 3 jours à Granada ?",
+  "baqui.s2": "Je veux de la nature dans le nord",
+  "baqui.s3": "Quels territoires sont sur la Caraïbe ?",
+  "nav.baqui": "BAQÜI"
 }
