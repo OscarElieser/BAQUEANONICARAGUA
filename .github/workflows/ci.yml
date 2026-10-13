@@ -195,6 +195,11 @@ jobs:
           test "$(stat -c %s og-ter.png)" -gt 5000 # No es una imagen vacía
           curl -fsS -o /dev/null http://127.0.0.1:3000/icono.svg # Icono del sitio
           curl -fsS http://127.0.0.1:3000/manifest.webmanifest | grep -q icono-512.png # El manifiesto declara los iconos
+          curl -fsS http://127.0.0.1:3000/manifest.webmanifest | grep -q '"purpose": "maskable"' # Y el icono enmascarable para Android
+          curl -fsS -D sw.txt -o sw.js http://127.0.0.1:3000/sw.js # El trabajador del modo sin conexión
+          grep -qi "service-worker-allowed: /" sw.txt # Puede atender todo el sitio
+          grep -q "PRIVADAS" sw.js # Y excluye las zonas privadas
+          curl -fsS http://127.0.0.1:3000/es/sin-conexion | grep -q 'noindex' # La página sin conexión existe y no se indexa
           code=$(curl -s -o 404.html -w '%{http_code}' http://127.0.0.1:3000/es/territorios/no-existe) # Una ficha que no existe
           test "$code" = 404 # Responde 404 de verdad
       - uses: actions/setup-node@v4 # Node para la revisión de accesibilidad

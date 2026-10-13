@@ -528,5 +528,8 @@
   "footer.help": "Aide",
   "help.go": "Y aller",
   "terr.seat_label": "Siège administratif",
-  "territory.seat": "Siège administratif : {name}"
+  "territory.seat": "Siège administratif : {name}",
+  "offline.title": "Hors connexion",
+  "offline.text": "Cette page n’est pas encore enregistrée sur ton appareil. Celles que tu as déjà visitées s’ouvrent sans internet.",
+  "offline.retry": "Réessayer"
 }

@@ -16,6 +16,13 @@ const config: NextConfig = {
         headers: securityHeaders(), // Cabeceras de seguridad
       },
       {
+        source: '/sw.js', // El trabajador del modo sin conexión
+        headers: [
+          { key: 'Cache-Control', value: 'no-cache' }, // El navegador siempre revisa si hay versión nueva
+          { key: 'Service-Worker-Allowed', value: '/' }, // Puede atender todo el sitio
+        ],
+      },
+      {
         source: '/:locale/(cuenta|ops|mensajes|denunciar)/:path*', // Paneles privados y formularios confidenciales
         headers: [
           { key: 'Cache-Control', value: 'private, no-store' }, // Cloudflare no debe guardarlos en caché

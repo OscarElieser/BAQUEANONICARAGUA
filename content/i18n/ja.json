@@ -528,5 +528,8 @@
   "footer.help": "ヘルプ",
   "help.go": "ページへ",
   "terr.seat_label": "行政所在地",
-  "territory.seat": "行政所在地：{name}"
+  "territory.seat": "行政所在地：{name}",
+  "offline.title": "オフラインです",
+  "offline.text": "このページはまだ端末に保存されていません。一度開いたページはインターネットなしでも開けます。",
+  "offline.retry": "もう一度試す"
 }

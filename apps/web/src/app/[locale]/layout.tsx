@@ -8,6 +8,7 @@ import { t } from '@/i18n/t'; // Textos traducidos
 import { SITE_URL } from '@/lib/seo'; // Dirección pública del sitio
 import { SiteFooter } from '@/components/SiteFooter'; // Pie con páginas legales y preferencias de cookies
 import { AvisoCookies } from '@/components/AvisoCookies'; // Aviso de cookies con consentimiento real
+import { RegistroTrabajador } from '@/components/RegistroTrabajador'; // Modo sin conexión de las páginas visitadas
 import { MedicionNavegacion } from '@/components/MedicionNavegacion'; // Medición anónima, solo con consentimiento
 import '../globals.css';
 
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: { default: t(locale, 'meta.title_default'), template: '%s | BAQUEANO' }, // Título por defecto y plantilla
     description: t(locale, 'meta.description'), // Descripción para buscadores
     openGraph: { siteName: 'Nicaragua', locale, type: 'website' }, // Datos comunes para la vista previa al compartir
-    icons: { icon: [{ url: '/icono.svg', type: 'image/svg+xml' }, { url: '/icono-48.png', sizes: '48x48', type: 'image/png' }], apple: '/icono-180.png' }, // Icono: la silueta del país en curvas de nivel
+    icons: { icon: [{ url: '/icono.svg', type: 'image/svg+xml' }, { url: '/icono-48.png', sizes: '48x48', type: 'image/png' }], apple: '/icono-180.png' }, // Icono: la silueta del país en curvas de nivel, con los colores de BAQUEANO
     // La canónica y las versiones por idioma las pone cada página (lib/seo.ts), para no apuntar todas a la portada
   };
 }
@@ -61,6 +62,7 @@ export default async function LocaleLayout({
         </div>
         <SiteFooter locale={locale} /> {/* Pie de página común */}
         <AvisoCookies locale={locale} /> {/* Aviso de cookies (solo aparece si falta elegir) */}
+        <RegistroTrabajador /> {/* Instala el modo sin conexión (solo en producción) */}
         <MedicionNavegacion locale={locale} /> {/* Registra páginas vistas solo con consentimiento */}
       </body>
     </html>

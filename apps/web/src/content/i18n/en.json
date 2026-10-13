@@ -528,5 +528,8 @@
   "footer.help": "Help",
   "help.go": "Go there",
   "terr.seat_label": "Administrative seat",
-  "territory.seat": "Administrative seat: {name}"
+  "territory.seat": "Administrative seat: {name}",
+  "offline.title": "You are offline",
+  "offline.text": "This page is not saved on your device yet. Pages you already visited open without internet.",
+  "offline.retry": "Try again"
 }

@@ -543,6 +543,9 @@ const i18nStrings = <String, Map<String, String>>{
     'help.go': 'Ir ahí',
     'terr.seat_label': 'Sede administrativa',
     'territory.seat': 'Sede administrativa: {name}',
+    'offline.title': 'Sin conexión',
+    'offline.text': 'Esta página todavía no está guardada en tu teléfono. Las que ya visitaste sí se abren sin internet.',
+    'offline.retry': 'Intentar de nuevo',
   },
   'en': {
     'meta.title_default': 'BAQUEANO: discover what\'s not on the map',
@@ -1070,6 +1073,9 @@ const i18nStrings = <String, Map<String, String>>{
     'help.go': 'Go there',
     'terr.seat_label': 'Administrative seat',
     'territory.seat': 'Administrative seat: {name}',
+    'offline.title': 'You are offline',
+    'offline.text': 'This page is not saved on your device yet. Pages you already visited open without internet.',
+    'offline.retry': 'Try again',
   },
   'zh-Hans': {
     'meta.title_default': 'BAQUEANO：发现地图上找不到的地方',
@@ -1597,6 +1603,9 @@ const i18nStrings = <String, Map<String, String>>{
     'help.go': '前往',
     'terr.seat_label': '行政驻地',
     'territory.seat': '行政驻地：{name}',
+    'offline.title': '当前离线',
+    'offline.text': '此页面尚未保存在你的设备上。已访问过的页面无需网络即可打开。',
+    'offline.retry': '重试',
   },
   'ko': {
     'meta.title_default': 'BAQUEANO: 지도에 없는 곳을 발견하세요',
@@ -2124,6 +2133,9 @@ const i18nStrings = <String, Map<String, String>>{
     'help.go': '바로 가기',
     'terr.seat_label': '행정 소재지',
     'territory.seat': '행정 소재지: {name}',
+    'offline.title': '오프라인입니다',
+    'offline.text': '이 페이지는 아직 기기에 저장되지 않았습니다. 이미 방문한 페이지는 인터넷 없이 열립니다.',
+    'offline.retry': '다시 시도',
   },
   'it': {
     'meta.title_default': 'BAQUEANO: scopri ciò che non è sulla mappa',
@@ -2651,6 +2663,9 @@ const i18nStrings = <String, Map<String, String>>{
     'help.go': 'Vai lì',
     'terr.seat_label': 'Sede amministrativa',
     'territory.seat': 'Sede amministrativa: {name}',
+    'offline.title': 'Sei offline',
+    'offline.text': 'Questa pagina non è ancora salvata sul tuo dispositivo. Quelle già visitate si aprono senza internet.',
+    'offline.retry': 'Riprova',
   },
   'fr': {
     'meta.title_default': 'BAQUEANO : découvre ce qui n\'est pas sur la carte',
@@ -3178,6 +3193,9 @@ const i18nStrings = <String, Map<String, String>>{
     'help.go': 'Y aller',
     'terr.seat_label': 'Siège administratif',
     'territory.seat': 'Siège administratif : {name}',
+    'offline.title': 'Hors connexion',
+    'offline.text': 'Cette page n’est pas encore enregistrée sur ton appareil. Celles que tu as déjà visitées s’ouvrent sans internet.',
+    'offline.retry': 'Réessayer',
   },
   'pt': {
     'meta.title_default': 'BAQUEANO: descubra o que não aparece no mapa',
@@ -3705,6 +3723,9 @@ const i18nStrings = <String, Map<String, String>>{
     'help.go': 'Ir até lá',
     'terr.seat_label': 'Sede administrativa',
     'territory.seat': 'Sede administrativa: {name}',
+    'offline.title': 'Sem conexão',
+    'offline.text': 'Esta página ainda não está salva no seu aparelho. As que você já visitou abrem sem internet.',
+    'offline.retry': 'Tentar de novo',
   },
   'de': {
     'meta.title_default': 'BAQUEANO: Entdecke, was auf keiner Karte steht',
@@ -4232,6 +4253,9 @@ const i18nStrings = <String, Map<String, String>>{
     'help.go': 'Dorthin',
     'terr.seat_label': 'Verwaltungssitz',
     'territory.seat': 'Verwaltungssitz: {name}',
+    'offline.title': 'Keine Verbindung',
+    'offline.text': 'Diese Seite ist noch nicht auf deinem Gerät gespeichert. Bereits besuchte Seiten öffnen sich ohne Internet.',
+    'offline.retry': 'Erneut versuchen',
   },
   'ru': {
     'meta.title_default': 'BAQUEANO: открой то, чего нет на карте',
@@ -4759,6 +4783,9 @@ const i18nStrings = <String, Map<String, String>>{
     'help.go': 'Перейти',
     'terr.seat_label': 'Административный центр',
     'territory.seat': 'Административный центр: {name}',
+    'offline.title': 'Нет подключения',
+    'offline.text': 'Эта страница ещё не сохранена на устройстве. Уже открытые страницы доступны без интернета.',
+    'offline.retry': 'Попробовать снова',
   },
   'ja': {
     'meta.title_default': 'BAQUEANO：地図に載っていないものを見つけよう',
@@ -5286,5 +5313,8 @@ const i18nStrings = <String, Map<String, String>>{
     'help.go': 'ページへ',
     'terr.seat_label': '行政所在地',
     'territory.seat': '行政所在地：{name}',
+    'offline.title': 'オフラインです',
+    'offline.text': 'このページはまだ端末に保存されていません。一度開いたページはインターネットなしでも開けます。',
+    'offline.retry': 'もう一度試す',
   },
 };

@@ -528,5 +528,8 @@
   "footer.help": "帮助",
   "help.go": "前往",
   "terr.seat_label": "行政驻地",
-  "territory.seat": "行政驻地：{name}"
+  "territory.seat": "行政驻地：{name}",
+  "offline.title": "当前离线",
+  "offline.text": "此页面尚未保存在你的设备上。已访问过的页面无需网络即可打开。",
+  "offline.retry": "重试"
 }

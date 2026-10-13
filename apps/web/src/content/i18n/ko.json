@@ -528,5 +528,8 @@
   "footer.help": "도움말",
   "help.go": "바로 가기",
   "terr.seat_label": "행정 소재지",
-  "territory.seat": "행정 소재지: {name}"
+  "territory.seat": "행정 소재지: {name}",
+  "offline.title": "오프라인입니다",
+  "offline.text": "이 페이지는 아직 기기에 저장되지 않았습니다. 이미 방문한 페이지는 인터넷 없이 열립니다.",
+  "offline.retry": "다시 시도"
 }
