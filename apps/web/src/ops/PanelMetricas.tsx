@@ -35,6 +35,10 @@ const KPIS: Array<[string, string]> = [
   ['favorites_total', 'Lugares guardados'], // Favoritos, web y Android
   ['baqui_messages_24h', 'Mensajes a BAQÜI en 24 h'], // Uso del asistente
   ['baqui_conversations_7d', 'Conversaciones con BAQÜI en 7 días'], // Conversaciones nuevas
+  ['push_devices_web', 'Navegadores con avisos'], // Avisos push activados en la web
+  ['push_devices_android', 'Teléfonos Android con avisos'], // Avisos push activados en la app
+  ['push_sent_24h', 'Avisos de 24 h entregados'], // Llegaron a por lo menos un dispositivo
+  ['push_failed_24h', 'Avisos de 24 h fallidos'], // Firebase no los aceptó tras tres intentos
 ];
 
 export function PanelMetricas({ locale, data }: { locale: string; data: Metricas }) {

@@ -135,5 +135,7 @@ export async function reenviarVerificacion(): Promise<void> {
 
 /** Cierra la sesión en este navegador. */
 export async function cerrarSesion(): Promise<void> {
+  const { quitarAvisosAlSalir } = await import('./avisos'); // Se carga solo al salir (no pesa en las demás páginas)
+  await quitarAvisosAlSalir(); // Este navegador deja de recibir los avisos de esta cuenta (computadoras compartidas)
   await signOut(requireAuth()); // Borra la sesión guardada en el navegador
 }

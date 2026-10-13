@@ -28,3 +28,6 @@ verify_jwt = false # La verificación la hace la función, no la puerta de Supab
 # BAQÜI, el asistente (Gemini). El token de Firebase lo valida la base de datos (baqui_start), no la puerta de entrada.
 [functions.baqui]
 verify_jwt = false
+
+[functions.enviar-avisos]
+verify_jwt = false # La despierta pg_cron sin sesión; solo procesa avisos que ya están en la base

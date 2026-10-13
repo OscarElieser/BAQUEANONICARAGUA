@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart'; // Textos del
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Reemplazo de proveedores
 import 'package:flutter_test/flutter_test.dart'; // Herramientas de pruebas de widgets
 import 'package:intl/date_symbol_data_local.dart'; // Formatos de fecha por idioma
+import 'package:nica_app/core/data/avisos.dart'; // Avisos push
 import 'package:nica_app/core/data/models.dart'; // Datos
 import 'package:nica_app/core/data/repositories.dart'; // Interfaces a reemplazar
 import 'package:nica_app/core/theme.dart'; // Tema
@@ -15,6 +16,7 @@ import 'package:nica_app/features/community/publicar_cronica_screen.dart'; // Pu
 import 'package:nica_app/features/culture/culture_screen.dart'; // Cultura
 import 'package:nica_app/features/messages/conversation_screen.dart'; // Conversación
 import 'package:nica_app/features/planner/planner_screen.dart'; // Mi aventura
+import 'package:nica_app/features/profile/avisos_telefono.dart'; // Avisos del teléfono
 
 /// Catálogo falso, sin red.
 class FakeCatalog implements CatalogRepository {
@@ -71,11 +73,31 @@ class FakeMessaging implements MessagingRepository {
   Future<String> startWithBusiness(String businessId, String body) async => 'c1'; // Conversación nueva
 }
 
+/// Avisos falsos, sin Firebase.
+class FakeAvisos implements AvisosRepository {
+  FakeAvisos(this.actual); // Estado inicial
+  EstadoAvisos actual; // Estado de la prueba
+  int activaciones = 0; // Veces que se activó
+  @override
+  Future<EstadoAvisos> estado() async => actual; // Estado actual
+  @override
+  Future<EstadoAvisos> activar() async {
+    activaciones++; // Cuenta la activación
+    return actual = EstadoAvisos.activado; // Queda activado
+  }
+
+  @override
+  Future<EstadoAvisos> apagar() async => actual = EstadoAvisos.apagado; // Queda apagado
+  @override
+  Future<void> alSalir() async {} // Nada que hacer
+}
+
 /// Monta una pantalla con los datos falsos y sin sesión.
-Widget app(Widget home, {FakeMessaging? messaging, Locale locale = const Locale('es')}) => ProviderScope(
+Widget app(Widget home, {FakeMessaging? messaging, AvisosRepository? avisos, Locale locale = const Locale('es')}) => ProviderScope(
       overrides: [
         catalogRepositoryProvider.overrideWithValue(FakeCatalog()), // Catálogo falso
         messagingRepositoryProvider.overrideWithValue(messaging ?? FakeMessaging()), // Mensajería falsa
+        avisosRepositoryProvider.overrideWithValue(avisos ?? FakeAvisos(EstadoAvisos.noSoportado)), // Avisos falsos (sin Firebase)
         authStateProvider.overrideWith((ref) => Stream<User?>.value(null)), // Sin sesión
       ],
       child: MaterialApp(
@@ -89,6 +111,34 @@ Widget app(Widget home, {FakeMessaging? messaging, Locale locale = const Locale(
 
 void main() {
   setUpAll(() => initializeDateFormatting()); // Carga los formatos de fecha de todos los idiomas
+
+  testWidgets('avisos del teléfono: activar, confirmar y apagar', (tester) async {
+    final avisos = FakeAvisos(EstadoAvisos.apagado); // Empiezan apagados
+    await tester.pumpWidget(app(const SingleChildScrollView(child: AvisosTelefono()), avisos: avisos)); // Monta la tarjeta
+    await tester.pumpAndSettle(); // Espera el estado
+    expect(find.text('Avisos en este teléfono'), findsOneWidget); // Título
+    await tester.tap(find.text('Activar avisos')); // Los activa
+    await tester.pumpAndSettle(); // Espera
+    expect(avisos.activaciones, 1); // Se pidió una sola vez
+    expect(find.text('Los avisos están activados en este teléfono.'), findsOneWidget); // Confirmación
+    await tester.tap(find.text('Apagar avisos')); // Los apaga
+    await tester.pumpAndSettle(); // Espera
+    expect(find.text('Activar avisos'), findsOneWidget); // Vuelve a ofrecer activarlos
+  });
+
+  testWidgets('avisos bloqueados en Android: explica cómo permitirlos y no ofrece el botón', (tester) async {
+    await tester.pumpWidget(app(const SingleChildScrollView(child: AvisosTelefono()), avisos: FakeAvisos(EstadoAvisos.bloqueado))); // Bloqueados
+    await tester.pumpAndSettle(); // Espera
+    expect(find.textContaining('Android tiene bloqueados los avisos de BAQUEANO'), findsOneWidget); // Lo explica
+    expect(find.byType(FilledButton), findsNothing); // Sin botón que no serviría
+  });
+
+  testWidgets('sin Firebase configurado: los avisos dicen que no están disponibles', (tester) async {
+    await tester.pumpWidget(app(const SingleChildScrollView(child: AvisosTelefono()))); // Avisos no disponibles (por defecto en las pruebas)
+    await tester.pumpAndSettle(); // Espera
+    expect(find.text('Este teléfono no puede recibir avisos todavía.'), findsOneWidget); // Lo dice
+    expect(find.byType(FilledButton), findsNothing); // Sin botón
+  });
 
   testWidgets('ficha de negocio: marca patrocinado, solo enlaza contactos válidos y no inventa tarifas', (tester) async {
     await tester.pumpWidget(app(const BusinessScreen(slug: 'comedor', name: 'Comedor de prueba'))); // Abre la ficha

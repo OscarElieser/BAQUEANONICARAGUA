@@ -2,12 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart'; // Tipo User de Firebase
 import 'package:flutter/material.dart'; // Componentes visuales de Flutter
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Acceso a los proveedores de Riverpod
 
+import '../../core/data/avisos.dart'; // Avisos push (para apagarlos al salir)
 import '../../core/i18n/t.dart'; // Textos traducidos
 import '../../core/theme.dart'; // Colores y espaciados del sistema de diseño
 import '../auth/auth_repository.dart'; // Sesión y acciones de autenticación
 import '../auth/sign_in_screen.dart'; // Pantalla de acceso
 import '../legal/legal_screen.dart'; // Información y legal
 import '../messages/inbox_screen.dart'; // Bandeja de mensajes
+import 'avisos_telefono.dart'; // Avisos de este teléfono
 
 /// Pestaña "Perfil": muestra el acceso si no hay sesión, o la cuenta con "Cerrar sesión".
 class ProfileScreen extends ConsumerWidget {
@@ -88,13 +90,20 @@ class _AccountState extends ConsumerState<_Account> {
           icon: const Icon(Icons.chat_bubble_outline), // Icono de mensajes
           label: Text(context.t('profile.messages')), // Texto
         ),
-        const SizedBox(height: TvSpace.s3), // Espacio
+        const SizedBox(height: TvSpace.s4), // Espacio
+        const AvisosTelefono(), // Activar o apagar los avisos de este teléfono
+        const SizedBox(height: TvSpace.s4), // Espacio
         OutlinedButton(
           style: OutlinedButton.styleFrom(
             foregroundColor: tv.statusAlert, // Texto en color de alerta
             side: BorderSide(color: tv.statusAlert, width: 1.5), // Borde en color de alerta
           ),
-          onPressed: _busy ? null : () => _do(repo.signOut, context.t('profile.signed_out')), // Cierra la sesión
+          onPressed: _busy
+              ? null
+              : () => _do(() async {
+                    await ref.read(avisosRepositoryProvider).alSalir(); // Este teléfono deja de recibir los avisos de esta cuenta
+                    await repo.signOut(); // Cierra la sesión
+                  }, context.t('profile.signed_out')), // Cierra la sesión
           child: Text(_busy ? context.t('session.signing_out') : context.t('session.sign_out')), // Texto según el estado
         ),
         if (_message != null) ...[

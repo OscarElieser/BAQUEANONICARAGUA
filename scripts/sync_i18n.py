@@ -12,6 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent  # Raíz del repositorio
 SOURCE = ROOT / "content" / "i18n"  # Fuente única de los textos
 WEB = ROOT / "apps" / "web" / "src" / "content" / "i18n"  # Copia para la web
 DART = ROOT / "apps" / "mobile" / "lib" / "core" / "i18n" / "strings.g.dart"  # Archivo generado para Android
+AVISOS = ROOT / "supabase" / "functions" / "enviar-avisos" / "textos.ts"  # Textos de los avisos push para la función del servidor
 LOCALES = ["es", "en", "zh-Hans", "ko", "it", "fr", "pt", "de", "ru", "ja"]  # Mismos idiomas que apps/web/src/i18n/config.ts
 VAR = re.compile(r"\{([A-Za-z0-9_]+)\}")  # Variables como {amount} o {118}
 
@@ -72,11 +73,31 @@ def render_dart(data: dict) -> str:
     return "\n".join(lines) + "\n"  # Archivo completo
 
 
+def render_avisos(data: dict) -> str:
+    """Genera los textos de los avisos push (claves push.*) para la función "enviar-avisos"."""
+    lines = [
+        "// ARCHIVO GENERADO por scripts/sync_i18n.py desde content/i18n (solo las claves push.*). No editar a mano.",  # Aviso
+        "// Textos de los avisos push en 10 idiomas; los comentarios por línea no aplican a datos generados.",  # Aclaración
+        "",
+        "/** Textos por idioma y clave. */",  # Documentación
+        "export const TEXTOS: Record<string, Record<string, string>> = {",  # Inicio del mapa
+    ]
+    for loc in LOCALES:  # Cada idioma
+        lines.append(f"  {json.dumps(loc)}: {{")  # Inicio del idioma
+        for k, v in data[loc].items():  # Cada texto
+            if k.startswith("push."):  # Solo los de avisos push
+                lines.append(f"    {json.dumps(k)}: {json.dumps(v, ensure_ascii=False)},")  # Clave y texto como literales de TypeScript
+        lines.append("  },")  # Fin del idioma
+    lines.append("};")  # Fin del mapa
+    return "\n".join(lines) + "\n"  # Archivo completo
+
+
 def main() -> None:
     check = "--check" in sys.argv  # Si solo hay que comprobar
     data = load()  # Valida los textos
     outputs = {WEB / f"{loc}.json": (SOURCE / f"{loc}.json").read_text(encoding="utf-8") for loc in LOCALES}  # Copias para la web
     outputs[DART] = render_dart(data)  # Archivo de Android
+    outputs[AVISOS] = render_avisos(data)  # Textos de los avisos push para el servidor
     stale = []  # Archivos desactualizados
     for path, content in outputs.items():  # Cada salida
         if check:  # Modo comprobación

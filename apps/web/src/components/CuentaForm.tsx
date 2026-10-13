@@ -11,6 +11,7 @@ import {
   reenviarVerificacion, // Reenvía el correo de verificación
 } from '@/lib/auth';
 import { useSession } from '@/lib/useSession'; // Estado de la sesión
+import { AvisosNavegador } from './AvisosNavegador'; // Avisos de este navegador
 import { t } from '@/i18n/t'; // Textos traducidos
 
 type Mode = 'entrar' | 'crear' | 'recuperar'; // Las tres vistas del formulario
@@ -94,6 +95,7 @@ export function CuentaForm({ locale }: { locale: string }) {
             </button>
           </div>
         )}
+        <AvisosNavegador locale={locale} /> {/* Activar o apagar los avisos de este navegador */}
         <button type="button" disabled={busy} onClick={() => run(cerrarSesion)}
           className="h-[52px] self-start rounded-pill border-[1.5px] border-status-alert px-6 font-bold text-status-alert disabled:opacity-45">
           {busy ? t(locale, 'session.signing_out') : t(locale, 'session.sign_out')} {/* Botón de salida */}

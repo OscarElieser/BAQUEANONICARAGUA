@@ -182,3 +182,13 @@ keyPassword=la contraseña de la llave
 Con ese archivo, `flutter build appbundle` firma con la llave propia; sin él, la versión de publicación usa la llave de pruebas (sirve para probar, no para Google Play).
 
 **En Firebase:** ⚙️ Configuración del proyecto → General → Tus apps → app Android → Agregar huella digital (una vez la SHA-1 y otra la SHA-256, de cada llave). Si la app se publica en Google Play con la firma de apps de Google, también se agregan las huellas que muestra Play Console → Integridad de la app. Después se descarga de nuevo `google-services.json`.
+
+## Avisos push (web y Android)
+
+- **Clave pública de la web (VAPID):** ya está en `apps/web/src/config/publica.json` (`firebaseVapidKey`). No es secreta; se puede cambiar con `NEXT_PUBLIC_FIREBASE_VAPID_KEY`. La privada de ese par nunca sale de Firebase.
+- **Registro:** la persona activa los avisos en Cuenta (web) o en Perfil (Android). El navegador o el teléfono piden permiso y el token se guarda con `push_register` (exige sesión). Al cerrar sesión se borra. En Android el registro automático de Firebase está apagado: el teléfono solo se registra si la persona lo pide.
+- **Envío:** la función `enviar-avisos` toma los avisos pendientes (`push_claim`), los manda con FCM (API v1) y anota el resultado real (`push_report`): enviado, fallido (tras 3 intentos) u omitido (sin dispositivos o de hace más de un día). Borra los tokens que Firebase da de baja.
+- **Quién la despierta:** `pg_cron` cada minuto, solo si hay avisos pendientes y solo en producción (la dirección `avisos_url` se guarda en `app.settings` cuando el proyecto de Firebase es el oficial).
+- **Secreto que necesita:** el mismo `FIREBASE_SERVICE_ACCOUNT` de `preparar-sesion` (permiso solo para enviar mensajes). Sin él, la función responde 503 y no toca los avisos. `SITIO_URL` es opcional (por defecto `https://baqueanonicaragua.com`).
+- **El Ops Center** ve solo cifras: navegadores y teléfonos con avisos, y avisos entregados o fallidos en 24 h.
+- **Android:** para que FCM funcione hace falta el `google-services.json` de la app Android registrada en Firebase (con sus huellas SHA-1 y SHA-256).

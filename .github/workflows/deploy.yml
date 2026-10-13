@@ -132,6 +132,8 @@ jobs:
         run: if [ -n "$GEMINI_API_KEY" ]; then supabase secrets set GEMINI_API_KEY="$GEMINI_API_KEY"; else echo "Sin GEMINI_API_KEY en GitHub; se conserva la que esté en Supabase."; fi
       - name: Desplegar BAQÜI # Asistente con Gemini (verify_jwt = false en config.toml: la sesión la valida baqui_start)
         run: supabase functions deploy baqui
+      - name: Desplegar enviar-avisos # Avisos push con FCM (la despierta pg_cron; usa la misma cuenta de servicio de Firebase)
+        run: supabase functions deploy enviar-avisos
 
   servidor:
     name: Desplegar en el servidor

@@ -111,12 +111,15 @@ export function pemToBytes(pem: string): Uint8Array<ArrayBuffer> {
   return Uint8Array.from(atob(body), (c) => c.charCodeAt(0)); // Decodifica el Base64 a bytes
 }
 
-/** Crea la "aserción" firmada con la cuenta de servicio para pedir un token de acceso a Google. */
-export async function buildServiceAssertion(sa: ServiceAccount, nowSeconds: number = Math.floor(Date.now() / 1000)): Promise<string> {
+export const SCOPE_CUENTAS = 'https://www.googleapis.com/auth/identitytoolkit'; // Permiso para administrar cuentas de Firebase Auth (preparar-sesion)
+export const SCOPE_AVISOS = 'https://www.googleapis.com/auth/firebase.messaging'; // Permiso solo para enviar avisos con Firebase Cloud Messaging (enviar-avisos)
+
+/** Crea la "aserción" firmada con la cuenta de servicio para pedir un token de acceso a Google con un solo permiso. */
+export async function buildServiceAssertion(sa: ServiceAccount, nowSeconds: number = Math.floor(Date.now() / 1000), scope: string = SCOPE_CUENTAS): Promise<string> {
   const header = { alg: 'RS256', typ: 'JWT' }; // Cabecera del JWT
   const payload = {
     iss: sa.client_email, // Quién firma: la cuenta de servicio
-    scope: 'https://www.googleapis.com/auth/identitytoolkit', // Permiso para administrar cuentas de Firebase Auth
+    scope, // El único permiso que pide quien llama (cuentas o avisos)
     aud: 'https://oauth2.googleapis.com/token', // Servicio de Google que recibe la aserción
     iat: nowSeconds, // Momento de emisión
     exp: nowSeconds + 600, // Válida por 10 minutos

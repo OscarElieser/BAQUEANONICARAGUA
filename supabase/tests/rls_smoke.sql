@@ -976,6 +976,139 @@ insert into results select 'el arranque de superadmin quedó en la auditoría', 
 insert into results select 'la marca del superadmin inicial se borró al usarse', -- No queda nada que reutilizar
   not exists (select 1 from app.settings where key = 'superadmin_inicial_sha256');
 
+-- Avisos push (migración avisos_push)
+insert into public.profiles (id, firebase_uid, display_name, preferred_locale) values -- Tres cuentas para los avisos
+  ('00000000-0000-0000-0000-00000000a5a1', 'fb_avisos_1', 'Avisos Uno', 'en'), -- Con dispositivos, en inglés
+  ('00000000-0000-0000-0000-00000000a5a2', 'fb_avisos_2', 'Avisos Dos', 'es'), -- Usará el mismo navegador después
+  ('00000000-0000-0000-0000-00000000a5a3', 'fb_avisos_3', 'Avisos Tres', 'es'); -- Sin dispositivos
+select pg_temp.act_as('fb_avisos_1'); -- Primera cuenta con sesión
+select public.push_register('token-web-de-prueba-00000000000001', 'web'); -- Activa los avisos en su navegador
+insert into results select 'push_register guarda el dispositivo de la persona', -- Queda a su nombre
+  exists (select 1 from public.push_tokens where token = 'token-web-de-prueba-00000000000001' and profile_id = '00000000-0000-0000-0000-00000000a5a1');
+do $$
+begin
+  begin
+    perform public.push_register('corto', 'web'); -- Token demasiado corto
+    insert into results values ('push_register rechaza tokens inválidos', false); -- No debió aceptarlo
+  exception when sqlstate '22023' then
+    insert into results values ('push_register rechaza tokens inválidos', true); -- Rechazado
+  end;
+  begin
+    perform public.push_register('token-web-de-prueba-00000000000009', 'ios'); -- Plataforma que no existe aquí
+    insert into results values ('push_register rechaza plataformas desconocidas', false); -- No debió aceptarla
+  exception when sqlstate '22023' then
+    insert into results values ('push_register rechaza plataformas desconocidas', true); -- Rechazada
+  end;
+end $$;
+reset role;
+select pg_temp.act_as('fb_avisos_2'); -- Otra cuenta entra en el mismo navegador
+select public.push_register('token-web-de-prueba-00000000000001', 'web'); -- Activa los avisos con el mismo token
+reset role;
+insert into results select 'el token del navegador pasa a la cuenta que lo activó al final', -- La cuenta anterior deja de recibir
+  (select profile_id from public.push_tokens where token = 'token-web-de-prueba-00000000000001') = '00000000-0000-0000-0000-00000000a5a2';
+select pg_temp.act_as('fb_avisos_1'); -- Vuelve la primera cuenta
+do $$
+begin
+  for i in 1..11 loop perform public.push_register('token-android-de-prueba-' || lpad(i::text, 10, '0'), 'android'); end loop; -- Once teléfonos
+end $$;
+reset role;
+insert into results select 'una persona guarda como máximo 10 dispositivos', -- Se borran los más viejos
+  (select count(*) from public.push_tokens where profile_id = '00000000-0000-0000-0000-00000000a5a1') = 10;
+set local role anon; -- Sin sesión
+select set_config('request.jwt.claims', '{}', true); -- Sin datos de sesión
+do $$
+begin
+  begin
+    perform public.push_register('token-web-de-prueba-00000000000002', 'web'); -- Intenta registrar sin sesión
+    insert into results values ('sin sesión no se registran dispositivos', false); -- No debió poder
+  exception when insufficient_privilege then
+    insert into results values ('sin sesión no se registran dispositivos', true); -- Bloqueado
+  end;
+end $$;
+reset role;
+select app.notify('00000000-0000-0000-0000-00000000a5a1', 'new_message', '{}'::jsonb); -- Aviso para la cuenta con dispositivos
+select app.notify('00000000-0000-0000-0000-00000000a5a3', 'new_message', '{}'::jsonb); -- Aviso para la cuenta sin dispositivos
+select pg_temp.act_as('fb_avisos_1'); -- Cliente con sesión
+do $$
+begin
+  begin
+    update public.notifications set push_attempts = 9 where profile_id = '00000000-0000-0000-0000-00000000a5a1'; -- Intenta tocar los datos del envío
+    insert into results values ('un cliente no puede cambiar los datos del envío', false); -- No debió poder
+  exception when insufficient_privilege then
+    insert into results values ('un cliente no puede cambiar los datos del envío', true); -- Bloqueado
+  end;
+  begin
+    perform public.push_claim(10); -- Intenta tomar avisos para enviar
+    insert into results values ('un cliente no puede tomar avisos para enviar', false); -- No debió poder
+  exception when insufficient_privilege then
+    insert into results values ('un cliente no puede tomar avisos para enviar', true); -- Bloqueado
+  end;
+  begin
+    perform public.push_report(1, 'sent'); -- Intenta anotar un envío falso
+    insert into results values ('un cliente no puede anotar envíos', false); -- No debió poder
+  exception when insufficient_privilege then
+    insert into results values ('un cliente no puede anotar envíos', true); -- Bloqueado
+  end;
+end $$;
+do $$
+declare n int; -- Filas cambiadas
+begin
+  update public.notifications set read_at = now() where profile_id = '00000000-0000-0000-0000-00000000a5a1'; -- Marca su aviso como leído
+  get diagnostics n = row_count; -- Cuántas cambió
+  insert into results values ('la persona sí puede marcar su aviso como leído', n = 1); -- Lo único permitido
+end $$;
+reset role;
+set local role service_role; -- Como la función "enviar-avisos"
+select set_config('request.jwt.claims', '{"role":"service_role"}', true); -- Datos de sesión del servidor
+do $$
+declare v jsonb; -- Avisos reservados
+begin
+  v := public.push_claim(50); -- Toma los pendientes
+  insert into results select 'push_claim entrega el aviso con su idioma y sus dispositivos', -- Aviso de la cuenta en inglés con 10 dispositivos
+    exists (select 1 from jsonb_array_elements(v) e where e->>'locale' = 'en' and e->>'kind' = 'new_message' and jsonb_array_length(e->'tokens') = 10);
+  insert into results select 'push_claim no entrega avisos de quien no tiene dispositivos', -- Ninguno sin dispositivos
+    not exists (select 1 from jsonb_array_elements(v) e where jsonb_array_length(e->'tokens') = 0);
+  insert into results select 'un aviso reservado no se entrega dos veces', jsonb_array_length(public.push_claim(50)) = 0; -- La reserva lo protege
+  perform public.push_report((select (e->>'id')::bigint from jsonb_array_elements(v) e where e->>'locale' = 'en'), 'sent', array['token-android-de-prueba-0000000011']); -- Enviado y un token muerto
+end $$;
+reset role;
+insert into results select 'push_report deja el aviso como enviado', -- Estado real
+  exists (select 1 from public.notifications where profile_id = '00000000-0000-0000-0000-00000000a5a1' and push_status = 'sent' and push_locked_until is null);
+insert into results select 'push_report borra los tokens que Firebase dio de baja', -- Ya no existe
+  not exists (select 1 from public.push_tokens where token = 'token-android-de-prueba-0000000011');
+insert into results select 'el aviso de quien no tiene dispositivos queda como omitido', -- Honesto: no se intentó
+  exists (select 1 from public.notifications where profile_id = '00000000-0000-0000-0000-00000000a5a3' and push_status = 'skipped');
+select app.notify('00000000-0000-0000-0000-00000000a5a1', 'comment_reply', '{}'::jsonb); -- Otro aviso para probar los reintentos
+set local role service_role; -- Como el servidor
+select set_config('request.jwt.claims', '{"role":"service_role"}', true); -- Datos de sesión del servidor
+select public.push_report((select (e->>'id')::bigint from jsonb_array_elements(public.push_claim(50)) e limit 1), 'retry'); -- Falla pasajera
+reset role;
+insert into results select 'una falla pasajera deja el aviso pendiente y en espera', -- Se reintentará después
+  exists (select 1 from public.notifications where kind = 'comment_reply' and profile_id = '00000000-0000-0000-0000-00000000a5a1' and push_status = 'pending' and push_locked_until > now());
+update public.notifications set push_attempts = 3 where kind = 'comment_reply' and profile_id = '00000000-0000-0000-0000-00000000a5a1'; -- Simula que ya se intentó tres veces
+set local role service_role; -- Como el servidor
+select set_config('request.jwt.claims', '{"role":"service_role"}', true); -- Datos de sesión del servidor
+select public.push_report((select id from public.notifications where kind = 'comment_reply' and profile_id = '00000000-0000-0000-0000-00000000a5a1'), 'retry'); -- Cuarta falla
+reset role;
+insert into results select 'después de tres intentos el aviso queda como fallido', -- No se reintenta para siempre
+  exists (select 1 from public.notifications where kind = 'comment_reply' and profile_id = '00000000-0000-0000-0000-00000000a5a1' and push_status = 'failed');
+delete from app.settings where key = 'avisos_url'; -- Sin dirección (como en CI)
+select app.notify('00000000-0000-0000-0000-00000000a5a1', 'post_comment', '{}'::jsonb); -- Un aviso pendiente para alguien con dispositivos
+create temp table cola_antes as select count(*) as n from net.http_request_queue; -- Peticiones en cola antes
+select app.avisos_disparar(); -- La tarea del minuto, sin dirección
+insert into results select 'sin dirección configurada la tarea no llama a nada', -- No toca la red
+  (select count(*) from net.http_request_queue) = (select n from cola_antes);
+insert into app.settings (key, value) values ('avisos_url', 'http://127.0.0.1:9/enviar-avisos'); -- Dirección de prueba (nunca se llama: todo se revierte)
+select app.avisos_disparar(); -- La tarea del minuto, con dirección
+insert into results select 'con avisos pendientes la tarea despierta a la función', -- Una petición nueva en cola
+  (select count(*) from net.http_request_queue) = (select n from cola_antes) + 1;
+insert into results select 'la tarea programada del minuto existe', -- pg_cron la tiene registrada
+  exists (select 1 from cron.job where jobname = 'enviar-avisos' and schedule = '* * * * *');
+select pg_temp.act_as('fb_auditor'); -- Alguien del equipo
+insert into results select 'el panel del Ops Center cuenta dispositivos y avisos de web y Android', -- Solo cifras
+  (public.ops_dashboard_metrics() ?& array['push_devices_web','push_devices_android','push_sent_24h','push_failed_24h','trips_total']) and (public.ops_dashboard_metrics()->>'push_devices_android')::int >= 9; -- Los teléfonos de la prueba
+reset role;
+
 select case when ok then 'PASS' else 'FAIL' end as status, name from results order by ok, name;
 select count(*) filter (where not ok) as failures, count(*) as total from results;
 
