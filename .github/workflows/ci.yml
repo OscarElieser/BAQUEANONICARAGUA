@@ -157,14 +157,26 @@ jobs:
                   print(f"::error title=Prueba Android: {names.get(e.get('testID'), '?')}::{text[:3000]}")
           PY
           exit "${status:-0}"
-      - uses: actions/setup-java@v4 # Java 17, el que pide el plugin de Android
+      - uses: actions/setup-java@v5 # Java 17, el que pide el plugin de Android
         with: { distribution: temurin, java-version: '17' }
       - name: Compilar la app (APK de prueba) # Comprueba que Gradle, el manifiesto, los plugins y la firma compilan de verdad
         run: |
           set -o pipefail # El resultado es el de flutter, no el de tee
           [ -f android/app/google-services.json ] || cp android/app/google-services.json.example android/app/google-services.json # Sin el archivo real se usa el de ejemplo (mismo paquete, solo datos públicos)
           flutter build apk --debug 2>&1 | tee build.txt || status=$? # Compilación de depuración: no necesita la llave de publicación
-          grep -E "^e: |error:|FAILURE|What went wrong" build.txt | head -n 15 | while IFS= read -r line; do echo "::error title=Compilación Android::${line//%/%25}"; done # Muestra los errores como anotaciones
+          python3 - <<'PY'
+          # Junta lo importante del registro en pocas anotaciones legibles (GitHub limita cuántas se muestran)
+          lines = open('build.txt', encoding='utf-8', errors='replace').read().splitlines() # Registro de la compilación
+          blocks = [] # Bloques de error
+          for i, l in enumerate(lines): # Recorre el registro
+              if 'What went wrong' in l: # Bloque de error de Gradle
+                  blocks.append('\n'.join(lines[i:i + 14])) # El motivo viene en las líneas siguientes
+          kotlin = [l for l in lines if l.startswith('e: ') or 'incompatible version of Kotlin' in l or 'minSdk' in l or 'Warning: Flutter support' in l or 'Error:' in l][:12] # Errores de Kotlin, minSdk y avisos de versiones
+          if kotlin: # Hay líneas sueltas importantes
+              blocks.append('\n'.join(kotlin)) # Van juntas en un bloque
+          for b in blocks[:6]: # Hasta seis anotaciones
+              print('::error title=Compilación Android::' + b[:3500].replace('%', '%25').replace('\r', '').replace('\n', '%0A')) # Multilínea codificada
+          PY
           exit "${status:-0}"
 
   docker:
