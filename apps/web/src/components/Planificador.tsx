@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'; // Estado y cálculo memorizado
 import { budgetBreakdown, parseTripIntent, type Interest } from '@nica/ai-core'; // Intérprete del viaje (mismo que Android)
 import { t, type MessageKey } from '@/i18n/t'; // Textos traducidos
+import { GuardarViaje } from './GuardarViaje'; // Guardar lo entendido como viaje
 
 type Missing = ReturnType<typeof parseTripIntent>['missing'][number]; // Datos que pueden faltar
 
@@ -102,6 +103,7 @@ export function Planificador({ locale }: { locale: string }) {
               </>
             )}
             <p className="mb-0 mt-5 text-sm text-ink-muted">{t(locale, 'planner.promise')}</p> {/* Promesa honesta */}
+            <GuardarViaje key={submitted} locale={locale} intent={intent} total={budget ? { amount: budget.total, currency: budget.currency } : null} /> {/* Guardar en Mis viajes (con sesión) */}
           </div>
         )}
       </section>

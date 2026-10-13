@@ -652,3 +652,4 @@ a.terr-accion:focus-visible { outline: 3px solid var(--marca-naranja); outline-o
 .ayuda-pregunta[open] summary::after { content: "−"; } /* Signo para cerrar */
 .ayuda-pregunta summary:focus-visible { outline: 3px solid var(--marca-naranja); outline-offset: 2px; border-radius: 6px; } /* Foco visible */
 .ayuda-mas { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 28px; border-radius: 24px; background: var(--marca-profundo); color: var(--ink); } /* Franja final de contacto */
+.viajes { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); } /* Tarjetas de viajes guardados */

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { SpriteMapa } from '@/components/SpriteMapa'; // Formas del mapa (las portadas las reutilizan)
+import { BotonFavorito } from '@/components/BotonFavorito'; // Guardar en favoritos
 import { notFound } from 'next/navigation';
 import { Boleto, TalonTarifa } from '@/components/Boleto'; // Cabecera en forma de boleto y tarifas como talones
 import { EstadoVerificacion } from '@/components/EstadoVerificacion';
@@ -45,6 +46,7 @@ export default async function DestinoPage({ params }: { params: Promise<{ locale
       <Boleto locale={locale} territory={territory}>
         <h1 className="m-0 font-display text-[40px] font-normal leading-[1.02] sm:text-[60px]">{d.name}</h1> {/* Nombre del destino */}
         {d.summary && <p className="mb-0 mt-4 max-w-[var(--measure)] text-[19px] leading-[30px] text-ink-muted">{d.summary}</p>} {/* Resumen */}
+        <div className="mt-5"><BotonFavorito locale={locale} tipo="destino" id={(d as unknown as { id: string }).id} /></div> {/* Guardar en favoritos (misma lista que la app) */}
       </Boleto>
 
       <div className="mt-8 flex flex-wrap gap-10">

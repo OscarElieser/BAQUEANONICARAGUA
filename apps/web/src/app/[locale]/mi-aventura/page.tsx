@@ -1,3 +1,4 @@
+import { MisViajes } from '@/components/MisViajes'; // Viajes y favoritos guardados
 import { CreditoFoto } from '@/components/CreditoFoto'; // Crédito de la foto
 import { fotoDe, srcsetDe } from '@/lib/fotos'; // Fotos reales con licencia libre
 import { Planificador } from '@/components/Planificador'; // Intérprete del viaje
@@ -35,6 +36,7 @@ export default async function MiAventura({ params }: { params: Promise<{ locale:
       </header>
       <div className="mx-auto max-w-[1280px] px-4 pt-10 sm:px-12">
       <Planificador locale={locale} /> {/* Intérprete del viaje */}
+      <MisViajes locale={locale} /> {/* Viajes y lugares guardados con la cuenta */}
       </div>
     </main>
   );

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { BotonFavorito } from '@/components/BotonFavorito'; // Guardar en favoritos
 import { notFound } from 'next/navigation';
 import { EscribirNegocio } from '@/components/EscribirNegocio';
 import { EstadoVerificacion } from '@/components/EstadoVerificacion';
@@ -56,6 +57,7 @@ export default async function NegocioPage({ params }: { params: Promise<{ locale
           {b.is_sponsored && <p className="m-0 mb-2 text-sm font-bold text-oro-text">{t(locale, 'business.sponsored')}</p>}
           <h1 className="m-0 font-mundo text-[44px] font-extrabold leading-[0.98] tracking-[-0.02em] sm:text-[68px]">{b.name}</h1> {/* Nombre del negocio */}
           {territory && <p className="m-0 mt-2"><Link href={`/${locale}/territorios/${territory.slug}`}>{t(locale, 'territory.in', { name: territory.name })}</Link></p>} {/* Territorio, con enlace */}
+          <div className="mt-4"><BotonFavorito locale={locale} tipo="negocio" id={b.id} /></div> {/* Guardar en favoritos (misma lista que la app) */}
           <div className="mt-3">
             <FranjaNivel tier={b.listing_tier} locale={locale} />
           </div>
