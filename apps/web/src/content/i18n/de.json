@@ -551,5 +551,8 @@
   "trips.saved_note": "Fertig. Du findest sie unten unter Meine Reisen und in der App mit demselben Konto.",
   "fav.sign_in": "Zum Speichern anmelden",
   "fav.save": "Speichern",
-  "fav.saved": "Gespeichert"
+  "fav.saved": "Gespeichert",
+  "common.cancel": "Abbrechen",
+  "trips.sign_in_to_save_app": "Melde dich im Profil an, um diese Reise in deinem Konto zu speichern und auch im Web zu sehen.",
+  "trips.sign_in_app": "Melde dich im Profil an, um deine Reisen und gespeicherten Orte zu sehen."
 }

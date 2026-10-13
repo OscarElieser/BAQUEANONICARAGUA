@@ -110,6 +110,16 @@ void main() {
     expect(find.textContaining('¿En qué fechas viajan?'), findsOneWidget); // Pregunta por las fechas
   });
 
+  testWidgets('sin sesión, Mi aventura invita a entrar para guardar y no lee viajes', (tester) async {
+    await tester.pumpWidget(app(const PlannerScreen())); // Abre el planificador sin sesión
+    await tester.tap(find.text('Probar con un ejemplo')); // Usa el ejemplo
+    await tester.pumpAndSettle(); // Espera el resultado
+    await tester.scrollUntilVisible(find.textContaining('Inicia sesión en Perfil para ver tus viajes'), 200, scrollable: find.byType(Scrollable).first); // Baja hasta Mis viajes
+    expect(find.textContaining('Inicia sesión en Perfil para guardar este viaje'), findsOneWidget); // Invita a entrar para guardar
+    expect(find.textContaining('Inicia sesión en Perfil para ver tus viajes'), findsOneWidget); // Y para ver la lista
+    expect(tester.takeException(), isNull); // Sin errores
+  });
+
   testWidgets('Comunidad muestra relatos en orden y marca lo promocional', (tester) async {
     await tester.pumpWidget(app(const CommunityScreen())); // Abre la comunidad
     await tester.pumpAndSettle(); // Espera el feed

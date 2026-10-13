@@ -551,5 +551,8 @@
   "trips.saved_note": "完成。你可以在下方“我的行程”以及同一账户的应用中看到它。",
   "fav.sign_in": "登录后收藏",
   "fav.save": "收藏",
-  "fav.saved": "已收藏"
+  "fav.saved": "已收藏",
+  "common.cancel": "取消",
+  "trips.sign_in_to_save_app": "在“个人资料”中登录，即可把行程保存到账户并在网页上查看。",
+  "trips.sign_in_app": "在“个人资料”中登录，即可查看你的行程和收藏地点。"
 }

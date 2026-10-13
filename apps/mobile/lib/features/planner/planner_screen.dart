@@ -3,6 +3,7 @@ import 'package:intl/intl.dart'; // Formato de dinero
 
 import '../../core/i18n/t.dart'; // Textos traducidos
 import '../../core/theme.dart'; // Colores y espaciados
+import 'mis_viajes.dart'; // Guardar y ver viajes
 import 'trip_intent.dart'; // Interpretación del viaje (igual que la web)
 
 /// Mi aventura: entiende el viaje en el propio teléfono (funciona sin conexión) y pregunta solo lo que falta.
@@ -126,10 +127,13 @@ class _PlannerScreenState extends State<PlannerScreen> {
                   ],
                   const SizedBox(height: TvSpace.s4), // Espacio
                   Text(context.t('planner.promise'), style: TextStyle(color: tv.inkMuted, fontSize: 14)), // Promesa honesta
+                  GuardarViaje(key: ValueKey(intent), intent: intent), // Guardar en Mis viajes (con sesión)
                 ],
               ),
             ),
           ),
+        const SizedBox(height: TvSpace.s8), // Espacio
+        const MisViajes(), // Viajes y lugares guardados con la cuenta (los mismos de la web)
       ],
     );
   }

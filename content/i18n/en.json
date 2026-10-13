@@ -551,5 +551,8 @@
   "trips.saved_note": "Done. You will find it below, in My trips, and in the app with the same account.",
   "fav.sign_in": "Sign in to save",
   "fav.save": "Save",
-  "fav.saved": "Saved"
+  "fav.saved": "Saved",
+  "common.cancel": "Cancel",
+  "trips.sign_in_to_save_app": "Sign in from Profile to save this trip to your account and see it on the web too.",
+  "trips.sign_in_app": "Sign in from Profile to see your trips and saved places."
 }

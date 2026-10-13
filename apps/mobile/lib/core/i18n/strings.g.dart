@@ -566,6 +566,9 @@ const i18nStrings = <String, Map<String, String>>{
     'fav.sign_in': 'Inicia sesión para guardar',
     'fav.save': 'Guardar',
     'fav.saved': 'Guardado',
+    'common.cancel': 'Cancelar',
+    'trips.sign_in_to_save_app': 'Inicia sesión en Perfil para guardar este viaje en tu cuenta y verlo también en la web.',
+    'trips.sign_in_app': 'Inicia sesión en Perfil para ver tus viajes y lugares guardados.',
   },
   'en': {
     'meta.title_default': 'BAQUEANO: discover what\'s not on the map',
@@ -1116,6 +1119,9 @@ const i18nStrings = <String, Map<String, String>>{
     'fav.sign_in': 'Sign in to save',
     'fav.save': 'Save',
     'fav.saved': 'Saved',
+    'common.cancel': 'Cancel',
+    'trips.sign_in_to_save_app': 'Sign in from Profile to save this trip to your account and see it on the web too.',
+    'trips.sign_in_app': 'Sign in from Profile to see your trips and saved places.',
   },
   'zh-Hans': {
     'meta.title_default': 'BAQUEANO：发现地图上找不到的地方',
@@ -1666,6 +1672,9 @@ const i18nStrings = <String, Map<String, String>>{
     'fav.sign_in': '登录后收藏',
     'fav.save': '收藏',
     'fav.saved': '已收藏',
+    'common.cancel': '取消',
+    'trips.sign_in_to_save_app': '在“个人资料”中登录，即可把行程保存到账户并在网页上查看。',
+    'trips.sign_in_app': '在“个人资料”中登录，即可查看你的行程和收藏地点。',
   },
   'ko': {
     'meta.title_default': 'BAQUEANO: 지도에 없는 곳을 발견하세요',
@@ -2216,6 +2225,9 @@ const i18nStrings = <String, Map<String, String>>{
     'fav.sign_in': '로그인하고 저장',
     'fav.save': '저장',
     'fav.saved': '저장됨',
+    'common.cancel': '취소',
+    'trips.sign_in_to_save_app': '프로필에서 로그인하면 이 여행을 계정에 저장하고 웹에서도 볼 수 있습니다.',
+    'trips.sign_in_app': '프로필에서 로그인하면 내 여행과 저장한 장소를 볼 수 있습니다.',
   },
   'it': {
     'meta.title_default': 'BAQUEANO: scopri ciò che non è sulla mappa',
@@ -2766,6 +2778,9 @@ const i18nStrings = <String, Map<String, String>>{
     'fav.sign_in': 'Accedi per salvare',
     'fav.save': 'Salva',
     'fav.saved': 'Salvato',
+    'common.cancel': 'Annulla',
+    'trips.sign_in_to_save_app': 'Accedi da Profilo per salvare questo viaggio nel tuo account e vederlo anche sul web.',
+    'trips.sign_in_app': 'Accedi da Profilo per vedere i tuoi viaggi e luoghi salvati.',
   },
   'fr': {
     'meta.title_default': 'BAQUEANO : découvre ce qui n\'est pas sur la carte',
@@ -3316,6 +3331,9 @@ const i18nStrings = <String, Map<String, String>>{
     'fav.sign_in': 'Connecte-toi pour enregistrer',
     'fav.save': 'Enregistrer',
     'fav.saved': 'Enregistré',
+    'common.cancel': 'Annuler',
+    'trips.sign_in_to_save_app': 'Connecte-toi dans Profil pour enregistrer ce voyage dans ton compte et le voir aussi sur le web.',
+    'trips.sign_in_app': 'Connecte-toi dans Profil pour voir tes voyages et lieux enregistrés.',
   },
   'pt': {
     'meta.title_default': 'BAQUEANO: descubra o que não aparece no mapa',
@@ -3866,6 +3884,9 @@ const i18nStrings = <String, Map<String, String>>{
     'fav.sign_in': 'Entre para salvar',
     'fav.save': 'Salvar',
     'fav.saved': 'Salvo',
+    'common.cancel': 'Cancelar',
+    'trips.sign_in_to_save_app': 'Entre em Perfil para salvar esta viagem na sua conta e vê-la também na web.',
+    'trips.sign_in_app': 'Entre em Perfil para ver suas viagens e lugares salvos.',
   },
   'de': {
     'meta.title_default': 'BAQUEANO: Entdecke, was auf keiner Karte steht',
@@ -4416,6 +4437,9 @@ const i18nStrings = <String, Map<String, String>>{
     'fav.sign_in': 'Zum Speichern anmelden',
     'fav.save': 'Speichern',
     'fav.saved': 'Gespeichert',
+    'common.cancel': 'Abbrechen',
+    'trips.sign_in_to_save_app': 'Melde dich im Profil an, um diese Reise in deinem Konto zu speichern und auch im Web zu sehen.',
+    'trips.sign_in_app': 'Melde dich im Profil an, um deine Reisen und gespeicherten Orte zu sehen.',
   },
   'ru': {
     'meta.title_default': 'BAQUEANO: открой то, чего нет на карте',
@@ -4966,6 +4990,9 @@ const i18nStrings = <String, Map<String, String>>{
     'fav.sign_in': 'Войдите, чтобы сохранить',
     'fav.save': 'Сохранить',
     'fav.saved': 'Сохранено',
+    'common.cancel': 'Отмена',
+    'trips.sign_in_to_save_app': 'Войдите в «Профиле», чтобы сохранить поездку в аккаунте и видеть её на сайте.',
+    'trips.sign_in_app': 'Войдите в «Профиле», чтобы увидеть свои поездки и сохранённые места.',
   },
   'ja': {
     'meta.title_default': 'BAQUEANO：地図に載っていないものを見つけよう',
@@ -5516,5 +5543,8 @@ const i18nStrings = <String, Map<String, String>>{
     'fav.sign_in': 'ログインして保存',
     'fav.save': '保存',
     'fav.saved': '保存済み',
+    'common.cancel': 'キャンセル',
+    'trips.sign_in_to_save_app': 'プロフィールからログインすると、この旅をアカウントに保存してウェブでも見られます。',
+    'trips.sign_in_app': 'プロフィールからログインすると、旅や保存した場所が見られます。',
   },
 };

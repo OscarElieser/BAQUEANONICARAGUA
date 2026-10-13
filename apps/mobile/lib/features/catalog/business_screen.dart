@@ -12,6 +12,7 @@ import '../../core/widgets/estados.dart'; // Cargando, error y vacío
 import '../../core/widgets/franja_tejida.dart'; // Franja tejida para fichas de personas
 import '../auth/auth_repository.dart'; // Sesión
 import '../messages/conversation_screen.dart'; // Conversación abierta tras escribir
+import '../planner/mis_viajes.dart'; // Botón de favoritos
 import 'ficha_widgets.dart'; // Horarios y tarifas
 
 /// Ficha de negocio por su dirección.
@@ -69,6 +70,8 @@ class BusinessScreen extends ConsumerWidget {
                             ],
                           ),
                         const SizedBox(height: TvSpace.s4), // Espacio
+                        BotonFavorito(tipo: 'negocio', id: b.id), // Guardar en favoritos (misma lista que la web)
+                        const SizedBox(height: TvSpace.s3), // Espacio
                         _EscribirNegocio(businessId: b.id, businessName: b.name), // Mensaje por la plataforma
                         const SizedBox(height: TvSpace.s6), // Espacio
                         Horarios(hours: b.hours), // Horarios

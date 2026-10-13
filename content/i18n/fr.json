@@ -551,5 +551,8 @@
   "trips.saved_note": "C’est fait. Tu le trouveras plus bas, dans Mes voyages, et dans l’app avec le même compte.",
   "fav.sign_in": "Connecte-toi pour enregistrer",
   "fav.save": "Enregistrer",
-  "fav.saved": "Enregistré"
+  "fav.saved": "Enregistré",
+  "common.cancel": "Annuler",
+  "trips.sign_in_to_save_app": "Connecte-toi dans Profil pour enregistrer ce voyage dans ton compte et le voir aussi sur le web.",
+  "trips.sign_in_app": "Connecte-toi dans Profil pour voir tes voyages et lieux enregistrés."
 }

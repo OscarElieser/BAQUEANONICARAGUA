@@ -11,6 +11,7 @@ import '../../core/widgets/estado_verificacion.dart'; // "Qué está comprobado"
 import '../../core/widgets/estados.dart'; // Cargando, error y vacío
 import '../../core/widgets/mapa_territorios.dart'; // Formas del mapa
 import '../../core/widgets/portada_territorio.dart'; // Portada del territorio
+import '../planner/mis_viajes.dart'; // Botón de favoritos
 import '../territories/presentation/territories_screen.dart'; // Territorios publicados (para saber el del destino)
 import '../territories/presentation/territory_screen.dart'; // Ficha del territorio
 import 'ficha_widgets.dart'; // Horarios y tarifas
@@ -99,6 +100,7 @@ class _Boleto extends ConsumerWidget {
                   children: [
                     Text(destino.name, style: text.displayMedium), // Nombre
                     if (destino.summary != null) Padding(padding: const EdgeInsets.only(top: TvSpace.s2), child: Text(destino.summary!, style: text.bodyLarge?.copyWith(color: tv.inkMuted))), // Resumen
+                    Padding(padding: const EdgeInsets.only(top: TvSpace.s3), child: BotonFavorito(tipo: 'destino', id: destino.id)), // Guardar en favoritos (misma lista que la web)
                   ],
                 ),
               ),

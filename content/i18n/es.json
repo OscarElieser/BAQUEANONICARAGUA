@@ -551,5 +551,8 @@
   "trips.saved_note": "Listo. Lo ves abajo, en Mis viajes, y en la app con la misma cuenta.",
   "fav.sign_in": "Inicia sesión para guardar",
   "fav.save": "Guardar",
-  "fav.saved": "Guardado"
+  "fav.saved": "Guardado",
+  "common.cancel": "Cancelar",
+  "trips.sign_in_to_save_app": "Inicia sesión en Perfil para guardar este viaje en tu cuenta y verlo también en la web.",
+  "trips.sign_in_app": "Inicia sesión en Perfil para ver tus viajes y lugares guardados."
 }

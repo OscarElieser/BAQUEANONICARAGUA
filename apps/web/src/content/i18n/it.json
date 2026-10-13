@@ -551,5 +551,8 @@
   "trips.saved_note": "Fatto. Lo trovi qui sotto, in I miei viaggi, e nell’app con lo stesso account.",
   "fav.sign_in": "Accedi per salvare",
   "fav.save": "Salva",
-  "fav.saved": "Salvato"
+  "fav.saved": "Salvato",
+  "common.cancel": "Annulla",
+  "trips.sign_in_to_save_app": "Accedi da Profilo per salvare questo viaggio nel tuo account e vederlo anche sul web.",
+  "trips.sign_in_app": "Accedi da Profilo per vedere i tuoi viaggi e luoghi salvati."
 }
