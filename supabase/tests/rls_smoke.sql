@@ -809,6 +809,7 @@ begin
   end;
 end $$;
 insert into results select 'panel devuelve métricas reales', (public.ops_dashboard_metrics()->>'destinations_published') is not null;
+insert into results select 'panel suma viajes, favoritos y BAQÜI de web y Android (0019)', (public.ops_dashboard_metrics() ?& array['trips_total','favorites_total','baqui_messages_24h','chronicles_7d','territories_published']); -- Indicadores nuevos presentes
 reset role;
 select pg_temp.act_as('fb_owner');
 do $$

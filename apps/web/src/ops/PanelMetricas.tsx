@@ -12,6 +12,7 @@ const AREAS: Array<{ id: string; titulo: string; nota: string; principal: [strin
   { id: 'contenido', titulo: 'Contenido publicado', nota: 'Lo que ven los viajeros', principal: ['destinations_published', 'Destinos publicados'], extra: [['businesses_published', 'Negocios publicados'], ['businesses_in_review', 'Negocios en revisión']], tono: 'turquesa' },
   { id: 'moderacion', titulo: 'Moderación', nota: 'Lo que espera una persona del equipo', principal: ['reports_open', 'Reportes abiertos'], extra: [['incidents_open', 'Denuncias abiertas'], ['incidents_urgent_open', 'Denuncias urgentes']], tono: 'naranja' },
   { id: 'comunidad', titulo: 'Comunidad', nota: 'Últimos 7 días', principal: ['posts_7d', 'Publicaciones'], extra: [['conversations_new_7d', 'Conversaciones nuevas'], ['users_active', 'Usuarios activos']], tono: 'verde' },
+  { id: 'viajeros', titulo: 'Viajeros (web y Android)', nota: 'Lo que guardan con su cuenta', principal: ['trips_total', 'Viajes guardados'], extra: [['favorites_total', 'Lugares guardados'], ['baqui_messages_24h', 'Mensajes a BAQÜI (24 h)']], tono: 'turquesa' },
 ];
 
 /** Todos los indicadores, en la cuadrícula de abajo. */
@@ -28,6 +29,12 @@ const KPIS: Array<[string, string]> = [
   ['conversations_new_7d', 'Conversaciones nuevas en 7 días'], // Mensajería (solo la cifra)
   ['ai_corrections_pending', 'Propuestas de la IA'], // Correcciones que esperan revisión humana
   ['destinations_published', 'Destinos publicados'], // Catálogo visible
+  ['territories_published', 'Territorios publicados'], // De los 17
+  ['chronicles_7d', 'Crónicas en 7 días'], // Relatos de la comunidad
+  ['trips_total', 'Viajes guardados'], // Mi aventura, web y Android
+  ['favorites_total', 'Lugares guardados'], // Favoritos, web y Android
+  ['baqui_messages_24h', 'Mensajes a BAQÜI en 24 h'], // Uso del asistente
+  ['baqui_conversations_7d', 'Conversaciones con BAQÜI en 7 días'], // Conversaciones nuevas
 ];
 
 export function PanelMetricas({ locale, data }: { locale: string; data: Metricas }) {
@@ -52,7 +59,7 @@ export function PanelMetricas({ locale, data }: { locale: string; data: Metricas
       </div>
 
       <div className="mt-6 grid gap-4 xl:grid-cols-[minmax(0,3fr)_minmax(280px,1fr)]">
-        <section aria-label="Áreas" className="grid gap-4 md:grid-cols-3">
+        <section aria-label="Áreas" className="grid gap-4 md:grid-cols-2 2xl:grid-cols-4">
           {AREAS.map((a) => (
             <article key={a.id} className={`ops-tarjeta ops-tono-${a.tono}`}>
               <p className="m-0 text-[13px] text-ink-muted">{a.nota}</p> {/* Para qué sirve el área */}
