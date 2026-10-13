@@ -21,9 +21,9 @@ dependencies:
   google_fonts: ^6.2.1
   google_sign_in: ^6.2.1
   http: ^1.2.2
-  url_launcher: ^6.3.0 # Abrir WhatsApp, llamadas, correos y la fuente de cada dato
+  url_launcher: ^6.3.3 # Abrir WhatsApp, llamadas, correos y la fuente de cada dato
   video_player: ^2.9.0 # Revelación del logotipo al abrir la app (video del dueño, sin sonido)
-  intl: any
+  intl: 0.20.3
 
 dev_dependencies:
   flutter_test:
