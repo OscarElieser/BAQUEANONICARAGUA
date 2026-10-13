@@ -1,4 +1,6 @@
 // Configuración de compilación para la aplicación Android de Baqueano Nicaragua
+import java.util.Properties // Lee el archivo key.properties (pares nombre=valor)
+
 plugins {
     id("com.android.application") // Plugin principal de aplicación Android
     id("kotlin-android") // Soporte para código fuente en Kotlin
@@ -7,6 +9,13 @@ plugins {
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services") // Plugin de Google Services para Firebase
 }
+
+// Llave de firma de publicación del dueño. Vive solo en su computadora o en los secretos de GitHub, nunca en el repositorio:
+// android/key.properties (ignorado por git) dice dónde está el archivo .jks y sus contraseñas. Pasos en docs/DESPLIEGUE.md.
+val firmaPropiedades = Properties() // Datos de la llave de publicación
+val firmaArchivo = rootProject.file("key.properties") // Archivo apps/mobile/android/key.properties
+val hayFirmaPropia = firmaArchivo.exists() // Si el dueño ya creó su llave en esta computadora
+if (hayFirmaPropia) firmaArchivo.inputStream().use { firmaPropiedades.load(it) } // Lee los datos solo si el archivo existe
 
 android {
     namespace = "com.baqueano.nicaragua" // Espacio de nombres único de la aplicación
@@ -30,9 +39,20 @@ android {
         versionName = flutter.versionName // Nombre descriptivo de la versión
     }
 
+    signingConfigs {
+        if (hayFirmaPropia) { // Solo se declara cuando existe key.properties
+            create("publicacion") { // Llave propia para Google Play
+                storeFile = file(requireNotNull(firmaPropiedades.getProperty("storeFile")) { "Falta storeFile en key.properties" }) // Ruta del archivo .jks
+                storePassword = requireNotNull(firmaPropiedades.getProperty("storePassword")) { "Falta storePassword en key.properties" } // Contraseña del almacén
+                keyAlias = requireNotNull(firmaPropiedades.getProperty("keyAlias")) { "Falta keyAlias en key.properties" } // Nombre de la llave dentro del almacén
+                keyPassword = requireNotNull(firmaPropiedades.getProperty("keyPassword")) { "Falta keyPassword en key.properties" } // Contraseña de la llave
+            }
+        }
+    }
+
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("debug") // Firma temporal de depuración para release local
+            signingConfig = if (hayFirmaPropia) signingConfigs.getByName("publicacion") else signingConfigs.getByName("debug") // Llave propia si existe; si no, la de pruebas (sirve para probar, no para Google Play)
         }
     }
 }

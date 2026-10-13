@@ -157,6 +157,15 @@ jobs:
                   print(f"::error title=Prueba Android: {names.get(e.get('testID'), '?')}::{text[:3000]}")
           PY
           exit "${status:-0}"
+      - uses: actions/setup-java@v4 # Java 17, el que pide el plugin de Android
+        with: { distribution: temurin, java-version: '17' }
+      - name: Compilar la app (APK de prueba) # Comprueba que Gradle, el manifiesto, los plugins y la firma compilan de verdad
+        run: |
+          set -o pipefail # El resultado es el de flutter, no el de tee
+          [ -f android/app/google-services.json ] || cp android/app/google-services.json.example android/app/google-services.json # Sin el archivo real se usa el de ejemplo (mismo paquete, solo datos públicos)
+          flutter build apk --debug 2>&1 | tee build.txt || status=$? # Compilación de depuración: no necesita la llave de publicación
+          grep -E "^e: |error:|FAILURE|What went wrong" build.txt | head -n 15 | while IFS= read -r line; do echo "::error title=Compilación Android::${line//%/%25}"; done # Muestra los errores como anotaciones
+          exit "${status:-0}"
 
   docker:
     name: Imágenes Docker (web y API)

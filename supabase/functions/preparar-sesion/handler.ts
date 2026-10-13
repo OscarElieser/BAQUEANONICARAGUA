@@ -120,6 +120,23 @@ export function createHandler(deps: Deps): (req: Request) => Promise<Response> {
     return profile; // Perfil listo
   }
 
+  /**
+   * Superadministrador inicial: si el correo verificado es el del dueño y todavía no hay ningún superadmin,
+   * la base de datos le da el rol una sola vez y lo anota en la auditoría (la regla vive en la base, no aquí).
+   * Nunca impide el inicio de sesión: si algo falla, queda en los registros y la persona entra igual.
+   */
+  async function bootstrapSuperadmin(claims: FirebaseClaims): Promise<void> {
+    if (claims.email_verified !== true || !claims.email) return; // Solo se revisan correos verificados por Firebase
+    try {
+      await rest('rpc/session_bootstrap_superadmin', {
+        method: 'POST', // Llama a la función de la base
+        body: JSON.stringify({ p_firebase_uid: claims.sub, p_email: claims.email, p_email_verified: true }), // Datos del token ya verificado
+      });
+    } catch (e) {
+      console.error('preparar-sesion: no se pudo revisar el superadmin inicial', e); // Queda en los registros de Supabase; el inicio de sesión sigue
+    }
+  }
+
   /** Obtiene un token de acceso de Google con la cuenta de servicio (o usa el guardado). */
   async function getGoogleToken(sa: ServiceAccount): Promise<string> {
     if (googleToken && googleToken.expires > now() + 60) return googleToken.token; // Sirve si le queda más de un minuto
@@ -170,6 +187,7 @@ export function createHandler(deps: Deps): (req: Request) => Promise<Response> {
 
       const claims = await verify(token, firebaseProjectId); // Comprueba que el token es auténtico
       const profile = await ensureProfile(claims); // Crea o actualiza el perfil (y bloquea cuentas suspendidas)
+      await bootstrapSuperadmin(claims); // Si es la cuenta del dueño, la base le da superadmin la primera vez
 
       let needsRefresh = false; // Si el cliente debe pedir un token nuevo
       if (needsRole(claims)) {

@@ -141,3 +141,44 @@ Lo que hay que hacer al publicar (necesita el dominio):
 Las migraciones que se aplicaron con la herramienta de Supabase quedaron registradas con su hora real como versión (`20261012192731`, `20261013035526`, `20261013042928`). Para no tocar el historial de producción, los archivos del repositorio usan esos mismos números, así `supabase db push` del flujo Publicar ve todo alineado y solo aplica lo nuevo (por ejemplo, `20261013061500_metricas_viajeros.sql`).
 
 Regla para lo que venga: si una migración se aplica con la herramienta de Supabase, el archivo del repositorio se renombra con la versión que quedó registrada (`list_migrations`).
+
+## Superadministrador inicial
+
+- La primera vez que la cuenta del dueño inicia sesión (web o Android) con su correo ya verificado, la función `preparar-sesion` llama a `session_bootstrap_superadmin` y la base le da el rol `superadmin`. Queda en `audit.logs` como `role.bootstrap`.
+- Sirve una sola vez: si ya existe un superadministrador, o si la marca ya se usó, no hace nada. Ningún cliente puede llamarla (solo la clave de servicio, que vive en Supabase).
+- El repositorio es público, así que el correo no está escrito en ningún archivo: la migración guarda solo su huella SHA-256 (correo en minúsculas, sin espacios).
+- Para dar o quitar roles después se usa el Ops Center (`admin_grant_role` / `admin_revoke_role`, con su protección del último superadministrador).
+- Las operaciones del Ops Center piden además la verificación en dos pasos de Firebase.
+
+## Firma de Android y huellas para Firebase
+
+Firebase pide las huellas SHA-1 y SHA-256 del certificado con el que se firma la app (`com.baqueano.nicaragua`) para el inicio de sesión con Google y para verificar la app. Las huellas no son secretas; el archivo de la llave y sus contraseñas sí lo son y nunca van al repositorio ni al chat.
+
+**Llave de pruebas (la de tu computadora).** Android Studio la crea sola la primera vez que corres la app. Sus huellas:
+
+```
+# Windows (Símbolo del sistema, con Android Studio instalado)
+"C:\Program Files\Android\Android Studio\jbr\bin\keytool.exe" -list -v -alias androiddebugkey -keystore "%USERPROFILE%\.android\debug.keystore" -storepass android
+# Mac o Linux
+keytool -list -v -alias androiddebugkey -keystore ~/.android/debug.keystore -storepass android
+```
+
+**Llave de publicación (para Google Play).** Se crea una sola vez en la computadora del dueño y se guarda con copia de seguridad (si se pierde y no se usa la firma de apps de Google Play, no se puede actualizar la app):
+
+```
+keytool -genkeypair -v -keystore baqueano-publicacion.jks -alias baqueano -keyalg RSA -keysize 2048 -validity 10000
+keytool -list -v -keystore baqueano-publicacion.jks -alias baqueano
+```
+
+Luego se crea `apps/mobile/android/key.properties` (git lo ignora) con:
+
+```
+storeFile=C:/ruta/a/baqueano-publicacion.jks
+storePassword=la contraseña del almacén
+keyAlias=baqueano
+keyPassword=la contraseña de la llave
+```
+
+Con ese archivo, `flutter build appbundle` firma con la llave propia; sin él, la versión de publicación usa la llave de pruebas (sirve para probar, no para Google Play).
+
+**En Firebase:** ⚙️ Configuración del proyecto → General → Tus apps → app Android → Agregar huella digital (una vez la SHA-1 y otra la SHA-256, de cada llave). Si la app se publica en Google Play con la firma de apps de Google, también se agregan las huellas que muestra Play Console → Integridad de la app. Después se descarga de nuevo `google-services.json`.

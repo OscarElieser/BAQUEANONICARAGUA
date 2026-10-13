@@ -920,6 +920,62 @@ insert into results select 'los 17 territorios tienen cabecera y fuente (migraci
 insert into results select 'la publicación de territorios quedó en la auditoría', -- Un registro por territorio
   (select count(distinct target_id) from audit.logs where action = 'territory.publish') = 17;
 
+-- Superadministrador inicial (migración superadmin_inicial)
+insert into results select 'la marca del superadmin inicial guarda solo una huella SHA-256', -- El correo real no aparece en claro
+  exists (select 1 from app.settings where key = 'superadmin_inicial_sha256' and value ~ '^[0-9a-f]{64}$');
+update app.settings set value = encode(sha256(convert_to('dueno.prueba@example.com', 'UTF8')), 'hex') -- En la prueba se usa un correo inventado
+ where key = 'superadmin_inicial_sha256'; -- Así el correo real del dueño no se escribe en el repositorio
+insert into public.profiles (id, firebase_uid, display_name) values ('00000000-0000-0000-0000-0000000d0e01', 'fb_dueno', 'Dueño de prueba'); -- Cuenta del dueño simulado
+grant insert, select on results to service_role; -- La función del servidor también anota resultados
+select pg_temp.act_as('fb_dueno'); -- El dueño con sesión, desde la web o Android
+do $$
+begin
+  begin
+    perform public.session_bootstrap_superadmin('fb_dueno', 'dueno.prueba@example.com', true); -- Intenta darse el rol desde el cliente
+    insert into results values ('un cliente no puede llamar al arranque de superadmin', false); -- No debió poder
+  exception when insufficient_privilege then
+    insert into results values ('un cliente no puede llamar al arranque de superadmin', true); -- Bloqueado
+  end;
+end $$;
+reset role;
+set local role anon; -- Sin sesión
+select set_config('request.jwt.claims', '{}', true); -- Sin datos de sesión
+do $$
+begin
+  begin
+    perform public.session_bootstrap_superadmin('fb_dueno', 'dueno.prueba@example.com', true); -- Intenta darse el rol sin sesión
+    insert into results values ('sin sesión no se puede llamar al arranque de superadmin', false); -- No debió poder
+  exception when insufficient_privilege then
+    insert into results values ('sin sesión no se puede llamar al arranque de superadmin', true); -- Bloqueado
+  end;
+end $$;
+reset role;
+set local role service_role; -- Como la función del servidor "preparar-sesion"
+select set_config('request.jwt.claims', '{"role":"service_role"}', true); -- Datos de sesión del servidor
+insert into results select 'si ya hay superadmin el arranque no hace nada', -- Ya existe el superadmin de las pruebas del Ops Center
+  public.session_bootstrap_superadmin('fb_dueno', 'dueno.prueba@example.com', true) = false;
+reset role;
+delete from public.user_roles where role_key = 'superadmin'; -- Simula una base nueva, sin ningún superadministrador
+set local role service_role; -- Vuelve a actuar como el servidor
+select set_config('request.jwt.claims', '{"role":"service_role"}', true); -- Datos de sesión del servidor
+insert into results select 'correo sin verificar no recibe superadmin', -- Firebase no confirmó el correo
+  public.session_bootstrap_superadmin('fb_dueno', 'dueno.prueba@example.com', false) = false;
+insert into results select 'otro correo no recibe superadmin', -- Otra persona inicia sesión
+  public.session_bootstrap_superadmin('fb_dueno', 'otra.persona@example.com', true) = false;
+insert into results select 'cuenta sin perfil no recibe superadmin', -- Correo correcto pero sin perfil activo
+  public.session_bootstrap_superadmin('fb_no_existe', 'dueno.prueba@example.com', true) = false;
+insert into results select 'el correo del dueño recibe superadmin aunque traiga mayúsculas y espacios', -- Caso real
+  public.session_bootstrap_superadmin('fb_dueno', '  Dueno.Prueba@Example.com ', true) = true;
+insert into results select 'el arranque de superadmin sirve una sola vez', -- Segunda llamada
+  public.session_bootstrap_superadmin('fb_dueno', 'dueno.prueba@example.com', true) = false;
+reset role;
+insert into results select 'el dueño quedó como superadmin', -- Rol otorgado
+  exists (select 1 from public.user_roles where profile_id = '00000000-0000-0000-0000-0000000d0e01' and role_key = 'superadmin');
+insert into results select 'el arranque de superadmin quedó en la auditoría', -- Un registro del sistema
+  (select count(*) from audit.logs where action = 'role.bootstrap' and actor_kind = 'system' and target_id = '00000000-0000-0000-0000-0000000d0e01') = 1;
+insert into results select 'la marca del superadmin inicial se borró al usarse', -- No queda nada que reutilizar
+  not exists (select 1 from app.settings where key = 'superadmin_inicial_sha256');
+
 select case when ok then 'PASS' else 'FAIL' end as status, name from results order by ok, name;
 select count(*) filter (where not ok) as failures, count(*) as total from results;
 

@@ -90,7 +90,7 @@ test('needsRole y CORS', () => {
 });
 
 /** Simula Google y Supabase y anota cada llamada para revisarla después. */
-function fakeServices(opts: { status?: string; existing?: boolean; attributes?: string } = {}) {
+function fakeServices(opts: { status?: string; existing?: boolean; attributes?: string; rpcFails?: boolean } = {}) {
   const calls: Array<{ url: string; method: string; body: string }> = []; // Registro de llamadas
   let created = opts.existing ?? false; // Si el perfil ya existe
   const profile = () => ({ id: 'p-1', display_name: 'Ana Prueba', username: null, preferred_locale: 'es', status: opts.status ?? 'active', email_verified: false }); // Perfil simulado
@@ -105,6 +105,7 @@ function fakeServices(opts: { status?: string; existing?: boolean; attributes?: 
       created = true; // Se crea el perfil
       return new Response(null, { status: 201 }); // Creado
     }
+    if (url.endsWith('/rest/v1/rpc/session_bootstrap_superadmin')) return opts.rpcFails ? new Response('caída', { status: 500 }) : reply(false); // Revisión del superadmin inicial (o una falla simulada)
     if (url.includes('/rest/v1/')) return new Response(null, { status: 204 }); // Otras escrituras en Supabase
     if (url === 'https://oauth2.googleapis.com/token') return reply({ access_token: 'ya29.prueba', expires_in: 3600 }); // Token de Google
     if (url.endsWith('accounts:lookup')) return reply({ users: [{ customAttributes: opts.attributes }] }); // Cuenta de Firebase
@@ -174,4 +175,38 @@ test('errores claros: sin token, token falso, método, preflight y servidor sin 
   assert.equal((await sinConfig(post(await token()))).status, 503); // Servidor sin configurar
   const sinCuenta = createHandler({ config: { ...(await config()), serviceAccountJson: undefined }, fetch: fake, now: () => NOW }); // Sin cuenta de servicio
   assert.equal((await sinCuenta(post(await token()))).status, 503); // No puede asignar el rol
+});
+
+test('correo verificado: pide a la base revisar el superadmin inicial con los datos del token ya verificado', async () => {
+  const { fake, calls } = fakeServices({ existing: true }); // Perfil ya creado
+  const res = await createHandler({ config: await config(), fetch: fake, now: () => NOW })(post(await token({ role: 'authenticated', email: 'Dueno@Example.com' }))); // Token con correo verificado
+  assert.equal(res.status, 200); // Entra normal
+  const rpc = calls.find((c) => c.url.endsWith('/rest/v1/rpc/session_bootstrap_superadmin')); // Llamada a la función de la base
+  assert.ok(rpc); // Se hizo la revisión
+  assert.equal(rpc.method, 'POST'); // Por POST, como pide la Data API
+  assert.deepEqual(JSON.parse(rpc.body), { p_firebase_uid: 'uid-123', p_email: 'Dueno@Example.com', p_email_verified: true }); // Datos del token, sin cambios
+});
+
+test('sin correo o con correo sin verificar no se pregunta por el superadmin', async () => {
+  const { fake, calls } = fakeServices({ existing: true }); // Perfil ya creado
+  const handler = createHandler({ config: await config(), fetch: fake, now: () => NOW }); // Función configurada
+  assert.equal((await handler(post(await token({ role: 'authenticated' })))).status, 200); // Token sin correo
+  assert.equal((await handler(post(await token({ role: 'authenticated', email: 'dueno@example.com', email_verified: false })))).status, 200); // Correo sin verificar
+  assert.ok(!calls.some((c) => c.url.includes('session_bootstrap_superadmin'))); // Ninguna revisión
+});
+
+test('si la revisión del superadmin falla, la persona entra igual', async () => {
+  const { fake, calls } = fakeServices({ existing: true, rpcFails: true }); // La base falla en esa función
+  const errores: unknown[] = []; // Mensajes que irían a los registros
+  const original = console.error; // Guarda la salida de errores real
+  console.error = (...args: unknown[]) => { errores.push(args); }; // La captura para revisarla
+  try {
+    const res = await createHandler({ config: await config(), fetch: fake, now: () => NOW })(post(await token({ role: 'authenticated', email: 'dueno@example.com' }))); // Inicio de sesión
+    assert.equal(res.status, 200); // No se bloquea el inicio de sesión
+    assert.equal((await res.json()).profile.id, 'p-1'); // Devuelve el perfil
+  } finally {
+    console.error = original; // Restaura la salida de errores
+  }
+  assert.ok(calls.some((c) => c.url.includes('session_bootstrap_superadmin'))); // Sí intentó la revisión
+  assert.equal(errores.length, 1); // Y dejó constancia de la falla
 });

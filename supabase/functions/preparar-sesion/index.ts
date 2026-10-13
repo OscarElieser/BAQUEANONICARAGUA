@@ -2,6 +2,7 @@
 // La web y Android la llaman justo después de iniciar sesión en Firebase:
 //   1. verifica el token de Firebase con las claves públicas de Google;
 //   2. crea o actualiza el perfil y el rol base "user" (bloquea cuentas suspendidas);
+//      si el correo verificado es el del dueño y aún no hay superadmin, la base le da ese rol una sola vez;
 //   3. si el token no trae role=authenticated, lo agrega a la cuenta de Firebase y pide renovar el token.
 // Secretos que se configuran en Supabase (nunca en web ni Android):
 //   FIREBASE_PROJECT_ID, FIREBASE_SERVICE_ACCOUNT (JSON) y ALLOWED_ORIGINS (separados por comas).
