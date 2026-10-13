@@ -50,3 +50,7 @@ print(f"- Google: {google}")  # Resultado
 
 c, t = pedir(f"{SUPABASE}/functions/v1/preparar-sesion", {}, {"apikey": PUBLICABLE})  # Sin token de Firebase: debe rechazar con 401
 print(f"- Función preparar-sesion: {'desplegada (rechaza sin token, código ' + str(c) + ')' if c in (400, 401, 403) else 'código ' + str(c) + ' ' + t[:120]}")  # Resultado
+
+c, t = pedir(f"{SUPABASE}/functions/v1/baqui", {"message": "hola"}, {"apikey": PUBLICABLE})  # Sin token: dice si falta la clave de Gemini (503) o pide sesión (401)
+estado_baqui = {503: "desplegada, falta la clave GEMINI_API_KEY", 401: "desplegada y con clave (pide sesión, como debe)"}.get(c, f"código {c} {t[:120]}")  # Interpretación
+print(f"- BAQÜI (función baqui): {estado_baqui}")  # Resultado
