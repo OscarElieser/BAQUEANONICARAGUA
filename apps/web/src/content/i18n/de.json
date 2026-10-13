@@ -422,5 +422,10 @@
   "ways.business_desc": "Tarife, damit dein Unternehmen auf BAQUEANO erscheint.",
   "auth.art_line1": "Die Welt ist groß.",
   "auth.art_line2": "Nicaragua ist unvergesslich.",
-  "auth.art_text": "Entdecke, speichere und teile Orte in Nicaragua mit seinen Menschen."
+  "auth.art_text": "Entdecke, speichere und teile Orte in Nicaragua mit seinen Menschen.",
+  "index.title": "Gebietsverzeichnis",
+  "index.count": "17 Gebiete",
+  "index.count_detail": "15 Departamentos und 2 autonome Regionen",
+  "index.department": "Departamento",
+  "index.region": "Autonome Region"
 }

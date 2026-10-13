@@ -422,5 +422,10 @@
   "ways.business_desc": "Planos para que seu negócio apareça no BAQUEANO.",
   "auth.art_line1": "O mundo é grande.",
   "auth.art_line2": "A Nicarágua é inesquecível.",
-  "auth.art_text": "Descubra, guarde e compartilhe lugares da Nicarágua com sua gente."
+  "auth.art_text": "Descubra, guarde e compartilhe lugares da Nicarágua com sua gente.",
+  "index.title": "Índice de territórios",
+  "index.count": "17 territórios",
+  "index.count_detail": "15 departamentos e 2 regiões autônomas",
+  "index.department": "Departamento",
+  "index.region": "Região autônoma"
 }

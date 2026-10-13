@@ -14,6 +14,13 @@ function aplicar(el: HTMLElement, activo: number, total: number) {
     else delete li.dataset.pos; // Las demás se ocultan
   });
   el.querySelectorAll<HTMLElement>('.exp-fondo').forEach((f) => f.classList.toggle('es-activo', Number(f.dataset.i) === activo)); // Fondo activo
+  el.querySelectorAll<HTMLButtonElement>('.exp-fila-boton').forEach((b) => {
+    if (Number(b.dataset.ir) === activo) {
+      b.setAttribute('aria-current', 'true'); // Marca el activo en la fila de fotos
+      const fila = b.closest<HTMLElement>('.exp-fila'); // Fila deslizable
+      if (fila) fila.scrollTo({ left: b.offsetLeft - (fila.clientWidth - b.offsetWidth) / 2, behavior: 'smooth' }); // Centra el activo dentro de la fila sin mover la página
+    } else b.removeAttribute('aria-current'); // Los demás, sin marca
+  });
   el.style.setProperty('--avance', String((activo + 1) / total)); // Riel de avance
   const cargar = (img: HTMLImageElement | null) => {
     if (!img?.dataset.src) return; // Ya cargada o sin foto

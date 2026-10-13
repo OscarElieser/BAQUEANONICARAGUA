@@ -7,6 +7,7 @@ import 'package:nica_app/core/data/fotos.dart'; // Fotos reales con licencia lib
 import 'package:nica_app/core/theme.dart'; // Tema del sistema de diseño
 import 'package:nica_app/core/widgets/explorador_territorios.dart'; // Explorador a pantalla completa
 import 'package:nica_app/core/widgets/galeria_arco.dart'; // Galería en arco 3D
+import 'package:nica_app/core/widgets/indice_territorios.dart'; // Índice de los 17
 import 'package:nica_app/core/widgets/mapa_territorios.dart'; // Datos del mapa
 import 'package:nica_app/core/widgets/modos_explorar.dart'; // Explora a tu manera
 import 'package:nica_app/core/widgets/portada_baqueano.dart'; // Portada con ventana pintada
@@ -134,6 +135,24 @@ void main() {
     await tester.tap(find.byType(InkWell).at(0)); // Mapa vivo
     await tester.tap(find.byType(InkWell).at(3)); // Mi aventura
     expect(tocados, ['map', 'adventure']); // Cada uno abre lo suyo
+    expect(tester.takeException(), isNull); // Sin errores al dibujar
+  });
+
+  testWidgets('el índice abre solo los territorios con ficha publicada', (tester) async {
+    final mapa = DatosMapa.fromJson(jsonDecode(File('assets/mapa/mapa.json').readAsStringSync()) as Map<String, dynamic>); // Mapa real de la app
+    final abiertas = <String>[]; // Fichas pedidas
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildTheme(Brightness.light, webFonts: false), // Tema sin descargar fuentes
+        home: Scaffold(body: SingleChildScrollView(child: IndiceTerritorios(mapa: mapa, published: const {'granada'}, onAbrir: (f) => abiertas.add(f.id)))), // Solo Granada tiene ficha
+      ),
+    );
+    expect(find.text('Granada'), findsOneWidget); // Aparece en el índice
+    await tester.ensureVisible(find.text('Granada')); // Baja hasta Granada
+    await tester.tap(find.text('Granada')); // La toca
+    await tester.ensureVisible(find.text('Boaco')); // Sube hasta Boaco
+    await tester.tap(find.text('Boaco')); // Sin ficha: no debe abrir nada
+    expect(abiertas, ['granada']); // Solo se abrió la publicada
     expect(tester.takeException(), isNull); // Sin errores al dibujar
   });
 }

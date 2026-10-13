@@ -422,5 +422,10 @@
   "ways.business_desc": "BAQUEANO에 사업장을 올리기 위한 요금제.",
   "auth.art_line1": "세상은 넓다.",
   "auth.art_line2": "니카라과는 잊을 수 없다.",
-  "auth.art_text": "니카라과의 장소를 그곳 사람들과 함께 발견하고 저장하고 공유하세요."
+  "auth.art_text": "니카라과의 장소를 그곳 사람들과 함께 발견하고 저장하고 공유하세요.",
+  "index.title": "지역 목록",
+  "index.count": "17개 지역",
+  "index.count_detail": "15개 주와 2개 자치 지역",
+  "index.department": "주",
+  "index.region": "자치 지역"
 }

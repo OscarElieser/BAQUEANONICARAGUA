@@ -168,6 +168,13 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
       - BAQÜI no existe todavía, así que no hay botón ni franja de BAQÜI;
       - la barra lateral del prototipo encaja como estructura del Ops Center (ya la tiene), no en el sitio público;
       - el "che" del saludo no es nicaragüense; los textos siguen el tono de la web.
+20. **11 maquetas del dueño (destinos, territorios, gastronomía, música, historia, BAQÜI, experiencias), tomadas como referencia (12 de octubre de 2026):**
+    - Adoptado, con datos reales:
+      - "17 territorios — 15 departamentos y 2 regiones autónomas" como cifra grande de la sección de territorios;
+      - índice de los 17 con foto redonda, tipo (departamento o región autónoma) y estado real de la ficha; solo los publicados se abren (web y Android);
+      - fila de fotos redondas de los 17 dentro del explorador (web): al tocar una, ese territorio pasa al frente.
+    - Pendiente hasta tener datos reales: conteos por tipo ("42 playas"), valoraciones con estrellas, precios "desde C$", eventos con fechas, testimonios, personas con nombre, cifras como "+260 destinos" o "25K viajeros". Las maquetas los inventan; aquí no se muestran.
+    - Gastronomía, música e historia como mundos propios: se harán cuando haya contenido verificado (platos, artistas, hechos con fuente).
 
 ## 4b. Estado del proyecto oficial (revisado el 2026-10-12)
 

@@ -422,5 +422,10 @@
   "ways.business_desc": "Piani per far comparire la tua attività su BAQUEANO.",
   "auth.art_line1": "Il mondo è grande.",
   "auth.art_line2": "Il Nicaragua è indimenticabile.",
-  "auth.art_text": "Scopri, salva e condividi luoghi del Nicaragua con la sua gente."
+  "auth.art_text": "Scopri, salva e condividi luoghi del Nicaragua con la sua gente.",
+  "index.title": "Indice dei territori",
+  "index.count": "17 territori",
+  "index.count_detail": "15 dipartimenti e 2 regioni autonome",
+  "index.department": "Dipartimento",
+  "index.region": "Regione autonoma"
 }

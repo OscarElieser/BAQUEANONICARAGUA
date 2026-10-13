@@ -422,5 +422,10 @@
   "ways.business_desc": "让你的商家出现在 BAQUEANO 上的方案。",
   "auth.art_line1": "世界很大。",
   "auth.art_line2": "尼加拉瓜令人难忘。",
-  "auth.art_text": "与当地人一起发现、保存并分享尼加拉瓜的地点。"
+  "auth.art_text": "与当地人一起发现、保存并分享尼加拉瓜的地点。",
+  "index.title": "地区索引",
+  "index.count": "17 个地区",
+  "index.count_detail": "15 个省和 2 个自治区",
+  "index.department": "省",
+  "index.region": "自治区"
 }

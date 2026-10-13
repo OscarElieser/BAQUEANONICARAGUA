@@ -1,10 +1,10 @@
-import Link from 'next/link';
 import { RelieveVivo3D } from '@/components/RelieveVivo3D'; // Relieve 3D "Relieve vivo"
 import { listTerritories } from '@/lib/territories'; // Territorios publicados desde Supabase
 import { MapaTerritorios } from '@/components/MapaTerritorios'; // Mapa ilustrado de los 17 territorios
 import { GaleriaTerritorios } from '@/components/GaleriaTerritorios'; // Galería en arco de las 17 portadas
 import { ExploradorTerritorios } from '@/components/ExploradorTerritorios'; // Explorador a pantalla completa
 import { ModosExplorar } from '@/components/ModosExplorar'; // Seis caminos con fotos reales
+import { IndiceTerritorios } from '@/components/IndiceTerritorios'; // Índice de los 17 con foto y estado
 import { PuertaCultura } from '@/components/PuertaCultura'; // Puerta al mundo de Cultura
 import { SpriteMapa } from '@/components/SpriteMapa'; // Formas del mapa, una sola vez por página
 import { InclinacionTarjetas } from '@/components/InclinacionTarjetas'; // Inclinación 3D de las tarjetas
@@ -60,9 +60,10 @@ export default async function Descubrir({ params }: { params: Promise<{ locale: 
 
       <section aria-labelledby="territorios" className="border-t border-line pb-10 pt-7">
         <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-          <h2 id="territorios" className="m-0 font-display text-[28px] font-normal">
-            {t(locale, 'home.choose')} {/* Título de la lista */}
-          </h2>
+          <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+            <h2 id="territorios" className="cifra-territorios m-0">{t(locale, 'index.count')}</h2> {/* "17 territorios" (dato oficial: 15 departamentos y 2 regiones) */}
+            <p className="m-0 text-[17px] text-ink-muted">{t(locale, 'index.count_detail')}</p> {/* "15 departamentos y 2 regiones autónomas" */}
+          </div>
           <p className="m-0 text-sm text-ink-muted">{t(locale, 'home.sources')}</p>
         </div>
 
@@ -85,19 +86,10 @@ export default async function Descubrir({ params }: { params: Promise<{ locale: 
             lakes={lagos.map((l) => l.id)} // Lagos
             viewBox={VIEWBOX_MAPA} // Lienzo
           />
-          <ul className="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(190px,1fr))] gap-x-6 gap-y-0.5 p-0">
-            {/* Lista de territorios publicados (misma información que el mapa, en texto) */}
-            {territories.map((ter) => (
-              <li key={ter.id}>
-                <Link
-                  href={`/${locale}/territorios/${ter.slug}`} // Ficha del territorio
-                  className="block border-b border-line py-2.5 text-[17px] text-ink no-underline hover:text-accent" // Fila con línea inferior
-                >
-                  {ter.kind === 'autonomous_region' ? ter.name.replace('Región Autónoma de la ', '') : ter.name} {/* Nombre corto para las regiones autónomas */}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div>
+            <h3 className="indice-titulo m-0">{t(locale, 'index.title')}</h3> {/* "Índice de territorios" */}
+            <IndiceTerritorios locale={locale} items={formas.map(({ slug, name }) => ({ slug, name }))} published={(territories ?? []).map((ter) => ter.slug)} /> {/* Los 17 con foto y estado real */}
+          </div>
         </div>
       </section>
     </main>

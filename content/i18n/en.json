@@ -422,5 +422,10 @@
   "ways.business_desc": "Plans to get your business listed on BAQUEANO.",
   "auth.art_line1": "The world is big.",
   "auth.art_line2": "Nicaragua is unforgettable.",
-  "auth.art_text": "Discover, save and share places in Nicaragua with its people."
+  "auth.art_text": "Discover, save and share places in Nicaragua with its people.",
+  "index.title": "Territory index",
+  "index.count": "17 territories",
+  "index.count_detail": "15 departments and 2 autonomous regions",
+  "index.department": "Department",
+  "index.region": "Autonomous region"
 }

@@ -422,5 +422,10 @@
   "ways.business_desc": "BAQUEANOに掲載するためのプラン。",
   "auth.art_line1": "世界は広い。",
   "auth.art_line2": "ニカラグアは忘れられない。",
-  "auth.art_text": "ニカラグアの場所を、そこに暮らす人とともに見つけ、保存し、共有しよう。"
+  "auth.art_text": "ニカラグアの場所を、そこに暮らす人とともに見つけ、保存し、共有しよう。",
+  "index.title": "地域一覧",
+  "index.count": "17の地域",
+  "index.count_detail": "15の県と2つの自治地域",
+  "index.department": "県",
+  "index.region": "自治地域"
 }

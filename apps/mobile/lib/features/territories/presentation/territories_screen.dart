@@ -8,6 +8,7 @@ import '../../../core/theme.dart'; // Colores y espaciados
 import '../../../core/widgets/estados.dart'; // Cargando, error y vacío
 import '../../../core/widgets/explorador_territorios.dart'; // Explorador a pantalla completa
 import '../../../core/widgets/galeria_arco.dart'; // Galería en arco 3D
+import '../../../core/widgets/indice_territorios.dart'; // Índice de los 17 con foto y estado
 import '../../../core/widgets/modos_explorar.dart'; // Explora a tu manera
 import '../../../core/widgets/mapa_territorios.dart'; // Mapa ilustrado de los 17 territorios
 import '../../../core/widgets/portada_territorio.dart'; // Portadas y tarjetas de cada territorio
@@ -97,17 +98,7 @@ class _TerritoriesScreenState extends ConsumerState<TerritoriesScreen> {
           error: (e, _) => SliverToBoxAdapter(child: ErrorConReintento(error: e, onRetry: () => ref.invalidate(territoriesProvider))), // Error claro
           data: (items) => items.isEmpty
               ? SliverToBoxAdapter(child: Vacio(text: context.t('home.empty'))) // Aún nada publicado
-              : SliverList.separated(
-                  itemCount: items.length, // Cantidad de territorios
-                  separatorBuilder: (_, __) => const Divider(indent: 20, endIndent: 20), // Línea entre filas
-                  itemBuilder: (_, i) => ListTile(
-                    minTileHeight: TvSpace.touchMin + 8, // Área táctil cómoda
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20), // Margen lateral
-                    title: Text(items[i].shortName, style: const TextStyle(fontSize: 17)), // Nombre
-                    trailing: Icon(Icons.chevron_right, color: tv.inkMuted), // Indica que se abre
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => TerritoryScreen(slug: items[i].slug, name: items[i].shortName))), // Abre la ficha
-                  ),
-                ),
+              : const SliverToBoxAdapter(child: SizedBox.shrink()), // Los publicados ya se abren desde el índice de arriba
         ),
         SliverToBoxAdapter(
           child: Padding(
@@ -148,6 +139,8 @@ class _MapaConDatos extends ConsumerWidget {
         ),
         const SizedBox(height: TvSpace.s8), // Espacio
         KeyedSubtree(key: _claveMapaIlustrado, child: MapaTerritorios(mapa: mapa, published: bySlug.keys.toSet(), onOpen: abrir)), // Mapa (los publicados se abren)
+        const SizedBox(height: TvSpace.s6), // Espacio
+        IndiceTerritorios(mapa: mapa, published: bySlug.keys.toSet(), onAbrir: abrir), // Los 17 con foto y estado real
         const SizedBox(height: TvSpace.s8), // Espacio
         GaleriaArco(
           titulo: context.t('gallery.title'), // "Los 17, uno por uno"

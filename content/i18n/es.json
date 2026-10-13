@@ -422,5 +422,10 @@
   "ways.business_desc": "Planes para que tu negocio aparezca en BAQUEANO.",
   "auth.art_line1": "El mundo es grande.",
   "auth.art_line2": "Nicaragua es inolvidable.",
-  "auth.art_text": "Descubre, guarda y comparte lugares de Nicaragua con su gente."
+  "auth.art_text": "Descubre, guarda y comparte lugares de Nicaragua con su gente.",
+  "index.title": "Índice de territorios",
+  "index.count": "17 territorios",
+  "index.count_detail": "15 departamentos y 2 regiones autónomas",
+  "index.department": "Departamento",
+  "index.region": "Región autónoma"
 }

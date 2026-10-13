@@ -519,3 +519,30 @@ a.tarjeta-3d:focus-visible .tarjeta-lamina { outline: 3px solid var(--focus); ou
 .login-partido .login-lado { display: grid; place-items: center; padding: 28px 16px; } /* Mitad del formulario */
 .login-partido .login-vidrio { max-width: 440px; } /* La tarjeta conserva su ancho */
 @media (min-width: 900px) { .login-arte { min-height: 600px; padding: 40px; } } /* Más alto lado a lado */
+
+/* ===== 17 territorios: cifra e índice con fotos ===== */
+.cifra-territorios { font-family: var(--font-archivo), var(--font-display); font-size: clamp(34px, 4.4vw, 52px); font-weight: 800; font-stretch: 112%; line-height: 1; color: var(--ink); } /* Cifra grande, con la letra de la marca */
+.indice-titulo { margin-bottom: 10px; font-size: 15px; font-weight: 700; color: var(--ink-muted); } /* Subtítulo discreto del índice */
+.indice { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); } /* Rejilla que se adapta al ancho */
+.indice-fila { display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 8px 12px 8px 8px; border-radius: 16px; background: var(--ground-raised); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); text-decoration: none; } /* Cada territorio como píldora */
+.indice-fila[data-enlace] { transition: box-shadow 160ms ease-out, transform 160ms ease-out; } /* Solo los enlaces reaccionan */
+.indice-fila[data-enlace]:hover { box-shadow: inset 0 0 0 1.5px var(--marca-turquesa); } /* Borde de la marca al apuntar */
+.indice-fila[data-enlace]:active { transform: scale(0.98); } /* Se hunde al tocarlo */
+.indice-fila[data-enlace]:focus-visible { outline: 3px solid var(--marca-naranja); outline-offset: 2px; } /* Foco visible con el teclado */
+.indice-foto { flex: none; width: 44px; height: 44px; border-radius: 50%; object-fit: cover; background: var(--marca-profundo); box-shadow: 0 0 0 2px var(--ground), 0 0 0 3px var(--line); } /* Foto redonda con aro */
+.indice-nombre { display: block; font-weight: 700; font-size: 16px; line-height: 20px; } /* Nombre del territorio */
+.indice-tipo { display: block; font-size: 13px; line-height: 18px; color: var(--ink-muted); } /* Tipo y estado */
+.indice-tipo [data-estado="publicada"] { color: var(--status-verified); font-weight: 700; } /* Ficha publicada, en verde */
+.indice-flecha { font-size: 22px; line-height: 1; color: var(--ink-muted); } /* Flecha de los que se abren */
+
+/* ===== Fila de los 17 con foto redonda, dentro del explorador ===== */
+.exp-fila { position: relative; z-index: 3; display: flex; gap: 6px; height: 124px; margin: 0; padding: 12px 20px 8px; list-style: none; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin; background: linear-gradient(0deg, var(--marca-nocturno), color-mix(in oklab, var(--marca-nocturno) 70%, transparent)); border-top: 1px solid color-mix(in oklab, var(--band-marfil) 12%, transparent); } /* Fila deslizable bajo el explorador */
+.exp-fila li { flex: none; scroll-snap-align: start; } /* Cada territorio se acomoda al deslizar */
+.exp-fila-boton { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 84px; padding: 6px 4px; border: 0; border-radius: 16px; background: none; color: var(--ink-muted); font: inherit; font-size: 12.5px; line-height: 15px; text-align: center; cursor: pointer; } /* Foto y nombre */
+.exp-fila-boton img, .exp-fila-vacio { display: block; width: 56px; height: 56px; border-radius: 50%; object-fit: cover; background: var(--marca-profundo); box-shadow: 0 0 0 2px color-mix(in oklab, var(--band-marfil) 18%, transparent); transition: box-shadow 200ms ease-out, transform 200ms ease-out; } /* Foto redonda */
+.exp-fila-boton:hover img { transform: translateY(-2px); } /* Sube un poco al apuntarla */
+.exp-fila-boton[aria-current="true"] { color: var(--ink); font-weight: 700; } /* Nombre del activo, resaltado */
+.exp-fila-boton[aria-current="true"] img { box-shadow: 0 0 0 2px var(--marca-nocturno), 0 0 0 4px var(--marca-naranja); } /* Aro naranja en el activo */
+.exp-fila-boton:focus-visible { outline: 3px solid var(--marca-naranja); outline-offset: 2px; } /* Foco visible con el teclado */
+@media (prefers-reduced-motion: reduce) { .exp-fila-boton img { transition: none; } } /* Sin movimiento si así se pidió */
+.explorador .exp-flechas { bottom: 152px; } /* Las flechas suben por encima de la fila de fotos */

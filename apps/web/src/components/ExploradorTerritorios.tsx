@@ -82,6 +82,19 @@ export function ExploradorTerritorios({ locale, published }: { locale: string; p
         </ul>
       </div>
 
+      <ul className="exp-fila" aria-label={t(locale, 'index.title')}>
+        {/* Los 17 en fila, con foto redonda: al tocar uno pasa a ser el territorio activo */}
+        {territorios.map((ter, i) => (
+          <li key={ter.slug}>
+            <button type="button" data-ir={i} aria-current={i === 0 ? 'true' : undefined} className="exp-fila-boton">
+              {fotoDe(ter.slug) ? <img src={fotoDe(ter.slug)!.imagen_movil} alt="" width={56} height={56} loading="lazy" decoding="async" /> : <span aria-hidden="true" className="exp-fila-vacio" />}
+              {/* Foto decorativa: el nombre de abajo dice qué territorio es */}
+              <span>{ter.name}</span> {/* Nombre del territorio */}
+            </button>
+          </li>
+        ))}
+      </ul>
+
       <ControlExplorador total={total} anterior={t(locale, 'gallery.prev')} siguiente={t(locale, 'gallery.next')} /> {/* Flechas y teclado */}
     </section>
   );
