@@ -477,5 +477,14 @@
   "mapx.title": "Mapa",
   "mapx.intro": "Destinos e negócios publicados, com sua fonte. Busque pelo nome ou escolha um território.",
   "mapx.stamp": "Lugares reais, com fonte.",
-  "mapx.by_territory": "Filtrar por território"
+  "mapx.by_territory": "Filtrar por território",
+  "report.stamp": "Sua voz também protege a Nicarágua.",
+  "report.why_title": "O que acontece com sua denúncia",
+  "report.why_text": "Cada denúncia é revisada pela equipe do BAQUEANO. Não substitui avisar as autoridades quando há perigo.",
+  "register.stamp": "Seu negócio, sua história.",
+  "register.steps": "Como seu negócio é publicado",
+  "register.step1": "Entre e envie os dados",
+  "register.step2": "A equipe verifica se são verdadeiros",
+  "register.step3": "Seu negócio aparece no mapa",
+  "register.step4": "Os viajantes escrevem direto para você"
 }

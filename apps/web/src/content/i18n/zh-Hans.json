@@ -477,5 +477,14 @@
   "mapx.title": "地图",
   "mapx.intro": "已发布的目的地和商家，并注明来源。按名称搜索或选择地区。",
   "mapx.stamp": "真实的地方，注明来源。",
-  "mapx.by_territory": "按地区筛选"
+  "mapx.by_territory": "按地区筛选",
+  "report.stamp": "你的声音也在守护尼加拉瓜。",
+  "report.why_title": "举报之后会怎样",
+  "report.why_text": "每条举报都由 BAQUEANO 团队审核。遇到危险时，它不能代替向当局报警。",
+  "register.stamp": "你的生意，你的故事。",
+  "register.steps": "商家如何发布",
+  "register.step1": "登录并提交资料",
+  "register.step2": "团队核实信息",
+  "register.step3": "商家出现在地图上",
+  "register.step4": "旅行者直接联系你"
 }

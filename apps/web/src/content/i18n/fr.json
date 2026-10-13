@@ -477,5 +477,14 @@
   "mapx.title": "Carte",
   "mapx.intro": "Destinations et commerces publiés, avec leur source. Cherchez par nom ou choisissez un territoire.",
   "mapx.stamp": "Des lieux réels, sourcés.",
-  "mapx.by_territory": "Filtrer par territoire"
+  "mapx.by_territory": "Filtrer par territoire",
+  "report.stamp": "Ta voix protège aussi le Nicaragua.",
+  "report.why_title": "Ce que devient ton signalement",
+  "report.why_text": "Chaque signalement est examiné par l’équipe BAQUEANO. Il ne remplace pas l’appel aux autorités en cas de danger.",
+  "register.stamp": "Ton commerce, ton histoire.",
+  "register.steps": "Comment ton commerce est publié",
+  "register.step1": "Connecte-toi et envoie les données",
+  "register.step2": "L’équipe vérifie qu’elles sont exactes",
+  "register.step3": "Ton commerce apparaît sur la carte",
+  "register.step4": "Les voyageurs t’écrivent directement"
 }

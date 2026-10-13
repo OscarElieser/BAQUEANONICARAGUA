@@ -636,3 +636,8 @@ a.terr-accion:focus-visible { outline: 3px solid var(--marca-naranja); outline-o
 .aventura-con-foto::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, color-mix(in oklab, var(--band-anil) 94%, transparent) 0%, color-mix(in oklab, var(--band-anil) 78%, transparent) 55%, color-mix(in oklab, var(--band-anil) 55%, transparent)); } /* Añil encima para que el texto siga leyéndose */
 .aventura-con-foto .credito-foto { color: var(--ink); } /* Crédito claro sobre el añil */
 @media (min-width: 1100px) { .mapa-territorios ul { gap: 2px; } .mapa-territorios a { min-height: 34px; box-shadow: none; background: none; } .mapa-territorios a:hover { background: var(--ground-raised); } } /* En escritorio, lista compacta */
+
+/* ===== Registrar negocio: pasos del proceso ===== */
+.pasos-negocio { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); } /* Pasos en fila que se adapta */
+.pasos-negocio li { display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 10px 16px; border-radius: 16px; background: var(--ground-raised); box-shadow: inset 0 0 0 1px var(--line); font-weight: 700; } /* Cada paso */
+.pasos-negocio li span { display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--marca-naranja); color: var(--marca-nocturno); font-weight: 800; } /* Número del paso */

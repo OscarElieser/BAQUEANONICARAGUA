@@ -477,5 +477,14 @@
   "mapx.title": "Mappa",
   "mapx.intro": "Destinazioni e attività pubblicate, con la loro fonte. Cerca per nome o scegli un territorio.",
   "mapx.stamp": "Luoghi reali, con fonte.",
-  "mapx.by_territory": "Filtra per territorio"
+  "mapx.by_territory": "Filtra per territorio",
+  "report.stamp": "Anche la tua voce protegge il Nicaragua.",
+  "report.why_title": "Cosa succede alla tua segnalazione",
+  "report.why_text": "Ogni segnalazione è esaminata dal team di BAQUEANO. Non sostituisce l’avviso alle autorità in caso di pericolo.",
+  "register.stamp": "La tua attività, la tua storia.",
+  "register.steps": "Come viene pubblicata la tua attività",
+  "register.step1": "Accedi e invia i dati",
+  "register.step2": "Il team verifica che siano corretti",
+  "register.step3": "La tua attività compare sulla mappa",
+  "register.step4": "I viaggiatori ti scrivono direttamente"
 }

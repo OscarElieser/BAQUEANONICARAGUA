@@ -477,5 +477,14 @@
   "mapx.title": "Map",
   "mapx.intro": "Published destinations and businesses, with their source. Search by name or pick a territory.",
   "mapx.stamp": "Real places, with sources.",
-  "mapx.by_territory": "Filter by territory"
+  "mapx.by_territory": "Filter by territory",
+  "report.stamp": "Your voice protects Nicaragua too.",
+  "report.why_title": "What happens to your report",
+  "report.why_text": "Every report is reviewed by the BAQUEANO team. It does not replace calling the authorities when there is danger.",
+  "register.stamp": "Your business, your story.",
+  "register.steps": "How your business gets published",
+  "register.step1": "Sign in and send the details",
+  "register.step2": "The team checks they are accurate",
+  "register.step3": "Your business appears on the map",
+  "register.step4": "Travelers write to you directly"
 }

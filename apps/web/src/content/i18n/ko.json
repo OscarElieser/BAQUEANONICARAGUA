@@ -477,5 +477,14 @@
   "mapx.title": "지도",
   "mapx.intro": "출처와 함께 공개된 여행지와 사업장입니다. 이름으로 검색하거나 지역을 고르세요.",
   "mapx.stamp": "출처가 있는 진짜 장소.",
-  "mapx.by_territory": "지역별 보기"
+  "mapx.by_territory": "지역별 보기",
+  "report.stamp": "당신의 목소리도 니카라과를 지킵니다.",
+  "report.why_title": "신고 후에는",
+  "report.why_text": "모든 신고는 BAQUEANO 팀이 검토합니다. 위험할 때 당국에 알리는 것을 대신하지 않습니다.",
+  "register.stamp": "당신의 사업, 당신의 이야기.",
+  "register.steps": "사업장이 게시되는 과정",
+  "register.step1": "로그인하고 정보 보내기",
+  "register.step2": "팀이 사실인지 확인",
+  "register.step3": "지도에 사업장 표시",
+  "register.step4": "여행자가 직접 연락"
 }

@@ -477,5 +477,14 @@
   "mapx.title": "Karte",
   "mapx.intro": "Veröffentlichte Ziele und Unternehmen mit Quelle. Suche nach Namen oder wähle ein Gebiet.",
   "mapx.stamp": "Echte Orte, mit Quelle.",
-  "mapx.by_territory": "Nach Gebiet filtern"
+  "mapx.by_territory": "Nach Gebiet filtern",
+  "report.stamp": "Deine Stimme schützt Nicaragua auch.",
+  "report.why_title": "Was mit deiner Meldung passiert",
+  "report.why_text": "Jede Meldung prüft das BAQUEANO-Team. Sie ersetzt nicht den Anruf bei den Behörden, wenn Gefahr besteht.",
+  "register.stamp": "Dein Unternehmen, deine Geschichte.",
+  "register.steps": "So wird dein Unternehmen veröffentlicht",
+  "register.step1": "Anmelden und Daten senden",
+  "register.step2": "Das Team prüft, ob sie stimmen",
+  "register.step3": "Dein Unternehmen erscheint auf der Karte",
+  "register.step4": "Reisende schreiben dir direkt"
 }

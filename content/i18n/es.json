@@ -477,5 +477,14 @@
   "mapx.title": "Mapa",
   "mapx.intro": "Destinos y negocios publicados, con su fuente. Busca por nombre o elige un territorio.",
   "mapx.stamp": "Lugares reales, con fuente.",
-  "mapx.by_territory": "Filtrar por territorio"
+  "mapx.by_territory": "Filtrar por territorio",
+  "report.stamp": "Tu voz también protege Nicaragua.",
+  "report.why_title": "Qué pasa con tu denuncia",
+  "report.why_text": "Cada denuncia la revisa el equipo de BAQUEANO. No reemplaza el aviso a las autoridades cuando hay peligro.",
+  "register.stamp": "Tu negocio, tu historia.",
+  "register.steps": "Cómo se publica tu negocio",
+  "register.step1": "Inicia sesión y envía los datos",
+  "register.step2": "El equipo revisa que sean ciertos",
+  "register.step3": "Tu negocio aparece en el mapa",
+  "register.step4": "Los viajeros te escriben directo"
 }

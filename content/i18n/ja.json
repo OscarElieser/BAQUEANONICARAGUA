@@ -477,5 +477,14 @@
   "mapx.title": "地図",
   "mapx.intro": "公開済みの目的地と店舗を出典付きで表示します。名前で検索するか、地域を選んでください。",
   "mapx.stamp": "出典のある本当の場所。",
-  "mapx.by_territory": "地域で絞り込む"
+  "mapx.by_territory": "地域で絞り込む",
+  "report.stamp": "あなたの声もニカラグアを守ります。",
+  "report.why_title": "通報のその後",
+  "report.why_text": "通報はすべてBAQUEANOのチームが確認します。危険がある場合の当局への連絡の代わりにはなりません。",
+  "register.stamp": "あなたの店、あなたの物語。",
+  "register.steps": "店舗が掲載されるまで",
+  "register.step1": "ログインして情報を送信",
+  "register.step2": "チームが内容を確認",
+  "register.step3": "地図に店舗が表示",
+  "register.step4": "旅行者から直接連絡が届く"
 }
