@@ -215,7 +215,8 @@ El nombre de la marca aún no está definido: se muestra como `[Marca]`.
   - las vistas `public_*` con SECURITY DEFINER (es a propósito: exponen solo lo publicado; revisar si se pasan a security_invoker);
   - `public.rls_auto_enable()` se puede ejecutar sin sesión; no es de nuestras migraciones.
 - Android: falta registrar la app Android en Firebase (paquete `com.baqueano.nicaragua`) y agregar su `google-services.json`. Sin ese archivo, `flutter build apk` falla. Hoy usa el appId de la app web.
-- Actualizado el 13 de octubre de 2026: en producción están aplicadas hasta `20261013061500` (metricas_viajeros); `superadmin_inicial` y `avisos_push` entran al avanzar `main` (integración de GitHub). En CI, el APK se compila con el `google-services.json.example` (mismo paquete, solo datos públicos).
+- Comprobado en producción el 13 de octubre de 2026, después de avanzar `main` a `eca0b3f`: la integración de GitHub aplicó `20261013120000_superadmin_inicial` y `20261013130000_avisos_push`; la huella guardada coincide con el correo del dueño; solo `service_role` puede usar `session_bootstrap_superadmin`, `push_claim` y `push_report`; `pg_cron` corre `enviar-avisos` cada minuto sin errores; funciones `preparar-sesion` (versión 5) y `enviar-avisos` (versión 1, `verify_jwt` apagado) activas. La sonda confirma que `enviar-avisos` tiene la cuenta de servicio y que BAQÜI sigue sin `GEMINI_API_KEY`. Superadministradores: 0 hasta que el dueño entre. Dominios autorizados de Firebase: todavía sin `baqueanonicaragua.com`.
+- En CI, el APK se compila con el `google-services.json.example` (mismo paquete, solo datos públicos).
 
 ## 5. Pendiente del dueño (Claude no puede hacerlo)
 
