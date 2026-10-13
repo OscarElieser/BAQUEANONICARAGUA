@@ -54,3 +54,7 @@ print(f"- Función preparar-sesion: {'desplegada (rechaza sin token, código ' +
 c, t = pedir(f"{SUPABASE}/functions/v1/baqui", {"message": "hola"}, {"apikey": PUBLICABLE})  # Sin token: dice si falta la clave de Gemini (503) o pide sesión (401)
 estado_baqui = {503: "desplegada, falta la clave GEMINI_API_KEY", 401: "desplegada y con clave (pide sesión, como debe)"}.get(c, f"código {c} {t[:120]}")  # Interpretación
 print(f"- BAQÜI (función baqui): {estado_baqui}")  # Resultado
+
+c, t = pedir(f"{SUPABASE}/functions/v1/enviar-avisos", {}, {"apikey": PUBLICABLE})  # Sin avisos pendientes no envía nada; dice si falta la cuenta de servicio
+estado_avisos = {200: f"desplegada y con cuenta de servicio ({t[:80]})", 503: "desplegada, falta FIREBASE_SERVICE_ACCOUNT o no es un JSON válido"}.get(c, f"código {c} {t[:120]}")  # Interpretación
+print(f"- Avisos push (función enviar-avisos): {estado_avisos}")  # Resultado
