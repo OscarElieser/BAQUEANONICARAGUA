@@ -19,7 +19,7 @@ jobs:
     name: Buscar fotos en Wikimedia Commons
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4 # Descarga el buscador
+      - uses: actions/checkout@v7 # Descarga el buscador
       - name: Buscar y descargar candidatas # Solo licencias libres; guarda autor, licencia y origen
         run: python3 scripts/fotos/buscar_fotos.py salida
       - name: Guardar en refs/datos/fotos # Commit aparte que se reemplaza en cada ejecución

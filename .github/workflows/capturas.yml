@@ -22,13 +22,13 @@ jobs:
     name: Capturas de la web (computadora y teléfono)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4 # Descarga el código
+      - uses: actions/checkout@v7 # Descarga el código
       - name: Construir y arrancar la web # La misma imagen que se publicaría
         run: |
           docker build -f apps/web/Dockerfile -t nica-web:capturas . # Construye
           docker run -d --name web -p 3000:3000 nica-web:capturas # Arranca
           for _ in $(seq 1 30); do curl -fsS -o /dev/null http://127.0.0.1:3000/es && break; sleep 2; done # Espera hasta 60 s
-      - uses: actions/setup-node@v4 # Node para Playwright
+      - uses: actions/setup-node@v7 # Node para Playwright
         with: { node-version: 22 }
       - name: Tomar las capturas # Chromium con varios idiomas, temas y tamaños
         run: |
