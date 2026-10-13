@@ -3,6 +3,7 @@
 import Link from 'next/link'; // Enlaces internos
 import type { Metadata } from 'next'; // Tipo de los metadatos
 import { CreditoFoto } from '@/components/CreditoFoto'; // Crédito de la foto del encabezado
+import { PublicarCronica } from '@/components/PublicarCronica'; // Formulario de publicación
 import { Paginacion } from '@/components/Paginacion'; // Anterior / siguiente
 import { SpriteMapa } from '@/components/SpriteMapa'; // Formas de los territorios (siluetas)
 import { letraFirma, letraMarca } from '@/app/fuentes'; // Letras de la marca y de la firma
@@ -53,8 +54,7 @@ export default async function Cronicas({ params, searchParams }: Props) {
           <p className="m-0 mt-2 text-[22px] font-bold">{t(locale, 'chron.subtitle')}</p> {/* "Historias reales que inspiran a viajar" */}
           <p className="m-0 mt-2 max-w-[56ch] text-[16px] leading-6">{t(locale, 'chron.intro')}</p> {/* Quién escribe y cómo se publica */}
           <div className="mt-5 flex flex-wrap items-center gap-3">
-            <button type="button" disabled className="boton-marca cursor-not-allowed opacity-100" aria-describedby="cron-pronto">{t(locale, 'chron.publish')}</button> {/* Publicar: aún sin formulario en la web */}
-            <span id="cron-pronto" className="text-[14px]">{t(locale, 'plans.unavailable')}</span> {/* Lo dice claramente */}
+            <a href="#publicar" className="boton-marca">{t(locale, 'chron.publish')}</a> {/* Baja al formulario de publicación */}
           </div>
           {portada && <CreditoFoto locale={locale} foto={portada} className="mt-4 block" />} {/* Crédito de la foto */}
         </div>
@@ -121,6 +121,7 @@ export default async function Cronicas({ params, searchParams }: Props) {
         )}
         <Paginacion locale={locale} prevHref={primera} nextHref={siguiente} /> {/* Más recientes / anteriores */}
       </section>
+      <PublicarCronica locale={locale} /> {/* Publicar con la cuenta (moderación de la comunidad) */}
     </main>
   );
 }

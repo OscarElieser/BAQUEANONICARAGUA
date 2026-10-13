@@ -554,5 +554,16 @@
   "fav.saved": "Gespeichert",
   "common.cancel": "Abbrechen",
   "trips.sign_in_to_save_app": "Melde dich im Profil an, um diese Reise in deinem Konto zu speichern und auch im Web zu sehen.",
-  "trips.sign_in_app": "Melde dich im Profil an, um deine Reisen und gespeicherten Orte zu sehen."
+  "trips.sign_in_app": "Melde dich im Profil an, um deine Reisen und gespeicherten Orte zu sehen.",
+  "chron.form_intro": "Sie wird mit deinem Kontonamen veröffentlicht. Alle können sie melden, das Moderationsteam prüft sie.",
+  "chron.sign_in": "um deine Chronik zu veröffentlichen.",
+  "chron.f_title": "Titel",
+  "chron.f_body": "Dein Bericht",
+  "chron.f_territory": "Gebiet (optional)",
+  "chron.f_promo": "Kreuze an, wenn die Chronik für ein eigenes oder verbundenes Unternehmen wirbt. Sie wird als „Werbung“ gekennzeichnet.",
+  "chron.f_submit": "Chronik veröffentlichen",
+  "chron.sent": "Veröffentlicht. Sie erscheint in wenigen Minuten in der Liste.",
+  "chron.limit": "Du hast in kurzer Zeit viel veröffentlicht. Versuche es in einer Stunde erneut.",
+  "chron.sign_in_app": "Melde dich im Profil an, um deine Chronik zu veröffentlichen.",
+  "chron.f_body_short": "Erzähl etwas mehr: mindestens 40 Zeichen."
 }

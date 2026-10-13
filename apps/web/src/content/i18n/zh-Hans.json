@@ -554,5 +554,16 @@
   "fav.saved": "已收藏",
   "common.cancel": "取消",
   "trips.sign_in_to_save_app": "在“个人资料”中登录，即可把行程保存到账户并在网页上查看。",
-  "trips.sign_in_app": "在“个人资料”中登录，即可查看你的行程和收藏地点。"
+  "trips.sign_in_app": "在“个人资料”中登录，即可查看你的行程和收藏地点。",
+  "chron.form_intro": "将以你的账户名发布。任何人都可以举报，审核团队会进行检查。",
+  "chron.sign_in": "后即可发布你的纪事。",
+  "chron.f_title": "标题",
+  "chron.f_body": "你的故事",
+  "chron.f_territory": "地区（可选）",
+  "chron.f_promo": "如果这篇纪事推广的是你自己或与你有关的商家，请勾选。它会被标为“推广”。",
+  "chron.f_submit": "发布纪事",
+  "chron.sent": "已发布。几分钟后会出现在列表中。",
+  "chron.limit": "你在短时间内发布太多了。请一小时后再试。",
+  "chron.sign_in_app": "在“个人资料”中登录后即可发布纪事。",
+  "chron.f_body_short": "请再多写一些：至少 40 个字符。"
 }

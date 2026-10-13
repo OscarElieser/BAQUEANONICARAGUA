@@ -10,6 +10,7 @@ import 'package:nica_app/core/theme.dart'; // Tema
 import 'package:nica_app/features/auth/auth_repository.dart'; // Sesión
 import 'package:nica_app/features/catalog/business_screen.dart'; // Ficha de negocio
 import 'package:nica_app/features/community/community_screen.dart'; // Comunidad
+import 'package:nica_app/features/community/publicar_cronica_screen.dart'; // Publicar crónica
 import 'package:nica_app/features/culture/culture_screen.dart'; // Cultura
 import 'package:nica_app/features/messages/conversation_screen.dart'; // Conversación
 import 'package:nica_app/features/planner/planner_screen.dart'; // Mi aventura
@@ -118,6 +119,13 @@ void main() {
     expect(find.textContaining('Inicia sesión en Perfil para guardar este viaje'), findsOneWidget); // Invita a entrar para guardar
     expect(find.textContaining('Inicia sesión en Perfil para ver tus viajes'), findsOneWidget); // Y para ver la lista
     expect(tester.takeException(), isNull); // Sin errores
+  });
+
+  testWidgets('publicar crónica sin sesión explica dónde entrar', (tester) async {
+    await tester.pumpWidget(app(const PublicarCronicaScreen())); // Abre el formulario sin sesión
+    await tester.pumpAndSettle(); // Espera
+    expect(find.text('Inicia sesión en Perfil para publicar tu crónica.'), findsOneWidget); // Lo explica
+    expect(find.byType(TextFormField), findsNothing); // Y no muestra campos que no se podrían enviar
   });
 
   testWidgets('Comunidad muestra relatos en orden y marca lo promocional', (tester) async {

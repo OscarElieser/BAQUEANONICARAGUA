@@ -11,6 +11,7 @@ import '../../core/theme.dart'; // Colores y espaciados
 import '../../core/widgets/estados.dart'; // Cargando, error y vacío
 import '../../core/widgets/franja_tejida.dart'; // Franja tejida de la comunidad
 import '../catalog/search_screen.dart'; // Negocios del catálogo
+import 'publicar_cronica_screen.dart'; // Publicar una crónica
 
 /// Relatos recientes en orden cronológico (no por interacción).
 final feedProvider = FutureProvider.autoDispose<List<FeedPost>>((ref) => ref.watch(catalogRepositoryProvider).feed()); // Pide el feed
@@ -48,6 +49,10 @@ class CommunityScreen extends ConsumerWidget {
                     FilledButton(
                       onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchScreen(query: '', kind: 'business', title: context.t('search.our_people')))), // Lista de negocios publicados
                       child: Text(context.t('community.meet')), // Texto
+                    ),
+                    FilledButton.tonal(
+                      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const PublicarCronicaScreen())), // Abre el formulario de crónica
+                      child: Text(context.t('chron.publish')), // "Publicar mi crónica"
                     ),
                     OutlinedButton(
                       onPressed: Env.webUrl.isEmpty

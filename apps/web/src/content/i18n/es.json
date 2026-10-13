@@ -554,5 +554,16 @@
   "fav.saved": "Guardado",
   "common.cancel": "Cancelar",
   "trips.sign_in_to_save_app": "Inicia sesión en Perfil para guardar este viaje en tu cuenta y verlo también en la web.",
-  "trips.sign_in_app": "Inicia sesión en Perfil para ver tus viajes y lugares guardados."
+  "trips.sign_in_app": "Inicia sesión en Perfil para ver tus viajes y lugares guardados.",
+  "chron.form_intro": "Se publica con tu nombre de cuenta. Cualquiera puede reportarla y el equipo de moderación la revisa.",
+  "chron.sign_in": "para publicar tu crónica.",
+  "chron.f_title": "Título",
+  "chron.f_body": "Tu relato",
+  "chron.f_territory": "Territorio (opcional)",
+  "chron.f_promo": "Marca esto si la crónica promociona un negocio tuyo o con el que tienes relación. Se mostrará como «Promocional».",
+  "chron.f_submit": "Publicar crónica",
+  "chron.sent": "Publicada. Aparecerá en la lista en unos minutos.",
+  "chron.limit": "Publicaste mucho en poco tiempo. Intenta de nuevo en una hora.",
+  "chron.sign_in_app": "Inicia sesión en Perfil para publicar tu crónica.",
+  "chron.f_body_short": "Cuenta un poco más: al menos 40 letras."
 }

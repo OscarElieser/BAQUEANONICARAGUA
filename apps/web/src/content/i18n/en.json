@@ -554,5 +554,16 @@
   "fav.saved": "Saved",
   "common.cancel": "Cancel",
   "trips.sign_in_to_save_app": "Sign in from Profile to save this trip to your account and see it on the web too.",
-  "trips.sign_in_app": "Sign in from Profile to see your trips and saved places."
+  "trips.sign_in_app": "Sign in from Profile to see your trips and saved places.",
+  "chron.form_intro": "It is published with your account name. Anyone can report it and the moderation team reviews it.",
+  "chron.sign_in": "to publish your chronicle.",
+  "chron.f_title": "Title",
+  "chron.f_body": "Your story",
+  "chron.f_territory": "Territory (optional)",
+  "chron.f_promo": "Check this if the chronicle promotes a business that is yours or that you are connected to. It will be labeled “Promotional”.",
+  "chron.f_submit": "Publish chronicle",
+  "chron.sent": "Published. It will show up in the list in a few minutes.",
+  "chron.limit": "You have published a lot in a short time. Try again in an hour.",
+  "chron.sign_in_app": "Sign in from Profile to publish your chronicle.",
+  "chron.f_body_short": "Tell a bit more: at least 40 characters."
 }
