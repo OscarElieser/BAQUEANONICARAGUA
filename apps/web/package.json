@@ -12,19 +12,19 @@
   "dependencies": {
     "@nica/ai-core": "workspace:*",
     "@supabase/ssr": "^0.12.7",
-    "@supabase/supabase-js": "^2.45.0",
+    "@supabase/supabase-js": "^2.118.0",
     "firebase": "^11.0.0",
     "maplibre-gl": "^6.4.1",
-    "next": "^15.0.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "three": "^0.169.0"
+    "next": "^15.5.28",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^20.14.0",
     "@types/react": "^19.0.0",
-    "@types/three": "^0.169.0",
+    "@types/three": "^0.186.0",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.6.0"
   }
