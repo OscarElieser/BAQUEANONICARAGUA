@@ -16,7 +16,7 @@ jobs:
     name: Sistema de diseño alineado (web + Android)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: python3 scripts/check_tokens.py
       - name: Flujos de GitHub Actions bien escritos (actionlint) # Detecta errores en ci.yml, codeql.yml y deploy.yml antes de usarlos
         run: |
@@ -39,8 +39,8 @@ jobs:
     name: Lógica sin dependencias (asistente, Ops Center, funciones)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with: { node-version: 22 }
       - run: node --test packages/ai-core/test/*.test.ts
       - name: Ops Center alineado con la base de datos
@@ -58,9 +58,9 @@ jobs:
     name: Web + API (tipos, pruebas, build)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with: { node-version: 22 }
       # Sin pnpm-lock.yaml aún: se genera aquí. Cuando exista en el repo, cambiar a --frozen-lockfile.
       - run: pnpm install --no-frozen-lockfile
@@ -87,7 +87,7 @@ jobs:
           PY
       - name: Guardar pnpm-lock.yaml generado
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with: { name: pnpm-lock, path: pnpm-lock.yaml, if-no-files-found: ignore }
 
   database:
@@ -96,8 +96,8 @@ jobs:
     env:
       FIREBASE_PROJECT_ID: nica-ci
     steps:
-      - uses: actions/checkout@v4
-      - uses: supabase/setup-cli@v1
+      - uses: actions/checkout@v7
+      - uses: supabase/setup-cli@v3
         with: { version: latest }
       - name: Levantar Supabase local y aplicar migraciones
         run: |
@@ -118,7 +118,7 @@ jobs:
     runs-on: ubuntu-24.04
     defaults: { run: { working-directory: apps/mobile } }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2
         with: { channel: stable }
       - run: flutter pub get
@@ -157,7 +157,7 @@ jobs:
                   print(f"::error title=Prueba Android: {names.get(e.get('testID'), '?')}::{text[:3000]}")
           PY
           exit "${status:-0}"
-      - uses: actions/setup-java@v5 # Java 17, el que pide el plugin de Android
+      - uses: actions/setup-java@v6 # Java 17, el que pide el plugin de Android
         with: { distribution: temurin, java-version: '17' }
       - name: Compilar la app (APK de prueba) # Comprueba que Gradle, el manifiesto, los plugins y la firma compilan de verdad
         run: |
@@ -183,7 +183,7 @@ jobs:
     name: Imágenes Docker (web y API)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Construir imagen de la API # Comprueba que la receta funciona (no se publica)
         run: docker build -f apps/api/Dockerfile -t nica-api:ci .
       - name: Construir imagen de la web # Sin configuración: la web arranca con avisos de "no disponible todavía"
@@ -223,7 +223,7 @@ jobs:
           curl -fsS http://127.0.0.1:3000/es/sin-conexion | grep -q 'noindex' # La página sin conexión existe y no se indexa
           code=$(curl -s -o 404.html -w '%{http_code}' http://127.0.0.1:3000/es/territorios/no-existe) # Una ficha que no existe
           test "$code" = 404 # Responde 404 de verdad
-      - uses: actions/setup-node@v4 # Node para la revisión de accesibilidad
+      - uses: actions/setup-node@v7 # Node para la revisión de accesibilidad
         with: { node-version: 22 }
       - name: Accesibilidad WCAG 2.2 AA (axe, temas claro y oscuro) # Falla con problemas graves o críticos
         working-directory: scripts/a11y
