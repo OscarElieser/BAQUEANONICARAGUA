@@ -77,7 +77,7 @@ jobs:
     runs-on: ubuntu-24.04
     environment: ${{ inputs.entorno }} # Variables del entorno (las NEXT_PUBLIC_* quedan dentro de la web)
     steps:
-      - uses: actions/checkout@v4 # Descarga el código del commit aprobado
+      - uses: actions/checkout@v7 # Descarga el código del commit aprobado
       - name: Entrar a GitHub Container Registry # Donde se guardan las imágenes
         run: echo "${{ github.token }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
       - name: Construir y subir la API # La API no lleva secretos dentro: se pasan al ejecutar
@@ -112,8 +112,8 @@ jobs:
       SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }} # Contraseña de la base para aplicar migraciones
       FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }} # Lo usa config.toml (Third-Party Auth)
     steps:
-      - uses: actions/checkout@v4 # Descarga el código del commit aprobado
-      - uses: supabase/setup-cli@v1 # Instala la CLI de Supabase
+      - uses: actions/checkout@v7 # Descarga el código del commit aprobado
+      - uses: supabase/setup-cli@v3 # Instala la CLI de Supabase
         with: { version: latest }
       - name: Vincular el proyecto # Elige el proyecto de este entorno
         run: supabase link --project-ref "${{ vars.SUPABASE_PROJECT_REF }}" -p "$SUPABASE_DB_PASSWORD"
@@ -141,7 +141,7 @@ jobs:
     runs-on: ubuntu-24.04
     environment: ${{ inputs.entorno }}
     steps:
-      - uses: actions/checkout@v4 # Para copiar los archivos de deploy/servidor
+      - uses: actions/checkout@v7 # Para copiar los archivos de deploy/servidor
       - name: Preparar SSH # Clave privada y huella conocida del servidor (evita suplantaciones)
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}

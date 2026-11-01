@@ -19,7 +19,7 @@ jobs:
     name: Generar mapa desde Natural Earth
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4 # Descarga el generador
+      - uses: actions/checkout@v7 # Descarga el generador
       - name: Descargar Natural Earth (versión fija) # Límites de primer nivel y lagos, escala 1:10 millones
         run: |
           base=https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson # Versión publicada fija
